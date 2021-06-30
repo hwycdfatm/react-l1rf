@@ -1,11 +1,11 @@
 import React from 'react'
 
-const Error = () => {
+const User = () => {
 	return (
 		<div className="flex items-center justify-center h-screen font-mono text-5xl">
-			Error
+			User
 		</div>
 	)
 }
 
-export default Error
+export default User
