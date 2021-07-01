@@ -4,8 +4,8 @@ const Home = () => {
 	return (
 		<div className="w-full max-w-screen-2xl m-auto pt-24">
 			<div className="py-3 border border-gray-500 rounded-md mb-2">Short</div>
-			<div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
-				<div class="flex flex-col p-4 shadow rounded-lg">
+			<div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
+				<div className="flex flex-col p-4 shadow rounded-lg">
 					<svg
 						className="w-full h-full"
 						fill="none"
@@ -27,7 +27,7 @@ const Home = () => {
 						dolor facere?
 					</span>
 				</div>
-				<div class="flex flex-col p-4 shadow rounded-lg">
+				<div className="flex flex-col p-4 shadow rounded-lg">
 					<svg
 						className="w-full h-full"
 						fill="none"
@@ -49,7 +49,7 @@ const Home = () => {
 						dolor facere?
 					</span>
 				</div>
-				<div class="flex flex-col p-4 shadow rounded-lg">
+				<div className="flex flex-col p-4 shadow rounded-lg">
 					<svg
 						className="w-full h-full"
 						fill="none"
@@ -71,7 +71,7 @@ const Home = () => {
 						dolor facere?
 					</span>
 				</div>
-				<div class="flex flex-col p-4 shadow rounded-lg">
+				<div className="flex flex-col p-4 shadow rounded-lg">
 					<svg
 						className="w-full h-full"
 						fill="none"
@@ -93,7 +93,7 @@ const Home = () => {
 						dolor facere?
 					</span>
 				</div>
-				<div class="flex flex-col p-4 shadow rounded-lg">
+				<div className="flex flex-col p-4 shadow rounded-lg">
 					<svg
 						className="w-full h-full"
 						fill="none"
@@ -115,7 +115,7 @@ const Home = () => {
 						dolor facere?
 					</span>
 				</div>
-				<div class="flex flex-col p-4 shadow rounded-lg">
+				<div className="flex flex-col p-4 shadow rounded-lg">
 					<svg
 						className="w-full h-full"
 						fill="none"
@@ -137,7 +137,7 @@ const Home = () => {
 						dolor facere?
 					</span>
 				</div>
-				<div class="flex flex-col p-4 shadow rounded-lg">
+				<div className="flex flex-col p-4 shadow rounded-lg">
 					<svg
 						className="w-full h-full"
 						fill="none"
@@ -159,7 +159,7 @@ const Home = () => {
 						dolor facere?
 					</span>
 				</div>
-				<div class="flex flex-col p-4 shadow rounded-lg">
+				<div className="flex flex-col p-4 shadow rounded-lg">
 					<svg
 						className="w-full h-full"
 						fill="none"

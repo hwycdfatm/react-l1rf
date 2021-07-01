@@ -3,7 +3,7 @@ import React from 'react'
 const Product = () => {
 	return (
 		<div className="w-full max-w-screen-2xl m-auto pt-24 flex flex-col">
-			<div className="flex w-full max-w-screen-xl m-auto border border-gray-600 rounded-md p-4">
+			<div className="flex w-full max-w-screen-xl m-auto shadow-lg mt-4 rounded-md p-4">
 				<div className="w-2/4">
 					<svg
 						className="w-full h-full"

@@ -8,7 +8,7 @@ import Home from './components/MainPage/Home'
 import User from './components/MainPage/User'
 import Product from './components/MainPage/Product'
 import Cart from './components/MainPage/Cart'
-import Login from './components/MainPage/Login'
+import Login from './components/MainPage/Auth/Login'
 
 function App() {
 	return (
