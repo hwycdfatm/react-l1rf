@@ -1,84 +1,115 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useRef } from 'react'
+import { Link, NavLink } from 'react-router-dom'
+
+import { useDetectOutsideClick } from '../../utils/useDetectOutsideClick'
+
+import useDarkMode from '../../utils/useDarkMode.js'
+
+import { SidebarData } from './SidebarData'
+
+import Sidebar from './Sidebar'
+
 const Header = () => {
-	const [dropdown, setDropDown] = useState(false)
-	const handleDropDown = () => setDropDown(!dropdown)
+	// Dropdown
+	const dropdownRef = useRef(null)
+	const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false)
+	const handleDropdown = () => setIsActive(!isActive)
+
+	const [colorTheme, setColorTheme] = useDarkMode()
+
+	function darkMode() {
+		setColorTheme(colorTheme)
+	}
+
 	return (
-		<header className="flex w-full p-10 py-5 justify-between h-20 items-center fixed bg-white z-10 shadow-sm">
-			<Link to="/" className=" text-3xl font-semibold uppercase logo">
+		<header className="fixed top-0 left-0 right-0 flex flex-row justify-between items-center h-16 px-2 bg-white transition duration-700 dark:bg-gray-700 dark:text-white md:px-4 lg:px-8">
+			<Sidebar fnc={darkMode} colorTheme={colorTheme} data={SidebarData} />
+			<Link to="/" className="font-bebas font-semibold text-3xl">
 				l1rf
 			</Link>
-			<div className="flex flex-row items-center space-x-3">
-				<Link
-					onClick={handleDropDown}
-					to="#"
-					className="px-3 h-10 flex items-center justify-center rounded-md font-semibold relative"
-				>
-					Danh mục sản phẩm
-					<svg
-						className="w-4 h-4 ml-1"
-						fill="none"
-						stroke="currentColor"
-						viewBox="0 0 24 24"
-						xmlns="http://www.w3.org/2000/svg"
+			<div className="hidden flex-row space-x-6 font-semibold md:flex md:space-x-2 lg:ml-28">
+				{SidebarData.map((sidebar, index) => (
+					<NavLink
+						key={index}
+						to={sidebar.path}
+						className="flex justify-center items-center h-10 px-7 rounded-md transition-all"
+						activeClassName="bg-gray-900 text-white"
 					>
-						<path
-							strokeLinecap="round"
-							strokeLinejoin="round"
-							strokeWidth={2}
-							d="M19 9l-7 7-7-7"
-						/>
-					</svg>
-					{dropdown && (
-						<div className="absolute flex flex-col bg-white rounded-md shadow-md w-52 top-12 p-2">
-							<Link
-								to="/category/pants"
-								className="px-3 h-10 hover:bg-blue-300 hover:text-gray-50 leading-10 rounded-md"
-							>
-								Pants
-							</Link>
-							<Link
-								to="/category/shirt"
-								className="px-3 h-10 hover:bg-blue-300 hover:text-gray-50 leading-10 rounded-md"
-							>
-								Shirt
-							</Link>
-							<Link
-								to="/category/shoes"
-								className="px-3 h-10 hover:bg-blue-300 hover:text-gray-50 leading-10 rounded-md"
-							>
-								Shoes
-							</Link>
-							<Link
-								to="/category/accessories"
-								className="px-3 h-10 hover:bg-blue-300 hover:text-gray-50 leading-10 rounded-md"
-							>
-								Accessories
-							</Link>
+						{sidebar.title}
+					</NavLink>
+				))}
+			</div>
+			<div className="flex space-x-4">
+				<div className="space-x-2 hidden md:flex relative">
+					<button
+						to="#"
+						ref={dropdownRef}
+						onClick={handleDropdown}
+						className="hidden justify-center items-center h-10 px-2 font-semibold rounded-md shadow-md dark:text-white"
+					>
+						<svg
+							className="w-6 h-6"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<path
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								strokeWidth={2}
+								d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+							/>
+						</svg>
+					</button>
+					{isActive && (
+						<div className="absolute top-14 right-0 w-48 rounded-md shadow-md bg-white dark:bg-gray-700">
+							<div className="flex flex-col p-2 font-medium ">
+								<Link
+									to="/user"
+									className="px-2 text-left font-medium text-sm hover:bg-gray-300 rounded-md p-2"
+								>
+									Thông tin cá nhân
+								</Link>
+								<Link
+									to="/history"
+									className="px-2 text-left font-medium text-sm hover:bg-gray-300 rounded-md p-2"
+								>
+									Lịch sử mua hàng
+								</Link>
+								<Link
+									to="/changepassword"
+									className="px-2 text-left font-medium text-sm hover:bg-gray-300 rounded-md p-2"
+								>
+									Thay đổi mật khẩu
+								</Link>
+								<button
+									onClick={darkMode}
+									className="px-2 text-left font-medium text-sm hover:bg-gray-300 rounded-md p-2"
+								>
+									{colorTheme === 'light' ? 'Light mode' : 'Dark mode'}
+								</button>
+							</div>
 						</div>
 					)}
-				</Link>
-				<Link
-					to="/history"
-					className="px-3 h-10 flex items-center justify-center rounded-md shadow-md font-semibold text-blue-500"
-				>
-					History
-				</Link>
-				<Link
-					to="/login"
-					className="px-3 h-10 flex items-center justify-center rounded-md shadow-md font-semibold text-purple-500"
-				>
-					Login
-				</Link>
-				<Link
-					to="/logout"
-					className="px-3 h-10 flex items-center justify-center rounded-md shadow-md font-semibold text-red-500"
-				>
-					Logout
-				</Link>
+				</div>
+				<div className="flex space-x-3">
+					<Link
+						to="/login"
+						className="flex justify-center items-center h-10 px-2 font-semibold text-blue-400"
+					>
+						Login
+					</Link>
+					<Link
+						to="/register"
+						className="flex justify-center items-center h-10 px-4 font-semibold text-white rounded-md shadow-md dark:text-white bg-blue-400"
+					>
+						Register
+					</Link>
+				</div>
 				<Link
 					to="/cart"
-					className=" flex justify-center  w-10 h-10 items-center rounded-md shadow-md"
+					className="flex justify-center items-center h-10 px-2 rounded-md shadow-md dark:text-white"
 				>
 					<svg
 						className="w-6 h-6"
