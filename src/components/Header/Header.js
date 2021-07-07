@@ -32,7 +32,7 @@ const Header = () => {
 					<NavLink
 						key={index}
 						to={sidebar.path}
-						className="flex justify-center items-center h-10 px-7 rounded-md transition-all"
+						className="flex justify-center items-center h-10 px-7 rounded-md transition"
 						activeClassName="bg-gray-900 text-white"
 					>
 						{sidebar.title}
@@ -45,7 +45,7 @@ const Header = () => {
 						to="#"
 						ref={dropdownRef}
 						onClick={handleDropdown}
-						className="hidden justify-center items-center h-10 px-2 font-semibold rounded-md shadow-md dark:text-white"
+						className="flex justify-center items-center h-10 px-2 font-semibold rounded-md shadow-sm dark:text-white"
 					>
 						<svg
 							className="w-6 h-6"
@@ -93,7 +93,7 @@ const Header = () => {
 						</div>
 					)}
 				</div>
-				<div className="flex space-x-3">
+				<div className="space-x-3 hidden">
 					<Link
 						to="/login"
 						className="flex justify-center items-center h-10 px-2 font-semibold text-blue-400"
@@ -109,7 +109,7 @@ const Header = () => {
 				</div>
 				<Link
 					to="/cart"
-					className="flex justify-center items-center h-10 px-2 rounded-md shadow-md dark:text-white"
+					className="flex justify-center items-center h-10 px-2 rounded-md shadow-sm dark:text-white"
 				>
 					<svg
 						className="w-6 h-6"
