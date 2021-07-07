@@ -72,7 +72,7 @@ export default function Sidebar(props) {
 							<div className="flex flex-col rounded-md shadow-sm">
 								<button
 									onClick={handleDropdown}
-									className="rounded-md px-3 w-full flex flex-row justify-between items-center h-10 bg-gray-300 transition"
+									className="rounded-md px-3 w-full flex flex-row justify-between items-center h-10 bg-gray-300"
 								>
 									<span>Danh mục sản phẩm</span>
 									<svg

@@ -9,6 +9,7 @@ import User from './components/MainPage/User'
 import Product from './components/MainPage/Product'
 import Cart from './components/MainPage/Cart'
 import Login from './components/MainPage/Auth/Login'
+import Footer from './components/Footer/Footer'
 
 function App() {
 	return (
@@ -23,6 +24,7 @@ function App() {
 					<Route path="/cart" component={Cart} />
 					<Route path="/login" component={Login} />
 				</Switch>
+				<Footer />
 			</Router>
 		</DataProvider>
 	)
