@@ -9,6 +9,8 @@ import User from './components/MainPage/User'
 import Product from './components/MainPage/Product'
 import Cart from './components/MainPage/Cart'
 import Login from './components/MainPage/Auth/Login'
+import Register from './components/MainPage/Auth/Register'
+import Forget from './components/MainPage/Auth/Forget'
 import Footer from './components/Footer/Footer'
 
 function App() {
@@ -23,6 +25,8 @@ function App() {
 					<Route path="/product" component={Product} />
 					<Route path="/cart" component={Cart} />
 					<Route path="/login" component={Login} />
+					<Route path="/register" component={Register} />
+					<Route path="/forget" component={Forget} />
 				</Switch>
 				<Footer />
 			</Router>
