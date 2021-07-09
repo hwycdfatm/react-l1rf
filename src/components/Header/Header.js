@@ -95,7 +95,7 @@ const Header = () => {
 						</div>
 					)}
 				</div>
-				<div className="space-x-3 flex">
+				<div className="space-x-3 hidden md:flex">
 					<Link
 						to="/login"
 						className="flex justify-center items-center h-10 px-2 font-semibold text-blue-400"
@@ -111,7 +111,7 @@ const Header = () => {
 				</div>
 				<button
 					onClick={darkMode}
-					className="flex justify-center items-center h-10 px-2 rounded-md shadow-sm dark:text-white"
+					className="hidden justify-center items-center h-10 px-2 rounded-md shadow-sm dark:text-white md:flex"
 				>
 					{colorTheme === 'light' ? (
 						<svg
