@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 
 import { Link, NavLink } from 'react-router-dom'
 
@@ -6,9 +6,9 @@ import { useDetectOutsideClick } from '../../utils/useDetectOutsideClick'
 
 import useDarkMode from '../../utils/useDarkMode.js'
 
-import { SidebarData } from './SidebarData'
-
 import Sidebar from './Sidebar'
+
+import axios from 'axios'
 
 const Header = () => {
 	// Dropdown
@@ -18,35 +18,53 @@ const Header = () => {
 
 	const [colorTheme, setColorTheme] = useDarkMode()
 
+	const [category, setCategory] = useState([])
+
+	const getCategory = async () => {
+		const res = await axios.get('/api/category')
+		setCategory(res.data.data)
+	}
+
+	useEffect(() => {
+		getCategory()
+	}, [])
+
 	function darkMode() {
 		setColorTheme(colorTheme)
 	}
 
 	return (
-		<header className="fixed top-0 left-0 right-0 flex flex-row justify-between items-center h-16 px-2 bg-white transition duration-700 dark:bg-gray-700 dark:text-white md:px-4 lg:px-8 shadow-sm">
-			<Sidebar fnc={darkMode} colorTheme={colorTheme} data={SidebarData} />
+		<header className="fixed top-0 z-50 left-0 right-0 flex flex-row justify-between items-center h-16 px-2 transition duration-700 bg-white dark:bg-gray-700  dark:text-white md:px-4 lg:px-8 shadow-sm">
+			{/* Toggle Button & Sidebar */}
+			<Sidebar fnc={darkMode} colorTheme={colorTheme} data={category} />
+
+			{/* Logo */}
 			<Link to="/" className="font-bebas font-semibold text-3xl">
 				l1rf
 			</Link>
+
+			{/* Menu Header */}
 			<div className="hidden flex-row space-x-6 font-semibold md:flex md:space-x-2 lg:ml-28">
-				{SidebarData.map((sidebar, index) => (
+				{category.map((sidebar, index) => (
 					<NavLink
 						key={index}
-						to={sidebar.path}
+						to={'/category/' + sidebar.slug}
 						className="flex justify-center items-center h-10 px-7 rounded-md transition duration-300 hover:bg-gray-100 dark:hover:bg-gray-600"
 						activeClassName="bg-gray-300 dark:bg-gray-900 dark:text-white"
 					>
-						{sidebar.title}
+						{sidebar.name}
 					</NavLink>
 				))}
 			</div>
+
+			{/* User */}
 			<div className="flex space-x-3">
 				<div className="space-x-2 hidden md:flex relative">
 					<button
 						to="#"
 						ref={dropdownRef}
 						onClick={handleDropdown}
-						className="hidden justify-center items-center h-10 px-2 font-semibold rounded-md shadow-sm dark:text-white"
+						className="flex justify-center items-center h-10 px-2 font-semibold rounded-md dark:text-white"
 					>
 						<svg
 							className="w-6 h-6"
@@ -65,7 +83,7 @@ const Header = () => {
 					</button>
 
 					{isActive && (
-						<div className="absolute top-14 right-10 w-40 rounded-md shadow-md bg-white dark:bg-gray-700">
+						<div className="absolute top-14 right-0 w-40 rounded-md shadow-md bg-white dark:bg-gray-700">
 							<div className="flex flex-col p-2 font-medium ">
 								<Link
 									to="/user"
@@ -95,7 +113,9 @@ const Header = () => {
 						</div>
 					)}
 				</div>
-				<div className="space-x-3 hidden md:flex">
+
+				{/* Login & Register */}
+				<div className="space-x-3 hidden">
 					<Link
 						to="/login"
 						className="flex justify-center items-center h-10 px-2 font-semibold text-blue-400"
@@ -109,9 +129,11 @@ const Header = () => {
 						Register
 					</Link>
 				</div>
+
+				{/* Dark Mode Toggle */}
 				<button
 					onClick={darkMode}
-					className="hidden justify-center items-center h-10 px-2 rounded-md shadow-sm dark:text-white md:flex"
+					className="hidden justify-center items-center h-10 px-2 rounded-md dark:text-white md:flex"
 				>
 					{colorTheme === 'light' ? (
 						<svg
@@ -145,9 +167,11 @@ const Header = () => {
 						</svg>
 					)}
 				</button>
+
+				{/* Cart button */}
 				<Link
 					to="/cart"
-					className="flex justify-center items-center h-10 px-2 rounded-md shadow-sm dark:text-white"
+					className="flex justify-center items-center h-10 px-2 rounded-md dark:text-white"
 				>
 					<svg
 						className="w-6 h-6"

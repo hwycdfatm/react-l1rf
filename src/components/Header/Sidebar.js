@@ -24,7 +24,7 @@ export default function Sidebar(props) {
 						: 'fixed top-0 left-0 bottom-0 right-0 transform transition -translate-x-full'
 				}
 			>
-				<div className="relative h-full bg-gray-50 dark:bg-gray-600">
+				<div className="relative h-full bg-gray-50 dark:bg-gray-600 overflow-y-scroll">
 					{/* X button */}
 					<button className="absolute top-4 right-4" onClick={handleSidebar}>
 						<svg
@@ -43,7 +43,7 @@ export default function Sidebar(props) {
 						</svg>
 					</button>
 					{/* Content sidebar */}
-					<div className="flex flex-col w-4/5 mx-auto pt-20 space-y-6">
+					<div className="flex flex-col w-4/5 mx-auto py-20 space-y-6">
 						{/* Search Input Field */}
 						<div className="flex justify-between items-center border-2 border-gray-300 rounded-md h-10">
 							<input
@@ -94,11 +94,11 @@ export default function Sidebar(props) {
 									<div className="flex flex-col p-2 space-y-1 bg-transparent">
 										{props.data.map((data, index) => (
 											<Link
-												to={data.path}
+												to={data.slug}
 												key={index}
 												className="px-3 h-8 leading-8 rounded-md hover:bg-gray-600"
 											>
-												{data.title}
+												{data.name}
 											</Link>
 										))}
 									</div>
@@ -158,7 +158,7 @@ export default function Sidebar(props) {
 			{/* Toggle Menu in header */}
 			<button
 				onClick={handleSidebar}
-				className="flex justify-center items-center h-10 w-10 rounded-md shadow-sm"
+				className="flex justify-center items-center h-10 w-10 rounded-md"
 			>
 				<svg
 					className="w-6 h-6"
