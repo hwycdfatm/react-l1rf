@@ -94,8 +94,9 @@ export default function Sidebar(props) {
 									<div className="flex flex-col p-2 space-y-1 bg-transparent">
 										{props.data.map((data, index) => (
 											<Link
-												to={data.slug}
+												to={`/category/${data.slug}`}
 												key={index}
+												onClick={handleSidebar}
 												className="px-3 h-8 leading-8 rounded-md hover:bg-gray-600"
 											>
 												{data.name}
