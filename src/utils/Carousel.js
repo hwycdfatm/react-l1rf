@@ -5,9 +5,7 @@ import 'slick-carousel/slick/slick-theme.css'
 
 export default function Carousel(props) {
 	const Customslider = (props) => (
-		<div
-			className={`flex items-center justify-center w-full h-56 md:h-50v ${props.bgColor}`}
-		>
+		<div className="flex items-center justify-center w-full h-60 md:h-50v bg-gray-400">
 			<img src={props.carousel} alt="" className="object-contain h-full" />
 		</div>
 	)
@@ -26,11 +24,7 @@ export default function Carousel(props) {
 		<div>
 			<Slider {...settings}>
 				{props.carousels.map((carousel, index) => (
-					<Customslider
-						key={index}
-						bgColor={carousel.bgColor}
-						carousel={carousel.image}
-					/>
+					<Customslider key={index} carousel={carousel.image} />
 				))}
 			</Slider>
 		</div>

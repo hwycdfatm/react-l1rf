@@ -72,7 +72,7 @@ export default function Sidebar(props) {
 							<div className="flex flex-col rounded-md shadow-sm">
 								<button
 									onClick={handleDropdown}
-									className="rounded-md px-3 w-full flex flex-row justify-between items-center h-10 bg-gray-300"
+									className="rounded-md px-3 w-full flex flex-row justify-between shadow-sm items-center h-10 bg-white dark:bg-gray-200"
 								>
 									<span>Danh mục sản phẩm</span>
 									<svg
@@ -107,7 +107,7 @@ export default function Sidebar(props) {
 							</div>
 							<Link
 								to="/"
-								className="flex flex-row items-center justify-between h-10 rounded-md bg-gray-300 px-3 shadow-md"
+								className="flex flex-row items-center justify-between h-10 rounded-md bg-white dark:bg-gray-200 px-3 shadow-sm"
 							>
 								<span>Thông tin cá nhân</span>
 								<svg
@@ -127,7 +127,7 @@ export default function Sidebar(props) {
 							</Link>
 							<Link
 								to="/"
-								className="flex flex-row items-center justify-between h-10 rounded-md bg-gray-300 px-3 shadow-md"
+								className="flex flex-row items-center justify-between h-10 rounded-md bg-white dark:bg-gray-200 px-3 shadow-sm"
 							>
 								<span>Đăng xuất</span>
 								<svg
@@ -148,9 +148,21 @@ export default function Sidebar(props) {
 							<Link
 								to="#"
 								onClick={props.fnc}
-								className="flex flex-row items-center justify-between h-10 rounded-md bg-gray-300 px-3 shadow-md"
+								className="flex flex-row items-center justify-between h-10 rounded-md bg-white dark:bg-gray-200 px-3 shadow-sm"
 							>
-								{props.colorTheme === 'light' ? 'Light mode' : 'Dark mode'}
+								<span>Dark mode</span>
+								<div className="flex items-center justify-center w-10">
+									<div className="relative">
+										<div className="block bg-gray-600 w-10 h-6 rounded-full"></div>
+										<div
+											className={`absolute left-1 top-1  w-4 h-4 rounded-full transition ${
+												props.colorTheme === 'dark'
+													? 'bg-white'
+													: 'transform translate-x-full bg-green-400'
+											}`}
+										></div>
+									</div>
+								</div>
 							</Link>
 						</div>
 					</div>
