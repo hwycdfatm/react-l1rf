@@ -18,11 +18,9 @@ export default function Sidebar(props) {
 	return (
 		<div className="md:hidden">
 			<div
-				className={
-					sideBar
-						? 'fixed top-0 left-0 bottom-0 right-0 transform transition'
-						: 'fixed top-0 left-0 bottom-0 right-0 transform transition -translate-x-full'
-				}
+				className={`fixed top-0 left-0 bottom-0 right-0 transform transition ${
+					sideBar ? '' : '-translate-x-full'
+				}`}
 			>
 				<div className="relative h-full bg-gray-50 dark:bg-gray-600 overflow-y-scroll">
 					{/* X button */}
