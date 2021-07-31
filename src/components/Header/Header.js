@@ -1,4 +1,6 @@
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useRef, useState, useEffect, useContext } from 'react'
+
+import { GlobalSate } from '../../GlobalState'
 
 import { Link, NavLink } from 'react-router-dom'
 
@@ -11,6 +13,10 @@ import Sidebar from './Sidebar'
 import axios from 'axios'
 
 const Header = () => {
+	// Global State
+	const state = useContext(GlobalSate)
+	const [isLogin, setIsLogin] = state.userAPI.isLogin
+	console.log(isLogin)
 	// Dropdown
 	const dropdownRef = useRef(null)
 	const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false)
@@ -59,76 +65,79 @@ const Header = () => {
 
 			{/* User */}
 			<div className="flex space-x-3">
-				<div className="space-x-2 hidden md:flex relative">
-					<button
-						to="#"
-						ref={dropdownRef}
-						onClick={handleDropdown}
-						className="flex justify-center items-center h-10 px-2 font-semibold rounded-md dark:text-white"
-					>
-						<svg
-							className="w-6 h-6"
-							fill="none"
-							stroke="currentColor"
-							viewBox="0 0 24 24"
-							xmlns="http://www.w3.org/2000/svg"
+				{isLogin ? (
+					<div className="space-x-2 hidden md:flex relative">
+						<button
+							to="#"
+							ref={dropdownRef}
+							onClick={handleDropdown}
+							className="flex justify-center items-center h-10 px-2 font-semibold rounded-md dark:text-white"
 						>
-							<path
-								strokeLinecap="round"
-								strokeLinejoin="round"
-								strokeWidth={2}
-								d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-							/>
-						</svg>
-					</button>
+							<svg
+								className="w-6 h-6"
+								fill="none"
+								stroke="currentColor"
+								viewBox="0 0 24 24"
+								xmlns="http://www.w3.org/2000/svg"
+							>
+								<path
+									strokeLinecap="round"
+									strokeLinejoin="round"
+									strokeWidth={2}
+									d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+								/>
+							</svg>
+						</button>
 
-					{isActive && (
-						<div className="absolute top-14 right-0 w-40 rounded-md shadow-md bg-white dark:bg-gray-700">
-							<div className="flex flex-col p-2 font-medium ">
-								<Link
-									to="/user"
-									className="text-left font-medium text-sm hover:bg-gray-300 rounded-md p-2"
-								>
-									Thông tin cá nhân
-								</Link>
-								<Link
-									to="/history"
-									className="text-left font-medium text-sm hover:bg-gray-300 rounded-md p-2"
-								>
-									Lịch sử mua hàng
-								</Link>
-								<Link
-									to="/changepassword"
-									className="text-left font-medium text-sm hover:bg-gray-300 rounded-md p-2"
-								>
-									Thay đổi mật khẩu
-								</Link>
-								<Link
-									to="/logout"
-									className="text-left font-medium text-sm hover:bg-gray-300 rounded-md p-2"
-								>
-									Đăng xuất
-								</Link>
+						{isActive && (
+							<div className="absolute top-14 right-0 w-40 rounded-md shadow-md bg-white dark:bg-gray-700">
+								<div className="flex flex-col p-1 font-medium ">
+									<Link
+										to="/user"
+										className="text-left font-medium text-sm hover:bg-gray-300 rounded-md p-2"
+									>
+										Thông tin cá nhân
+									</Link>
+									<Link
+										to="/history"
+										className="text-left font-medium text-sm hover:bg-gray-300 rounded-md p-2"
+									>
+										Lịch sử mua hàng
+									</Link>
+									<Link
+										to="/changepassword"
+										className="text-left font-medium text-sm hover:bg-gray-300 rounded-md p-2"
+									>
+										Thay đổi mật khẩu
+									</Link>
+									<Link
+										to="/logout"
+										className="text-left font-medium text-sm hover:bg-gray-300 rounded-md p-2"
+									>
+										Đăng xuất
+									</Link>
+								</div>
 							</div>
-						</div>
-					)}
-				</div>
+						)}
+					</div>
+				) : (
+					<div className="space-x-3 hidden md:flex">
+						<Link
+							to="/login"
+							className="flex justify-center items-center h-10 px-2 font-semibold text-blue-400"
+						>
+							Login
+						</Link>
+						<Link
+							to="/register"
+							className="flex justify-center items-center h-10 px-4 font-semibold text-white rounded-md shadow-md dark:text-white bg-blue-400"
+						>
+							Register
+						</Link>
+					</div>
+				)}
 
 				{/* Login & Register */}
-				<div className="space-x-3 hidden">
-					<Link
-						to="/login"
-						className="flex justify-center items-center h-10 px-2 font-semibold text-blue-400"
-					>
-						Login
-					</Link>
-					<Link
-						to="/register"
-						className="flex justify-center items-center h-10 px-4 font-semibold text-white rounded-md shadow-md dark:text-white bg-blue-400"
-					>
-						Register
-					</Link>
-				</div>
 
 				{/* Dark Mode Toggle */}
 				<button

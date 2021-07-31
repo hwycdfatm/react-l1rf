@@ -1,7 +1,29 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-
+import axios from 'axios'
 const Login = () => {
+	const [user, setUser] = useState({
+		email: '',
+		password: '',
+	})
+
+	const onChangeInput = (e) => {
+		const { name, value } = e.target
+		setUser({ ...user, [name]: value })
+	}
+
+	const loginSubmit = async (e) => {
+		e.preventDefault()
+		try {
+			await axios.post('/user/login', { ...user })
+
+			localStorage.setItem('first-login', true)
+
+			window.location.href = '/'
+		} catch (err) {
+			alert(err.response.data.message)
+		}
+	}
 	return (
 		<div className="mt-16 bg-white p-3">
 			<h1 className="py-5 text-2xl font-semibold text-center">
@@ -37,7 +59,10 @@ const Login = () => {
 						</Link>
 					</div>
 				</div>
-				<div className="flex flex-col space-y-4 text-gray-400">
+				<form
+					onSubmit={loginSubmit}
+					className="flex flex-col space-y-4 text-gray-400"
+				>
 					<div className="flex items-center h-10 rounded-md border border-gray-100">
 						<label htmlFor="email" className="text-gray-400 p-1 ml-1">
 							<svg
@@ -56,9 +81,12 @@ const Login = () => {
 							</svg>
 						</label>
 						<input
-							type="text"
+							type="email"
 							placeholder="Email"
 							id="email"
+							name="email"
+							value={user.email}
+							onChange={onChangeInput}
 							className="outline-none flex-1 ml-2 font-normal"
 						/>
 					</div>
@@ -83,6 +111,9 @@ const Login = () => {
 							type="password"
 							placeholder="Mật khẩu"
 							id="password"
+							name="password"
+							value={user.password}
+							onChange={onChangeInput}
 							className="outline-none flex-1 ml-2 font-normal"
 						/>
 					</div>
@@ -93,7 +124,10 @@ const Login = () => {
 						</label>
 					</div>
 
-					<button className="mx-auto w-32 p-2 bg-blue-300 rounded-md text-white outline-none focus:outline-none focus:shadow-outline">
+					<button
+						type="submit"
+						className="mx-auto w-32 p-2 bg-blue-300 rounded-md text-white outline-none focus:outline-none focus:shadow-outline"
+					>
 						Đăng nhập
 					</button>
 					<div className="flex flex-row text-blue-300 font-medium text-sm justify-between">
@@ -101,7 +135,7 @@ const Login = () => {
 
 						<Link to="/forget_password">Quên mật khẩu ?</Link>
 					</div>
-				</div>
+				</form>
 			</div>
 		</div>
 	)
