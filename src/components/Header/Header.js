@@ -16,7 +16,12 @@ const Header = () => {
 	// Global State
 	const state = useContext(GlobalSate)
 	const [isLogin, setIsLogin] = state.userAPI.isLogin
-	console.log(isLogin)
+
+	const handleLogout = async () => {
+		await axios.get('/user/logout')
+		setIsLogin(false)
+		localStorage.removeItem('first-login')
+	}
 	// Dropdown
 	const dropdownRef = useRef(null)
 	const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false)
@@ -42,7 +47,13 @@ const Header = () => {
 	return (
 		<header className="fixed top-0 z-50 left-0 right-0 flex flex-row justify-between items-center h-16 px-2 transition duration-700 bg-white dark:bg-gray-700  dark:text-white md:px-4 lg:px-8 shadow-sm">
 			{/* Toggle Button & Sidebar */}
-			<Sidebar fnc={darkMode} colorTheme={colorTheme} data={category} />
+			<Sidebar
+				fnc={darkMode}
+				colorTheme={colorTheme}
+				data={category}
+				isLogin={isLogin}
+				logout={handleLogout}
+			/>
 
 			{/* Logo */}
 			<Link to="/" className="font-bebas font-semibold text-3xl">
@@ -111,7 +122,8 @@ const Header = () => {
 										Thay đổi mật khẩu
 									</Link>
 									<Link
-										to="/logout"
+										to="/"
+										onClick={handleLogout}
 										className="text-left font-medium text-sm hover:bg-gray-300 rounded-md p-2"
 									>
 										Đăng xuất

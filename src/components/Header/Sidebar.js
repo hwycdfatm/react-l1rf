@@ -103,46 +103,63 @@ export default function Sidebar(props) {
 									</div>
 								)}
 							</div>
-							<Link
-								to="/"
-								className="flex flex-row items-center justify-between h-10 rounded-md bg-white dark:bg-gray-200 px-3 shadow-sm"
-							>
-								<span>Thông tin cá nhân</span>
-								<svg
-									className="w-6 h-6"
-									fill="none"
-									stroke="currentColor"
-									viewBox="0 0 24 24"
-									xmlns="http://www.w3.org/2000/svg"
+							{props.isLogin ? (
+								<>
+									<Link
+										to="/user"
+										onClick={handleSidebar}
+										className="flex flex-row items-center justify-between h-10 rounded-md bg-white dark:bg-gray-200 px-3 shadow-sm"
+									>
+										<span>Thông tin cá nhân</span>
+										<svg
+											className="w-6 h-6"
+											fill="none"
+											stroke="currentColor"
+											viewBox="0 0 24 24"
+											xmlns="http://www.w3.org/2000/svg"
+										>
+											<path
+												strokeLinecap="round"
+												strokeLinejoin="round"
+												strokeWidth={2}
+												d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+											/>
+										</svg>
+									</Link>
+									<Link
+										to="/"
+										onClick={() => {
+											props.logout()
+											handleSidebar()
+										}}
+										className="flex flex-row items-center justify-between h-10 rounded-md bg-white dark:bg-gray-200 px-3 shadow-sm"
+									>
+										<span>Đăng xuất</span>
+										<svg
+											className="w-6 h-6"
+											fill="none"
+											stroke="currentColor"
+											viewBox="0 0 24 24"
+											xmlns="http://www.w3.org/2000/svg"
+										>
+											<path
+												strokeLinecap="round"
+												strokeLinejoin="round"
+												strokeWidth={2}
+												d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+											/>
+										</svg>
+									</Link>
+								</>
+							) : (
+								<Link
+									to="/login"
+									onClick={handleSidebar}
+									className="flex flex-row items-center justify-between h-10 rounded-md bg-white dark:bg-gray-200 px-3 shadow-sm"
 								>
-									<path
-										strokeLinecap="round"
-										strokeLinejoin="round"
-										strokeWidth={2}
-										d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-									/>
-								</svg>
-							</Link>
-							<Link
-								to="/"
-								className="flex flex-row items-center justify-between h-10 rounded-md bg-white dark:bg-gray-200 px-3 shadow-sm"
-							>
-								<span>Đăng xuất</span>
-								<svg
-									className="w-6 h-6"
-									fill="none"
-									stroke="currentColor"
-									viewBox="0 0 24 24"
-									xmlns="http://www.w3.org/2000/svg"
-								>
-									<path
-										strokeLinecap="round"
-										strokeLinejoin="round"
-										strokeWidth={2}
-										d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-									/>
-								</svg>
-							</Link>
+									Đăng nhập
+								</Link>
+							)}
 							<Link
 								to="#"
 								onClick={props.fnc}

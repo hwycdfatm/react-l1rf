@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Footer = () => {
 	return (
@@ -10,6 +11,7 @@ const Footer = () => {
 					trang web
 					<strong> không có tính thương mại</strong>.
 				</p>
+				<Link to="/dieu-khoan">Điều khoản</Link>
 			</div>
 		</div>
 	)

@@ -1,6 +1,8 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { DataProvider } from './GlobalState'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 import Header from './components/Header/Header'
 import Footer from './components/Footer/Footer'
@@ -14,6 +16,8 @@ import User from './components/Page/Auth/User'
 import Login from './components/Page/Auth/Login'
 import Register from './components/Page/Auth/Register'
 import Forget from './components/Page/Auth/Forget'
+
+import Privacy from './components/Page/Privacy/Privacy'
 
 import ScrollToTop from './utils/ScrollToTop'
 
@@ -33,7 +37,9 @@ function App() {
 							<Route path="/login" component={Login} />
 							<Route path="/register" component={Register} />
 							<Route path="/forget" component={Forget} />
+							<Route path="/dieu-khoan" component={Privacy} />
 						</Switch>
+						<ToastContainer />
 					</div>
 
 					<Footer />

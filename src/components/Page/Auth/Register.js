@@ -1,14 +1,53 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Link, useHistory } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import axios from 'axios'
 
 const Register = () => {
+	const [user, setUser] = useState({
+		name: '',
+		email: '',
+		address: '',
+		password: '',
+		repassword: '',
+	})
+	const history = useHistory()
+	const handleHistory = () => {
+		history.push('/login')
+	}
+	const onChangeInput = (e) => {
+		const { name, value } = e.target
+		setUser({ ...user, [name]: value })
+	}
+	const handleToast = (msg) => {
+		return toast(msg)
+	}
+	const handleRegister = async (e) => {
+		e.preventDefault()
+		try {
+			if (user.password === user.repassword) {
+				const result = await axios.post('/user/register', { ...user })
+				if (result.status === 200) {
+					handleToast(result.data.message)
+					handleHistory()
+				}
+			} else {
+				alert('Mật khẩu không hợp lệ')
+			}
+		} catch (err) {
+			alert(err.response.data.message)
+		}
+	}
 	return (
 		<div className="mt-16 bg-white p-3">
 			<h1 className="py-5 text-2xl font-semibold text-center">
 				Chào mừng bạn đến với shop l1rf!
 			</h1>
 			<div className="rounded-md shadow-md max-w-md mx-auto p-3 flex flex-col space-y-10">
-				<div className="flex flex-col space-y-4 text-gray-400">
+				<form
+					onSubmit={handleRegister}
+					className="flex flex-col space-y-4 text-gray-400"
+				>
 					<h4 className="text-center text-xl">Đăng ký</h4>
 					<div className="flex items-center h-10 rounded-md border border-gray-100">
 						<label htmlFor="username" className="text-gray-400 p-1 ml-1">
@@ -30,8 +69,11 @@ const Register = () => {
 						<input
 							type="text"
 							placeholder="Họ tên của bạn là gì ?"
-							id="username"
-							className="outline-none flex-1 ml-2 font-normal"
+							id="name"
+							name="name"
+							value={user.name}
+							onChange={onChangeInput}
+							className="outline-none flex-1 ml-2 font-normal appearance-none bg-none"
 						/>
 					</div>
 					<div className="flex items-center h-10 rounded-md border border-gray-100">
@@ -55,6 +97,9 @@ const Register = () => {
 							type="text"
 							placeholder="Địa chỉ nhà bạn ở đâu ?"
 							id="address"
+							name="address"
+							value={user.address}
+							onChange={onChangeInput}
 							className="outline-none flex-1 ml-2 font-normal"
 						/>
 					</div>
@@ -79,6 +124,9 @@ const Register = () => {
 							type="text"
 							placeholder="Email"
 							id="email"
+							name="email"
+							value={user.email}
+							onChange={onChangeInput}
 							className="outline-none flex-1 ml-2 font-normal"
 						/>
 					</div>
@@ -103,6 +151,9 @@ const Register = () => {
 							type="password"
 							placeholder="Mật khẩu"
 							id="password"
+							name="password"
+							value={user.password}
+							onChange={onChangeInput}
 							className="outline-none flex-1 ml-2 font-normal"
 						/>
 					</div>
@@ -127,17 +178,26 @@ const Register = () => {
 							type="password"
 							placeholder="Bạn vui lòng nhập lại mật khẩu"
 							id="repassword"
+							name="repassword"
+							value={user.repassword}
+							onChange={onChangeInput}
 							className="outline-none flex-1 ml-2 font-normal"
 						/>
 					</div>
 					<div>
 						<input type="checkbox" id="remember" />
 						<label htmlFor="remember" className="ml-2">
-							Tôi đồng ý với các điều khoản
+							Tôi đồng ý với các {''}
+							<Link to="/dieu-khoan" className="text-blue-300">
+								điều khoản
+							</Link>
 						</label>
 					</div>
 
-					<button className="mx-auto w-32 p-2 bg-blue-300 rounded-md text-white outline-none focus:outline-none focus:shadow-outline">
+					<button
+						type="submit"
+						className="mx-auto w-32 p-2 bg-blue-300 rounded-md text-white outline-none focus:outline-none focus:shadow-outline"
+					>
 						Đăng ký
 					</button>
 					<div className="pt-2 flex flex-row  font-medium text-sm space-x-2">
@@ -146,7 +206,7 @@ const Register = () => {
 							Đăng nhập ngay
 						</Link>
 					</div>
-				</div>
+				</form>
 			</div>
 		</div>
 	)
