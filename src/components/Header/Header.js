@@ -16,10 +16,12 @@ const Header = () => {
 	// Global State
 	const state = useContext(GlobalSate)
 	const [isLogin, setIsLogin] = state.userAPI.isLogin
+	const [isAdmin, setIsAdmin] = state.userAPI.isAdmin
 
 	const handleLogout = async () => {
 		await axios.get('/user/logout')
 		setIsLogin(false)
+		setIsAdmin(false)
 		localStorage.removeItem('first-login')
 	}
 	// Dropdown
@@ -53,26 +55,35 @@ const Header = () => {
 				data={category}
 				isLogin={isLogin}
 				logout={handleLogout}
+				isAdmin={isAdmin}
 			/>
 
 			{/* Logo */}
-			<Link to="/" className="font-bebas font-semibold text-3xl">
-				l1rf
-			</Link>
+			{isAdmin ? (
+				<Link to="/" className="font-bebas font-semibold text-3xl">
+					Admin
+				</Link>
+			) : (
+				<Link to="/" className="font-bebas font-semibold text-3xl">
+					l1rf
+				</Link>
+			)}
 
 			{/* Menu Header */}
-			<div className="hidden flex-row space-x-6 font-semibold md:flex md:space-x-2 lg:ml-28">
-				{category.map((sidebar, index) => (
-					<NavLink
-						key={index}
-						to={'/category/' + sidebar.slug}
-						className="flex justify-center items-center h-10 px-7 rounded-md transition duration-300 hover:bg-gray-100 dark:hover:bg-gray-600"
-						activeClassName="bg-gray-300 dark:bg-gray-900 dark:text-white"
-					>
-						{sidebar.name}
-					</NavLink>
-				))}
-			</div>
+			{!isAdmin && (
+				<div className="hidden flex-row space-x-6 font-semibold md:flex md:space-x-2 lg:ml-28">
+					{category.map((sidebar, index) => (
+						<NavLink
+							key={index}
+							to={'/category/' + sidebar.slug}
+							className="flex justify-center items-center h-10 px-7 rounded-md transition duration-300 hover:bg-gray-100 dark:hover:bg-gray-600"
+							activeClassName="bg-gray-300 dark:bg-gray-900 dark:text-white"
+						>
+							{sidebar.name}
+						</NavLink>
+					))}
+				</div>
+			)}
 
 			{/* User */}
 			<div className="flex space-x-3">
@@ -190,25 +201,48 @@ const Header = () => {
 				</button>
 
 				{/* Cart button */}
-				<Link
-					to="/cart"
-					className="flex justify-center items-center h-10 px-2 rounded-md dark:text-white"
-				>
-					<svg
-						className="w-6 h-6"
-						fill="none"
-						stroke="currentColor"
-						viewBox="0 0 24 24"
-						xmlns="http://www.w3.org/2000/svg"
+				{isAdmin ? (
+					<Link
+						to="/add"
+						className="flex justify-center items-center h-10 px-2 rounded-md dark:text-white xl:bg-blue-300"
 					>
-						<path
-							strokeLinecap="round"
-							strokeLinejoin="round"
-							strokeWidth={2}
-							d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
-						/>
-					</svg>
-				</Link>
+						<svg
+							className="w-6 h-6 xl:hidden"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<path
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								strokeWidth={2}
+								d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+							/>
+						</svg>
+						<span className="hidden xl:block">Thêm sản phẩm</span>
+					</Link>
+				) : (
+					<Link
+						to="/cart"
+						className="flex justify-center items-center h-10 px-2 rounded-md dark:text-white"
+					>
+						<svg
+							className="w-6 h-6"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<path
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								strokeWidth={2}
+								d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+							/>
+						</svg>
+					</Link>
+				)}
 			</div>
 		</header>
 	)

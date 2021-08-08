@@ -1,9 +1,10 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { DataProvider } from './GlobalState'
-import { ToastContainer } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
 
+import ProtectedRoute from './routes/ProtectedRoute'
+
+// User
 import Header from './components/Header/Header'
 import Footer from './components/Footer/Footer'
 
@@ -20,6 +21,9 @@ import Forget from './components/Page/Auth/Forget'
 import Privacy from './components/Page/Privacy/Privacy'
 
 import ScrollToTop from './utils/ScrollToTop'
+
+// Admin
+import Add from './components/AdminPage/Add'
 
 function App() {
 	return (
@@ -38,8 +42,8 @@ function App() {
 							<Route path="/register" component={Register} />
 							<Route path="/forget" component={Forget} />
 							<Route path="/dieu-khoan" component={Privacy} />
+							<ProtectedRoute exact path="/add" component={Add} />
 						</Switch>
-						<ToastContainer />
 					</div>
 
 					<Footer />

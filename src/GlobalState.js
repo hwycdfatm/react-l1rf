@@ -2,6 +2,7 @@ import React, { createContext, useEffect, useState } from 'react'
 import axios from 'axios'
 
 import UserAPI from './api/UserAPI'
+
 export const GlobalSate = createContext()
 
 export const DataProvider = ({ children }) => {

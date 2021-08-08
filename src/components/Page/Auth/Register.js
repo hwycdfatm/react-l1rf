@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
-import { toast } from 'react-toastify'
 import axios from 'axios'
 
 const Register = () => {
@@ -19,16 +18,13 @@ const Register = () => {
 		const { name, value } = e.target
 		setUser({ ...user, [name]: value })
 	}
-	const handleToast = (msg) => {
-		return toast(msg)
-	}
+
 	const handleRegister = async (e) => {
 		e.preventDefault()
 		try {
 			if (user.password === user.repassword) {
 				const result = await axios.post('/user/register', { ...user })
 				if (result.status === 200) {
-					handleToast(result.data.message)
 					handleHistory()
 				}
 			} else {
@@ -205,6 +201,7 @@ const Register = () => {
 						<Link to="/login" className="text-blue-300">
 							Đăng nhập ngay
 						</Link>
+						<Link to="/forget_password">Quên mật khẩu ?</Link>
 					</div>
 				</form>
 			</div>

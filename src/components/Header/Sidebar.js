@@ -5,6 +5,7 @@ export default function Sidebar(props) {
 	// Show/ Hidden Sidebar
 	const [sideBar, setSideBar] = useState(false)
 	const handleSidebar = () => setSideBar(!sideBar)
+	const isAdmin = props.isAdmin
 
 	// Block scroll out page when open sidebar
 	sideBar
@@ -67,42 +68,44 @@ export default function Sidebar(props) {
 							</button>
 						</div>
 						<div className="flex flex-col space-y-4">
-							<div className="flex flex-col rounded-md shadow-sm">
-								<button
-									onClick={handleDropdown}
-									className="rounded-md px-3 w-full flex flex-row justify-between shadow-sm items-center h-10 bg-white dark:bg-gray-200"
-								>
-									<span>Danh mục sản phẩm</span>
-									<svg
-										className="w-6 h-6"
-										fill="none"
-										stroke="currentColor"
-										viewBox="0 0 24 24"
-										xmlns="http://www.w3.org/2000/svg"
+							{!isAdmin && (
+								<div className="flex flex-col rounded-md shadow-sm">
+									<button
+										onClick={handleDropdown}
+										className="rounded-md px-3 w-full flex flex-row justify-between shadow-sm items-center h-10 bg-white dark:bg-gray-200"
 									>
-										<path
-											strokeLinecap="round"
-											strokeLinejoin="round"
-											strokeWidth={2}
-											d="M19 9l-7 7-7-7"
-										/>
-									</svg>
-								</button>
-								{dropdown && (
-									<div className="flex flex-col p-2 space-y-1 bg-transparent">
-										{props.data.map((data, index) => (
-											<Link
-												to={`/category/${data.slug}`}
-												key={index}
-												onClick={handleSidebar}
-												className="px-3 h-8 leading-8 rounded-md hover:bg-gray-600"
-											>
-												{data.name}
-											</Link>
-										))}
-									</div>
-								)}
-							</div>
+										<span>Danh mục sản phẩm</span>
+										<svg
+											className="w-6 h-6"
+											fill="none"
+											stroke="currentColor"
+											viewBox="0 0 24 24"
+											xmlns="http://www.w3.org/2000/svg"
+										>
+											<path
+												strokeLinecap="round"
+												strokeLinejoin="round"
+												strokeWidth={2}
+												d="M19 9l-7 7-7-7"
+											/>
+										</svg>
+									</button>
+									{dropdown && (
+										<div className="flex flex-col p-2 space-y-1 bg-transparent">
+											{props.data.map((data, index) => (
+												<Link
+													to={`/category/${data.slug}`}
+													key={index}
+													onClick={handleSidebar}
+													className="px-3 h-8 leading-8 rounded-md hover:bg-gray-600"
+												>
+													{data.name}
+												</Link>
+											))}
+										</div>
+									)}
+								</div>
+							)}
 							{props.isLogin ? (
 								<>
 									<Link
