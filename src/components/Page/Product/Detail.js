@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import Loading from '../../../utils/Loading'
+import { GlobalSate } from '../../../GlobalState'
 
 const Detail = () => {
+	const state = useContext(GlobalSate)
 	const [count, setCount] = useState(1)
 	const [load, setLoad] = useState(true)
 	const { slug } = useParams()
 	const [product, setProduct] = useState([slug])
+	const addToCart = state.userAPI.addToCart
 	useEffect(() => {
 		async function fetchProduct() {
 			try {
@@ -75,7 +78,13 @@ const Detail = () => {
 							<button className="px-4 py-2 bg-gray-900 rounded font-semibold text-white">
 								Mua
 							</button>
-							<button className="px-4 py-2 text-gray-900 bg-gray-100 rounded font-semibold ">
+							<button
+								onClick={() => {
+									product.quantity = count
+									addToCart(product)
+								}}
+								className="px-4 py-2 text-gray-900 bg-gray-100 rounded font-semibold "
+							>
 								Thêm vào giỏ hàng
 							</button>
 						</div>

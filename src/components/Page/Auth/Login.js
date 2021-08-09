@@ -1,7 +1,11 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useContext, useState } from 'react'
+import { Link, Redirect } from 'react-router-dom'
 import axios from 'axios'
+import { GlobalSate } from '../../../GlobalState'
 const Login = () => {
+	const state = useContext(GlobalSate)
+	const [login] = state.userAPI.isLogin
+
 	const [user, setUser] = useState({
 		email: '',
 		password: '',
@@ -24,6 +28,7 @@ const Login = () => {
 			alert(err.response.data.message)
 		}
 	}
+	if (login) return <Redirect to="/" />
 	return (
 		<div className="mt-16 bg-white p-3">
 			<h1 className="py-5 text-2xl font-semibold text-center">

@@ -2,20 +2,21 @@ import React, { useContext } from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import { GlobalSate } from '../GlobalState'
 
-const ProtectedRoute = ({ component: Component, ...rest }) => {
+const AdminRoute = ({ component: Component, ...rest }) => {
 	const state = useContext(GlobalSate)
+	const [isAdmin] = state.userAPI.isAdmin
 	const [isLogin] = state.userAPI.isLogin
 	return (
 		<Route
 			{...rest}
 			render={(props) => {
-				if (isLogin) {
+				if (isAdmin && isLogin) {
 					return <Component {...props} />
 				}
 				return (
 					<Redirect
 						to={{
-							pathname: '/login',
+							pathname: '/',
 							state: {
 								from: props.location,
 							},
@@ -26,4 +27,4 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
 		/>
 	)
 }
-export default ProtectedRoute
+export default AdminRoute
