@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
 import CartItem from './CartItem'
-import { GlobalSate } from '../../../GlobalState'
+import { GlobalState } from '../../../GlobalState'
 import axios from 'axios'
 const Cart = () => {
-	const state = useContext(GlobalSate)
+	const state = useContext(GlobalState)
 	const [cart, setCart] = state.cart
 	const [token] = state.token
 	const [tempTotal, setTempTotal] = useState(0)
@@ -93,7 +93,7 @@ const Cart = () => {
 							</div>
 						</div>
 						<div
-							onClick={() => console.log('Thanh toán')}
+							onClick={() => alert('Đm t chưa có làm tới cái này')}
 							className="cursor-pointer py-4 shadow-lg text-center font-bold  px-4 rounded-lg my-4 mx-2 lg:mx-4"
 						>
 							Thanh toán

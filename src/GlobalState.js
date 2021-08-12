@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react'
 import axios from 'axios'
 
-export const GlobalSate = createContext()
+export const GlobalState = createContext()
 
 export const DataProvider = ({ children }) => {
 	const [login, setLogin] = useState(false)
@@ -72,5 +72,5 @@ export const DataProvider = ({ children }) => {
 		cart: [cart, setCart],
 		addToCart: addToCart,
 	}
-	return <GlobalSate.Provider value={state}>{children}</GlobalSate.Provider>
+	return <GlobalState.Provider value={state}>{children}</GlobalState.Provider>
 }

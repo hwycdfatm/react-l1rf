@@ -34,3 +34,13 @@ input[type='number']::-webkit-inner-spin-button,
 input[type='number']::-webkit-outer-spin-button {
 	-webkit-appearance: none;
 }
+
+.blue-circle {
+	animation-delay: 0.1s;
+}
+.green-circle {
+	animation-delay: 0.2s;
+}
+.red-circle {
+	animation-delay: 0.3s;
+}

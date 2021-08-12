@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect, useContext } from 'react'
 
-import { GlobalSate } from '../../GlobalState'
+import { GlobalState } from '../../GlobalState'
 
 import { Link, NavLink } from 'react-router-dom'
 
@@ -14,15 +14,16 @@ import axios from 'axios'
 
 const Header = () => {
 	// Global State
-	const state = useContext(GlobalSate)
+	const state = useContext(GlobalState)
 	const [isLogin, setIsLogin] = state.isLogin
 	const [isAdmin, setIsAdmin] = state.isAdmin
-	const [cart] = state.cart
+	const [cart, setCart] = state.cart
 	const handleLogout = async () => {
 		await axios.get('/user/logout')
 		setIsLogin(false)
 		setIsAdmin(false)
 		localStorage.removeItem('first-login')
+		setCart([])
 	}
 	// Dropdown
 	const dropdownRef = useRef(null)

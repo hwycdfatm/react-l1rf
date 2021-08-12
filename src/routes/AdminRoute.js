@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
 import { Route, Redirect } from 'react-router-dom'
-import { GlobalSate } from '../GlobalState'
+import { GlobalState } from '../GlobalState'
 
 const AdminRoute = ({ component: Component, ...rest }) => {
-	const state = useContext(GlobalSate)
+	const state = useContext(GlobalState)
 	const [isAdmin] = state.isAdmin
 	const [isLogin] = state.isLogin
 	return (

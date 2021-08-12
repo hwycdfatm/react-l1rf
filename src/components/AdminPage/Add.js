@@ -1,22 +1,39 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import { GlobalState } from '../../GlobalState'
 import axios from 'axios'
 const Add = () => {
+	// Global state
+	const state = useContext(GlobalState)
+
+	// Check admin
+	const [admin] = state.isAdmin
+	// get token
+	const [token] = state.token
+	// init Product
 	const [product, setProduct] = useState({
 		title: '',
 		description: '',
 		content: '',
-		image: '',
 		category: '',
 		slug: '',
 		price: '',
 		inStock: '',
 	})
+	// init category
 	const [categories, setCategories] = useState([])
+
+	// lazy loading
+	const [loading, setLoading] = useState(false)
+
+	// image
+	const [images, setImages] = useState('')
+	// handle Input fields
 	const onChangeInput = (e) => {
 		const { name, value } = e.target
 		setProduct({ ...product, [name]: value })
 	}
 
+	// convers title to slug
 	function string_to_slug(str) {
 		str = str.toLowerCase()
 
@@ -35,89 +52,77 @@ const Add = () => {
 		product.slug = str
 	}
 
+	// handle upload image
+	const handleUploadImage = async (e) => {
+		e.preventDefault()
+		try {
+			if (!admin) return console.log('bạn không có quyền')
+			const file = e.target.files[0]
+			if (!file) return alert('Vui lòng chọn file')
+			if (file.type !== 'image/png' && file.type !== 'image/jpeg')
+				return alert('Vui lòng chọn file ảnh')
+			if (file.size > 1024 * 1024 * 1024) return alert('Kích thước ảnh quá to')
+			let formData = new FormData()
+			formData.append('file', file)
+			setLoading(true)
+			const res = await axios.post('/api/upload', formData, {
+				headers: {
+					'content-type': 'multipart/form-data',
+					Authorization: token,
+				},
+			})
+			if (res) {
+				setLoading(false)
+				setImages(res.data)
+				console.log(res)
+			}
+		} catch (error) {
+			console.log(error)
+		}
+	}
+	// delete image
+	const handleDestroy = async () => {
+		try {
+			if (!admin) return alert("You're not an admin")
+			setLoading(true)
+			await axios.post(
+				'/api/destroy',
+				{ public_id: images.public_id },
+				{
+					headers: { Authorization: token },
+				}
+			)
+			setLoading(false)
+			setImages(false)
+		} catch (err) {
+			alert(err)
+		}
+	}
+	// handle upload product
 	const handleAddProduct = (e) => {
 		e.preventDefault()
 		console.log(product)
 	}
-	const getCategories = async () => {
-		const res = await axios.get('/api/category')
-		setCategories(res.data.data)
-	}
 
+	// api category get and push to view
 	useEffect(() => {
+		const getCategories = async () => {
+			const res = await axios.get('/api/category')
+			setCategories(res.data.data)
+		}
 		getCategories()
 	}, [])
 	return (
-		<>
-			<form
-				onSubmit={handleAddProduct}
-				className="pt-20 flex flex-col bg-white dark:bg-gray-700 transition duration-700 dark:text-white"
-			>
-				<div className="flex flex-col p-1 w-full max-w-screen-lg mx-auto overflow-hidden md:flex-row md:space-x-4">
-					<div className=" h-96 md:w-1/2 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight overflow-hidden flex items-center justify-center md:h-60v focus:outline-none focus:shadow-outline">
-						<svg
-							className="w-10 h-10"
-							fill="none"
-							stroke="currentColor"
-							viewBox="0 0 24 24"
-							xmlns="http://www.w3.org/2000/svg"
-						>
-							<path
-								strokeLinecap="round"
-								strokeLinejoin="round"
-								strokeWidth={2}
-								d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-							/>
-						</svg>
-						<input type="file" hidden />
-					</div>
-					<div className="w-full flex flex-col px-5 space-y-2 text-sm md:text-base md:w-1/2">
-						<input
-							placeholder="Nhập tên sản phẩm ở đây......"
-							name="title"
-							autoComplete="off"
-							value={product.title}
-							onChange={onChangeInput}
-							onInput={string_to_slug(product.title)}
-							className="shadow text-lg appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-						/>
-
-						<p className="text-gray-400 h-6" id="slug-innner">
-							{product.slug
-								? '/' + product.slug
-								: 'Phần slug sẽ được tạo tự động ở đây'}
-						</p>
-						<input
-							type="text"
-							name="slug"
-							hidden
-							value={product.slug}
-							onChange={onChangeInput}
-						/>
-						<textarea
-							className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-							placeholder="Nhập mô tả ngắn ở đây nè"
-							rows="5"
-							name="description"
-							value={product.description}
-							onChange={onChangeInput}
-						></textarea>
-						<div>
-							<input
-								type="number"
-								placeholder="Nhập giá nè"
-								className="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-								name="price"
-								value={product.price}
-								onChange={onChangeInput}
-							/>
-							<span className="ml-4 text-sm font-medium">VNĐ</span>
-						</div>
-						<div className="flex order-first items-center justify-center space-x-2 md:order-none md:justify-start">
-							<div
-								title="Chọn các ảnh khác"
-								className="w-20 h-20 rounded bg-gray-100 shadow flex items-center justify-center"
-							>
+		<form
+			onSubmit={handleAddProduct}
+			className="pt-20 flex flex-col bg-white dark:bg-gray-700 transition duration-700 dark:text-white"
+		>
+			<div className="flex flex-col p-1 w-full max-w-screen-lg mx-auto overflow-hidden md:flex-row md:space-x-4">
+				<div className=" h-96 md:w-1/2 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight overflow-hidden flex items-center justify-center md:h-60v focus:outline-none focus:shadow-outline relative">
+					{images ? (
+						<>
+							<img src={images.url} alt="" className="h-full object-contain" />
+							<div onClick={handleDestroy} className="absolute top-1 right-1">
 								<svg
 									className="w-6 h-6"
 									fill="none"
@@ -129,55 +134,154 @@ const Add = () => {
 										strokeLinecap="round"
 										strokeLinejoin="round"
 										strokeWidth={2}
-										d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+										d="M6 18L18 6M6 6l12 12"
 									/>
 								</svg>
 							</div>
-							<input type="file" hidden />
-						</div>
-						<div>
-							<input
-								className="shadow appearance-none border rounded  py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-								placeholder="Nhập số lượng ở đây nè"
-								type="number"
-								name="inStock"
-								value={product.inStock}
-								onChange={onChangeInput}
-							/>
-						</div>
-						<div className="text-base flex space-x-4">
-							<select
-								name="category"
-								className="shadow appearance-none border rounded px-4 py-2 text-gray-700 focus:outline-none focus:shadow-outline"
+						</>
+					) : (
+						<label
+							htmlFor="image-upload"
+							className="w-full h-full flex items-center justify-center"
+						>
+							<svg
+								className="w-10 h-10"
+								fill="none"
+								stroke="currentColor"
+								viewBox="0 0 24 24"
+								xmlns="http://www.w3.org/2000/svg"
 							>
-								<option value="">Chọn danh mục</option>
-								{categories.map((category, index) => (
-									<option key={index} value={category.slug}>
-										{category.name}
-									</option>
-								))}
-							</select>
-							<button
-								type="submit"
-								className="px-4 py-2 text-gray-900 bg-gray-100 rounded font-semibold shadow"
-							>
-								Thêm sản phẩm
-							</button>
+								<path
+									strokeLinecap="round"
+									strokeLinejoin="round"
+									strokeWidth={2}
+									d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+								/>
+							</svg>
+						</label>
+					)}
+					{/* {loading ? (
+						<div className="absolute top-0 left-0 bottom-0 right-0">
+							<div className="bg-blue-600 p-2  w-4 h-4 rounded-full animate-bounce blue-circle"></div>
+							<div className="bg-green-600 p-2 w-4 h-4 rounded-full animate-bounce green-circle"></div>
+							<div className="bg-red-600 p-2  w-4 h-4 rounded-full animate-bounce red-circle"></div>
 						</div>
-					</div>
+					) : (
+						''
+					)} */}
+					<input
+						type="file"
+						hidden
+						id="image-upload"
+						onChange={handleUploadImage}
+					/>
 				</div>
-				<div className="mt-2 mx-auto w-full max-w-screen-lg p-1">
-					<textarea
-						placeholder="Nhập dữ liệu gì đó ở đây nè"
+				<div className="w-full flex flex-col px-5 space-y-2 text-sm md:text-base md:w-1/2">
+					<input
+						placeholder="Nhập tên sản phẩm ở đây......"
+						name="title"
+						autoComplete="off"
+						value={product.title}
+						onChange={onChangeInput}
+						onInput={string_to_slug(product.title)}
 						className="shadow text-lg appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-						rows="20"
-						name="content"
-						value={product.content}
+					/>
+
+					<p className="text-gray-400 h-6" id="slug-innner">
+						{product.slug
+							? '/' + product.slug
+							: 'Phần slug sẽ được tạo tự động ở đây'}
+					</p>
+					<input
+						type="text"
+						name="slug"
+						hidden
+						value={product.slug}
+						onChange={onChangeInput}
+					/>
+					<textarea
+						className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+						placeholder="Nhập mô tả ngắn ở đây nè"
+						rows="5"
+						name="description"
+						value={product.description}
 						onChange={onChangeInput}
 					></textarea>
+					<div>
+						<input
+							type="number"
+							placeholder="Nhập giá nè"
+							className="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+							name="price"
+							value={product.price}
+							onChange={onChangeInput}
+						/>
+						<span className="ml-4 text-sm font-medium">VNĐ</span>
+					</div>
+					<div className="flex order-first items-center justify-center space-x-2 md:order-none md:justify-start">
+						<div
+							title="Chọn các ảnh khác"
+							className="w-20 h-20 rounded bg-gray-100 shadow flex items-center justify-center"
+						>
+							<svg
+								className="w-6 h-6"
+								fill="none"
+								stroke="currentColor"
+								viewBox="0 0 24 24"
+								xmlns="http://www.w3.org/2000/svg"
+							>
+								<path
+									strokeLinecap="round"
+									strokeLinejoin="round"
+									strokeWidth={2}
+									d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+								/>
+							</svg>
+						</div>
+						<input type="file" hidden />
+					</div>
+					<div>
+						<input
+							className="shadow appearance-none border rounded  py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+							placeholder="Nhập số lượng ở đây nè"
+							type="number"
+							name="inStock"
+							value={product.inStock}
+							onChange={onChangeInput}
+						/>
+					</div>
+					<div className="text-base flex space-x-4">
+						<select
+							name="category"
+							className="shadow appearance-none border rounded px-4 py-2 text-gray-700 focus:outline-none focus:shadow-outline"
+						>
+							<option value="">Chọn danh mục</option>
+							{categories.map((category, index) => (
+								<option key={index} value={category.slug}>
+									{category.name}
+								</option>
+							))}
+						</select>
+						<button
+							type="submit"
+							className="px-4 py-2 text-gray-900 bg-gray-100 rounded font-semibold shadow"
+						>
+							Thêm sản phẩm
+						</button>
+					</div>
 				</div>
-			</form>
-		</>
+			</div>
+			<div className="mt-2 mx-auto w-full max-w-screen-lg p-1">
+				<textarea
+					placeholder="Nhập dữ liệu gì đó ở đây nè"
+					className="shadow text-lg appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+					rows="20"
+					name="content"
+					value={product.content}
+					onChange={onChangeInput}
+				></textarea>
+			</div>
+		</form>
 	)
 }
 

@@ -2,10 +2,10 @@ import React, { useState, useEffect, useContext } from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import Loading from '../../../utils/Loading'
-import { GlobalSate } from '../../../GlobalState'
+import { GlobalState } from '../../../GlobalState'
 
 const Detail = () => {
-	const state = useContext(GlobalSate)
+	const state = useContext(GlobalState)
 	const [count, setCount] = useState(1)
 	const [load, setLoad] = useState(true)
 	const { slug } = useParams()
@@ -16,7 +16,6 @@ const Detail = () => {
 	const [imageMain, setImageMain] = useState('')
 
 	const addToCart = state.addToCart
-	const [login] = state.isLogin
 	const price = parseInt(product.price)
 
 	useEffect(() => {
@@ -102,11 +101,7 @@ const Detail = () => {
 							<button
 								onClick={() => {
 									product.quantity = count
-									if (login) {
-										addToCart(product)
-									} else {
-										alert('Vui lòng đăng nhập')
-									}
+									addToCart(product)
 								}}
 								className="px-4 py-2 text-gray-900 bg-gray-100 rounded font-semibold "
 							>

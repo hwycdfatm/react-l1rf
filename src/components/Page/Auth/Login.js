@@ -1,11 +1,11 @@
 import React, { useContext, useState } from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import axios from 'axios'
-import { GlobalSate } from '../../../GlobalState'
+import { GlobalState } from '../../../GlobalState'
 const Login = () => {
-	const state = useContext(GlobalSate)
+	const state = useContext(GlobalState)
 	const [login] = state.isLogin
-
+	const [error, setError] = useState('')
 	const [user, setUser] = useState({
 		email: '',
 		password: '',
@@ -15,17 +15,22 @@ const Login = () => {
 		const { name, value } = e.target
 		setUser({ ...user, [name]: value })
 	}
+	function removeMsg() {
+		setError('')
+	}
 
 	const loginSubmit = async (e) => {
 		e.preventDefault()
 		try {
 			await axios.post('/user/login', { ...user })
-
 			localStorage.setItem('first-login', true)
-
 			window.location.href = '/'
 		} catch (err) {
-			alert(err.response.data.message)
+			setError(
+				<div className="w-full bg-red-100 rounded text-red-700 py-1 text-center animate-bounce text-opacity-80">
+					{err.response.data.message}
+				</div>
+			)
 		}
 	}
 	if (login) return <Redirect to="/" />
@@ -64,10 +69,13 @@ const Login = () => {
 						</Link>
 					</div>
 				</div>
+
 				<form
 					onSubmit={loginSubmit}
 					className="flex flex-col space-y-4 text-gray-400"
 				>
+					<h4 className="text-center font-semibold">Đăng nhập</h4>
+					{error ? error : ''}
 					<div className="flex items-center h-10 rounded-md border border-gray-100">
 						<label htmlFor="email" className="text-gray-400 p-1 ml-1">
 							<svg
@@ -92,6 +100,7 @@ const Login = () => {
 							name="email"
 							value={user.email}
 							onChange={onChangeInput}
+							onFocus={() => removeMsg()}
 							className="outline-none flex-1 ml-2 font-normal"
 						/>
 					</div>
@@ -119,6 +128,7 @@ const Login = () => {
 							name="password"
 							value={user.password}
 							onChange={onChangeInput}
+							onFocus={() => removeMsg()}
 							className="outline-none flex-1 ml-2 font-normal"
 						/>
 					</div>

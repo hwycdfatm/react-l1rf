@@ -4,24 +4,20 @@ export default function CartItem(props) {
 	const price = parseInt(props.item.price)
 	return (
 		<div className="bg-white py-4 px-4 shadow-md rounded-lg my-4 mx-2 flex overflow-hidden">
-			<div className="h-16 mr-6">
+			<div className="h-16 w-14 flex items-center justify-center mr-6 ">
 				<img
 					src={props.item.image[0]}
 					alt=""
-					className="h-full object-contain"
+					className="h-full object-contain rounded"
 				/>
 			</div>
 			<div className="flex flex-1 justify-between items-center">
 				<div className="text-base font-semibold">
-					<p>
-						{props.item.title}
-						<span className="ml-6 font-normal text-sm">
-							x{props.item.quantity}
-						</span>
-					</p>
+					<p>{props.item.title}</p>
 
 					<p className="text-gray-400 text-sm">
-						{price.toLocaleString('en')} vnđ
+						{price.toLocaleString('en')} vnđ{' '}
+						<span className="ml-2 font-light">x{props.item.quantity}</span>
 					</p>
 				</div>
 				<div className="text-lg font-semibold">
