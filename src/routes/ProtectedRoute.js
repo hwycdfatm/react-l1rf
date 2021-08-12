@@ -4,7 +4,7 @@ import { GlobalSate } from '../GlobalState'
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
 	const state = useContext(GlobalSate)
-	const [isLogin] = state.userAPI.isLogin
+	const [isLogin] = state.isLogin
 	return (
 		<Route
 			{...rest}

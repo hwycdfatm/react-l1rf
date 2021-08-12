@@ -10,42 +10,63 @@ const Detail = () => {
 	const [load, setLoad] = useState(true)
 	const { slug } = useParams()
 	const [product, setProduct] = useState([slug])
-	const addToCart = state.userAPI.addToCart
+
+	const image = product.image || []
+	// Image
+	const [imageMain, setImageMain] = useState('')
+
+	const addToCart = state.addToCart
+	const [login] = state.isLogin
+	const price = parseInt(product.price)
+
 	useEffect(() => {
 		async function fetchProduct() {
 			try {
 				const result = await axios.get(`/api/product/${slug}`)
 				setLoad(false)
 				setProduct(result.data.data)
+				setImageMain(result.data.data.image[0])
 			} catch (error) {
 				console.log(error)
 			}
 		}
 		fetchProduct()
 	}, [slug])
+
 	return (
 		<>
 			<div className="pt-20 flex flex-col bg-white dark:bg-gray-700 transition duration-700 dark:text-white">
 				<div className="flex flex-col p-1 w-full max-w-screen-lg mx-auto overflow-hidden md:flex-row md:space-x-4">
 					<div className="w-full h-96 md:w-1/2 rounded overflow-hidden flex items-center justify-center md:h-70v">
-						<img src="" alt="" className="w-full h-full object-contain" />
+						<img
+							src={imageMain}
+							alt=""
+							className="w-full h-full object-contain"
+						/>
 					</div>
 					<div className="w-full flex flex-col px-5 space-y-4 text-sm md:text-base md:w-1/2">
 						<h1
 							title="Quần jean rách gối ultimate vjp pr0 m1"
-							className="text-xl font-semibold mt-4 md:text-2xl md:mt-0"
+							className="text-lg font-semibold mt-4 md:text-xl md:mt-0"
 						>
 							{product.title}
 						</h1>
 						<span>{product.description}</span>
-						<p className="font-medium mt-8">{product.price} vnđ</p>
+						<p className="font-medium mt-8">{price.toLocaleString('en')} vnđ</p>
 						<div className="flex order-first items-center justify-center space-x-2 md:order-none md:justify-start">
-							<div
-								className="h-14 w-14 cursor-pointer border border-gray-200 rounded overflow-hidden"
-								key=""
-							>
-								<img src="" alt="" className="object-cover w-full h-full" />
-							</div>
+							{image.map((item, index) => (
+								<div
+									onClick={() => setImageMain(item)}
+									className="h-14 w-14 cursor-pointer border border-gray-200 rounded overflow-hidden"
+									key={index}
+								>
+									<img
+										src={item}
+										alt=""
+										className="object-cover w-full h-full"
+									/>
+								</div>
+							))}
 						</div>
 						<div className="flex items-center space-x-4">
 							<span>Số lượng</span>
@@ -81,7 +102,11 @@ const Detail = () => {
 							<button
 								onClick={() => {
 									product.quantity = count
-									addToCart(product)
+									if (login) {
+										addToCart(product)
+									} else {
+										alert('Vui lòng đăng nhập')
+									}
 								}}
 								className="px-4 py-2 text-gray-900 bg-gray-100 rounded font-semibold "
 							>
@@ -90,9 +115,7 @@ const Detail = () => {
 						</div>
 					</div>
 				</div>
-				<div className="flex flex-row mt-10  slider relative">
-					{product.content}
-				</div>
+				<div className="container mt-10">{product.content}</div>
 			</div>
 			{load && <Loading />}
 		</>

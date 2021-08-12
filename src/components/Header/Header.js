@@ -15,9 +15,9 @@ import axios from 'axios'
 const Header = () => {
 	// Global State
 	const state = useContext(GlobalSate)
-	const [isLogin, setIsLogin] = state.userAPI.isLogin
-	const [isAdmin, setIsAdmin] = state.userAPI.isAdmin
-
+	const [isLogin, setIsLogin] = state.isLogin
+	const [isAdmin, setIsAdmin] = state.isAdmin
+	const [cart] = state.cart
 	const handleLogout = async () => {
 		await axios.get('/user/logout')
 		setIsLogin(false)
@@ -33,14 +33,13 @@ const Header = () => {
 
 	const [category, setCategory] = useState([])
 
-	const getCategory = async () => {
-		const res = await axios.get('/api/category')
-		setCategory(res.data.data)
-	}
-
 	useEffect(() => {
+		const getCategory = async () => {
+			const res = await axios.get('/api/category')
+			setCategory(res.data.data)
+		}
 		getCategory()
-	}, [])
+	}, [cart])
 
 	function darkMode() {
 		setColorTheme(colorTheme)
@@ -119,12 +118,6 @@ const Header = () => {
 										className="text-left font-medium text-sm hover:bg-gray-300 rounded-md p-2"
 									>
 										Thông tin cá nhân
-									</Link>
-									<Link
-										to="/history"
-										className="text-left font-medium text-sm hover:bg-gray-300 rounded-md p-2"
-									>
-										Lịch sử mua hàng
 									</Link>
 									<Link
 										to="/changepassword"
@@ -225,7 +218,7 @@ const Header = () => {
 				) : (
 					<Link
 						to="/cart"
-						className="flex justify-center items-center h-10 px-2 rounded-md dark:text-white"
+						className="relative flex justify-center items-center h-10 px-2 rounded-md dark:text-white"
 					>
 						<svg
 							className="w-6 h-6"
@@ -241,6 +234,9 @@ const Header = () => {
 								d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
 							/>
 						</svg>
+						<span className="absolute top-1 right-0 font-medium text-sm">
+							{cart.length > 0 ? cart.length : ''}
+						</span>
 					</Link>
 				)}
 			</div>

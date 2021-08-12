@@ -1,10 +1,15 @@
 import React from 'react'
 
 export default function CartItem(props) {
+	const price = parseInt(props.item.price)
 	return (
 		<div className="bg-white py-4 px-4 shadow-md rounded-lg my-4 mx-2 flex overflow-hidden">
 			<div className="h-16 mr-6">
-				<img src={props.item.image} alt="" className="h-full object-contain" />
+				<img
+					src={props.item.image[0]}
+					alt=""
+					className="h-full object-contain"
+				/>
 			</div>
 			<div className="flex flex-1 justify-between items-center">
 				<div className="text-base font-semibold">
@@ -15,7 +20,9 @@ export default function CartItem(props) {
 						</span>
 					</p>
 
-					<p className="text-gray-400 text-sm">{props.item.price} vnđ</p>
+					<p className="text-gray-400 text-sm">
+						{price.toLocaleString('en')} vnđ
+					</p>
 				</div>
 				<div className="text-lg font-semibold">
 					<button

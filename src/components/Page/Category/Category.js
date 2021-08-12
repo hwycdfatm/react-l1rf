@@ -13,13 +13,13 @@ const Category = () => {
 	const [totalPage, setTotalPage] = useState('')
 	const _limit = 1
 	const [currentPage, setCurrentPage] = useState(1)
+
 	useEffect(() => {
 		async function fetchProduct() {
 			try {
 				const result = await axios.get(
 					`/api/product?category=${slug}&_limit=${_limit}&_page=${currentPage}`
 				)
-
 				setLoad(false)
 				setProducts(result.data.data)
 				setTotalPage(result.data.pagination._total_Page)
@@ -28,7 +28,8 @@ const Category = () => {
 			}
 		}
 		fetchProduct()
-	}, [slug, currentPage, _limit])
+	}, [slug, currentPage])
+
 	return (
 		<>
 			<div className="w-full flex flex-col px-4 pt-24 dark:text-white transition duration-700 space-y-4">
@@ -44,6 +45,7 @@ const Category = () => {
 					totalPage={totalPage}
 					currentPage={currentPage}
 					setCurrentPage={setCurrentPage}
+					slug={slug}
 				/>
 			)}
 			{load && <Loading />}

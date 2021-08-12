@@ -4,8 +4,8 @@ import { GlobalSate } from '../GlobalState'
 
 const AdminRoute = ({ component: Component, ...rest }) => {
 	const state = useContext(GlobalSate)
-	const [isAdmin] = state.userAPI.isAdmin
-	const [isLogin] = state.userAPI.isLogin
+	const [isAdmin] = state.isAdmin
+	const [isLogin] = state.isLogin
 	return (
 		<Route
 			{...rest}

@@ -5,6 +5,7 @@ module.exports = {
 		extend: {
 			fontFamily: {
 				bebas: ['Bebas Neue', 'cursive'],
+				noto: ['Noto Sans', 'sans-serif'],
 			},
 			height: {
 				'10v': '10vh',

@@ -1,10 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 const Pagination = (props) => {
 	const page = []
 	const maxPage = props.totalPage
 	const currentPage = parseInt(props.currentPage)
 	const setCurrentPage = props.setCurrentPage
+
+	useEffect(() => {
+		setCurrentPage(1)
+	}, [props.slug, setCurrentPage])
+
 	const nextPage = () => {
 		if (currentPage < maxPage) setCurrentPage(currentPage + 1)
 	}

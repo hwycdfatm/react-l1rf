@@ -4,7 +4,7 @@ import axios from 'axios'
 import { GlobalSate } from '../../../GlobalState'
 const Login = () => {
 	const state = useContext(GlobalSate)
-	const [login] = state.userAPI.isLogin
+	const [login] = state.isLogin
 
 	const [user, setUser] = useState({
 		email: '',
