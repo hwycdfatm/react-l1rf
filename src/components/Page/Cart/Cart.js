@@ -47,8 +47,8 @@ const Cart = () => {
 		}
 	}
 	return (
-		<div className="max-w-6xl mx-auto mt-20 p-2 xl:p-0">
-			<div className="bg-white h-full md:h-screen mt-4">
+		<div className="max-w-6xl mx-auto mt-16 p-2 xl:p-0">
+			<div className="bg-white h-full md:h-screen dark:bg-gray-700 rounded-lg ">
 				<div className="grid grid-cols-12 gap-2">
 					<div className="col-span-12 sm:col-span-12 md:col-span-7 lg:col-span-8 2xl:col-span-8">
 						{cart.length >= 1
@@ -58,7 +58,7 @@ const Cart = () => {
 							: 'Giỏ hàng trống'}
 					</div>
 					<div className="col-span-12 sm:col-span-12 md:col-span-5 lg:col-span-4 xxl:col-span-4">
-						<div className="bg-white py-4 px-4 shadow-md rounded-lg my-4 mx-2 lg:mx-4">
+						<div className="bg-white py-4 px-4 shadow-md rounded-lg my-4 mx-2">
 							<div className="flex justify-between border-b-2 mb-2">
 								<div className="text-lg py-2">
 									<p>Tổng số lượng hàng</p>

@@ -76,7 +76,7 @@ const Login = () => {
 				>
 					<h4 className="text-center font-semibold">Đăng nhập</h4>
 					{error ? error : ''}
-					<div className="flex items-center h-10 rounded-md border border-gray-100">
+					<div className="flex items-center h-10 rounded-md border border-gray-100 overflow-hidden">
 						<label htmlFor="email" className="text-gray-400 p-1 ml-1">
 							<svg
 								className="w-6 h-6"
@@ -101,10 +101,10 @@ const Login = () => {
 							value={user.email}
 							onChange={onChangeInput}
 							onFocus={() => removeMsg()}
-							className="outline-none flex-1 ml-2 font-normal"
+							className="h-full outline-none flex-1 ml-1 pl-1 font-normal"
 						/>
 					</div>
-					<div className="flex items-center h-10 rounded-md border border-gray-100">
+					<div className="flex items-center h-10 rounded-md border border-gray-100 overflow-hidden">
 						<label htmlFor="password" className="p-1 ml-1">
 							<svg
 								className="w-6 h-6"
@@ -129,7 +129,7 @@ const Login = () => {
 							value={user.password}
 							onChange={onChangeInput}
 							onFocus={() => removeMsg()}
-							className="outline-none flex-1 ml-2 font-normal"
+							className="h-full outline-none flex-1 ml-1 pl-1 font-normal"
 						/>
 					</div>
 					<div>
