@@ -30,7 +30,7 @@ const Add = () => {
 	const [loading, setLoading] = useState(false)
 
 	// image
-	const [image, setImage] = useState('')
+	const [images, setImages] = useState([])
 
 	// handle Input fields
 	const onChangeInput = (e) => {
@@ -81,7 +81,7 @@ const Add = () => {
 			})
 			if (res) {
 				setLoading(false)
-				setImage(res.data)
+				setImages(res.data)
 				console.log(res)
 			}
 		} catch (error) {
@@ -94,23 +94,25 @@ const Add = () => {
 		try {
 			if (!admin) return alert("You're not an admin")
 			setLoading(true)
+			console.log([images.public_id])
 			await axios.post(
 				'/api/destroy',
-				{ public_id: image.public_id },
+				{ public_id: [images.public_id] },
 				{
 					headers: { Authorization: token },
 				}
 			)
 			setLoading(false)
-			setImage(false)
+			setImages(false)
 		} catch (err) {
 			alert(err)
 		}
 	}
+
 	// handle upload product
 	const handleAddProduct = (e) => {
 		e.preventDefault()
-		console.log({ product, content, image })
+		console.log({ product, content, images })
 	}
 	const handleUpLoadImagess = async (e) => {
 		e.preventDefault()
@@ -131,9 +133,13 @@ const Add = () => {
 		>
 			<div className="flex flex-col p-1 w-full max-w-screen-lg mx-auto overflow-hidden md:flex-row md:space-x-4">
 				<div className=" h-96 md:w-1/2 shadow appearance-none border rounded w-full  text-gray-700 leading-tight overflow-hidden flex items-center justify-center md:h-60v focus:outline-none focus:shadow-outline relative">
-					{image ? (
+					{images[0] ? (
 						<>
-							<img src={image.url} alt="" className="h-full object-contain" />
+							<img
+								src={images[0].url}
+								alt=""
+								className="h-full object-contain"
+							/>
 							<div
 								onClick={handleDestroy}
 								className="absolute top-1 right-1 text-red-300 cursor-pointer"
