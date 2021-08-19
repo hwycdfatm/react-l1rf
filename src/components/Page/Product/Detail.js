@@ -11,7 +11,7 @@ const Detail = () => {
 	const { slug } = useParams()
 	const [product, setProduct] = useState([slug])
 
-	const image = product.image || []
+	const images = product.images || []
 	// Image
 	const [imageMain, setImageMain] = useState('')
 
@@ -24,7 +24,7 @@ const Detail = () => {
 				const result = await axios.get(`/api/product/${slug}`)
 				setLoad(false)
 				setProduct(result.data.data)
-				setImageMain(result.data.data.image[0])
+				setImageMain(result.data.data.images[0].url)
 			} catch (error) {
 				console.log(error)
 			}
@@ -53,14 +53,14 @@ const Detail = () => {
 						<span>{product.description}</span>
 						<p className="font-medium mt-8">{price.toLocaleString('en')} vnđ</p>
 						<div className="flex order-first items-center justify-center space-x-2 md:order-none md:justify-start">
-							{image.map((item, index) => (
+							{images.map((item, index) => (
 								<div
-									onClick={() => setImageMain(item)}
+									onClick={() => setImageMain(item.url)}
 									className="h-14 w-14 cursor-pointer border border-gray-200 rounded overflow-hidden"
 									key={index}
 								>
 									<img
-										src={item}
+										src={item.url}
 										alt=""
 										className="object-cover w-full h-full"
 									/>

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 const Product = (props) => {
 	const price = parseInt(props.sp.price)
-	const image = props.sp.image || []
+	const image = props.sp.images
 	return (
 		<Link
 			to={`/product/${props.sp.slug}`}
@@ -11,7 +11,7 @@ const Product = (props) => {
 		>
 			<div className="h-5/6 flex items-center justify-center overflow-hidden">
 				<img
-					src={image[0]}
+					src={image[0].url}
 					alt=""
 					className="w-full object-contain transform hover:scale-110 duration-300"
 				/>

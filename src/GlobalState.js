@@ -27,8 +27,14 @@ export const DataProvider = ({ children }) => {
 					const result = await axios.get('/user/info', {
 						headers: { Authorization: token },
 					})
+					localStorage.setItem('login', true)
 					setLogin(true)
-					result.data.user.role === 'admin' ? setAdmin(true) : setAdmin(false)
+					if (result.data.user.role === 'admin') {
+						setAdmin(true)
+						localStorage.setItem('admin', true)
+					} else {
+						setAdmin(false)
+					}
 					setCart(result.data.user.cart)
 				} catch (error) {
 					console.log(error)

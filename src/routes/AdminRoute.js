@@ -4,12 +4,12 @@ import { GlobalState } from '../GlobalState'
 const AdminRoute = ({ component: Component, ...rest }) => {
 	const state = useContext(GlobalState)
 	const [admin] = state.isAdmin
-
+	const isAdmin = localStorage.getItem('admin')
 	return (
 		<Route
 			{...rest}
 			render={(props) => {
-				if (admin) {
+				if (isAdmin || admin) {
 					return <Component {...props} />
 				}
 				return (

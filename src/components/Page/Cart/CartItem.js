@@ -1,20 +1,20 @@
 import React from 'react'
 
 export default function CartItem(props) {
-	const { image, price } = props.item
+	const { images, price, title, _id } = props.item
 	const priceParse = parseInt(price)
 	return (
 		<div className="bg-white py-4 px-4 shadow-md rounded-lg my-4 mx-2 flex overflow-hidden">
 			<div className="h-16 w-14 flex items-center justify-center mr-6 ">
 				<img
-					src={Array.isArray(image) ? image[0] : image}
+					src={images[0].url}
 					alt=""
 					className="h-full object-contain rounded"
 				/>
 			</div>
 			<div className="flex flex-1 justify-between items-center">
 				<div className="text-base font-semibold">
-					<p>{props.item.title}</p>
+					<p>{title}</p>
 
 					<p className="text-gray-400 text-sm">
 						{priceParse.toLocaleString('en')} vnđ
@@ -23,7 +23,7 @@ export default function CartItem(props) {
 				</div>
 				<div className="text-lg font-semibold">
 					<button
-						onClick={() => props.fncRM(props.item._id)}
+						onClick={() => props.fncRM(_id)}
 						className="focus:outline-none font-bold py-2 px-2 rounded-full inline-flex items-center "
 					>
 						<svg

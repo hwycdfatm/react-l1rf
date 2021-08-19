@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import axios from 'axios'
+import FacebookLogin from 'react-facebook-login'
 import { GlobalState } from '../../../GlobalState'
 const Login = () => {
 	const state = useContext(GlobalState)
@@ -33,40 +34,38 @@ const Login = () => {
 			)
 		}
 	}
+	const handleLoginFacebook = async (response) => {
+		try {
+			await axios.post('/user/loginwithfacebook', { ...response })
+			localStorage.setItem('first-login', true)
+			window.location.href = '/'
+		} catch (err) {
+			console.log(err)
+		}
+	}
 	if (login) return <Redirect to="/" />
 	return (
 		<div className="mt-16 bg-white p-3">
 			<h1 className="py-5 text-2xl font-semibold text-center">
 				Chào mừng bạn đến với shop l1rf!
 			</h1>
-			<div className="rounded-md shadow-md max-w-md mx-auto p-3 flex flex-col space-y-10">
+			<div className="rounded-md shadow-md max-w-md mx-auto p-3 flex flex-col space-y-5">
 				<div className="flex flex-col space-y-4 text-gray-400">
 					<h4 className="text-center font-semibold">Đăng nhập với</h4>
 					<div className="grid grid-cols-1 md:grid-cols-2 gap-2 font-semibold">
-						<Link
-							to="/"
-							className="p-2 rounded-md border-2 border-gray-300 text-center hover:bg-indigo-400 hover:text-red-50 "
-						>
-							Facebook
-						</Link>
-						<Link
-							to="/"
-							className="p-2 rounded-md border-2 border-gray-300 text-center hover:bg-indigo-400 hover:text-red-50 "
-						>
-							Google
-						</Link>
-						<Link
-							to="/"
-							className="p-2 rounded-md border-2 border-gray-300 text-center hover:bg-indigo-400 hover:text-red-50 "
-						>
-							Github
-						</Link>
-						<Link
-							to="/"
-							className="p-2 rounded-md border-2 border-gray-300 text-center hover:bg-indigo-400 hover:text-red-50 "
+						<FacebookLogin
+							appId="512680796465992"
+							autoLoad={false}
+							callback={handleLoginFacebook}
+							textButton="Facebook"
+							cssClass="w-full p-2 rounded-md border-2 font-semibold border-gray-300 text-center hover:bg-indigo-400 hover:text-red-50"
+						/>
+						<button
+							onClick={() => alert('Thấy rồi nha, có nick này luôn o.o')}
+							className="p-2 rounded-md border-2 border-gray-300 font-semibold text-center hover:bg-indigo-400 hover:text-red-50 "
 						>
 							Pornhub
-						</Link>
+						</button>
 					</div>
 				</div>
 
@@ -141,7 +140,7 @@ const Login = () => {
 
 					<button
 						type="submit"
-						className="mx-auto w-32 p-2 bg-blue-300 rounded-md text-white outline-none focus:outline-none focus:shadow-outline"
+						className="mx-auto font-semibold w-32 p-2 bg-blue-300 rounded-md text-white outline-none focus:outline-none focus:shadow-outline hover:bg-blue-500 transition-all"
 					>
 						Đăng nhập
 					</button>

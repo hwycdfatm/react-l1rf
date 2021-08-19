@@ -23,6 +23,8 @@ const Header = () => {
 		setIsLogin(false)
 		setIsAdmin(false)
 		localStorage.removeItem('first-login')
+		localStorage.removeItem('login')
+		localStorage.removeItem('admin')
 		setCart([])
 	}
 	// Dropdown

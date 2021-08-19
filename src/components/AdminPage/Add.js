@@ -22,24 +22,19 @@ const Add = () => {
 		slug: '',
 		price: '',
 		inStock: '',
+		images: [],
 	})
+
 	// init category
 	const [categories, setCategories] = useState([])
 
-	// lazy loading
-	const [loading, setLoading] = useState(false)
-
-	// image
-	const [images, setImages] = useState([])
-
+	// check image main uploaded ?
+	const [checked, setChecked] = useState(false)
 	// handle Input fields
 	const onChangeInput = (e) => {
 		const { name, value } = e.target
 		setProduct({ ...product, [name]: value })
 	}
-
-	// set content
-	const [content, setContent] = useState('')
 
 	// convers title to slug
 	function string_to_slug(str) {
@@ -60,62 +55,92 @@ const Add = () => {
 		product.slug = str
 	}
 
-	// handle upload image
-	const handleUploadImage = async (e) => {
+	// function check Image
+	function checkImage(image) {
+		if (image.type !== 'image/png' && image.type !== 'image/jpeg')
+			return alert('Vui lòng chọn file ảnh')
+		if (image.size > 1024 * 1024 * 1024) return alert('Kích thước ảnh quá to')
+		return true
+	}
+
+	// Upload hình ảnh
+	const handleUploadImages = async (e) => {
 		e.preventDefault()
 		try {
-			if (!admin) return console.log('bạn không có quyền')
-			const file = e.target.files[0]
-			if (!file) return alert('Vui lòng chọn file')
-			if (file.type !== 'image/png' && file.type !== 'image/jpeg')
-				return alert('Vui lòng chọn file ảnh')
-			if (file.size > 1024 * 1024 * 1024) return alert('Kích thước ảnh quá to')
+			if (!admin) return alert('bạn không có quyền')
+			const files = e.target.files
+			if (files.length === 0) return alert('Vui lòng chọn ảnh')
 			let formData = new FormData()
-			formData.append('file', file)
-			setLoading(true)
+			if (files.length === 1) {
+				const check = checkImage(files[0])
+				if (check) {
+					setChecked(true)
+					formData.append('file', files[0])
+				}
+			} else {
+				if (files.length > 4) return alert('Tối đa 4 ảnh thôi bạn !')
+				for (let file of files) {
+					const check = checkImage(file)
+					if (check) {
+						formData.append('file', file)
+					}
+				}
+			}
+
 			const res = await axios.post('/api/upload', formData, {
 				headers: {
 					'content-type': 'multipart/form-data',
 					Authorization: token,
 				},
 			})
-			if (res) {
-				setLoading(false)
-				setImages(res.data)
-				console.log(res)
-			}
+			console.log(res.data.images)
+			setProduct({
+				...product,
+				images: [...product.images, ...res.data.images],
+			})
 		} catch (error) {
 			console.log(error)
 		}
 	}
 
 	// delete image
-	const handleDestroy = async () => {
+	const handleDestroy = async (public_id) => {
 		try {
-			if (!admin) return alert("You're not an admin")
-			setLoading(true)
-			console.log([images.public_id])
+			if (!admin) return alert('Mày không có quyền')
+
 			await axios.post(
 				'/api/destroy',
-				{ public_id: [images.public_id] },
+				{ public_id: [public_id] },
 				{
 					headers: { Authorization: token },
 				}
 			)
-			setLoading(false)
-			setImages(false)
+			product.images.forEach((item, index) => {
+				if (item.public_id === public_id) product.images.splice(index, 1)
+			})
+			setProduct({ ...product })
 		} catch (err) {
 			alert(err)
 		}
 	}
 
 	// handle upload product
-	const handleAddProduct = (e) => {
+	const handleAddProduct = async (e) => {
 		e.preventDefault()
-		console.log({ product, content, images })
-	}
-	const handleUpLoadImagess = async (e) => {
-		e.preventDefault()
+		try {
+			if (!admin) return alert('Mày không có quyền')
+			const check = await axios.post(
+				'/api/product',
+				{ ...product },
+				{ header: { Authorization: token } }
+			)
+			if (check.status === 200) {
+				alert(check.data.message)
+			}
+			console.log(check)
+		} catch (error) {
+			console.log(error)
+		}
 	}
 
 	// api category get and push to view
@@ -126,6 +151,7 @@ const Add = () => {
 		}
 		getCategories()
 	}, [])
+
 	return (
 		<form
 			onSubmit={handleAddProduct}
@@ -133,15 +159,15 @@ const Add = () => {
 		>
 			<div className="flex flex-col p-1 w-full max-w-screen-lg mx-auto overflow-hidden md:flex-row md:space-x-4">
 				<div className=" h-96 md:w-1/2 shadow appearance-none border rounded w-full  text-gray-700 leading-tight overflow-hidden flex items-center justify-center md:h-60v focus:outline-none focus:shadow-outline relative">
-					{images[0] ? (
+					{product.images[0] ? (
 						<>
 							<img
-								src={images[0].url}
+								src={product.images[0].url}
 								alt=""
 								className="h-full object-contain"
 							/>
 							<div
-								onClick={handleDestroy}
+								onClick={() => handleDestroy(product.images[0].public_id)}
 								className="absolute top-1 right-1 text-red-300 cursor-pointer"
 							>
 								<svg
@@ -182,23 +208,15 @@ const Add = () => {
 						</label>
 					)}
 
-					{loading && (
-						<div className="absolute flex w-full h-full items-center justify-center bg-white">
-							<div className="bg-blue-600 p-2  w-4 h-4 rounded-full animate-bounce blue-circle"></div>
-							<div className="bg-green-600 p-2 w-4 h-4 rounded-full animate-bounce green-circle"></div>
-							<div className="bg-red-600 p-2  w-4 h-4 rounded-full animate-bounce red-circle"></div>
-						</div>
-					)}
-
 					<input
 						type="file"
 						hidden
 						id="image-upload"
-						onChange={handleUploadImage}
+						onChange={handleUploadImages}
 					/>
 				</div>
-				<div className="w-full flex flex-col px-5 space-y-2 text-sm md:text-base md:w-1/2">
-					<div>
+				<div className="w-full flex flex-col px-5 space-y-2 text-sm md:text-base md:w-1/2 md:px-0 md:pl-5">
+					<div className="space-y-1">
 						<h1 className="text-sm md:text-md md:font-semibold">
 							Tên sản phẩm
 						</h1>
@@ -224,7 +242,7 @@ const Add = () => {
 						value={product.slug}
 						onChange={onChangeInput}
 					/>
-					<div>
+					<div className="space-y-1">
 						<h1 className="text-sm md:text-md md:font-semibold">Mô tả</h1>
 						<textarea
 							className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -235,7 +253,7 @@ const Add = () => {
 							onChange={onChangeInput}
 						></textarea>
 					</div>
-					<div>
+					<div className="space-y-1">
 						<h1 className="text-sm md:text-md md:font-semibold">Giá</h1>
 						<input
 							type="number"
@@ -249,38 +267,76 @@ const Add = () => {
 					</div>
 					<div className="flex flex-col order-first  md:order-none md:justify-start pb-2 lg:pb-0">
 						<h1 className="text-sm md:text-md md:font-semibold">
-							Các ảnh khác
+							Các ảnh khác (tối đa 4 ảnh)
 						</h1>
-						<div className="flex md:justify-start justify-center items-center md:space-x-1">
-							<label
-								htmlFor="imagess"
-								className="w-20 h-20 rounded bg-gray-100 shadow flex items-center justify-center"
-							>
-								<svg
-									className="w-6 h-6"
-									fill="none"
-									stroke="currentColor"
-									viewBox="0 0 24 24"
-									xmlns="http://www.w3.org/2000/svg"
+						<div className="flex md:justify-start justify-center items-center space-x-2">
+							{product.images.length < 2 ? (
+								<label
+									htmlFor="imagess"
+									className="w-20 h-20 rounded bg-gray-100 shadow flex items-center justify-center"
 								>
-									<path
-										strokeLinecap="round"
-										strokeLinejoin="round"
-										strokeWidth={2}
-										d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-									/>
-								</svg>
-							</label>
+									<svg
+										className="w-6 h-6"
+										fill="none"
+										stroke="currentColor"
+										viewBox="0 0 24 24"
+										xmlns="http://www.w3.org/2000/svg"
+									>
+										<path
+											strokeLinecap="round"
+											strokeLinejoin="round"
+											strokeWidth={2}
+											d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+										/>
+									</svg>
+								</label>
+							) : (
+								product.images.map((image, index) => (
+									<div
+										className="w-20 h-20 rounded bg-gray-100 shadow flex items-center justify-center overflow-hidden relative"
+										key={index}
+									>
+										<img
+											className="h-full object-contain"
+											src={image.url}
+											alt=""
+										/>
+										<div
+											onClick={() => handleDestroy(image.public_id)}
+											className="absolute top-1 right-1 text-red-300 cursor-pointer"
+										>
+											<svg
+												className="w-3 h-3"
+												fill="none"
+												stroke="currentColor"
+												viewBox="0 0 24 24"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<path
+													strokeLinecap="round"
+													strokeLinejoin="round"
+													strokeWidth={2}
+													d="M6 18L18 6M6 6l12 12"
+												/>
+											</svg>
+										</div>
+									</div>
+								))
+							)}
 						</div>
-						<input
-							type="file"
-							id="imagess"
-							hidden
-							multiple
-							onChange={handleUpLoadImagess}
-						/>
+						{checked ? (
+							<input
+								type="file"
+								id="imagess"
+								hidden
+								multiple
+								onChange={handleUploadImages}
+							/>
+						) : (
+							''
+						)}
 					</div>
-					<div>
+					<div className="space-y-1">
 						<h1 className="text-sm md:text-md md:font-semibold">
 							Nhập số lượng trong kho
 						</h1>
@@ -293,7 +349,7 @@ const Add = () => {
 							onChange={onChangeInput}
 						/>
 					</div>
-					<div className="text-base flex flex-col ">
+					<div className="text-base flex flex-col space-y-1">
 						<h1 className="text-sm md:text-md md:font-semibold">
 							Chọn danh mục
 						</h1>
@@ -347,7 +403,7 @@ const Add = () => {
 					//=--------------------------------
 					onChange={(event, editor) => {
 						const data = editor.getData()
-						setContent(data)
+						setProduct({ ...product, content: data })
 					}}
 				/>
 			</div>

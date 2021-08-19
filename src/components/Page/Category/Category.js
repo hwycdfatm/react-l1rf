@@ -8,7 +8,7 @@ import Loading from '../../../utils/Loading'
 
 const Category = () => {
 	const { slug } = useParams()
-	const [products, setProducts] = useState([slug])
+	const [products, setProducts] = useState([])
 	const [load, setLoad] = useState(true)
 	const [totalPage, setTotalPage] = useState('')
 	const _limit = 1
