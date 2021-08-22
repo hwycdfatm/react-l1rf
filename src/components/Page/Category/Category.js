@@ -5,13 +5,15 @@ import axios from 'axios'
 import Pagination from '../../../utils/Pagination'
 import Product from '../Product/Product'
 import Loading from '../../../utils/Loading'
+import Error from '../Error/Error'
 
 const Category = () => {
 	const { slug } = useParams()
 	const [products, setProducts] = useState([])
 	const [load, setLoad] = useState(true)
+	const [fail, setFail] = useState(false)
 	const [totalPage, setTotalPage] = useState('')
-	const _limit = 1
+	const _limit = 9
 	const [currentPage, setCurrentPage] = useState(1)
 
 	useEffect(() => {
@@ -24,12 +26,12 @@ const Category = () => {
 				setProducts(result.data.data)
 				setTotalPage(result.data.pagination._total_Page)
 			} catch (err) {
-				console.log(err)
+				if (err) return setFail(true)
 			}
 		}
 		fetchProduct()
 	}, [slug, currentPage])
-
+	if (fail) return <Error />
 	return (
 		<>
 			<div className="w-full flex flex-col px-4 pt-24 dark:text-white transition duration-700 space-y-4">
@@ -37,7 +39,7 @@ const Category = () => {
 					{products.map((product, index) => (
 						<Product sp={product} key={index} />
 					))}
-					{products.length === 0 && <div>Trống</div>}
+					{products.length === 0 && <div className="mx-auto">Trống</div>}
 				</div>
 			</div>
 			{totalPage > 1 && (

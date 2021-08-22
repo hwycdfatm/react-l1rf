@@ -46,7 +46,7 @@ const Login = () => {
 	if (login) return <Redirect to="/" />
 	return (
 		<div className="mt-16 bg-white p-3">
-			<h1 className="py-5 text-2xl font-semibold text-center">
+			<h1 className="pt-10 pb-5 text-2xl font-semibold text-center">
 				Chào mừng bạn đến với shop l1rf!
 			</h1>
 			<div className="rounded-md shadow-md max-w-md mx-auto p-3 flex flex-col space-y-5">
@@ -61,10 +61,10 @@ const Login = () => {
 							cssClass="w-full p-2 rounded-md border-2 font-semibold border-gray-300 text-center hover:bg-indigo-400 hover:text-red-50"
 						/>
 						<button
-							onClick={() => alert('Thấy rồi nha, có nick này luôn o.o')}
+							onClick={() => alert('Chưa làm')}
 							className="p-2 rounded-md border-2 border-gray-300 font-semibold text-center hover:bg-indigo-400 hover:text-red-50 "
 						>
-							Pornhub
+							Google
 						</button>
 					</div>
 				</div>

@@ -3,7 +3,10 @@ import { CKEditor } from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import { GlobalState } from '../../GlobalState'
 import axios from 'axios'
-const Add = () => {
+const Form = (props) => {
+	// default Action is Add
+	const action = props.action || 'add'
+
 	// Global state
 	const state = useContext(GlobalState)
 
@@ -28,9 +31,9 @@ const Add = () => {
 	// init category
 	const [categories, setCategories] = useState([])
 
-	// check image main uploaded ?
 	const [checked, setChecked] = useState(false)
-	// handle Input fields
+
+	// handle input
 	const onChangeInput = (e) => {
 		const { name, value } = e.target
 		setProduct({ ...product, [name]: value })
@@ -103,6 +106,44 @@ const Add = () => {
 		}
 	}
 
+	// handle upload product
+	const handleAddProduct = async (e) => {
+		e.preventDefault()
+		try {
+			if (!admin) return alert('Mày không có quyền')
+			const check = await axios.post(
+				'/api/product',
+				{ ...product },
+				{ header: { Authorization: token } }
+			)
+			if (check.status === 200) {
+				alert(check.data.message)
+			}
+			console.log(check)
+		} catch (error) {
+			console.log(error)
+		}
+	}
+
+	// Handle Edit product
+	const handleEditProduct = async (e) => {
+		e.preventDefault()
+		try {
+			if (!admin) return alert('Mày không có quyền')
+			const check = await axios.put(
+				`/api/product/`,
+				{ ...product },
+				{ header: { Authorization: token } }
+			)
+			if (check.status === 200) {
+				alert(check.data.message)
+			}
+			console.log(check)
+		} catch (error) {
+			console.log(error)
+		}
+	}
+
 	// delete image
 	const handleDestroy = async (public_id) => {
 		try {
@@ -124,25 +165,6 @@ const Add = () => {
 		}
 	}
 
-	// handle upload product
-	const handleAddProduct = async (e) => {
-		e.preventDefault()
-		try {
-			if (!admin) return alert('Mày không có quyền')
-			const check = await axios.post(
-				'/api/product',
-				{ ...product },
-				{ header: { Authorization: token } }
-			)
-			if (check.status === 200) {
-				alert(check.data.message)
-			}
-			console.log(check)
-		} catch (error) {
-			console.log(error)
-		}
-	}
-
 	// api category get and push to view
 	useEffect(() => {
 		const getCategories = async () => {
@@ -154,17 +176,17 @@ const Add = () => {
 
 	return (
 		<form
-			onSubmit={handleAddProduct}
+			onSubmit={action === 'add' ? handleAddProduct : handleEditProduct}
 			className="pt-20 flex flex-col bg-white dark:bg-gray-700 transition duration-700 dark:text-white"
 		>
 			<div className="flex flex-col p-1 w-full max-w-screen-lg mx-auto overflow-hidden md:flex-row md:space-x-4">
-				<div className=" h-96 md:w-1/2 shadow appearance-none border rounded w-full  text-gray-700 leading-tight overflow-hidden flex items-center justify-center md:h-60v focus:outline-none focus:shadow-outline relative">
+				<div className="h-96 md:h-542px md:w-1/2 shadow appearance-none border rounded w-full text-gray-700 leading-tight overflow-hidden flex items-center justify-center focus:outline-none focus:shadow-outline relative">
 					{product.images[0] ? (
 						<>
 							<img
 								src={product.images[0].url}
 								alt=""
-								className="h-full object-contain"
+								className="h-full object-cover"
 							/>
 							<div
 								onClick={() => handleDestroy(product.images[0].public_id)}
@@ -254,7 +276,13 @@ const Add = () => {
 						></textarea>
 					</div>
 					<div className="space-y-1">
-						<h1 className="text-sm md:text-md md:font-semibold">Giá</h1>
+						<h1 className="text-sm md:text-md md:font-semibold">
+							Giá :{' '}
+							<span className="ml-2">
+								{product.price && parseInt(product.price).toLocaleString('en')}{' '}
+								VNĐ
+							</span>
+						</h1>
 						<input
 							type="number"
 							placeholder="Nhập giá nè"
@@ -263,11 +291,11 @@ const Add = () => {
 							value={product.price}
 							onChange={onChangeInput}
 						/>
-						<span className="ml-4 text-sm font-medium">VNĐ</span>
+						<span className="ml-2 text-sm font-semibold">VNĐ</span>
 					</div>
 					<div className="flex flex-col order-first  md:order-none md:justify-start pb-2 lg:pb-0">
 						<h1 className="text-sm md:text-md md:font-semibold">
-							Các ảnh khác (tối đa 4 ảnh)
+							Các ảnh khác (tối đa 4 ảnh / vui lòng chọn ảnh lớn trước)
 						</h1>
 						<div className="flex md:justify-start justify-center items-center space-x-2">
 							{product.images.length < 2 ? (
@@ -349,6 +377,7 @@ const Add = () => {
 							onChange={onChangeInput}
 						/>
 					</div>
+
 					<div className="text-base flex flex-col space-y-1">
 						<h1 className="text-sm md:text-md md:font-semibold">
 							Chọn danh mục
@@ -359,7 +388,9 @@ const Add = () => {
 								name="category"
 								className="shadow appearance-none border rounded px-2 py-2 text-gray-700 focus:outline-none focus:shadow-outline xl:px-4"
 							>
-								<option value="">Chọn danh mục</option>
+								<option value="" hidden>
+									Chọn danh mục
+								</option>
 								{categories.map((category, index) => (
 									<option key={index} value={category.slug}>
 										{category.name}
@@ -370,21 +401,13 @@ const Add = () => {
 								type="submit"
 								className="px-2 py-2 text-gray-900 bg-gray-100 rounded font-semibold border shadow xl:px-4"
 							>
-								Thêm sản phẩm
+								{action === 'add' ? 'Thêm sản phẩm' : 'Cập nhật sản phẩm'}
 							</button>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div className="mt-2 mx-auto w-full max-w-screen-lg p-1">
-				{/* <textarea
-					placeholder="Nhập dữ liệu gì đó ở đây nè"
-					className="shadow text-lg appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-					rows="20"
-					name="content"
-					value={content}
-					onChange={onChangeInput}
-				></textarea> */}
+			<div className="mt-2 mx-auto w-full max-w-screen-lg p-1 unreset">
 				<CKEditor
 					editor={ClassicEditor}
 					data={product.content}
@@ -411,4 +434,4 @@ const Add = () => {
 	)
 }
 
-export default Add
+export default Form

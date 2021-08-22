@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import React, { useState, useContext } from 'react'
+import { Link, useHistory, Redirect } from 'react-router-dom'
 import axios from 'axios'
-
+import { GlobalState } from '../../../GlobalState'
 const Register = () => {
+	const state = useContext(GlobalState)
+	const [login] = state.isLogin
 	const [user, setUser] = useState({
 		name: '',
 		email: '',
@@ -34,6 +36,7 @@ const Register = () => {
 			alert(err.response.data.message)
 		}
 	}
+	if (login) return <Redirect to="/" />
 	return (
 		<div className="mt-16 bg-white p-3">
 			<h1 className="py-5 text-2xl font-semibold text-center">
@@ -69,7 +72,7 @@ const Register = () => {
 							name="name"
 							value={user.name}
 							onChange={onChangeInput}
-							className="outline-none flex-1 ml-2 font-normal appearance-none bg-none"
+							className="outline-none flex-1 ml-2 font-normal h-full appearance-none bg-none"
 						/>
 					</div>
 					<div className="flex items-center h-10 rounded-md border border-gray-100">
@@ -96,7 +99,7 @@ const Register = () => {
 							name="address"
 							value={user.address}
 							onChange={onChangeInput}
-							className="outline-none flex-1 ml-2 font-normal"
+							className="outline-none flex-1 ml-2 font-normal h-full"
 						/>
 					</div>
 					<div className="flex items-center h-10 rounded-md border border-gray-100">
@@ -123,7 +126,7 @@ const Register = () => {
 							name="email"
 							value={user.email}
 							onChange={onChangeInput}
-							className="outline-none flex-1 ml-2 font-normal"
+							className="outline-none flex-1 ml-2 font-normal h-full"
 						/>
 					</div>
 					<div className="flex items-center h-10 rounded-md border border-gray-100">
@@ -150,7 +153,7 @@ const Register = () => {
 							name="password"
 							value={user.password}
 							onChange={onChangeInput}
-							className="outline-none flex-1 ml-2 font-normal"
+							className="outline-none flex-1 ml-2 font-normal h-full"
 						/>
 					</div>
 					<div className="flex items-center h-10 rounded-md border border-gray-100">
@@ -177,7 +180,7 @@ const Register = () => {
 							name="repassword"
 							value={user.repassword}
 							onChange={onChangeInput}
-							className="outline-none flex-1 ml-2 font-normal"
+							className="outline-none flex-1 ml-2 font-normal h-full"
 						/>
 					</div>
 					<div>
@@ -201,7 +204,6 @@ const Register = () => {
 						<Link to="/login" className="text-blue-300">
 							Đăng nhập ngay
 						</Link>
-						<Link to="/forget_password">Quên mật khẩu ?</Link>
 					</div>
 				</form>
 			</div>

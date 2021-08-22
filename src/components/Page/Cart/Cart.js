@@ -58,7 +58,7 @@ const Cart = () => {
 							: 'Giỏ hàng trống'}
 					</div>
 					<div className="col-span-12 sm:col-span-12 md:col-span-5 lg:col-span-4 xxl:col-span-4">
-						<div className="bg-white py-4 px-4 shadow-md rounded-lg my-4 mx-2">
+						<div className="bg-white py-4 px-4 border border-gray-200 shadow-md rounded-lg my-4 mx-2">
 							<div className="flex justify-between border-b-2 mb-2">
 								<div className="text-lg py-2">
 									<p>Tổng số lượng hàng</p>
@@ -94,7 +94,7 @@ const Cart = () => {
 						</div>
 						<div
 							onClick={() => alert('Đm t chưa có làm tới cái này')}
-							className="cursor-pointer py-4 shadow-lg text-center font-bold  px-4 rounded-lg my-4 mx-2 lg:mx-4"
+							className="cursor-pointer py-4 border border-gray-200 shadow-md text-center font-bold  px-4 rounded-lg my-4 mx-2 lg:mx-2 dark:bg-red-500"
 						>
 							Thanh toán
 						</div>
