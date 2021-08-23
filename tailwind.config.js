@@ -20,8 +20,13 @@ module.exports = {
 				'100v': '100vh',
 				'542px': '542px',
 			},
+
 			scale: ['responsive', 'hover', 'focus'],
 		},
+		backgroundColor: (theme) => ({
+			...theme('colors'),
+			sidebar: '#D8E3E7',
+		}),
 	},
 	variants: {
 		extend: {},

@@ -4,6 +4,13 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+@font-face {
+	src: url('./fonts/Patriot-Medium.ttf');
+	font-family: Patriot;
+}
+.patriot {
+	font-family: Patriot;
+}
 html::-webkit-scrollbar {
 	background-color: #fff;
 	width: 16px;

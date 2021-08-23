@@ -3,10 +3,12 @@ import { CKEditor } from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import { GlobalState } from '../../GlobalState'
 import axios from 'axios'
+import { useParams } from 'react-router-dom'
+import NotFound from '../Page/Error/Error'
 const Form = (props) => {
 	// default Action is Add
 	const action = props.action || 'add'
-
+	const { id } = useParams()
 	// Global state
 	const state = useContext(GlobalState)
 
@@ -131,14 +133,13 @@ const Form = (props) => {
 		try {
 			if (!admin) return alert('Mày không có quyền')
 			const check = await axios.put(
-				`/api/product/`,
+				`/api/product/${product._id}`,
 				{ ...product },
 				{ header: { Authorization: token } }
 			)
 			if (check.status === 200) {
 				alert(check.data.message)
 			}
-			console.log(check)
 		} catch (error) {
 			console.log(error)
 		}
@@ -165,19 +166,34 @@ const Form = (props) => {
 		}
 	}
 
-	// api category get and push to view
+	const [errorFetchProduct, setErrorFetchProduct] = useState(true)
 	useEffect(() => {
-		const getCategories = async () => {
-			const res = await axios.get('/api/category')
-			setCategories(res.data.data)
+		try {
+			const getCategories = async () => {
+				const res = await axios.get('/api/category')
+				setCategories(res.data.data)
+			}
+			const getProduct = async () => {
+				const result = await axios.get(`/api/product/id/${id}`)
+				if (result) {
+					setProduct(result.data.data)
+					setErrorFetchProduct(false)
+				}
+			}
+			action === 'edit' && getProduct()
+			getCategories()
+		} catch (error) {
+			alert(error)
 		}
-		getCategories()
-	}, [])
+	}, [id, action])
+	if (action === 'edit') {
+		if (errorFetchProduct) return <NotFound />
+	}
 
 	return (
 		<form
 			onSubmit={action === 'add' ? handleAddProduct : handleEditProduct}
-			className="pt-20 flex flex-col bg-white dark:bg-gray-700 transition duration-700 dark:text-white"
+			className="pt-10 flex flex-col bg-white dark:bg-gray-700 transition duration-700 dark:text-white"
 		>
 			<div className="flex flex-col p-1 w-full max-w-screen-lg mx-auto overflow-hidden md:flex-row md:space-x-4">
 				<div className="h-96 md:h-542px md:w-1/2 shadow appearance-none border rounded w-full text-gray-700 leading-tight overflow-hidden flex items-center justify-center focus:outline-none focus:shadow-outline relative">
@@ -325,7 +341,7 @@ const Form = (props) => {
 										key={index}
 									>
 										<img
-											className="h-full object-contain"
+											className="h-full object-cover"
 											src={image.url}
 											alt=""
 										/>
@@ -386,16 +402,23 @@ const Form = (props) => {
 							<select
 								onChange={onChangeInput}
 								name="category"
+								value={action === 'edit' && product.category}
 								className="shadow appearance-none border rounded px-2 py-2 text-gray-700 focus:outline-none focus:shadow-outline xl:px-4"
 							>
 								<option value="" hidden>
 									Chọn danh mục
 								</option>
-								{categories.map((category, index) => (
-									<option key={index} value={category.slug}>
-										{category.name}
-									</option>
-								))}
+								{action === 'edit'
+									? categories.map((category, index) => (
+											<option key={index} value={category.slug}>
+												{category.name}
+											</option>
+									  ))
+									: categories.map((category, index) => (
+											<option key={index} value={category.slug}>
+												{category.name}
+											</option>
+									  ))}
 							</select>
 							<button
 								type="submit"
