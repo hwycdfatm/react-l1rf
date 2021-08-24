@@ -3,12 +3,11 @@ import { CKEditor } from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import { GlobalState } from '../../GlobalState'
 import axios from 'axios'
-import { useParams } from 'react-router-dom'
-import NotFound from '../Page/Error/Error'
+
 const Form = (props) => {
 	// default Action is Add
 	const action = props.action || 'add'
-	const { id } = useParams()
+
 	// Global state
 	const state = useContext(GlobalState)
 
@@ -166,36 +165,51 @@ const Form = (props) => {
 		}
 	}
 
-	const [errorFetchProduct, setErrorFetchProduct] = useState(true)
 	useEffect(() => {
 		try {
 			const getCategories = async () => {
 				const res = await axios.get('/api/category')
 				setCategories(res.data.data)
 			}
-			const getProduct = async () => {
-				const result = await axios.get(`/api/product/id/${id}`)
-				if (result) {
-					setProduct(result.data.data)
-					setErrorFetchProduct(false)
-				}
-			}
-			action === 'edit' && getProduct()
 			getCategories()
 		} catch (error) {
 			alert(error)
 		}
-	}, [id, action])
-	if (action === 'edit') {
-		if (errorFetchProduct) return <NotFound />
+	}, [])
+	const hanbleButton = (e) => {
+		e.preventDefault()
+		props.setToggleForm(!props.toggleForm)
 	}
-
+	!props.toggleForm
+		? document.querySelector('body').classList.add('overflow-hidden')
+		: document.querySelector('body').classList.remove('overflow-hidden')
 	return (
 		<form
-			onSubmit={action === 'add' ? handleAddProduct : handleEditProduct}
-			className="pt-10 flex flex-col bg-white dark:bg-gray-700 transition duration-700 dark:text-white"
+			onSubmit={action ? handleEditProduct : handleAddProduct}
+			className={`fixed top-0 bottom-0 right-0 left-0 pt-10 z-30 lg:pl-56 p-6 xl:pl-44 shadows-xl min-h-screen flex flex-col bg-gray-300 bg-opacity-90 transition duration-700 transform overflow-scroll ${
+				props.toggleForm && 'translate-y-full'
+			}`}
 		>
-			<div className="flex flex-col p-1 w-full max-w-screen-lg mx-auto overflow-hidden md:flex-row md:space-x-4">
+			<button
+				onClick={hanbleButton}
+				className="absolute right-1 top-2 md:right-16 md:top-5 text-red-500"
+			>
+				<svg
+					className="w-6 h-6"
+					fill="none"
+					stroke="currentColor"
+					viewBox="0 0 24 24"
+					xmlns="http://www.w3.org/2000/svg"
+				>
+					<path
+						strokeLinecap="round"
+						strokeLinejoin="round"
+						strokeWidth={2}
+						d="M6 18L18 6M6 6l12 12"
+					/>
+				</svg>
+			</button>
+			<div className="flex flex-col p-1 w-full max-w-screen-lg mx-auto md:flex-row md:space-x-4">
 				<div className="h-96 md:h-542px md:w-1/2 shadow appearance-none border rounded w-full text-gray-700 leading-tight overflow-hidden flex items-center justify-center focus:outline-none focus:shadow-outline relative">
 					{product.images[0] ? (
 						<>

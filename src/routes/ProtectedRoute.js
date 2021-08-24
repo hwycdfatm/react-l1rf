@@ -5,6 +5,7 @@ import { GlobalState } from '../GlobalState'
 const ProtectedRoute = ({ component: Component, ...rest }) => {
 	const state = useContext(GlobalState)
 	const [isLogin] = state.isLogin
+
 	return (
 		<Route
 			{...rest}

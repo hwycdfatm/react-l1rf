@@ -18,9 +18,6 @@ import Forget from './Page/Auth/Forget'
 import Privacy from './Page/Privacy/Privacy'
 import Error from './Page/Error/Error'
 
-import EditProduct from './AdminPage/EditProduct'
-import AddProduct from './AdminPage/AddProduct'
-
 import MessengerCustomerChat from 'react-messenger-customer-chat'
 
 import AdminRoute from '../routes/AdminRoute'
@@ -30,11 +27,15 @@ import DashBoard from './AdminPage/DashBoard'
 import CategoryAdmin from './AdminPage/CategoryAdmin'
 import SidebarAdmin from './AdminPage/SidebarAdmin'
 import Orders from './AdminPage/Orders'
+
+import Form from '../components/AdminPage/Form'
 const Layout = () => {
 	const state = useContext(GlobalState)
 	const [admin] = state.isAdmin
 	const isAdmin = localStorage.getItem('admin')
 	const [open, setOpen] = useState(true)
+	const [toggleForm, setToggleForm] = useState(false)
+	console.log(toggleForm)
 	return (
 		<div>
 			{!admin && (
@@ -49,37 +50,28 @@ const Layout = () => {
 			<div className="flex w-full bg-white dark:bg-gray-700 min-h-screen transition duration-700 relative overflow-hidden">
 				{admin && (
 					<>
-						<button
-							onClick={() => setOpen(false)}
-							className="p-3 absolute lg:hidden"
-						>
-							<svg
-								className="w-6 h-6"
-								fill="none"
-								stroke="currentColor"
-								viewBox="0 0 24 24"
-								xmlns="http://www.w3.org/2000/svg"
-							>
-								<path
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									strokeWidth={2}
-									d="M4 6h16M4 12h8m-8 6h16"
-								/>
-							</svg>
-						</button>
-						<SidebarAdmin open={open} setOpen={setOpen} />
+						<SidebarAdmin
+							open={open}
+							setOpen={setOpen}
+							toggleForm={toggleForm}
+							setToggleForm={setToggleForm}
+						/>
+						<Form
+							open={open}
+							setOpen={setOpen}
+							toggleForm={toggleForm}
+							setToggleForm={setToggleForm}
+						/>
 					</>
 				)}
 
-				<div className="w-full">
+				<div className="w-full relative">
 					<Switch>
 						<Route
 							exact
 							path="/"
 							component={isAdmin || admin ? DashBoard : Home}
 						/>
-
 						<Route path="/category/:slug" component={Category} />
 						<Route path="/product/:slug" component={Product} />
 						<Route path="/login" component={Login} />
@@ -88,9 +80,6 @@ const Layout = () => {
 						<Route path="/dieu-khoan" component={Privacy} />
 						<ProtectedRoute path="/cart" component={Cart} />
 						<ProtectedRoute path="/user" component={User} />
-						<ProtectedRoute path="/user" component={User} />
-						<AdminRoute exact path="/add" component={AddProduct} />
-						<AdminRoute path="/edit/:id" component={EditProduct} />
 						<AdminRoute path="/products" component={CategoryAdmin} />
 						<AdminRoute path="/orders" component={Orders} />
 						<Route path="*" component={Error} />
