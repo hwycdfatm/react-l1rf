@@ -1,5 +1,4 @@
 import React from 'react'
-
 export default function CartItem(props) {
 	const { images, price, title, _id } = props.item
 	const priceParse = parseInt(price)
@@ -23,7 +22,7 @@ export default function CartItem(props) {
 				</div>
 				<div className="text-lg font-semibold">
 					<button
-						onClick={() => props.fncRM(_id)}
+						onClick={() => props.removeProduct(_id)}
 						className="focus:outline-none font-bold py-2 px-2 rounded-full inline-flex items-center "
 					>
 						<svg

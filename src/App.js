@@ -1,10 +1,10 @@
 import React from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
+import Layout from './components/Layout'
 import { DataProvider } from './GlobalState'
 
 import ScrollToTop from './utils/ScrollToTop'
 
-import Layout from './components/Layout'
 function App() {
 	return (
 		<DataProvider>

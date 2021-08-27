@@ -38,7 +38,7 @@ const Register = () => {
 	}
 	if (login) return <Redirect to="/" />
 	return (
-		<div className="mt-16 bg-white p-3">
+		<div className="w-full mt-16 bg-white p-3">
 			<h1 className="py-5 text-2xl font-semibold text-center">
 				Chào mừng bạn đến với shop l1rf!
 			</h1>

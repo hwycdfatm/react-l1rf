@@ -1,28 +1,9 @@
 import React, { useContext } from 'react'
 import { NavLink } from 'react-router-dom'
 import { GlobalState } from '../../GlobalState'
-import axios from 'axios'
 const SidebarAdmin = (props) => {
-	const state = useContext(GlobalState)
-	const [login, setIsLogin] = state.isLogin
-	const [admin, setIsAdmin] = state.isAdmin
-	const [cart, setCart] = state.cart
-	const handleLogout = async () => {
-		await axios.get('/user/logout')
-		setIsLogin(!login)
-		setIsAdmin(!admin)
-		localStorage.setItem('cart', cart)
-		localStorage.removeItem('first-login')
-		localStorage.removeItem('login')
-		localStorage.removeItem('admin')
-		setCart([])
-	}
-
-	const handleSidebar = () => props.setOpen(!props.open)
-	const hanbleButton = () => {
-		props.setOpen(!props.open)
-		props.setToggleForm(!props.toggleForm)
-	}
+	const { logout } = useContext(GlobalState)
+	const { handleSidebar, hanbleButton, open } = props.option
 	return (
 		<>
 			<div className="top-0 left-0 right-0 p-3 fixed bg-white lg:hidden z-30">
@@ -45,7 +26,7 @@ const SidebarAdmin = (props) => {
 			</div>
 			<div
 				className={`fixed h-screen w-56 bg-sidebar flex-col shadow-xl rounded-r-xl transition flex justify-between z-40 transform lg:transform-none ${
-					props.open && '-translate-x-full'
+					!open && '-translate-x-full'
 				}`}
 			>
 				<button className="absolute p-3 lg:hidden" onClick={handleSidebar}>
@@ -131,7 +112,7 @@ const SidebarAdmin = (props) => {
 				</div>
 				<div className="p-2 mb-5">
 					<button
-						onClick={handleLogout}
+						onClick={logout}
 						className="w-full flex items-center space-x-2 text-left leading-10 h-10 px-2 rounded-md transition duration-300  hover:bg-gray-300 text-sm font-semibold"
 					>
 						<svg

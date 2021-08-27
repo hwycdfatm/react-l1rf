@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 export default function Sidebar(props) {
+	const { darkModeFuntion, colorTheme, categorys, login, logout } = props
 	// Show/ Hidden Sidebar
 	const [sideBar, setSideBar] = useState(false)
 	const handleSidebar = () => setSideBar(!sideBar)
-	const isAdmin = props.isAdmin
 
 	// Block scroll out page when open sidebar
 	sideBar
@@ -20,7 +20,7 @@ export default function Sidebar(props) {
 		<div className="md:hidden z-10">
 			<div
 				className={`fixed top-0 left-0 bottom-0 right-0 transform transition ${
-					sideBar ? '' : '-translate-x-full'
+					!sideBar && '-translate-x-full'
 				}`}
 			>
 				<div className="relative h-full bg-gray-50 dark:bg-gray-600 overflow-y-scroll">
@@ -68,45 +68,44 @@ export default function Sidebar(props) {
 							</button>
 						</div>
 						<div className="flex flex-col space-y-4">
-							{!isAdmin && (
-								<div className="flex flex-col rounded-md shadow-sm">
-									<button
-										onClick={handleDropdown}
-										className="rounded-md px-3 w-full flex flex-row justify-between shadow-sm items-center h-10 bg-white dark:bg-gray-200"
+							<div className="flex flex-col rounded-md shadow-sm">
+								<button
+									onClick={handleDropdown}
+									className="rounded-md px-3 w-full flex flex-row justify-between shadow-sm items-center h-10 bg-white dark:bg-gray-200"
+								>
+									<span>Danh mục sản phẩm</span>
+									<svg
+										className="w-6 h-6"
+										fill="none"
+										stroke="currentColor"
+										viewBox="0 0 24 24"
+										xmlns="http://www.w3.org/2000/svg"
 									>
-										<span>Danh mục sản phẩm</span>
-										<svg
-											className="w-6 h-6"
-											fill="none"
-											stroke="currentColor"
-											viewBox="0 0 24 24"
-											xmlns="http://www.w3.org/2000/svg"
-										>
-											<path
-												strokeLinecap="round"
-												strokeLinejoin="round"
-												strokeWidth={2}
-												d="M19 9l-7 7-7-7"
-											/>
-										</svg>
-									</button>
-									{dropdown && (
-										<div className="flex flex-col p-2 space-y-1 bg-transparent">
-											{props.data.map((data, index) => (
-												<Link
-													to={`/category/${data.slug}`}
-													key={index}
-													onClick={handleSidebar}
-													className="px-3 h-8 leading-8 rounded-md hover:bg-gray-600"
-												>
-													{data.name}
-												</Link>
-											))}
-										</div>
-									)}
-								</div>
-							)}
-							{props.isLogin ? (
+										<path
+											strokeLinecap="round"
+											strokeLinejoin="round"
+											strokeWidth={2}
+											d="M19 9l-7 7-7-7"
+										/>
+									</svg>
+								</button>
+								{dropdown && (
+									<div className="flex flex-col p-2 space-y-1 bg-transparent">
+										{categorys.map((data, index) => (
+											<Link
+												to={`/category/${data.slug}`}
+												key={index}
+												onClick={handleSidebar}
+												className="px-3 h-8 leading-8 rounded-md hover:bg-gray-600"
+											>
+												{data.name}
+											</Link>
+										))}
+									</div>
+								)}
+							</div>
+
+							{login ? (
 								<>
 									<Link
 										to="/user"
@@ -132,7 +131,7 @@ export default function Sidebar(props) {
 									<Link
 										to="/"
 										onClick={() => {
-											props.logout()
+											logout()
 											handleSidebar()
 										}}
 										className="flex flex-row items-center justify-between h-10 rounded-md bg-white dark:bg-gray-200 px-3 shadow-sm"
@@ -165,7 +164,7 @@ export default function Sidebar(props) {
 							)}
 							<Link
 								to="#"
-								onClick={props.fnc}
+								onClick={darkModeFuntion}
 								className="flex flex-row items-center justify-between h-10 rounded-md bg-white dark:bg-gray-200 px-3 shadow-sm"
 							>
 								<span>Dark mode</span>
@@ -174,7 +173,7 @@ export default function Sidebar(props) {
 										<div className="block bg-gray-600 w-10 h-6 rounded-full"></div>
 										<div
 											className={`absolute left-1 top-1  w-4 h-4 rounded-full transition ${
-												props.colorTheme === 'dark'
+												colorTheme === 'dark'
 													? 'bg-white'
 													: 'transform translate-x-full bg-green-400'
 											}`}

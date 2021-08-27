@@ -8,9 +8,9 @@ const Product = (props) => {
 	return (
 		<Link
 			to={`/product/${props.sp.slug}`}
-			className="flex flex-col h-96 bg-white rounded-lg shadow-md p-4 hover:shadow-lg space-y-2"
+			className="flex flex-col h-auto bg-white p-3 rounded-2xl shadow-lg hover:shadow-xl space-y-2 overflow-hidden"
 		>
-			<div className="h-5/6 flex rounded-lg items-center justify-center overflow-hidden">
+			<div className="h-80 flex items-center rounded-lg justify-center overflow-hidden">
 				<img
 					src={image[0] ? image[0].url : NotFoundImage}
 					alt=""
@@ -18,10 +18,10 @@ const Product = (props) => {
 				/>
 			</div>
 			<div className="space-y-2">
-				<h1 className="text-base font-bold truncate">{props.sp.title}</h1>
-				<p className="text-base font-semibold cursor-auto">
+				<h3 className="text-base font-bold truncate">{props.sp.title}</h3>
+				<h4 className="text-sm font-bold cursor-auto text-gray-800">
 					{price.toLocaleString('en')} vnđ
-				</p>
+				</h4>
 			</div>
 		</Link>
 	)

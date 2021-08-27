@@ -40,7 +40,7 @@ const Detail = () => {
 	if (fail) return <Error />
 	return (
 		<>
-			<div className="pt-20 flex flex-col max-w-screen-lg mx-auto bg-white dark:bg-gray-700 transition duration-700 dark:text-white">
+			<div className="pt-20 flex flex-col max-w-screen-lg mx-auto bg-transparent transition duration-700 dark:text-white">
 				<div className="mt-4 flex flex-col w-full overflow-hidden md:flex-row md:space-x-8">
 					<div className="w-full h-96 md:w-1/2 rounded-lg overflow-hidden flex items-center justify-center md:h-542px">
 						<img

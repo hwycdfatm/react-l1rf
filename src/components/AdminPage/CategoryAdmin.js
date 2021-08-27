@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 const CategoryAdmin = () => {
 	const [products, setProducts] = useState([])
-	// const [load, setLoad] = useState(true)
-	// const [fail, setFail] = useState(false)
 
 	useEffect(() => {
 		async function fetchProduct() {

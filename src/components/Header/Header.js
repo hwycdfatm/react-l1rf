@@ -14,20 +14,8 @@ import axios from 'axios'
 
 const Header = () => {
 	// Global State
-	const state = useContext(GlobalState)
-	const [isLogin, setIsLogin] = state.isLogin
-	const [isAdmin, setIsAdmin] = state.isAdmin
-	const [cart, setCart] = state.cart
+	const { login, logout, cart } = useContext(GlobalState)
 
-	const handleLogout = async () => {
-		await axios.get('/user/logout')
-		setIsLogin(false)
-		setIsAdmin(false)
-		localStorage.removeItem('first-login')
-		localStorage.removeItem('login')
-		localStorage.removeItem('admin')
-		setCart([])
-	}
 	// Dropdown
 	const dropdownRef = useRef(null)
 	const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false)
@@ -35,15 +23,15 @@ const Header = () => {
 
 	const [colorTheme, setColorTheme] = useDarkMode()
 
-	const [category, setCategory] = useState([])
+	const [categorys, setCategorys] = useState([])
 
 	useEffect(() => {
 		const getCategory = async () => {
 			const res = await axios.get('/api/category')
-			setCategory(res.data.data)
+			setCategorys(res.data.data)
 		}
 		getCategory()
-	}, [cart])
+	}, [])
 
 	function darkMode() {
 		setColorTheme(colorTheme)
@@ -51,28 +39,20 @@ const Header = () => {
 
 	return (
 		<header className="fixed top-0 z-50 left-0 right-0 flex flex-row justify-between items-center h-16 px-2 transition duration-700 bg-white dark:bg-gray-700  dark:text-white md:px-4 lg:px-8 shadow-sm">
-			{/* Toggle Button & Sidebar */}
 			<Sidebar
-				fnc={darkMode}
+				darkModeFuntion={darkMode}
 				colorTheme={colorTheme}
-				data={category}
-				isLogin={isLogin}
-				logout={handleLogout}
-				isAdmin={isAdmin}
+				categorys={categorys}
+				login={login}
+				logout={logout}
 			/>
 
-			{/* Logo */}
-			{isAdmin ? (
-				<Link to="/" className="font-bebas font-semibold text-3xl">
-					Admin
-				</Link>
-			) : (
-				<Link to="/" className="font-bebas font-semibold text-3xl">
-					l1rf
-				</Link>
-			)}
+			<Link to="/" className="font-bebas font-semibold text-3xl">
+				l1rf
+			</Link>
+
 			<div className="hidden flex-row space-x-6 font-semibold md:flex md:space-x-2 lg:ml-28">
-				{category.map((sidebar, index) => (
+				{categorys.map((sidebar, index) => (
 					<NavLink
 						key={index}
 						to={'/category/' + sidebar.slug}
@@ -86,7 +66,7 @@ const Header = () => {
 
 			{/* User */}
 			<div className="flex space-x-3">
-				{isLogin ? (
+				{login ? (
 					<div className="space-x-2 hidden md:flex relative">
 						<button
 							to="#"
@@ -127,7 +107,7 @@ const Header = () => {
 									</Link>
 									<Link
 										to="/"
-										onClick={handleLogout}
+										onClick={logout}
 										className="text-left font-medium text-sm hover:bg-gray-300 rounded-md p-2"
 									>
 										Đăng xuất
@@ -152,8 +132,6 @@ const Header = () => {
 						</Link>
 					</div>
 				)}
-
-				{/* Login & Register */}
 
 				{/* Dark Mode Toggle */}
 				<button

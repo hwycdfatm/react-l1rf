@@ -41,15 +41,15 @@ const Category = () => {
 					))}
 					{products.length === 0 && <div className="mx-auto">Trống</div>}
 				</div>
+				{totalPage > 1 && (
+					<Pagination
+						totalPage={totalPage}
+						currentPage={currentPage}
+						setCurrentPage={setCurrentPage}
+						slug={slug}
+					/>
+				)}
 			</div>
-			{totalPage > 1 && (
-				<Pagination
-					totalPage={totalPage}
-					currentPage={currentPage}
-					setCurrentPage={setCurrentPage}
-					slug={slug}
-				/>
-			)}
 			{load && <Loading />}
 		</>
 	)

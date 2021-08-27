@@ -4,8 +4,7 @@ import axios from 'axios'
 import FacebookLogin from 'react-facebook-login'
 import { GlobalState } from '../../../GlobalState'
 const Login = () => {
-	const state = useContext(GlobalState)
-	const [login] = state.isLogin
+	const { login, setLogin } = useContext(GlobalState)
 	const [error, setError] = useState('')
 	const [user, setUser] = useState({
 		email: '',
@@ -24,8 +23,8 @@ const Login = () => {
 		e.preventDefault()
 		try {
 			await axios.post('/user/login', { ...user })
-			localStorage.setItem('first-login', true)
-			window.location.href = '/'
+			setLogin(true)
+			window.location = '/'
 		} catch (err) {
 			setError(
 				<div className="w-full bg-red-100 rounded text-red-700 py-1 text-center animate-bounce text-opacity-80">
@@ -37,15 +36,16 @@ const Login = () => {
 	const handleLoginFacebook = async (response) => {
 		try {
 			await axios.post('/user/loginwithfacebook', { ...response })
-			localStorage.setItem('first-login', true)
-			window.location.href = '/'
+			setLogin(true)
+			window.location = '/'
 		} catch (err) {
 			console.log(err)
 		}
 	}
+
 	if (login) return <Redirect to="/" />
 	return (
-		<div className="mt-16 bg-white p-3">
+		<div className="w-full mt-16 bg-white p-3">
 			<h1 className="pt-10 pb-5 text-2xl font-semibold text-center">
 				Chào mừng bạn đến với shop l1rf!
 			</h1>

@@ -3,14 +3,13 @@ import { Route, Redirect } from 'react-router-dom'
 import { GlobalState } from '../GlobalState'
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
-	const state = useContext(GlobalState)
-	const [isLogin] = state.isLogin
+	const { login } = useContext(GlobalState)
 
 	return (
 		<Route
 			{...rest}
 			render={(props) => {
-				if (isLogin) {
+				if (login) {
 					return <Component {...props} />
 				}
 				return (

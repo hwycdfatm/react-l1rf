@@ -1,11 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
 import CartItem from './CartItem'
 import { GlobalState } from '../../../GlobalState'
-import axios from 'axios'
 const Cart = () => {
-	const state = useContext(GlobalState)
-	const [cart, setCart] = state.cart
-	const [token] = state.token
+	const { cart, removeProduct } = useContext(GlobalState)
 	const [tempTotal, setTempTotal] = useState(0)
 	const ship = 50000
 	const total = tempTotal + ship
@@ -26,34 +23,19 @@ const Cart = () => {
 		getLength()
 		getTotal()
 	}, [cart])
-	const addToCart = async (cart) => {
-		await axios.patch(
-			'/user/addcart',
-			{ cart },
-			{
-				headers: { Authorization: token },
-			}
-		)
-	}
-	const removeProduct = (id) => {
-		if (window.confirm('Bạn không muốn mua sản phẩm này sao bạn yêu?')) {
-			cart.forEach((item, index) => {
-				if (item._id === id) {
-					cart.splice(index, 1)
-				}
-			})
-			setCart([...cart])
-			addToCart(cart)
-		}
-	}
+
 	return (
-		<div className="max-w-6xl mx-auto mt-16 p-2 xl:p-0">
-			<div className="bg-white h-full md:h-screen dark:bg-gray-700 rounded-lg ">
+		<div className="w-full max-w-6xl mx-auto mt-16 p-2 xl:p-0">
+			<div className=" h-full md:h-screen bg-transparent rounded-lg ">
 				<div className="grid grid-cols-12 gap-2">
 					<div className="col-span-12 sm:col-span-12 md:col-span-7 lg:col-span-8 2xl:col-span-8">
 						{cart.length >= 1
 							? cart.map((items, index) => (
-									<CartItem key={index} item={items} fncRM={removeProduct} />
+									<CartItem
+										key={index}
+										item={items}
+										removeProduct={removeProduct}
+									/>
 							  ))
 							: 'Giỏ hàng trống'}
 					</div>
@@ -94,7 +76,7 @@ const Cart = () => {
 						</div>
 						<div
 							onClick={() => alert('Đm t chưa có làm tới cái này')}
-							className="cursor-pointer py-4 border border-gray-200 shadow-md text-center font-bold  px-4 rounded-lg my-4 mx-2 lg:mx-2 dark:bg-red-500"
+							className="bg-white cursor-pointer py-4 border border-gray-200 shadow-md text-center font-bold  px-4 rounded-lg my-4 mx-2 lg:mx-2 dark:bg-red-500"
 						>
 							Thanh toán
 						</div>
