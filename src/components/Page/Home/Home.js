@@ -20,7 +20,7 @@ const Home = () => {
 	]
 
 	return (
-		<div className="w-full flex flex-col mt-20 dark:text-white transition duration-700 space-y-4">
+		<div className="w-full flex flex-col dark:text-white transition duration-700 space-y-4">
 			<div className="w-full mx-auto mb-5">
 				<Carousel carousels={data} />
 			</div>

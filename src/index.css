@@ -1663,11 +1663,24 @@ input[type='number']::-webkit-outer-spin-button {
 	animation: animation-scale 0.3s;
 }
 
+.animation-down {
+	animation: animation-down 0.3s;
+}
+
 @keyframes animation-scale {
 	from {
 		transform: scale(0);
 	}
 	to {
 		transform: scale(1);
+	}
+}
+
+@keyframes animation-down {
+	from {
+		transform: scaleY(0);
+	}
+	to {
+		transform: scaleY(1);
 	}
 }

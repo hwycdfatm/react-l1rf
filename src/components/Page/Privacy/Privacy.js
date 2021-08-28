@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Privacy() {
 	return (
-		<div className="mt-16">
+		<div>
 			<h1 className="text-center">ĐIỀU KHOẢN DỊCH VỤ </h1>
 			1. GIỚI THIỆU 1.1 Chào mừng bạn đến với sàn giao dịch thương mại điện tử
 			l1rf Store qua giao diện website hoặc ứng dụng di động (“Trang l1rf

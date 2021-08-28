@@ -40,7 +40,7 @@ const Detail = () => {
 	if (fail) return <Error />
 	return (
 		<>
-			<div className="pt-20 flex flex-col max-w-screen-lg mx-auto bg-transparent transition duration-700 dark:text-white">
+			<div className="flex flex-col max-w-screen-lg mx-auto bg-transparent transition duration-700 dark:text-white">
 				<div className="mt-4 flex flex-col w-full overflow-hidden md:flex-row md:space-x-8">
 					<div className="w-full h-96 md:w-1/2 rounded-lg overflow-hidden flex items-center justify-center md:h-542px">
 						<img
@@ -49,7 +49,7 @@ const Detail = () => {
 							className="w-full h-full object-cover"
 						/>
 					</div>
-					<div className="w-full flex flex-col space-y-4 px-4 md:px-0 text-sm md:text-base md:w-1/2">
+					<div className="w-full flex flex-col space-y-6 px-4 md:px-0 text-sm md:text-base md:w-1/2">
 						<h1
 							title="Quần jean rách gối ultimate vjp pr0 m1"
 							className="text-lg font-semibold mt-4 md:text-xl md:mt-0"
@@ -129,7 +129,7 @@ const Detail = () => {
 					</div>
 				</div>
 				<div
-					className="unreset"
+					className="unreset px-4 py-3 mt-10"
 					dangerouslySetInnerHTML={{ __html: product.content }}
 				/>
 			</div>

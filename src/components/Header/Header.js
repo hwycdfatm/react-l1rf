@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useContext } from 'react'
+import React, { useRef, useContext } from 'react'
 
 import { GlobalState } from '../../GlobalState'
 
@@ -10,11 +10,9 @@ import useDarkMode from '../../utils/useDarkMode.js'
 
 import Sidebar from './Sidebar'
 
-import axios from 'axios'
-
 const Header = () => {
 	// Global State
-	const { login, logout, cart } = useContext(GlobalState)
+	const { login, logout, cart, categories } = useContext(GlobalState)
 
 	// Dropdown
 	const dropdownRef = useRef(null)
@@ -22,16 +20,6 @@ const Header = () => {
 	const handleDropdown = () => setIsActive(!isActive)
 
 	const [colorTheme, setColorTheme] = useDarkMode()
-
-	const [categorys, setCategorys] = useState([])
-
-	useEffect(() => {
-		const getCategory = async () => {
-			const res = await axios.get('/api/category')
-			setCategorys(res.data.data)
-		}
-		getCategory()
-	}, [])
 
 	function darkMode() {
 		setColorTheme(colorTheme)
@@ -42,7 +30,7 @@ const Header = () => {
 			<Sidebar
 				darkModeFuntion={darkMode}
 				colorTheme={colorTheme}
-				categorys={categorys}
+				categorys={categories}
 				login={login}
 				logout={logout}
 			/>
@@ -52,7 +40,7 @@ const Header = () => {
 			</Link>
 
 			<div className="hidden flex-row space-x-6 font-semibold md:flex md:space-x-2 lg:ml-28">
-				{categorys.map((sidebar, index) => (
+				{categories.map((sidebar, index) => (
 					<NavLink
 						key={index}
 						to={'/category/' + sidebar.slug}
@@ -91,7 +79,7 @@ const Header = () => {
 						</button>
 
 						{isActive && (
-							<div className="absolute top-14 right-0 w-40 rounded-md shadow-md bg-white dark:bg-gray-700">
+							<div className="absolute top-14 right-0 w-40 rounded-md shadow-md bg-white dark:bg-gray-700 transform origin-top animation-down">
 								<div className="flex flex-col p-1 font-medium ">
 									<Link
 										to="/user"

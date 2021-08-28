@@ -44,6 +44,7 @@ export const DataProvider = ({ children }) => {
 	const [admin, setAdmin] = useLocalStorage('ongchuhocuatoi', false)
 	const [cart, setCart] = useState([])
 	const [token, setToken] = useState(false)
+	const [categories, setCategories] = useState([])
 
 	useEffect(() => {
 		if (login) {
@@ -76,11 +77,22 @@ export const DataProvider = ({ children }) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [token])
 
+	useEffect(() => {
+		try {
+			const getCategories = async () => {
+				const res = await axios.get('/api/category')
+				setCategories(res.data.data)
+			}
+			getCategories()
+		} catch (error) {
+			console.log(error)
+		}
+	}, [])
+
 	const logout = async () => {
 		await axios.get('/user/logout')
 		setLogin(false)
 		setAdmin(false)
-		localStorage.removeItem('first-login')
 		setCart([])
 	}
 
@@ -114,7 +126,12 @@ export const DataProvider = ({ children }) => {
 
 	const removeProduct = async (id) => {
 		if (window.confirm('Bạn không muốn mua sản phẩm này sao bạn yêu?')) {
-			setCart([...cart.filter((e) => e._id !== id)])
+			cart.forEach((item, index) => {
+				if (item._id === id) {
+					cart.splice(index, 1)
+				}
+			})
+			setCart([...cart])
 			await axios.patch(
 				'/user/addcart',
 				{ cart },
@@ -135,6 +152,7 @@ export const DataProvider = ({ children }) => {
 				logout,
 				cart,
 				setLogin,
+				categories,
 				removeProduct,
 			}}
 		>

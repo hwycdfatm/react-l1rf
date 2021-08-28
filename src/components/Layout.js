@@ -16,7 +16,7 @@ import Forget from '../components/Page/Auth/Forget'
 import Privacy from '../components/Page/Privacy/Privacy'
 import Error from '../components/Page/Error/Error'
 
-import MessengerCustomerChat from 'react-messenger-customer-chat'
+// import MessengerCustomerChat from 'react-messenger-customer-chat'
 
 import AdminRoute from '../routes/AdminRoute'
 import ProtectedRoute from '../routes/ProtectedRoute'
@@ -30,15 +30,12 @@ import Footer from '../components/Footer/Footer'
 import DashBoard from '../components/AdminPage/DashBoard'
 import SidebarAdmin from '../components/AdminPage/SidebarAdmin'
 import Form from '../components/AdminPage/Form'
+import AddProduct from '../components/AdminPage/AddProduct'
 const Layout = () => {
 	const { admin } = useContext(GlobalState)
 	const [open, setOpen] = useState(false)
 	const [openForm, setOpenForm] = useState(false)
 	const handleSidebar = () => setOpen(!open)
-	const hanbleButton = () => {
-		setOpen(!open)
-		setOpenForm(!openForm)
-	}
 	const handleForm = () => {
 		setOpenForm(!openForm)
 	}
@@ -51,15 +48,19 @@ const Layout = () => {
 			{!admin ? (
 				<>
 					<Header />
-					<MessengerCustomerChat
+					{/* <MessengerCustomerChat
 						pageId="2118692731747671"
 						appId="512680796465992"
-					/>
+					/> */}
 				</>
 			) : (
-				<SidebarAdmin option={{ handleSidebar, hanbleButton, open }} />
+				<SidebarAdmin option={{ handleSidebar, open }} />
 			)}
-			<div className="flex w-full bg-gray-100 dark:bg-gray-700 min-h-screen relative overflow-hidden">
+			<div
+				className={`flex ${
+					!admin && 'pt-16'
+				} bg-white min-h-screen relative overflow-hidden`}
+			>
 				{openForm && <Form handleForm={handleForm} open={openForm} />}
 				<Switch>
 					<Route exact path="/" component={admin ? DashBoard : Home} />
@@ -72,6 +73,7 @@ const Layout = () => {
 					<ProtectedRoute path="/cart" component={Cart} />
 					<ProtectedRoute path="/user" component={User} />
 					<AdminRoute path="/products" component={CategoryAdmin} />
+					<AdminRoute path="/add" component={AddProduct} />
 					<AdminRoute path="/orders" component={Orders} />
 					<Route path="*" component={Error} />
 				</Switch>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import { CKEditor } from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import { GlobalState } from '../../GlobalState'
@@ -9,7 +9,7 @@ const Form = (props) => {
 	const action = props.action || 'add'
 
 	// Global state
-	const { admin, token } = useContext(GlobalState)
+	const { admin, token, categories } = useContext(GlobalState)
 
 	// init Product
 	const [product, setProduct] = useState({
@@ -22,9 +22,6 @@ const Form = (props) => {
 		inStock: '',
 		images: [],
 	})
-
-	// init category
-	const [categories, setCategories] = useState([])
 
 	const [checked, setChecked] = useState(false)
 
@@ -159,17 +156,6 @@ const Form = (props) => {
 		}
 	}
 
-	useEffect(() => {
-		try {
-			const getCategories = async () => {
-				const res = await axios.get('/api/category')
-				setCategories(res.data.data)
-			}
-			getCategories()
-		} catch (error) {
-			alert(error)
-		}
-	}, [])
 	return (
 		<div
 			className={`fixed top-0 bottom-0 right-0 left-0 pt-6 lg:pt-10 z-30 lg:pl-56 lg:p-6 xl:pl-44 shadows-xl min-h-screen flex flex-col bg-gray-300 bg-opacity-90 transition duration-700 transform overflow-y-scroll animation-scale scrollbar`}
@@ -312,7 +298,7 @@ const Form = (props) => {
 							/>
 							<span className="ml-2 text-sm font-semibold">VNĐ</span>
 						</div>
-						<div className="flex flex-col order-first  md:order-none md:justify-start pb-2 lg:pb-0">
+						<div className="flex flex-col order-first space-y-2 md:order-none md:justify-start pb-2 lg:pb-0">
 							<h1 className="text-sm md:text-md md:font-semibold">
 								Các ảnh khác (tối đa 4 ảnh / vui lòng chọn ảnh lớn trước)
 							</h1>

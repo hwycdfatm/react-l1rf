@@ -45,7 +45,7 @@ const Login = () => {
 
 	if (login) return <Redirect to="/" />
 	return (
-		<div className="w-full mt-16 bg-white p-3">
+		<div className="w-full bg-white p-3">
 			<h1 className="pt-10 pb-5 text-2xl font-semibold text-center">
 				Chào mừng bạn đến với shop l1rf!
 			</h1>
@@ -130,12 +130,6 @@ const Login = () => {
 							onFocus={() => removeMsg()}
 							className="h-full outline-none flex-1 ml-1 pl-1 font-normal"
 						/>
-					</div>
-					<div>
-						<input type="checkbox" id="remember" />
-						<label htmlFor="remember" className="ml-2">
-							Ghi nhớ
-						</label>
 					</div>
 
 					<button

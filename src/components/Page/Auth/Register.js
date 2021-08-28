@@ -3,8 +3,8 @@ import { Link, useHistory, Redirect } from 'react-router-dom'
 import axios from 'axios'
 import { GlobalState } from '../../../GlobalState'
 const Register = () => {
-	const state = useContext(GlobalState)
-	const [login] = state.isLogin
+	const { login } = useContext(GlobalState)
+	const [checkPrivacy, setCheckPrivacy] = useState(false)
 	const [user, setUser] = useState({
 		name: '',
 		email: '',
@@ -21,6 +21,11 @@ const Register = () => {
 		setUser({ ...user, [name]: value })
 	}
 
+	// nếu check phần privacy mới cho bấm đăng ký
+	const handleCheck = (e) => {
+		if (e.target.checked) return setCheckPrivacy(true)
+		return setCheckPrivacy(false)
+	}
 	const handleRegister = async (e) => {
 		e.preventDefault()
 		try {
@@ -36,9 +41,10 @@ const Register = () => {
 			alert(err.response.data.message)
 		}
 	}
+
 	if (login) return <Redirect to="/" />
 	return (
-		<div className="w-full mt-16 bg-white p-3">
+		<div className="w-full bg-white p-3">
 			<h1 className="py-5 text-2xl font-semibold text-center">
 				Chào mừng bạn đến với shop l1rf!
 			</h1>
@@ -184,9 +190,9 @@ const Register = () => {
 						/>
 					</div>
 					<div>
-						<input type="checkbox" id="remember" />
+						<input type="checkbox" id="remember" onChange={handleCheck} />
 						<label htmlFor="remember" className="ml-2">
-							Tôi đồng ý với các {''}
+							Tôi đồng ý với các
 							<Link to="/dieu-khoan" className="text-blue-300">
 								điều khoản
 							</Link>
@@ -194,8 +200,10 @@ const Register = () => {
 					</div>
 
 					<button
-						type="submit"
-						className="mx-auto w-32 p-2 bg-blue-300 rounded-md text-white outline-none focus:outline-none focus:shadow-outline"
+						type={checkPrivacy ? `submit` : 'button'}
+						className={`mx-auto w-32 p-2  rounded-md text-white outline-none focus:outline-none focus:shadow-outline transition-all ${
+							checkPrivacy ? 'bg-blue-500' : 'bg-blue-300'
+						} `}
 					>
 						Đăng ký
 					</button>

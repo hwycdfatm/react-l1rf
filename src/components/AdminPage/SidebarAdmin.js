@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 import { GlobalState } from '../../GlobalState'
 const SidebarAdmin = (props) => {
 	const { logout } = useContext(GlobalState)
-	const { handleSidebar, hanbleButton, open } = props.option
+	const { handleSidebar, open } = props.option
 	return (
 		<>
 			<div className="top-0 left-0 right-0 p-3 fixed bg-white lg:hidden z-30">
@@ -103,8 +103,8 @@ const SidebarAdmin = (props) => {
 						Tất cả hóa đơn
 					</NavLink>
 					<NavLink
-						to="#"
-						onClick={hanbleButton}
+						to="/add"
+						onClick={handleSidebar}
 						className="flex items-center space-x-2 h-10 px-2 rounded-md transition duration-300  hover:bg-gray-300 text-sm font-semibold"
 					>
 						Thêm sản phẩm mới
