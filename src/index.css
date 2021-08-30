@@ -8,6 +8,11 @@
 	src: url('./fonts/Patriot-Medium.ttf');
 	font-family: Patriot;
 }
+
+@font-face {
+	src: url('./fonts/NotoSans-Regular.ttf');
+	font-family: Notosans;
+}
 .patriot {
 	font-family: Patriot;
 }
@@ -1657,6 +1662,10 @@ input[type='number']::-webkit-outer-spin-button {
 }
 .unreset iframe {
 	border: 2px inset;
+}
+
+.height-animation {
+	transition: max-height 300ms;
 }
 
 .animation-scale {

@@ -74,7 +74,7 @@ const Register = () => {
 						<input
 							type="text"
 							placeholder="Họ tên của bạn là gì ?"
-							id="name"
+							id="username"
 							name="name"
 							value={user.name}
 							onChange={onChangeInput}
@@ -82,7 +82,7 @@ const Register = () => {
 						/>
 					</div>
 					<div className="flex items-center h-10 rounded-md border border-gray-100">
-						<label htmlFor="username" className="text-gray-400 p-1 ml-1">
+						<label htmlFor="address" className="text-gray-400 p-1 ml-1">
 							<svg
 								className="w-6 h-6"
 								fill="none"

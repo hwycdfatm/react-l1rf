@@ -45,7 +45,7 @@ export const DataProvider = ({ children }) => {
 	const [cart, setCart] = useState([])
 	const [token, setToken] = useState(false)
 	const [categories, setCategories] = useState([])
-
+	const [user, setUser] = useState('')
 	useEffect(() => {
 		if (login) {
 			const refreshToken = async () => {
@@ -63,6 +63,7 @@ export const DataProvider = ({ children }) => {
 					const result = await axios.get('/user/info', {
 						headers: { Authorization: token },
 					})
+					setUser(result.data.user)
 					setLogin(true)
 					if (result.data.user.role === 'admin') {
 						setAdmin(true)
@@ -100,41 +101,39 @@ export const DataProvider = ({ children }) => {
 		if (!login) return alert('Vui lòng đăng nhập')
 		const check = cart.every((item) => item._id !== product._id)
 		if (!check) {
+			// Cập nhật số lượng sản phẩm
 			cart.forEach((item) => {
 				if (item._id === product._id) {
 					item.quantity += product.quantity
 				}
 			})
-			await axios.patch(
-				'/user/addcart',
-				{ cart },
-				{
-					headers: { Authorization: token },
-				}
-			)
+			setCart([...cart])
 		} else {
-			setCart([...cart, { ...product, quantity: product.quantity }])
-			await axios.patch(
-				'/user/addcart',
-				{ cart },
-				{
-					headers: { Authorization: token },
-				}
-			)
+			// Thêm sản phẩm mới
+			cart.push(product)
+			// setCart([...cart, { ...product, quantity: product.quantity }])
+			setCart([...cart])
 		}
+		await axios.patch(
+			'/user/addcart',
+			{ cart },
+			{
+				headers: { Authorization: token },
+			}
+		)
 	}
 
 	const removeProduct = async (id) => {
 		if (window.confirm('Bạn không muốn mua sản phẩm này sao bạn yêu?')) {
-			cart.forEach((item, index) => {
-				if (item._id === id) {
-					cart.splice(index, 1)
-				}
-			})
-			setCart([...cart])
+			// cart.forEach((item, index) => {
+			// 	if (item._id === id) {
+			// 		cart.splice(index, 1)
+			// 	}
+			// })
+			setCart([...cart.filter((e) => e._id !== id)])
 			await axios.patch(
 				'/user/addcart',
-				{ cart },
+				{ cart: [...cart.filter((e) => e._id !== id)] },
 				{
 					headers: { Authorization: token },
 				}
@@ -154,6 +153,7 @@ export const DataProvider = ({ children }) => {
 				setLogin,
 				categories,
 				removeProduct,
+				user,
 			}}
 		>
 			{children}

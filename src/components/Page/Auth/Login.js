@@ -24,6 +24,7 @@ const Login = () => {
 		try {
 			await axios.post('/user/login', { ...user })
 			setLogin(true)
+			localStorage.setItem('first-login', true)
 			window.location = '/'
 		} catch (err) {
 			setError(
@@ -35,11 +36,14 @@ const Login = () => {
 	}
 	const handleLoginFacebook = async (response) => {
 		try {
-			await axios.post('/user/loginwithfacebook', { ...response })
+			await axios.post('/user/loginwithfacebook', {
+				...response,
+			})
 			setLogin(true)
+			localStorage.setItem('first-login', true)
 			window.location = '/'
 		} catch (err) {
-			console.log(err)
+			console.log({ err })
 		}
 	}
 

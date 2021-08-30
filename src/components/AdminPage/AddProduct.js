@@ -7,7 +7,6 @@ import axios from 'axios'
 const AddProduct = () => {
 	// Global state
 	const { admin, token, categories } = useContext(GlobalState)
-
 	// init Product
 	const [product, setProduct] = useState({
 		title: '',
@@ -85,7 +84,6 @@ const AddProduct = () => {
 					Authorization: token,
 				},
 			})
-			console.log(res.data.images)
 			setProduct({
 				...product,
 				images: [...product.images, ...res.data.images],
@@ -103,12 +101,13 @@ const AddProduct = () => {
 			const check = await axios.post(
 				'/api/product',
 				{ ...product },
-				{ header: { Authorization: token } }
+				{
+					header: { Authorization: token },
+				}
 			)
 			if (check.status === 200) {
 				alert(check.data.message)
 			}
-			console.log(check)
 		} catch (error) {
 			console.log(error)
 		}
@@ -134,7 +133,6 @@ const AddProduct = () => {
 			alert(err)
 		}
 	}
-
 	return (
 		<form
 			onSubmit={handleAddProduct}

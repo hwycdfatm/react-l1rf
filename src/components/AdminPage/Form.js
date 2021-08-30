@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useContext } from 'react'
 import { CKEditor } from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import { GlobalState } from '../../GlobalState'
@@ -6,30 +6,22 @@ import axios from 'axios'
 
 const Form = (props) => {
 	// default Action is Add
-	const action = props.action || 'add'
+	const { onChangeInput, product, setProduct, setOpenForm } = props
 
 	// Global state
 	const { admin, token, categories } = useContext(GlobalState)
 
 	// init Product
-	const [product, setProduct] = useState({
-		title: '',
-		description: '',
-		content: 'Đây là phần content của sản phẩm',
-		category: '',
-		slug: '',
-		price: '',
-		inStock: '',
-		images: [],
-	})
-
-	const [checked, setChecked] = useState(false)
-
-	// handle input
-	const onChangeInput = (e) => {
-		const { name, value } = e.target
-		setProduct({ ...product, [name]: value })
-	}
+	// const [product, setProduct] = useState({
+	// 	title: '',
+	// 	description: '',
+	// 	content: 'Đây là phần content của sản phẩm',
+	// 	category: '',
+	// 	slug: '',
+	// 	price: '',
+	// 	inStock: '',
+	// 	images: [],
+	// })
 
 	// convers title to slug
 	function string_to_slug(str) {
@@ -69,7 +61,6 @@ const Form = (props) => {
 			if (files.length === 1) {
 				const check = checkImage(files[0])
 				if (check) {
-					setChecked(true)
 					formData.append('file', files[0])
 				}
 			} else {
@@ -93,25 +84,6 @@ const Form = (props) => {
 				...product,
 				images: [...product.images, ...res.data.images],
 			})
-		} catch (error) {
-			console.log(error)
-		}
-	}
-
-	// handle upload product
-	const handleAddProduct = async (e) => {
-		e.preventDefault()
-		try {
-			if (!admin) return alert('Mày không có quyền')
-			const check = await axios.post(
-				'/api/product',
-				{ ...product },
-				{ header: { Authorization: token } }
-			)
-			if (check.status === 200) {
-				alert(check.data.message)
-			}
-			console.log(check)
 		} catch (error) {
 			console.log(error)
 		}
@@ -161,7 +133,7 @@ const Form = (props) => {
 			className={`fixed top-0 bottom-0 right-0 left-0 pt-6 lg:pt-10 z-30 lg:pl-56 lg:p-6 xl:pl-44 shadows-xl min-h-screen flex flex-col bg-gray-300 bg-opacity-90 transition duration-700 transform overflow-y-scroll animation-scale scrollbar`}
 		>
 			<button
-				onClick={props.handleForm}
+				onClick={() => setOpenForm(false)}
 				className="absolute top-3 right-3 lg:right-20 text-red-600 focus:border-none"
 			>
 				<svg
@@ -179,10 +151,7 @@ const Form = (props) => {
 					/>
 				</svg>
 			</button>
-			<form
-				onSubmit={action ? handleEditProduct : handleAddProduct}
-				className="p-3"
-			>
+			<form onSubmit={handleEditProduct} className="p-3">
 				<div className="flex flex-col p-1 w-full max-w-screen-lg mx-auto md:flex-row md:space-x-4">
 					<div className="h-96 md:h-542px md:w-1/2 shadow appearance-none border rounded w-full text-gray-700 leading-tight overflow-hidden flex items-center justify-center focus:outline-none focus:shadow-outline relative">
 						{product.images[0] ? (
@@ -357,17 +326,14 @@ const Form = (props) => {
 									))
 								)}
 							</div>
-							{checked ? (
-								<input
-									type="file"
-									id="imagess"
-									hidden
-									multiple
-									onChange={handleUploadImages}
-								/>
-							) : (
-								''
-							)}
+
+							<input
+								type="file"
+								id="imagess"
+								hidden
+								multiple
+								onChange={handleUploadImages}
+							/>
 						</div>
 						<div className="space-y-1">
 							<h1 className="text-sm md:text-md md:font-semibold">
@@ -391,29 +357,23 @@ const Form = (props) => {
 								<select
 									onChange={onChangeInput}
 									name="category"
-									value={action === 'edit' && product.category}
+									value={product.category}
 									className="shadow appearance-none border rounded px-2 py-2 text-gray-700 focus:outline-none focus:shadow-outline xl:px-4"
 								>
 									<option value="" hidden>
 										Chọn danh mục
 									</option>
-									{action === 'edit'
-										? categories.map((category, index) => (
-												<option key={index} value={category.slug}>
-													{category.name}
-												</option>
-										  ))
-										: categories.map((category, index) => (
-												<option key={index} value={category.slug}>
-													{category.name}
-												</option>
-										  ))}
+									{categories.map((category, index) => (
+										<option key={index} value={category.slug}>
+											{category.name}
+										</option>
+									))}
 								</select>
 								<button
 									type="submit"
 									className="px-2 py-2 text-gray-900 bg-gray-100 rounded font-semibold border shadow xl:px-4"
 								>
-									{action === 'add' ? 'Thêm sản phẩm' : 'Cập nhật sản phẩm'}
+									Cập nhật sản phẩm
 								</button>
 							</div>
 						</div>

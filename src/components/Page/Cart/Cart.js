@@ -2,11 +2,12 @@ import React, { useContext, useEffect, useState } from 'react'
 import CartItem from './CartItem'
 import { GlobalState } from '../../../GlobalState'
 const Cart = () => {
-	const { cart, removeProduct } = useContext(GlobalState)
+	const { cart, removeProduct, user } = useContext(GlobalState)
 	const [tempTotal, setTempTotal] = useState(0)
 	const ship = 50000
 	const total = tempTotal + ship
 	const [length, setLength] = useState(0)
+
 	useEffect(() => {
 		const getTotal = () => {
 			const total = cart.reduce((prev, item) => {
@@ -23,6 +24,13 @@ const Cart = () => {
 		getLength()
 		getTotal()
 	}, [cart])
+
+	const handlePayment = async () => {
+		if (!user.address) {
+			return console.log('Vui lòng cập nhật nơi ở của bạn')
+		}
+		console.log({ cart, user, total, length })
+	}
 
 	return (
 		<div className="w-full max-w-6xl mx-auto xl:p-0">
@@ -78,11 +86,12 @@ const Cart = () => {
 								</div>
 							</div>
 						</div>
+
 						<div
-							onClick={() => alert('Đm t chưa có làm tới cái này')}
+							onClick={handlePayment}
 							className="bg-white cursor-pointer py-4 border border-gray-200 shadow-md text-center font-bold  px-4 rounded-lg my-4 mx-2 lg:mx-2 dark:bg-red-500"
 						>
-							Thanh toán
+							Thanh toán COD
 						</div>
 					</div>
 				</div>

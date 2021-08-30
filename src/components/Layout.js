@@ -59,7 +59,7 @@ const Layout = () => {
 			<div
 				className={`flex ${
 					!admin && 'pt-16'
-				} bg-white min-h-screen relative overflow-hidden`}
+				} bg-white min-h-screen relative overflow-hidden font-noto`}
 			>
 				{openForm && <Form handleForm={handleForm} open={openForm} />}
 				<Switch>

@@ -17,9 +17,9 @@ const Product = (props) => {
 					className="h-full object-cover"
 				/>
 			</div>
-			<div className="flex flex-col p-3 h-24">
-				<h3 className="text-base font-bold">{props.sp.title}</h3>
-				<h4 className="text-sm font-bold cursor-default w-max bg-purple-500 px-1 rounded text-gray-200  mt-auto">
+			<div className="flex-1 px-3 py-2 flex flex-col justify-between">
+				<h3 className="text-base font-medium ">{props.sp.title}</h3>
+				<h4 className="text-sm font-medium cursor-default mt-auto text-gray-700">
 					{price.toLocaleString('en')} vnđ
 				</h4>
 			</div>

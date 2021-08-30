@@ -35,7 +35,7 @@ const Category = () => {
 	return (
 		<>
 			<div className="w-full px-3 py-5">
-				<div className="grid grid-cols-1 sm:gap-4 lg:gap-5 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+				<div className="grid grid-cols-1 gap-3 sm:gap-4 lg:gap-5 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
 					{products.map((product, index) => (
 						<Product sp={product} key={index} />
 					))}
