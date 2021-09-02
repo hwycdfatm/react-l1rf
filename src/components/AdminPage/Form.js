@@ -6,7 +6,7 @@ import axios from 'axios'
 
 const Form = (props) => {
 	// default Action is Add
-	const { onChangeInput, product, setProduct, setOpenForm } = props
+	const { onChangeInput, product, setProduct } = props
 
 	// Global state
 	const { admin, token, categories } = useContext(GlobalState)
@@ -130,27 +130,8 @@ const Form = (props) => {
 
 	return (
 		<div
-			className={`fixed top-0 bottom-0 right-0 left-0 pt-6 lg:pt-10 z-30 lg:pl-56 lg:p-6 xl:pl-44 shadows-xl min-h-screen flex flex-col bg-gray-300 bg-opacity-90 transition duration-700 transform overflow-y-scroll animation-scale scrollbar`}
+			className={`fixed top-0 bottom-0 right-0 left-0 pt-6 lg:pt-10 z-30 lg:pl-56  xl:pl-44 shadows-xl min-h-screen flex flex-col bg-white bg-opacity-90 transition duration-700 transform overflow-y-scroll animation-scale scrollbar`}
 		>
-			<button
-				onClick={() => setOpenForm(false)}
-				className="absolute top-3 right-3 lg:right-20 text-red-600 focus:border-none"
-			>
-				<svg
-					className="w-6 h-6"
-					fill="none"
-					stroke="currentColor"
-					viewBox="0 0 24 24"
-					xmlns="http://www.w3.org/2000/svg"
-				>
-					<path
-						strokeLinecap="round"
-						strokeLinejoin="round"
-						strokeWidth={2}
-						d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-					/>
-				</svg>
-			</button>
 			<form onSubmit={handleEditProduct} className="p-3">
 				<div className="flex flex-col p-1 w-full max-w-screen-lg mx-auto md:flex-row md:space-x-4">
 					<div className="h-96 md:h-542px md:w-1/2 shadow appearance-none border rounded w-full text-gray-700 leading-tight overflow-hidden flex items-center justify-center focus:outline-none focus:shadow-outline relative">

@@ -1,44 +1,100 @@
-import React, { useState, useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link, useHistory, Redirect } from 'react-router-dom'
 import axios from 'axios'
 import { GlobalState } from '../../../GlobalState'
+
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup'
 const Register = () => {
 	const { login } = useContext(GlobalState)
-	const [checkPrivacy, setCheckPrivacy] = useState(false)
-	const [user, setUser] = useState({
-		name: '',
-		email: '',
-		address: '',
-		password: '',
-		repassword: '',
+	const [noti, setNoti] = useState('')
+	// check privacy
+	const [privacy, setPrivacy] = useState(false)
+	// định nghĩa các rule
+	const schema = yup.object().shape({
+		email: yup.string().required('Vui lòng nhập email'),
+		password: yup
+			.string()
+			.required('Vui lòng nhập mật khẩu')
+			.min(6, 'Mật khẩu phải lớn hơn 6 ký tự'),
+		repassword: yup
+			.string()
+			.required('Vui lòng nhập mật khẩu')
+			.min(6, 'Mật khẩu phải lớn hơn 6 ký tự')
+			.oneOf([yup.ref('password'), null], 'Mật khẩu không hợp lệ'),
+		name: yup.string().required('Vui lòng nhập tên của bạn'),
+		address: yup.string().required('Vui lòng nhập địa chỉ'),
 	})
+
+	// lấy react hook form
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm({
+		mode: 'all',
+		resolver: yupResolver(schema),
+	})
+
+	// init form field
+	const formInit = [
+		{
+			name: 'name',
+			type: 'text',
+			placeholder: 'Họ tên bạn là gì ?',
+			icon: 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z',
+		},
+		{
+			name: 'address',
+			type: 'text',
+			placeholder: 'Địa chỉ nhà bạn ở đâu ?',
+			icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6',
+		},
+		{
+			name: 'email',
+			type: 'email',
+			placeholder: 'Email của bạn là gì ?',
+			icon: 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z',
+		},
+		{
+			name: 'password',
+			type: 'password',
+			placeholder: 'Mật khẩu ?',
+			icon: 'M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z',
+		},
+		{
+			name: 'repassword',
+			type: 'password',
+			placeholder: 'Vui lòng nhập lại mật khẩu',
+			icon: 'M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z',
+		},
+	]
+
 	const history = useHistory()
 	const handleHistory = () => {
 		history.push('/login')
 	}
-	const onChangeInput = (e) => {
-		const { name, value } = e.target
-		setUser({ ...user, [name]: value })
-	}
 
-	// nếu check phần privacy mới cho bấm đăng ký
-	const handleCheck = (e) => {
-		if (e.target.checked) return setCheckPrivacy(true)
-		return setCheckPrivacy(false)
-	}
-	const handleRegister = async (e) => {
-		e.preventDefault()
+	const handleRegister = async (data) => {
 		try {
-			if (user.password === user.repassword) {
-				const result = await axios.post('/user/register', { ...user })
-				if (result.status === 200) {
-					handleHistory()
-				}
-			} else {
-				alert('Mật khẩu không hợp lệ')
+			const result = await axios.post('/user/register', { ...data })
+			if (result.status === 200) {
+				setNoti(
+					<div className="text-center py-1 bg-blue-400 text-white animate-bounce rounded bg-opacity-70">
+						{result.data.message}
+						<br />
+						Hệ thống sẽ tự chuyển đến trang đăng nhập sau 5 giây
+					</div>
+				)
+				setTimeout(handleHistory, 5000)
 			}
 		} catch (err) {
-			alert(err.response.data.message)
+			setNoti(
+				<div className="text-center py-1 bg-red-400 text-white animate-bounce rounded bg-opacity-70">
+					{err.response.data.message}
+				</div>
+			)
 		}
 	}
 
@@ -50,147 +106,51 @@ const Register = () => {
 			</h1>
 			<div className="rounded-md shadow-md max-w-md mx-auto p-3 flex flex-col space-y-10">
 				<form
-					onSubmit={handleRegister}
+					onSubmit={handleSubmit(handleRegister)}
 					className="flex flex-col space-y-4 text-gray-400"
 				>
 					<h4 className="text-center text-xl">Đăng ký</h4>
-					<div className="flex items-center h-10 rounded-md border border-gray-100">
-						<label htmlFor="username" className="text-gray-400 p-1 ml-1">
-							<svg
-								className="w-6 h-6"
-								fill="none"
-								stroke="currentColor"
-								viewBox="0 0 24 24"
-								xmlns="http://www.w3.org/2000/svg"
-							>
-								<path
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									strokeWidth={2}
-									d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+					{noti && noti}
+					{formInit.map((data, index) => (
+						<div key={index}>
+							<div className="flex items-center h-10 rounded-md border border-gray-100">
+								<label htmlFor={data.name} className="text-gray-400 p-1 ml-1">
+									<svg
+										className="w-6 h-6"
+										fill="none"
+										stroke="currentColor"
+										viewBox="0 0 24 24"
+										xmlns="http://www.w3.org/2000/svg"
+									>
+										<path
+											strokeLinecap="round"
+											strokeLinejoin="round"
+											strokeWidth={2}
+											d={data.icon}
+										/>
+									</svg>
+								</label>
+								<input
+									type={data.type}
+									placeholder={data.placeholder}
+									id={data.name}
+									name={data.name}
+									{...register(data.name)}
+									className="outline-none flex-1 ml-2 font-normal h-full appearance-none bg-none"
 								/>
-							</svg>
-						</label>
-						<input
-							type="text"
-							placeholder="Họ tên của bạn là gì ?"
-							id="username"
-							name="name"
-							value={user.name}
-							onChange={onChangeInput}
-							className="outline-none flex-1 ml-2 font-normal h-full appearance-none bg-none"
-						/>
-					</div>
-					<div className="flex items-center h-10 rounded-md border border-gray-100">
-						<label htmlFor="address" className="text-gray-400 p-1 ml-1">
-							<svg
-								className="w-6 h-6"
-								fill="none"
-								stroke="currentColor"
-								viewBox="0 0 24 24"
-								xmlns="http://www.w3.org/2000/svg"
-							>
-								<path
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									strokeWidth={2}
-									d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-								/>
-							</svg>
-						</label>
-						<input
-							type="text"
-							placeholder="Địa chỉ nhà bạn ở đâu ?"
-							id="address"
-							name="address"
-							value={user.address}
-							onChange={onChangeInput}
-							className="outline-none flex-1 ml-2 font-normal h-full"
-						/>
-					</div>
-					<div className="flex items-center h-10 rounded-md border border-gray-100">
-						<label htmlFor="email" className="text-gray-400 p-1 ml-1">
-							<svg
-								className="w-6 h-6"
-								fill="none"
-								stroke="currentColor"
-								viewBox="0 0 24 24"
-								xmlns="http://www.w3.org/2000/svg"
-							>
-								<path
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									strokeWidth={2}
-									d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-								/>
-							</svg>
-						</label>
-						<input
-							type="text"
-							placeholder="Email"
-							id="email"
-							name="email"
-							value={user.email}
-							onChange={onChangeInput}
-							className="outline-none flex-1 ml-2 font-normal h-full"
-						/>
-					</div>
-					<div className="flex items-center h-10 rounded-md border border-gray-100">
-						<label htmlFor="password" className="p-1 ml-1">
-							<svg
-								className="w-6 h-6"
-								fill="none"
-								stroke="currentColor"
-								viewBox="0 0 24 24"
-								xmlns="http://www.w3.org/2000/svg"
-							>
-								<path
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									strokeWidth={2}
-									d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"
-								/>
-							</svg>
-						</label>
-						<input
-							type="password"
-							placeholder="Mật khẩu"
-							id="password"
-							name="password"
-							value={user.password}
-							onChange={onChangeInput}
-							className="outline-none flex-1 ml-2 font-normal h-full"
-						/>
-					</div>
-					<div className="flex items-center h-10 rounded-md border border-gray-100">
-						<label htmlFor="repassword" className="p-1 ml-1">
-							<svg
-								className="w-6 h-6"
-								fill="none"
-								stroke="currentColor"
-								viewBox="0 0 24 24"
-								xmlns="http://www.w3.org/2000/svg"
-							>
-								<path
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									strokeWidth={2}
-									d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-								/>
-							</svg>
-						</label>
-						<input
-							type="password"
-							placeholder="Bạn vui lòng nhập lại mật khẩu"
-							id="repassword"
-							name="repassword"
-							value={user.repassword}
-							onChange={onChangeInput}
-							className="outline-none flex-1 ml-2 font-normal h-full"
-						/>
-					</div>
+							</div>
+							<div className="text-sm mt-2 ml-4 text-red-500">
+								{errors[data.name]?.message}
+							</div>
+						</div>
+					))}
+
 					<div>
-						<input type="checkbox" id="remember" onChange={handleCheck} />
+						<input
+							type="checkbox"
+							id="remember"
+							onChange={() => setPrivacy(!privacy)}
+						/>
 						<label htmlFor="remember" className="ml-2">
 							Tôi đồng ý với các
 							<Link to="/dieu-khoan" className="text-blue-300">
@@ -200,10 +160,10 @@ const Register = () => {
 					</div>
 
 					<button
-						type={checkPrivacy ? `submit` : 'button'}
+						type={`${privacy ? 'submit' : 'button'}`}
 						className={`mx-auto w-32 p-2  rounded-md text-white outline-none focus:outline-none focus:shadow-outline transition-all ${
-							checkPrivacy ? 'bg-blue-500' : 'bg-blue-300'
-						} `}
+							privacy ? 'bg-blue-500' : 'bg-gray-300 cursor-default'
+						}`}
 					>
 						Đăng ký
 					</button>

@@ -109,6 +109,13 @@ const SidebarAdmin = (props) => {
 					>
 						Thêm sản phẩm mới
 					</NavLink>
+					<NavLink
+						to="/trash"
+						onClick={handleSidebar}
+						className="flex items-center space-x-2 h-10 px-2 rounded-md transition duration-300  hover:bg-gray-300 text-sm font-semibold"
+					>
+						BTS
+					</NavLink>
 				</div>
 				<div className="p-2 mb-5">
 					<button

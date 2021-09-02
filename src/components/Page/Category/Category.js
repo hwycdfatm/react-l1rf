@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import axios from 'axios'
+
+import productAPI from '../../../api/productAPI'
 
 import Pagination from '../../../utils/Pagination'
 import Product from '../Product/Product'
@@ -13,25 +14,32 @@ const Category = () => {
 	const [load, setLoad] = useState(true)
 	const [fail, setFail] = useState(false)
 	const [totalPage, setTotalPage] = useState('')
-	const _limit = 9
 	const [currentPage, setCurrentPage] = useState(1)
 
 	useEffect(() => {
 		async function fetchProduct() {
 			try {
-				const result = await axios.get(
-					`/api/product?category=${slug}&_limit=${_limit}&_page=${currentPage}`
-				)
-				setLoad(false)
-				setProducts(result.data.data)
-				setTotalPage(result.data.pagination._total_Page)
+				const params = {
+					category: slug,
+					_page: currentPage,
+					_limit: 9, // tối đa bao nhiêu sản phẩm trong 1 trang
+				}
+				const result = await productAPI.getAll(params)
+				if (result.status === 'Success') {
+					setLoad(false)
+					setProducts(result.data)
+					setTotalPage(result.pagination._total_Page)
+				}
 			} catch (err) {
+				console.log(err)
 				if (err) return setFail(true)
 			}
 		}
 		fetchProduct()
 	}, [slug, currentPage])
+
 	if (fail) return <Error />
+
 	return (
 		<>
 			<div className="w-full px-3 py-5">

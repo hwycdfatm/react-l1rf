@@ -3,24 +3,51 @@ import { Link, Redirect } from 'react-router-dom'
 import axios from 'axios'
 import FacebookLogin from 'react-facebook-login'
 import { GlobalState } from '../../../GlobalState'
+
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup'
+
 const Login = () => {
 	const { login, setLogin } = useContext(GlobalState)
 	const [error, setError] = useState('')
-	const [user, setUser] = useState({
-		email: '',
-		password: '',
-	})
 
-	const onChangeInput = (e) => {
-		const { name, value } = e.target
-		setUser({ ...user, [name]: value })
-	}
 	function removeMsg() {
 		setError('')
 	}
 
-	const loginSubmit = async (e) => {
-		e.preventDefault()
+	// định nghĩa các rule
+	const schema = yup.object().shape({
+		email: yup.string().required('Vui lòng nhập email'),
+		password: yup
+			.string()
+			.required('Vui lòng nhập mật khẩu')
+			.min(6, 'Mật khẩu phải lớn hơn 6 ký tự'),
+	})
+	// lấy react hook form
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm({
+		mode: 'all',
+		resolver: yupResolver(schema),
+	})
+	// init input Field value
+	const inputs = [
+		{
+			name: 'email',
+			placeholder: 'Email',
+			icon: 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z',
+		},
+		{
+			name: 'password',
+			placeholder: 'Mật khẩu',
+			icon: 'M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z',
+		},
+	]
+	// xử lý đăng nhập bằng tài khoản được tạo
+	const loginSubmit = async (user) => {
 		try {
 			await axios.post('/user/login', { ...user })
 			setLogin(true)
@@ -34,6 +61,7 @@ const Login = () => {
 			)
 		}
 	}
+	// xử lý đằng nhập bằng facebook
 	const handleLoginFacebook = async (response) => {
 		try {
 			await axios.post('/user/loginwithfacebook', {
@@ -74,67 +102,45 @@ const Login = () => {
 				</div>
 
 				<form
-					onSubmit={loginSubmit}
+					onSubmit={handleSubmit(loginSubmit)}
 					className="flex flex-col space-y-4 text-gray-400"
 				>
 					<h4 className="text-center font-semibold">Đăng nhập</h4>
 					{error ? error : ''}
-					<div className="flex items-center h-10 rounded-md border border-gray-100 overflow-hidden">
-						<label htmlFor="email" className="text-gray-400 p-1 ml-1">
-							<svg
-								className="w-6 h-6"
-								fill="none"
-								stroke="currentColor"
-								viewBox="0 0 24 24"
-								xmlns="http://www.w3.org/2000/svg"
-							>
-								<path
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									strokeWidth={2}
-									d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+					{inputs.map((e, i) => (
+						<div key={i}>
+							<div className="flex items-center h-10 rounded-md border border-gray-100 overflow-hidden">
+								<label htmlFor={e.name} className="p-1 ml-1">
+									<svg
+										className="w-6 h-6"
+										fill="none"
+										stroke="currentColor"
+										viewBox="0 0 24 24"
+										xmlns="http://www.w3.org/2000/svg"
+									>
+										<path
+											strokeLinecap="round"
+											strokeLinejoin="round"
+											strokeWidth={2}
+											d={e.icon}
+										/>
+									</svg>
+								</label>
+								<input
+									type={e.name}
+									placeholder={e.placeholder}
+									id={e.name}
+									name={e.name}
+									onFocus={() => removeMsg()}
+									className="h-full outline-none flex-1 ml-1 pl-1 font-normal"
+									{...register(e.name)}
 								/>
-							</svg>
-						</label>
-						<input
-							type="email"
-							placeholder="Email"
-							id="email"
-							name="email"
-							value={user.email}
-							onChange={onChangeInput}
-							onFocus={() => removeMsg()}
-							className="h-full outline-none flex-1 ml-1 pl-1 font-normal"
-						/>
-					</div>
-					<div className="flex items-center h-10 rounded-md border border-gray-100 overflow-hidden">
-						<label htmlFor="password" className="p-1 ml-1">
-							<svg
-								className="w-6 h-6"
-								fill="none"
-								stroke="currentColor"
-								viewBox="0 0 24 24"
-								xmlns="http://www.w3.org/2000/svg"
-							>
-								<path
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									strokeWidth={2}
-									d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"
-								/>
-							</svg>
-						</label>
-						<input
-							type="password"
-							placeholder="Mật khẩu"
-							id="password"
-							name="password"
-							value={user.password}
-							onChange={onChangeInput}
-							onFocus={() => removeMsg()}
-							className="h-full outline-none flex-1 ml-1 pl-1 font-normal"
-						/>
-					</div>
+							</div>
+							<div className="text-sm mt-2 ml-4 text-red-500">
+								{errors[e.name]?.message}
+							</div>
+						</div>
+					))}
 
 					<button
 						type="submit"

@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { useParams } from 'react-router-dom'
-import axios from 'axios'
 import Loading from '../../../utils/Loading'
 import { GlobalState } from '../../../GlobalState'
 import Error from '../Error/Error'
 import NotFoundImage from './image-not-found.jpg'
+import productAPI from '../../../api/productAPI'
 const Detail = () => {
 	const state = useContext(GlobalState)
 	const [count, setCount] = useState(1)
@@ -23,12 +23,12 @@ const Detail = () => {
 	useEffect(() => {
 		async function fetchProduct() {
 			try {
-				const result = await axios.get(`/api/product/${slug}`)
+				const result = await productAPI.getBySlug(slug)
 				setLoad(false)
-				if (result.status === 200) {
-					setProduct(result.data.data)
-					if (result.data.data.images[0]) {
-						setImageMain(result.data.data.images[0].url)
+				if (result.status === 'Success') {
+					setProduct(result.data)
+					if (result.data.images[0]) {
+						setImageMain(result.data.images[0].url)
 					}
 				}
 			} catch (error) {
