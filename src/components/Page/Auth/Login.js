@@ -1,12 +1,13 @@
 import React, { useContext, useState } from 'react'
 import { Link, Redirect } from 'react-router-dom'
-import axios from 'axios'
+
 import FacebookLogin from 'react-facebook-login'
 import { GlobalState } from '../../../GlobalState'
 
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
+import userAPI from '../../../api/userAPI'
 
 const Login = () => {
 	const { login, setLogin } = useContext(GlobalState)
@@ -49,9 +50,8 @@ const Login = () => {
 	// xử lý đăng nhập bằng tài khoản được tạo
 	const loginSubmit = async (user) => {
 		try {
-			await axios.post('/user/login', { ...user })
+			await userAPI.login(user)
 			setLogin(true)
-			localStorage.setItem('first-login', true)
 			window.location = '/'
 		} catch (err) {
 			setError(
@@ -64,11 +64,8 @@ const Login = () => {
 	// xử lý đằng nhập bằng facebook
 	const handleLoginFacebook = async (response) => {
 		try {
-			await axios.post('/user/loginwithfacebook', {
-				...response,
-			})
+			await userAPI.loginWithFacebook(response)
 			setLogin(true)
-			localStorage.setItem('first-login', true)
 			window.location = '/'
 		} catch (err) {
 			console.log({ err })

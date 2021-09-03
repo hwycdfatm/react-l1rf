@@ -21,9 +21,8 @@ const CategoryAdmin = () => {
 
 	const handleRestore = async (id) => {
 		try {
-			const result = await productAPI.restore(id, token)
-			console.log(result)
-			// setProductList(productList.filter((e) => e._id !== id))
+			await productAPI.restore(id, token)
+			setProductList([...productList.filter((e) => e._id !== id)])
 		} catch (err) {
 			console.log(err)
 		}
@@ -31,7 +30,7 @@ const CategoryAdmin = () => {
 	const handleDelete = async (id) => {
 		try {
 			await productAPI.deletedForce(id, token)
-			setProductList(productList.filter((e) => e._id !== id))
+			setProductList([...productList.filter((e) => e._id !== id)])
 		} catch (err) {
 			console.log(err)
 		}

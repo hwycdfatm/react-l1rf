@@ -16,7 +16,7 @@ import Forget from '../components/Page/Auth/Forget'
 import Privacy from '../components/Page/Privacy/Privacy'
 import Error from '../components/Page/Error/Error'
 
-import MessengerCustomerChat from 'react-messenger-customer-chat'
+// import MessengerCustomerChat from 'react-messenger-customer-chat'
 
 import AdminRoute from '../routes/AdminRoute'
 import ProtectedRoute from '../routes/ProtectedRoute'
@@ -42,10 +42,10 @@ const Layout = () => {
 			{!admin ? (
 				<>
 					<Header />
-					<MessengerCustomerChat
+					{/* <MessengerCustomerChat
 						pageId="2118692731747671"
 						appId="512680796465992"
-					/>
+					/> */}
 				</>
 			) : (
 				<SidebarAdmin option={{ handleSidebar, open }} />

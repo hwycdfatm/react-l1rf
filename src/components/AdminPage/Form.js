@@ -2,7 +2,8 @@ import React, { useContext } from 'react'
 import { CKEditor } from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import { GlobalState } from '../../GlobalState'
-import axios from 'axios'
+import uploadImageAPI from '../../api/uploadImageAPI'
+import productAPI from '../../api/productAPI'
 
 const Form = (props) => {
 	// default Action is Add
@@ -10,18 +11,6 @@ const Form = (props) => {
 
 	// Global state
 	const { admin, token, categories } = useContext(GlobalState)
-
-	// init Product
-	// const [product, setProduct] = useState({
-	// 	title: '',
-	// 	description: '',
-	// 	content: 'Đây là phần content của sản phẩm',
-	// 	category: '',
-	// 	slug: '',
-	// 	price: '',
-	// 	inStock: '',
-	// 	images: [],
-	// })
 
 	// convers title to slug
 	function string_to_slug(str) {
@@ -73,16 +62,11 @@ const Form = (props) => {
 				}
 			}
 
-			const res = await axios.post('/api/upload', formData, {
-				headers: {
-					'content-type': 'multipart/form-data',
-					Authorization: token,
-				},
-			})
-			console.log(res.data.images)
+			const res = await uploadImageAPI.upload(formData, token)
+			console.log(res.images)
 			setProduct({
 				...product,
-				images: [...product.images, ...res.data.images],
+				images: [...product.images, ...res.images],
 			})
 		} catch (error) {
 			console.log(error)
@@ -94,13 +78,10 @@ const Form = (props) => {
 		e.preventDefault()
 		try {
 			if (!admin) return alert('Mày không có quyền')
-			const check = await axios.put(
-				`/api/product/${product._id}`,
-				{ ...product },
-				{ header: { Authorization: token } }
-			)
+			const check = await productAPI.update({ ...product }, product._id, token)
+
 			if (check.status === 200) {
-				alert(check.data.message)
+				alert(check.message)
 			}
 		} catch (error) {
 			console.log(error)
@@ -112,17 +93,14 @@ const Form = (props) => {
 		try {
 			if (!admin) return alert('Mày không có quyền')
 
-			await axios.post(
-				'/api/destroy',
-				{ public_id: [public_id] },
-				{
-					headers: { Authorization: token },
-				}
-			)
-			product.images.forEach((item, index) => {
-				if (item.public_id === public_id) product.images.splice(index, 1)
+			await uploadImageAPI.delete([public_id], token)
+
+			setProduct({
+				...product,
+				images: [
+					...product.images.filter((image) => image.public_id !== public_id),
+				],
 			})
-			setProduct({ ...product })
 		} catch (err) {
 			alert(err)
 		}

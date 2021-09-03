@@ -35,20 +35,16 @@ const CategoryAdmin = () => {
 		fetchProduct()
 	}, [])
 
-	useEffect(() => {
-		setVisible('')
-	}, [])
-
 	const handleShowFormEdit = (id) => {
 		if (!visible) {
 			setVisible(true)
-			setProduct(productList.filter((e) => e._id === id))
+			setProduct(...productList.filter((e) => e._id === id))
 		}
 	}
 	const handleDelete = async (id) => {
 		try {
 			await productAPI.delete(id, token)
-			setProduct(productList.filter((e) => e._id !== id))
+			setProductList([...productList.filter((e) => e._id !== id)])
 		} catch (err) {
 			console.log(err)
 		}

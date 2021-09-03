@@ -1,5 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react'
-import axios from 'axios'
+
+import userAPI from './api/userAPI'
+import categoriesAPI from './api/categoryAPI'
 
 export const GlobalState = createContext()
 
@@ -49,8 +51,8 @@ export const DataProvider = ({ children }) => {
 	useEffect(() => {
 		if (login) {
 			const refreshToken = async () => {
-				const token = await axios.get('/user/refresh_token')
-				setToken(token.data.accessToken)
+				const result = await userAPI.refreshToken()
+				setToken(result.accessToken)
 				setTimeout(() => {
 					refreshToken()
 				}, 10 * 60 * 1000)
@@ -60,15 +62,17 @@ export const DataProvider = ({ children }) => {
 		if (token) {
 			const getUser = async () => {
 				try {
-					const result = await axios.get('/user/info', {
-						headers: { Authorization: token },
-					})
-					setUser(result.data.user)
-					setLogin(true)
-					if (result.data.user.role === 'admin') {
-						setAdmin(true)
+					const result = await userAPI.getUser(token)
+					if (result) {
+						console.log(result)
+						setUser(result.user)
+						setLogin(true)
+						if (result.user.role === 'admin') {
+							setAdmin(true)
+						}
+
+						setCart([...result.user.cart])
 					}
-					setCart(result.data.user.cart)
 				} catch (error) {
 					console.log(error)
 				}
@@ -81,8 +85,8 @@ export const DataProvider = ({ children }) => {
 	useEffect(() => {
 		try {
 			const getCategories = async () => {
-				const res = await axios.get('/api/category')
-				setCategories(res.data.data)
+				const res = await categoriesAPI.get()
+				setCategories(res.data)
 			}
 			getCategories()
 		} catch (error) {
@@ -91,7 +95,7 @@ export const DataProvider = ({ children }) => {
 	}, [])
 
 	const logout = async () => {
-		await axios.get('/user/logout')
+		await userAPI.logout()
 		setLogin(false)
 		setAdmin(false)
 		setCart([])
@@ -114,30 +118,14 @@ export const DataProvider = ({ children }) => {
 			// setCart([...cart, { ...product, quantity: product.quantity }])
 			setCart([...cart])
 		}
-		await axios.patch(
-			'/user/addcart',
-			{ cart },
-			{
-				headers: { Authorization: token },
-			}
-		)
+		// Add to cart
+		await userAPI.handleCart(cart, token)
 	}
 
 	const removeProduct = async (id) => {
 		if (window.confirm('Bạn không muốn mua sản phẩm này sao bạn yêu?')) {
-			// cart.forEach((item, index) => {
-			// 	if (item._id === id) {
-			// 		cart.splice(index, 1)
-			// 	}
-			// })
 			setCart([...cart.filter((e) => e._id !== id)])
-			await axios.patch(
-				'/user/addcart',
-				{ cart: [...cart.filter((e) => e._id !== id)] },
-				{
-					headers: { Authorization: token },
-				}
-			)
+			await userAPI.handleCart([...cart.filter((e) => e._id !== id)], token)
 		}
 	}
 

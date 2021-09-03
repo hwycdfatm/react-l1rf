@@ -2,11 +2,13 @@ import React, { useState, useContext } from 'react'
 import { CKEditor } from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import { GlobalState } from '../../GlobalState'
-import axios from 'axios'
+import productAPI from '../../api/productAPI'
+import uploadImageAPI from '../../api/uploadImageAPI'
 
 const AddProduct = () => {
 	// Global state
 	const { admin, token, categories } = useContext(GlobalState)
+
 	// init Product
 	const [product, setProduct] = useState({
 		title: '',
@@ -78,15 +80,10 @@ const AddProduct = () => {
 				}
 			}
 
-			const res = await axios.post('/api/upload', formData, {
-				headers: {
-					'content-type': 'multipart/form-data',
-					Authorization: token,
-				},
-			})
+			const res = await uploadImageAPI.upload(formData, token)
 			setProduct({
 				...product,
-				images: [...product.images, ...res.data.images],
+				images: [...product.images, ...res.images],
 			})
 		} catch (error) {
 			console.log(error)
@@ -97,16 +94,11 @@ const AddProduct = () => {
 	const handleAddProduct = async (e) => {
 		e.preventDefault()
 		try {
+			console.log({ token, product })
 			if (!admin) return alert('Mày không có quyền')
-			const check = await axios.post(
-				'/api/product',
-				{ ...product },
-				{
-					header: { Authorization: token },
-				}
-			)
-			if (check.status === 200) {
-				alert(check.data.message)
+			const check = await productAPI.creat({ ...product }, token)
+			if (check.status === 'Success') {
+				alert(check.message)
 			}
 		} catch (error) {
 			console.log(error)
@@ -118,17 +110,13 @@ const AddProduct = () => {
 		try {
 			if (!admin) return alert('Mày không có quyền')
 
-			await axios.post(
-				'/api/destroy',
-				{ public_id: [public_id] },
-				{
-					headers: { Authorization: token },
-				}
-			)
-			product.images.forEach((item, index) => {
-				if (item.public_id === public_id) product.images.splice(index, 1)
+			await uploadImageAPI.delete([public_id], token)
+			setProduct({
+				...product,
+				images: [
+					...product.images.filter((image) => image.public_id !== public_id),
+				],
 			})
-			setProduct({ ...product })
 		} catch (err) {
 			alert(err)
 		}

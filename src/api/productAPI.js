@@ -1,40 +1,40 @@
-import axiosClient from './axiosCLient'
+import axiosAPI from './axiosAPI'
 const productAPI = {
 	getAll: (params) => {
 		const url = '/product'
-		return axiosClient.get(url, { params })
+		return axiosAPI.get(url, { params })
 	},
 	getTrash: (params, token) => {
 		const url = '/product/bts/trash'
-		return axiosClient.get(url, { params, headers: { Authorization: token } })
+		return axiosAPI.get(url, { params, headers: { Authorization: token } })
 	},
 	getBySlug: (slug) => {
 		const url = `/product/${slug}`
-		return axiosClient.get(url)
+		return axiosAPI.get(url)
 	},
 	getById: (id) => {
 		const url = `/product/id/${id}`
-		return axiosClient.get(url)
+		return axiosAPI.get(url)
 	},
-	creat: (params, token) => {
-		const url = '/product/'
-		return axiosClient.post(url, { params, headers: { Authorization: token } })
+	creat: (data, token) => {
+		const url = '/product'
+		return axiosAPI.post(url, data, { headers: { Authorization: token } })
 	},
-	update: (params, id, token) => {
+	update: (data, id, token) => {
 		const url = `/product/${id}`
-		return axiosClient.put(url, { params, headers: { Authorization: token } })
+		return axiosAPI.put(url, data, { headers: { Authorization: token } })
 	},
 	restore: (id, token) => {
 		const url = `/product/${id}/restore`
-		return axiosClient.patch(url, { headers: { Authorization: token } })
+		return axiosAPI.patch(url, {}, { headers: { Authorization: token } })
 	},
 	delete: (id, token) => {
 		const url = `/product/${id}`
-		return axiosClient.delete(url, { headers: { Authorization: token } })
+		return axiosAPI.delete(url, { headers: { Authorization: token } })
 	},
 	deletedForce: (id, token) => {
 		const url = `/product/${id}/force`
-		return axiosClient.delete(url, { headers: { Authorization: token } })
+		return axiosAPI.delete(url, { headers: { Authorization: token } })
 	},
 }
 

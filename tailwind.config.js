@@ -20,6 +20,9 @@ module.exports = {
 				'100v': '100vh',
 				'542px': '542px',
 			},
+			width: {
+				lg: '542px',
+			},
 
 			scale: ['responsive', 'hover', 'focus'],
 		},
