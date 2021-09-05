@@ -6,7 +6,7 @@ export default function CartItem(props) {
 		<div className="bg-white py-4 px-4 border border-gray-200 shadow-md rounded-lg my-4 mx-2 flex overflow-hidden">
 			<div className="h-16 w-14 flex items-center justify-center mr-6 ">
 				<img
-					src={images[0].url}
+					src={images && images[0].url}
 					alt=""
 					className="h-full object-contain rounded"
 				/>

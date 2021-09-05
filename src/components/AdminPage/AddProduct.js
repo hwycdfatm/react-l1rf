@@ -68,19 +68,20 @@ const AddProduct = () => {
 				const check = checkImage(files[0])
 				if (check) {
 					setChecked(true)
-					formData.append('file', files[0])
+					formData.append('images', files[0])
 				}
 			} else {
 				if (files.length > 4) return alert('Tối đa 4 ảnh thôi bạn !')
 				for (let file of files) {
 					const check = checkImage(file)
 					if (check) {
-						formData.append('file', file)
+						formData.append('images', file)
 					}
 				}
 			}
 
 			const res = await uploadImageAPI.upload(formData, token)
+
 			setProduct({
 				...product,
 				images: [...product.images, ...res.images],
@@ -106,15 +107,17 @@ const AddProduct = () => {
 	}
 
 	// delete image
-	const handleDestroy = async (public_id) => {
+	const handleDestroy = async (public_name) => {
 		try {
 			if (!admin) return alert('Mày không có quyền')
 
-			await uploadImageAPI.delete([public_id], token)
+			await uploadImageAPI.delete([public_name], token)
 			setProduct({
 				...product,
 				images: [
-					...product.images.filter((image) => image.public_id !== public_id),
+					...product.images.filter(
+						(image) => image.public_name !== public_name
+					),
 				],
 			})
 		} catch (err) {
@@ -136,7 +139,7 @@ const AddProduct = () => {
 								className="h-full object-cover"
 							/>
 							<div
-								onClick={() => handleDestroy(product.images[0].public_id)}
+								onClick={() => handleDestroy(product.images[0].public_name)}
 								className="absolute top-1 right-1 text-red-300 cursor-pointer"
 							>
 								<svg
@@ -277,7 +280,7 @@ const AddProduct = () => {
 											alt=""
 										/>
 										<div
-											onClick={() => handleDestroy(image.public_id)}
+											onClick={() => handleDestroy(image.public_name)}
 											className="absolute top-1 right-1 text-red-300 cursor-pointer"
 										>
 											<svg

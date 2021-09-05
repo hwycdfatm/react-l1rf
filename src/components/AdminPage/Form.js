@@ -7,7 +7,7 @@ import productAPI from '../../api/productAPI'
 
 const Form = (props) => {
 	// default Action is Add
-	const { onChangeInput, product, setProduct } = props
+	const { onChangeInput, product, setProduct, fetchProduct } = props
 
 	// Global state
 	const { admin, token, categories } = useContext(GlobalState)
@@ -80,7 +80,8 @@ const Form = (props) => {
 			if (!admin) return alert('Mày không có quyền')
 			const check = await productAPI.update({ ...product }, product._id, token)
 
-			if (check.status === 200) {
+			if (check.status === 'Success') {
+				fetchProduct()
 				alert(check.message)
 			}
 		} catch (error) {
@@ -113,7 +114,7 @@ const Form = (props) => {
 			<form onSubmit={handleEditProduct} className="p-3">
 				<div className="flex flex-col p-1 w-full max-w-screen-lg mx-auto md:flex-row md:space-x-4">
 					<div className="h-96 md:h-542px md:w-1/2 shadow appearance-none border rounded w-full text-gray-700 leading-tight overflow-hidden flex items-center justify-center focus:outline-none focus:shadow-outline relative">
-						{product.images[0] ? (
+						{product.images && product.images[0] ? (
 							<>
 								<img
 									src={product.images[0].url}

@@ -10,11 +10,11 @@ const uploadImageAPI = {
 			},
 		})
 	},
-	delete: (public_id, token) => {
+	delete: (public_name, token) => {
 		const url = '/destroy'
 		return axioxAPI.post(
 			url,
-			{ public_id },
+			{ public_name },
 			{
 				headers: { Authorization: token },
 			}

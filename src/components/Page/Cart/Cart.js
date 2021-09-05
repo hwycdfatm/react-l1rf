@@ -1,12 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react'
 import CartItem from './CartItem'
+import paymentAPI from '../../../api/paymentAPI'
+import userAPI from '../../../api/userAPI'
 import { GlobalState } from '../../../GlobalState'
 const Cart = () => {
-	const { cart, removeProduct, user } = useContext(GlobalState)
+	const { cart, removeProduct, user, token, setCart } = useContext(GlobalState)
 	const [tempTotal, setTempTotal] = useState(0)
 	const ship = 50000
 	const total = tempTotal + ship
-	const [length, setLength] = useState(0)
+	const [quantity, setQuantity] = useState(0)
 
 	useEffect(() => {
 		const getTotal = () => {
@@ -19,17 +21,31 @@ const Cart = () => {
 			const total = cart.reduce((prev, item) => {
 				return prev + item.quantity
 			}, 0)
-			setLength(total)
+			setQuantity(total)
 		}
 		getLength()
 		getTotal()
 	}, [cart])
-
+	const emptyCart = async () => {
+		await userAPI.handleCart([], token)
+	}
 	const handlePayment = async () => {
 		if (!user.address) {
-			return console.log('Vui lòng cập nhật nơi ở của bạn')
+			return alert('Vui lòng cập nhật nơi ở của bạn')
 		}
-		console.log({ cart, user, total, length })
+		try {
+			const result = await paymentAPI.create(
+				{ order: cart, user, total, quantity },
+				token
+			)
+			if (result.status === 'Success') {
+				setCart([])
+				emptyCart()
+				alert(result.message)
+			}
+		} catch (error) {
+			console.log(error)
+		}
 	}
 
 	return (
@@ -58,7 +74,7 @@ const Cart = () => {
 									<p>Tổng số lượng hàng</p>
 								</div>
 								<div className="text-lg py-2">
-									<p>{length} </p>
+									<p>{quantity} </p>
 								</div>
 							</div>
 							<div className="flex justify-between border-b-2 mb-2">

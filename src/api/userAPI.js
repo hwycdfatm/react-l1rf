@@ -12,7 +12,7 @@ const userAPI = {
 		const url = '/user/addcart'
 		return axiosAPI.patch(
 			url,
-			{ ...cart },
+			{ cart: [...cart] },
 			{ headers: { Authorization: token } }
 		)
 	},
@@ -27,6 +27,10 @@ const userAPI = {
 	logout: () => {
 		const url = '/user/logout'
 		return axiosAPI.get(url)
+	},
+	register: (data) => {
+		const url = '/user/register'
+		return axiosAPI.post(url, { ...data })
 	},
 }
 export default userAPI

@@ -1,11 +1,11 @@
 import React, { useContext, useState } from 'react'
 import { Link, useHistory, Redirect } from 'react-router-dom'
-import axios from 'axios'
 import { GlobalState } from '../../../GlobalState'
 
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
+import userAPI from '../../../api/userAPI'
 const Register = () => {
 	const { login } = useContext(GlobalState)
 	const [noti, setNoti] = useState('')
@@ -78,11 +78,11 @@ const Register = () => {
 
 	const handleRegister = async (data) => {
 		try {
-			const result = await axios.post('/user/register', { ...data })
-			if (result.status === 200) {
+			const result = await userAPI.register(data)
+			if (result.status === 'Success') {
 				setNoti(
 					<div className="text-center py-1 bg-blue-400 text-white animate-bounce rounded bg-opacity-70">
-						{result.data.message}
+						{result.message}
 						<br />
 						Hệ thống sẽ tự chuyển đến trang đăng nhập sau 5 giây
 					</div>
@@ -92,7 +92,7 @@ const Register = () => {
 		} catch (err) {
 			setNoti(
 				<div className="text-center py-1 bg-red-400 text-white animate-bounce rounded bg-opacity-70">
-					{err.response.data.message}
+					Email đã được đăng ký
 				</div>
 			)
 		}

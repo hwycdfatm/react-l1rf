@@ -8,17 +8,17 @@ const Product = (props) => {
 	return (
 		<Link
 			to={`/product/${props.sp.slug}`}
-			className="w-ful flex flex-col border border-gray-100 bg-white transition-all hover:shadow-md transform hover:-translate-y-1 overflow-hidden"
+			className="w-ful flex flex-col border border-gray-100 bg-white transition-all transform hover:-translate-y-1 overflow-hidden"
 		>
-			<div className="h-96 flex justify-center overflow-hidden">
+			<div className="w-full md:h-96 lg:h-80 flex justify-center overflow-hidden">
 				<img
 					src={image[0] ? image[0].url : NotFoundImage}
 					alt=""
-					className="h-full object-cover"
+					className="w-full h-full object-cover"
 				/>
 			</div>
 			<div className="flex-1 px-3 py-2 flex flex-col justify-between">
-				<h3 className="text-base font-medium ">{props.sp.title}</h3>
+				<h3 className="text-base font-medium mb-3">{props.sp.title}</h3>
 				<h4 className="text-sm font-medium cursor-default mt-auto text-gray-700">
 					{price.toLocaleString('en')} vnđ
 				</h4>

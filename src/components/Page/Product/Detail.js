@@ -6,7 +6,7 @@ import Error from '../Error/Error'
 import NotFoundImage from './image-not-found.jpg'
 import productAPI from '../../../api/productAPI'
 const Detail = () => {
-	const state = useContext(GlobalState)
+	const { addToCart } = useContext(GlobalState)
 	const [count, setCount] = useState(1)
 	const [load, setLoad] = useState(true)
 	const [fail, setFail] = useState(false)
@@ -17,7 +17,6 @@ const Detail = () => {
 	// Image
 	const [imageMain, setImageMain] = useState('')
 
-	const addToCart = state.addToCart
 	const price = parseInt(product.price)
 
 	useEffect(() => {
@@ -40,13 +39,13 @@ const Detail = () => {
 	if (fail) return <Error />
 	return (
 		<>
-			<div className="flex flex-col mx-auto bg-transparent transition duration-700 dark:text-white">
-				<div className="mt-4 flex flex-col w-full overflow-hidden md:flex-row md:space-x-4">
+			<section className="flex flex-col mx-auto bg-transparent transition duration-700 dark:text-white">
+				<div className="mt-4 flex flex-col w-full mx-auto md:flex-row md:space-x-4">
 					<div className="w-full h-96 md:w-1/2 rounded-lg overflow-hidden flex items-center justify-center md:h-542px lg:w-lg">
 						<img
 							src={imageMain ? imageMain : NotFoundImage}
 							alt=""
-							className="w-full h-full object-cover"
+							className="w-full h-full object-contain"
 						/>
 					</div>
 					<div className="w-full flex flex-col space-y-6 px-4 md:px-0 text-sm md:text-base md:w-1/2 lg:w-lg  rounded-lg lg:pl-4">
@@ -103,18 +102,7 @@ const Detail = () => {
 								</button>
 							</div>
 						</div>
-						<div className="flex text-base space-x-2 items-center">
-							<label htmlFor="size">Size:</label>
-							<select
-								name="size"
-								id="size"
-								className="border border-gray-200 py-1 rounded-md"
-							>
-								<option value="">Vui lòng chọn size</option>
-								<option value="s">S</option>
-								<option value="m">M</option>
-							</select>
-						</div>
+
 						<div className="flex text-base">
 							<button
 								onClick={() => {
@@ -132,7 +120,7 @@ const Detail = () => {
 					className="unreset px-4 py-3 mt-10"
 					dangerouslySetInnerHTML={{ __html: product.content }}
 				/>
-			</div>
+			</section>
 			{load && <Loading />}
 		</>
 	)

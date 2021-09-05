@@ -2,7 +2,6 @@ import React, { useContext } from 'react'
 import { GlobalState } from '../../../GlobalState'
 const User = () => {
 	const { user } = useContext(GlobalState)
-	console.log(user)
 	return (
 		<div className="w-full flex flex-col">
 			<div className="flex">

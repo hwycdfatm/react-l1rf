@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import productAPI from '../../api/productAPI'
 import Form from './Form'
-import { useTransition, animated } from 'react-spring'
 import { GlobalState } from '../../GlobalState'
 const CategoryAdmin = () => {
 	const { token } = useContext(GlobalState)
@@ -10,28 +9,22 @@ const CategoryAdmin = () => {
 	const [product, setProduct] = useState({})
 
 	const [visible, setVisible] = useState(false)
-	const transition = useTransition(visible, {
-		from: { x: 100, y: 800, opacity: 0 },
-		enter: { x: 0, y: 0, opacity: 1 },
-		leave: { x: 200, y: 300, opacity: 0 },
-	})
+
 	const onChangeInput = (e) => {
 		const { name, value } = e.target
 		setProduct({ ...product, [name]: value })
 	}
-
-	useEffect(() => {
-		async function fetchProduct() {
-			try {
-				const result = await productAPI.getAll()
-				if (result.status === 'Success') {
-					setProductList(result.data)
-				}
-			} catch (err) {
-				// if (err) return setFail(true)
-				console.log(err)
+	async function fetchProduct() {
+		try {
+			const result = await productAPI.getAll()
+			if (result.status === 'Success') {
+				setProductList([...result.data])
 			}
+		} catch (err) {
+			console.log(err)
 		}
+	}
+	useEffect(() => {
 		fetchProduct()
 	}, [])
 
@@ -51,18 +44,15 @@ const CategoryAdmin = () => {
 	}
 	return (
 		<>
-			{transition(
-				(style, item) =>
-					item && (
-						<Form
-							styles={style}
-							onChangeInput={onChangeInput}
-							product={product}
-							setProduct={setProduct}
-							setVisible={setVisible}
-							visible={visible}
-						/>
-					)
+			{visible && (
+				<Form
+					onChangeInput={onChangeInput}
+					product={product}
+					setProduct={setProduct}
+					setVisible={setVisible}
+					visible={visible}
+					fetchProduct={fetchProduct}
+				/>
 			)}
 
 			<div className="mt-10 lg:mt-0 lg:ml-56 p-3 flex flex-col space-y-4 relative">
@@ -79,7 +69,7 @@ const CategoryAdmin = () => {
 							/>
 							<div className="bg-white">
 								<img
-									src={product.images[0].url}
+									src={product.images[0]?.url}
 									alt={product.title}
 									className="w-full object-cover h-48"
 								/>

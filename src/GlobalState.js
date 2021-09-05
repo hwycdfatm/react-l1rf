@@ -48,6 +48,7 @@ export const DataProvider = ({ children }) => {
 	const [token, setToken] = useState(false)
 	const [categories, setCategories] = useState([])
 	const [user, setUser] = useState('')
+
 	useEffect(() => {
 		if (login) {
 			const refreshToken = async () => {
@@ -59,12 +60,15 @@ export const DataProvider = ({ children }) => {
 			}
 			refreshToken()
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
+
+	useEffect(() => {
 		if (token) {
 			const getUser = async () => {
 				try {
 					const result = await userAPI.getUser(token)
 					if (result) {
-						console.log(result)
 						setUser(result.user)
 						setLogin(true)
 						if (result.user.role === 'admin') {
@@ -141,6 +145,7 @@ export const DataProvider = ({ children }) => {
 				setLogin,
 				categories,
 				removeProduct,
+				setCart,
 				user,
 			}}
 		>
