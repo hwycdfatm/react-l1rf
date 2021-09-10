@@ -8,11 +8,11 @@ const axiosAPI = axios.create({
 	headers: {
 		'content-type': 'application/json',
 	},
-
 	paramsSerializer: (params) => queryString.stringify(params),
 })
 
 axiosAPI.defaults.withCredentials = true
+
 axiosAPI.interceptors.request.use(async (config) => {
 	return config
 })

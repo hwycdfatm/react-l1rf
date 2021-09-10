@@ -26,7 +26,7 @@ const Header = () => {
 	}
 
 	return (
-		<header className="fixed top-0 z-50 left-0 right-0 flex flex-row justify-between items-center h-16 px-2 transition duration-700 bg-white dark:bg-gray-700  dark:text-white md:px-4 lg:px-8 shadow-sm">
+		<header className="fixed top-0 z-50 left-0 right-0 flex flex-row justify-between items-center h-16 px-2 transition duration-500 bg-white dark:bg-gray-700  dark:text-white md:px-4 lg:px-8 shadow-sm">
 			<Sidebar
 				darkModeFuntion={darkMode}
 				colorTheme={colorTheme}

@@ -8,6 +8,10 @@ const paymentApi = {
 			{ headers: { Authorization: token } }
 		)
 	},
+	getForUser: ({ token }) => {
+		const url = '/payment'
+		return axiosAPI.get(url, { headers: { Authorization: token } })
+	},
 }
 
 export default paymentApi

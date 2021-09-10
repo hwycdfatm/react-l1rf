@@ -16,9 +16,13 @@ const userAPI = {
 			{ headers: { Authorization: token } }
 		)
 	},
+	updateProfile: (profile) => {
+		const url = '/user/addcart'
+		return axiosAPI.patch(url)
+	},
 	refreshToken: () => {
 		const url = '/user/refresh_token'
-		return axiosAPI.get(url)
+		return axiosAPI.get(url, { withCredentials: true })
 	},
 	getUser: (token) => {
 		const url = '/user/info'

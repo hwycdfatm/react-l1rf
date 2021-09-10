@@ -53,7 +53,7 @@ const Layout = () => {
 			<div
 				className={`flex ${
 					!admin && 'pt-16'
-				} bg-white min-h-screen relative overflow-hidden font-noto`}
+				} bg-white min-h-screen relative overflow-hidden font-noto w-full dark:bg-gray-700 transition duration-500`}
 			>
 				<Switch>
 					<Route exact path="/" component={admin ? DashBoard : Home} />
