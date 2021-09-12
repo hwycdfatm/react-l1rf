@@ -42,9 +42,9 @@ const Category = () => {
 
 	return (
 		<>
-			<section className="w-full max-w-screen-xl mx-auto p-2 flex flex-col space-y-2">
+			<section className="w-full max-w-screen-xl mx-auto p-3 lg:p-0 lg:pt-4 flex flex-col space-y-4">
 				<div className="flex space-x-2 items-center justify-end">
-					<button className="h-9 flex items-center justify-center px-3 space-x-2 border-2 border-gray-200 rounded">
+					<button className="bg-white h-9 flex items-center justify-center px-3 space-x-2 border-2 border-gray-200 rounded">
 						<span>Mới nhất</span>
 						<svg
 							className="w-6 h-6"
@@ -61,7 +61,7 @@ const Category = () => {
 							/>
 						</svg>
 					</button>
-					<button className="h-9 flex items-center justify-center px-3 space-x-2 border-2 border-gray-200 rounded">
+					<button className="bg-white h-9 flex items-center justify-center px-3 space-x-2 border-2 border-gray-200 rounded">
 						<span>Giá</span>
 						<svg
 							className="w-5 h-5"
@@ -79,7 +79,7 @@ const Category = () => {
 						</svg>
 					</button>
 				</div>
-				<div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+				<div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5  py-2 overflow-hidden rounded-md">
 					{products.map((product, index) => (
 						<Product sp={product} key={index} />
 					))}

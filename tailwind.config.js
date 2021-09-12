@@ -19,6 +19,7 @@ module.exports = {
 				'90v': '90vh',
 				'100v': '100vh',
 				'542px': '542px',
+				'200v': '200vh',
 			},
 			width: {
 				lg: '542px',

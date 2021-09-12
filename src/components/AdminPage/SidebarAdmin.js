@@ -25,7 +25,7 @@ const SidebarAdmin = (props) => {
 				</button>
 			</div>
 			<div
-				className={`fixed h-screen w-56 bg-sidebar flex-col shadow-xl rounded-r-xl transition flex justify-between z-40 transform lg:transform-none ${
+				className={`fixed h-screen w-56 bg-white flex-col shadow-xl transition flex justify-between z-40 transform lg:transform-none ${
 					!open && '-translate-x-full'
 				}`}
 			>
@@ -120,7 +120,7 @@ const SidebarAdmin = (props) => {
 				<div className="p-2 mb-5">
 					<button
 						onClick={logout}
-						className="w-full flex items-center space-x-2 text-left leading-10 h-10 px-2 rounded-md transition duration-300  hover:bg-gray-300 text-sm font-semibold"
+						className="w-full flex items-center space-x-2 text-left leading-10 h-10 px-2 rounded-md transition duration-300 text-sm font-semibold"
 					>
 						<svg
 							className="w-6 h-6"

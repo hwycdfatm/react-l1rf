@@ -1664,25 +1664,8 @@ input[type='number']::-webkit-outer-spin-button {
 	border: 2px inset;
 }
 
-.height-animation {
-	transition: max-height 300ms;
-}
-
-.animation-scale {
-	animation: animation-scale 0.3s;
-}
-
 .animation-down {
 	animation: animation-down 0.3s;
-}
-
-@keyframes animation-scale {
-	from {
-		transform: scale(0);
-	}
-	to {
-		transform: scale(1);
-	}
 }
 
 @keyframes animation-down {

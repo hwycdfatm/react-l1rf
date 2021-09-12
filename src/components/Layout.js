@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Switch, Route } from 'react-router-dom'
 
 import { GlobalState } from '../GlobalState'
@@ -36,6 +36,28 @@ const Layout = () => {
 	const { admin } = useContext(GlobalState)
 	const [open, setOpen] = useState(false)
 	const handleSidebar = () => setOpen(!open)
+	const [isVisible, setIsVisible] = useState(false)
+
+	const toggleVisibility = () => {
+		if (window.pageYOffset > 300) {
+			setIsVisible(true)
+		} else {
+			setIsVisible(false)
+		}
+	}
+
+	// Set the top cordinate to 0
+	// make scrolling smooth
+	const scrollToTop = () => {
+		window.scrollTo({
+			top: 0,
+			behavior: 'smooth',
+		})
+	}
+
+	useEffect(() => {
+		window.addEventListener('scroll', toggleVisibility)
+	}, [])
 
 	return (
 		<>
@@ -71,6 +93,27 @@ const Layout = () => {
 					<AdminRoute exact path="/orders" component={Orders} />
 					<Route path="*" component={Error} />
 				</Switch>
+				<button
+					onClick={scrollToTop}
+					className={`${
+						isVisible ? 'fixed' : 'hidden'
+					} bottom-10 right-5 lg:right-10 bg-white p-2 rounded-full overflow-hidden`}
+				>
+					<svg
+						className="w-6 h-6"
+						fill="none"
+						stroke="currentColor"
+						viewBox="0 0 24 24"
+						xmlns="http://www.w3.org/2000/svg"
+					>
+						<path
+							strokeLinecap="round"
+							strokeLinejoin="round"
+							strokeWidth={2}
+							d="M5 11l7-7 7 7M5 19l7-7 7 7"
+						/>
+					</svg>
+				</button>
 			</div>
 			{!admin && <Footer />}
 		</>

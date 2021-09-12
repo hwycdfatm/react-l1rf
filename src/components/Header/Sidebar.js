@@ -68,7 +68,7 @@ export default function Sidebar(props) {
 							</button>
 						</div>
 						<div className="flex flex-col space-y-4">
-							<div className="flex flex-col rounded-md shadow-sm transition-all transform origin-top animation-down">
+							<div className="flex flex-col rounded-md shadow-sm">
 								<button
 									onClick={handleDropdown}
 									className="rounded-md px-3 w-full flex flex-row justify-between shadow-sm items-center h-10 bg-white dark:bg-gray-200"
@@ -90,7 +90,7 @@ export default function Sidebar(props) {
 									</svg>
 								</button>
 								{dropdown && (
-									<div className="flex flex-col p-2 space-y-1 bg-transparent transform origin-top animation-down">
+									<div className="flex flex-col p-2 space-y-1 bg-transparent">
 										{categorys.map((data, index) => (
 											<Link
 												to={`/category/${data.slug}`}

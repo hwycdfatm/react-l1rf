@@ -22,7 +22,7 @@ const userAPI = {
 	},
 	refreshToken: () => {
 		const url = '/user/refresh_token'
-		return axiosAPI.get(url, { withCredentials: true })
+		return axiosAPI.get(url)
 	},
 	getUser: (token) => {
 		const url = '/user/info'
