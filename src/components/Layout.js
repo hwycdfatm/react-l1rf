@@ -16,7 +16,7 @@ import Forget from '../components/Page/Auth/Forget'
 import Privacy from '../components/Page/Privacy/Privacy'
 import Error from '../components/Page/Error/Error'
 
-// import MessengerCustomerChat from 'react-messenger-customer-chat'
+import MessengerCustomerChat from 'react-messenger-customer-chat'
 
 import AdminRoute from '../routes/AdminRoute'
 import ProtectedRoute from '../routes/ProtectedRoute'
@@ -64,10 +64,10 @@ const Layout = () => {
 			{!admin ? (
 				<>
 					<Header />
-					{/* <MessengerCustomerChat
+					<MessengerCustomerChat
 						pageId="2118692731747671"
 						appId="512680796465992"
-					/> */}
+					/>
 				</>
 			) : (
 				<SidebarAdmin option={{ handleSidebar, open }} />
@@ -95,9 +95,9 @@ const Layout = () => {
 				</Switch>
 				<button
 					onClick={scrollToTop}
-					className={`${
+					className={` ${
 						isVisible ? 'fixed' : 'hidden'
-					} bottom-10 right-5 lg:right-10 bg-white p-2 rounded-full overflow-hidden`}
+					} bottom-10 right-5 lg:right-20 bg-white p-2 rounded-lg shadow-xl border overflow-hidden`}
 				>
 					<svg
 						className="w-6 h-6"

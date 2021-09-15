@@ -12,8 +12,14 @@ const Register = () => {
 	// check privacy
 	const [privacy, setPrivacy] = useState(false)
 	// định nghĩa các rule
+	const phoneRegExp =
+		/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 	const schema = yup.object().shape({
-		phone: yup.number().required('Vui lòng nhập số điện thoại'),
+		phone: yup
+			.string()
+			.matches(phoneRegExp, 'Vui lòng nhập số điện thoại')
+			.length(10, 'Số điện thoại chỉ có 10 số thôiii')
+			.required('Vui lòng nhập số điện thoại'),
 		email: yup.string().required('Vui lòng nhập email'),
 		password: yup
 			.string()

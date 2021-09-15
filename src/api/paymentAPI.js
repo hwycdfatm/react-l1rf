@@ -12,6 +12,10 @@ const paymentApi = {
 		const url = '/payment'
 		return axiosAPI.get(url, { headers: { Authorization: token } })
 	},
+	getAllPayements: ({ token }) => {
+		const url = '/payment/admin'
+		return axiosAPI.get(url, { headers: { Authorization: token } })
+	},
 }
 
 export default paymentApi

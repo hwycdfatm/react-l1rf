@@ -24,6 +24,7 @@ const Category = () => {
 					_page: currentPage,
 					_limit: 9, // tối đa bao nhiêu sản phẩm trong 1 trang
 				}
+				setLoad(true)
 				const result = await productAPI.getAll(params)
 				if (result.status === 'Success') {
 					setLoad(false)

@@ -3,12 +3,18 @@ import CartItem from './CartItem'
 import paymentAPI from '../../../api/paymentAPI'
 import userAPI from '../../../api/userAPI'
 import { GlobalState } from '../../../GlobalState'
+import { Link } from 'react-router-dom'
+import VNPayIcon from '../../../images/vnpayicon.png'
+import MoMoIcon from '../../../images/momoicon.png'
+import CodIcon from '../../../images/codicon.png'
+
 const Cart = () => {
 	const { cart, removeProduct, user, token, setCart } = useContext(GlobalState)
 	const [tempTotal, setTempTotal] = useState(0)
 	const ship = 50000
 	const total = tempTotal + ship
 	const [quantity, setQuantity] = useState(0)
+	const [methodPaid, setMethodPaid] = useState('')
 
 	useEffect(() => {
 		const getTotal = () => {
@@ -30,6 +36,9 @@ const Cart = () => {
 		await userAPI.handleCart([], token)
 	}
 	const handlePayment = async () => {
+		if (methodPaid === '' || methodPaid === undefined)
+			return alert('Vui lòng chọn phương thức thanh toán')
+		if (cart.length === 0) return alert('Giỏ hàng bạn đang trống mà :((')
 		if (!user.address) {
 			return alert('Vui lòng cập nhật nơi ở của bạn')
 		}
@@ -47,9 +56,8 @@ const Cart = () => {
 			console.log(error)
 		}
 	}
-
 	return (
-		<div className="w-full max-w-screen-xl mx-auto px-2 lg:px-8 xl:p-0">
+		<div className="w-full max-w-screen-xl mx-auto px-2 lg:px-8 xl:p-0 lg:mt-2">
 			<div className=" h-full md:h-screen bg-transparent rounded-lg ">
 				<div className="grid grid-cols-12 gap-2 lg:gap-4 xl:gap-5">
 					<div className="col-span-12 sm:col-span-12 md:col-span-7 lg:col-span-8 2xl:col-span-8">
@@ -66,8 +74,25 @@ const Cart = () => {
 								Bạn ơi giỏ hàng đang trống, bạn hãy mua đồ nhé !! 🤔
 							</div>
 						)}
+						<Link to={'/'} className="flex">
+							<svg
+								className="w-6 h-6"
+								fill="none"
+								stroke="currentColor"
+								viewBox="0 0 24 24"
+								xmlns="http://www.w3.org/2000/svg"
+							>
+								<path
+									strokeLinecap="round"
+									strokeLinejoin="round"
+									strokeWidth={2}
+									d="M10 19l-7-7m0 0l7-7m-7 7h18"
+								/>
+							</svg>
+							<h3>Tiếp tục mua hàng</h3>
+						</Link>
 					</div>
-					<div className="col-span-12 sm:col-span-12 md:col-span-5 lg:col-span-4 xxl:col-span-4">
+					<div className="col-span-12 sm:col-span-12 md:col-span-5 lg:col-span-4 2xl:col-span-4">
 						<div className="bg-white py-4 px-4 border border-gray-200 shadow-md rounded-lg md:my-4">
 							<div className="flex justify-between border-b-2 mb-2">
 								<div className="text-lg py-2">
@@ -102,12 +127,77 @@ const Cart = () => {
 								</div>
 							</div>
 						</div>
+						<div className="bg-white space-y-4 py-2">
+							<h2 className="text-lg">Phương thức thanh toán</h2>
+							<div className="flex flex-col space-y-3 ml-4">
+								<div className="flex items-center justify-center space-x-4 w-full">
+									<input
+										type="radio"
+										name="method-pay"
+										id="momo"
+										className="appearance-none w-5 h-5 rounded-full border-2 outline-none checked:bg-blue-400"
+										onChange={(e) => setMethodPaid(e.target.id)}
+									/>
+									<label
+										htmlFor="momo"
+										className="flex-1 flex items-center justify-between pr-6"
+									>
+										<span className="text-md">Thanh toán Momo</span>
+										<img
+											src={MoMoIcon}
+											alt=""
+											className="w-10 h-10 rounded-lg shadow-lg object-cover"
+										/>
+									</label>
+								</div>
+								<div className="flex items-center justify-center space-x-4 w-full">
+									<input
+										type="radio"
+										name="method-pay"
+										id="vnpay"
+										className="appearance-none w-5 h-5 rounded-full border-2 outline-none checked:bg-blue-400"
+										onChange={(e) => setMethodPaid(e.target.id)}
+									/>
+									<label
+										htmlFor="vnpay"
+										className="flex-1 flex items-center justify-between pr-6"
+									>
+										<span className="text-md">Thanh toán VnPay</span>
+										<img
+											src={VNPayIcon}
+											alt=""
+											className="w-10 h-10 rounded-lg shadow-lg object-cover"
+										/>
+									</label>
+								</div>
+								<div className="flex items-center justify-center space-x-4 w-full">
+									<input
+										type="radio"
+										name="method-pay"
+										id="cod"
+										className="appearance-none w-5 h-5 rounded-full border-2 outline-none checked:bg-blue-400"
+										onChange={(e) => setMethodPaid(e.target.id)}
+									/>
+									<label
+										htmlFor="cod"
+										className="flex-1 flex items-center justify-between pr-6"
+									>
+										<span className="text-md">Thanh toán khi nhận hàng</span>
+										<img
+											src={CodIcon}
+											alt=""
+											className="w-10 h-10 rounded-lg shadow-lg object-cover"
+										/>
+									</label>
+								</div>
+							</div>
+						</div>
 
 						<div
 							onClick={handlePayment}
 							className="bg-white cursor-pointer py-4 border border-gray-200 shadow-md text-center font-bold  px-4 rounded-lg my-4 dark:bg-red-500"
 						>
-							Thanh toán COD
+							Tiến hành thanh toán
 						</div>
 					</div>
 				</div>
