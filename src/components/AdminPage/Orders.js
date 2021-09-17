@@ -13,7 +13,7 @@ const Orders = () => {
 	}, [token])
 	return (
 		<div className="mt-10 lg:mt-0 lg:ml-56 w-full">
-			<div className="py-2">
+			<div className="py-2 overflow-auto">
 				<table className="min-w-full divide-y divide-gray-200 rounded-lg">
 					<thead className="bg-gray-50">
 						<tr>

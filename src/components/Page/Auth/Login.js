@@ -159,7 +159,7 @@ const Login = () => {
 						/>
 					</div>
 
-					<div className="flex flex-row text-blue-300 font-medium text-sm justify-between">
+					<div className="flex flex-row text-blue-300 font-medium text-sm justify-between pt-5">
 						<Link to="/register">Đăng ký ngay</Link>
 
 						<Link to="/forget_password">Quên mật khẩu ?</Link>

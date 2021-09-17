@@ -26,7 +26,7 @@ const Header = () => {
 	}
 
 	return (
-		<header className="fixed bg-white dark:bg-gray-400 w-full top-0 z-50 left-0 right-0 h-16">
+		<header className="fixed bg-white dark:bg-black dark:text-white w-full top-0 z-50 left-0 right-0 h-16">
 			<div className="max-w-screen-xl mx-auto px-4 lg:px-8 xl:px-0 h-full flex flex-row justify-between items-center transition duration-500">
 				<Sidebar
 					darkModeFuntion={darkMode}
@@ -108,13 +108,13 @@ const Header = () => {
 						<div className="space-x-3 hidden md:flex">
 							<Link
 								to="/login"
-								className="flex justify-center items-center h-10 px-2 font-semibold text-blue-400"
+								className="flex justify-center items-center h-10 px-2 font-semibold text-green-400"
 							>
 								Login
 							</Link>
 							<Link
 								to="/register"
-								className="flex justify-center items-center h-10 px-4 font-semibold text-white rounded-md shadow-md dark:text-white bg-blue-400"
+								className="flex justify-center items-center h-10 px-4 font-semibold text-white rounded-md shadow-md dark:text-white bg-green-400"
 							>
 								Register
 							</Link>

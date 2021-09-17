@@ -8,9 +8,13 @@ const User = () => {
 	const [load, setLoad] = useState(false)
 	useEffect(() => {
 		const fetchPayment = async () => {
-			const result = await paymentApi.getForUser({ token })
-			setPaymentList(result.order)
-			setLoad(true)
+			try {
+				const result = await paymentApi.getForUser({ token })
+				setPaymentList(result.order)
+				setLoad(true)
+			} catch (error) {
+				console.log(error)
+			}
 		}
 		fetchPayment()
 	}, [token])

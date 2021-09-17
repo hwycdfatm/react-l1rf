@@ -11,8 +11,12 @@ function App() {
 	const [apiReady, setApiReady] = useState(false)
 	useEffect(() => {
 		const fetchApi = async () => {
-			const response = await categoriesAPI.get()
-			response.status === 'Success' && setApiReady(true)
+			try {
+				const response = await categoriesAPI.get()
+				response.status === 'Success' && setApiReady(true)
+			} catch (error) {
+				console.log(error)
+			}
 		}
 		fetchApi()
 	}, [])

@@ -117,12 +117,11 @@ const Register = () => {
 			<h1 className="py-5 text-2xl font-semibold text-center">
 				Chào mừng bạn đến với shop l1rf!
 			</h1>
-			<div className="rounded-md shadow-md max-w-md mx-auto p-3 flex flex-col space-y-10">
+			<div className="max-w-md mx-auto p-3 flex flex-col space-y-10">
 				<form
 					onSubmit={handleSubmit(handleRegister)}
 					className="flex flex-col space-y-4 text-gray-400"
 				>
-					<h4 className="text-center text-xl">Đăng ký</h4>
 					{noti && noti}
 					{formInit.map((data, index) => (
 						<div key={index}>
@@ -165,7 +164,7 @@ const Register = () => {
 							onChange={() => setPrivacy(!privacy)}
 						/>
 						<label htmlFor="remember" className="ml-2">
-							Tôi đồng ý với các
+							Tôi đồng ý với các{' '}
 							<Link to="/dieu-khoan" className="text-blue-300">
 								điều khoản
 							</Link>
@@ -173,10 +172,8 @@ const Register = () => {
 					</div>
 
 					<button
-						type={`${privacy ? 'submit' : 'button'}`}
-						className={`mx-auto w-32 p-2  rounded-md text-white outline-none focus:outline-none focus:shadow-outline transition-all ${
-							privacy ? 'bg-blue-500' : 'bg-gray-300 cursor-default'
-						}`}
+						type="submit"
+						className="mx-auto w-32 p-2  rounded-md text-white outline-none focus:outline-none focus:shadow-outline transition-all bg-green-400 shadow-lg"
 					>
 						Đăng ký
 					</button>
