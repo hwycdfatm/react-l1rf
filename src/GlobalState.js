@@ -3,6 +3,9 @@ import React, { createContext, useEffect, useState } from 'react'
 import userAPI from './api/userAPI'
 import categoriesAPI from './api/categoryAPI'
 
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
 export const GlobalState = createContext()
 
 function useLocalStorage(key, initialValue) {
@@ -60,8 +63,7 @@ export const DataProvider = ({ children }) => {
 			}
 			refreshToken()
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
+	}, [login])
 
 	useEffect(() => {
 		if (token) {
@@ -83,7 +85,6 @@ export const DataProvider = ({ children }) => {
 			}
 			getUser()
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [token])
 
 	useEffect(() => {
@@ -123,7 +124,10 @@ export const DataProvider = ({ children }) => {
 			setCart([...cart])
 		}
 		// Add to cart
-		await userAPI.handleCart(cart, token)
+		const result = await userAPI.handleCart(cart, token)
+		if (result.status === 'Success') {
+			toast(result.message, { type: 'success' })
+		}
 	}
 
 	const removeProduct = async (id) => {

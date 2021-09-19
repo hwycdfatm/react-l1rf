@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { Link, Redirect } from 'react-router-dom'
+import { Link, Redirect, useHistory } from 'react-router-dom'
 
 import FacebookLogin from 'react-facebook-login'
 import { GlobalState } from '../../../GlobalState'
@@ -17,6 +17,7 @@ const Login = () => {
 	function removeMsg() {
 		setError('')
 	}
+	const history = useHistory()
 
 	// định nghĩa các rule
 	const schema = yup.object().shape({
@@ -60,8 +61,8 @@ const Login = () => {
 
 			if (res.status === 'Success') {
 				setLogin(true)
-				window.location = '/'
 				setLoader(false)
+				history.push('/')
 			}
 		} catch (err) {
 			setLoader(false)
@@ -78,7 +79,7 @@ const Login = () => {
 			const res = await userAPI.loginWithFacebook(response)
 			if (res.status === 'Success') {
 				setLogin(true)
-				window.location = '/'
+				history.push('/')
 			}
 		} catch (err) {
 			console.log({ err })

@@ -31,6 +31,7 @@ import Footer from '../components/Footer/Footer'
 import DashBoard from '../components/AdminPage/DashBoard'
 import SidebarAdmin from '../components/AdminPage/SidebarAdmin'
 import AddProduct from '../components/AdminPage/AddProduct'
+import AllUsers from '../components/AdminPage/AllUsers'
 
 const Layout = () => {
 	const { admin } = useContext(GlobalState)
@@ -91,6 +92,7 @@ const Layout = () => {
 					<AdminRoute exact path="/add" component={AddProduct} />
 					<AdminRoute exact path="/trash" component={CategoryTrash} />
 					<AdminRoute exact path="/orders" component={Orders} />
+					<AdminRoute exact path="/allusers" component={AllUsers} />
 					<Route path="*" component={Error} />
 				</Switch>
 				<button

@@ -36,5 +36,9 @@ const userAPI = {
 		const url = '/user/register'
 		return axiosAPI.post(url, { ...data })
 	},
+	getAllUsers: (token) => {
+		const url = '/user/all'
+		return axiosAPI.get(url, { headers: { Authorization: token } })
+	},
 }
 export default userAPI

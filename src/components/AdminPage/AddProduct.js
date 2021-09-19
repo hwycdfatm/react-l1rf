@@ -81,7 +81,7 @@ const AddProduct = () => {
 			}
 
 			const res = await uploadImageAPI.upload(formData, token)
-
+			console.log(res)
 			setProduct({
 				...product,
 				images: [...product.images, ...res.images],

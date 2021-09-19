@@ -26,7 +26,7 @@ const Header = () => {
 	}
 
 	return (
-		<header className="fixed bg-white dark:bg-black dark:text-white w-full top-0 z-50 left-0 right-0 h-16">
+		<header className="fixed bg-white dark:bg-black dark:text-white w-full top-0 z-50 left-0 right-0 h-16 transition-all">
 			<div className="max-w-screen-xl mx-auto px-4 lg:px-8 xl:px-0 h-full flex flex-row justify-between items-center transition duration-500">
 				<Sidebar
 					darkModeFuntion={darkMode}
@@ -35,7 +35,7 @@ const Header = () => {
 					login={login}
 					logout={logout}
 				/>
-				<Link to="/" className="font-bebas font-semibold text-3xl">
+				<Link to="/" className="font-bebas text-3xl font-semibold">
 					l1rf
 				</Link>
 
@@ -44,7 +44,7 @@ const Header = () => {
 						<NavLink
 							key={index}
 							to={'/category/' + sidebar.slug}
-							className="flex justify-center items-center h-10 px-7 rounded-md transition duration-500 hover:bg-gray-100 dark:hover:bg-gray-600"
+							className="flex justify-center items-center h-10 px-7 rounded-md hover:bg-gray-100 dark:hover:bg-gray-600"
 							activeClassName="bg-gray-300 dark:bg-gray-900 dark:text-white"
 						>
 							{sidebar.name}
@@ -53,7 +53,7 @@ const Header = () => {
 				</div>
 
 				{/* User */}
-				<div className="flex space-x-3">
+				<div className="flex md:space-x-3">
 					{login ? (
 						<div className="space-x-2 hidden md:flex relative">
 							<button

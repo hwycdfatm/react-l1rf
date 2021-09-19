@@ -127,7 +127,7 @@ const Cart = () => {
 								</div>
 							</div>
 						</div>
-						<div className="bg-white space-y-4 py-2">
+						<div className="space-y-4 py-2">
 							<h2 className="text-lg">Phương thức thanh toán</h2>
 							<div className="flex flex-col space-y-3 ml-4">
 								<div className="flex items-center justify-center space-x-4 w-full">
@@ -195,7 +195,7 @@ const Cart = () => {
 
 						<div
 							onClick={handlePayment}
-							className="bg-white cursor-pointer py-4 border border-gray-200 shadow-md text-center font-bold  px-4 rounded-lg my-4 dark:bg-red-500"
+							className="bg-green-400 cursor-pointer py-4 border-2 border-green-400 text-center text-white hover:text-green-400 font-bold  px-4 rounded-lg my-4 hover:bg-white dark:hover:bg-black"
 						>
 							Tiến hành thanh toán
 						</div>

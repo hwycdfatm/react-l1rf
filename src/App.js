@@ -4,7 +4,7 @@ import categoriesAPI from './api/categoryAPI'
 import Layout from './components/Layout'
 import { DataProvider } from './GlobalState'
 import Loading from './utils/Loading'
-
+import { ToastContainer } from 'react-toastify'
 import ScrollToTop from './utils/ScrollToTop'
 
 function App() {
@@ -23,6 +23,11 @@ function App() {
 	return (
 		<DataProvider>
 			<Router>
+				<ToastContainer
+					position="bottom-left"
+					autoClose={3000}
+					hideProgressBar={true}
+				/>
 				<ScrollToTop>{!apiReady ? <Loading /> : <Layout />}</ScrollToTop>
 			</Router>
 		</DataProvider>

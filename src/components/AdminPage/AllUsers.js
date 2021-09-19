@@ -1,16 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react'
-import paymentApi from '../../api/paymentAPI'
+import userAPI from '../../api/userAPI'
+
 import { GlobalState } from '../../GlobalState'
-import { format, compareAsc } from 'date-fns'
-const Orders = () => {
-	const [orders, setOrders] = useState([])
+const AllUsers = () => {
+	const [users, setUsers] = useState([])
 	const { token } = useContext(GlobalState)
 	useEffect(() => {
-		async function fetchAllOrder() {
-			const result = await paymentApi.getAllPayements({ token })
-			setOrders(result.order)
+		async function fetchAllUsers() {
+			const res = await userAPI.getAllUsers(token)
+			console.log(res)
+			setUsers([...res.users])
 		}
-		fetchAllOrder()
+		fetchAllUsers()
 	}, [token])
 	return (
 		<div className="mt-10 lg:mt-0 lg:ml-56 w-full">
@@ -40,13 +41,7 @@ const Orders = () => {
 								scope="col"
 								className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
 							>
-								Ngày mua
-							</th>
-							<th
-								scope="col"
-								className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-							>
-								Tình trạng
+								Quyền
 							</th>
 
 							<th
@@ -58,7 +53,7 @@ const Orders = () => {
 						</tr>
 					</thead>
 					<tbody className="bg-white divide-y divide-gray-200">
-						{orders.map((order, index) => (
+						{users?.map((order, index) => (
 							<tr key={order.paymentID}>
 								<td className="px-4 py-4 whitespace-nowrap">
 									<div className="text-sm text-gray-900">{index + 1}</div>
@@ -77,14 +72,7 @@ const Orders = () => {
 									<div className="text-sm text-gray-900">{order.address}</div>
 								</td>
 								<td className="px-6 py-4 whitespace-nowrap">
-									<div className="text-sm text-gray-900">
-										{format(order.createdAt)}
-									</div>
-								</td>
-								<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-									{order.status === 1
-										? 'Đang chuẩn bị'
-										: 'Giao hàng thành công'}
+									<div className="text-sm text-gray-900">{order.role}</div>
 								</td>
 								<td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-4">
 									<button className="text-indigo-600 hover:text-indigo-900">
@@ -151,4 +139,4 @@ const Orders = () => {
 	)
 }
 
-export default Orders
+export default AllUsers

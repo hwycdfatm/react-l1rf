@@ -5,6 +5,7 @@ import { GlobalState } from '../../../GlobalState'
 import Error from '../Error/Error'
 import NotFoundImage from './image-not-found.jpg'
 import productAPI from '../../../api/productAPI'
+
 const Detail = () => {
 	const { addToCart } = useContext(GlobalState)
 	const [count, setCount] = useState(1)
