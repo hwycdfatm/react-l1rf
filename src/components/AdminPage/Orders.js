@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import paymentApi from '../../api/paymentAPI'
 import { GlobalState } from '../../GlobalState'
-import { format, compareAsc } from 'date-fns'
 const Orders = () => {
 	const [orders, setOrders] = useState([])
 	const { token } = useContext(GlobalState)
@@ -77,9 +76,7 @@ const Orders = () => {
 									<div className="text-sm text-gray-900">{order.address}</div>
 								</td>
 								<td className="px-6 py-4 whitespace-nowrap">
-									<div className="text-sm text-gray-900">
-										{format(order.createdAt)}
-									</div>
+									<div className="text-sm text-gray-900">{order.createdAt}</div>
 								</td>
 								<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
 									{order.status === 1
