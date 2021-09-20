@@ -80,9 +80,10 @@ export const DataProvider = ({ children }) => {
 						setCart([...result.user.cart])
 					}
 				} catch (error) {
-					console.log(error)
+					alert(error)
 				}
 			}
+
 			getUser()
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps

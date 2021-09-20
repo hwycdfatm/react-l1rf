@@ -90,16 +90,18 @@ const Form = (props) => {
 	}
 
 	// delete image
-	const handleDestroy = async (public_id) => {
+	const handleDestroy = async (public_name) => {
 		try {
 			if (!admin) return alert('Mày không có quyền')
 
-			await uploadImageAPI.delete([public_id], token)
+			await uploadImageAPI.delete([public_name], token)
 
 			setProduct({
 				...product,
 				images: [
-					...product.images.filter((image) => image.public_id !== public_id),
+					...product.images.filter(
+						(image) => image.public_name !== public_name
+					),
 				],
 			})
 		} catch (err) {
@@ -122,7 +124,7 @@ const Form = (props) => {
 									className="h-full object-cover"
 								/>
 								<div
-									onClick={() => handleDestroy(product.images[0].public_id)}
+									onClick={() => handleDestroy(product.images[0].public_name)}
 									className="absolute top-1 right-1 text-red-300 cursor-pointer"
 								>
 									<svg
@@ -264,7 +266,7 @@ const Form = (props) => {
 												alt=""
 											/>
 											<div
-												onClick={() => handleDestroy(image.public_id)}
+												onClick={() => handleDestroy(image.public_name)}
 												className="absolute top-1 right-1 text-red-300 cursor-pointer"
 											>
 												<svg

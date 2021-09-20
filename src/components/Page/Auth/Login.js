@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import userAPI from '../../../api/userAPI'
+import LoadingBtn from '../../../utils/LoadingBtn'
 
 const Login = () => {
 	const { login, setLogin } = useContext(GlobalState)
@@ -140,15 +141,7 @@ const Login = () => {
 							type="submit"
 							className="w-full font-semibold h-10 bg-green-300 rounded-md text-white outline-none focus:outline-none focus:shadow-outline hover:bg-green-500 transition-all shadow-md"
 						>
-							{loader ? (
-								<div className="flex space-x-3 justify-center loader">
-									<div className="h-4 w-2 rounded-full bg-white animate-bounce duration-200"></div>
-									<div className="h-4 w-2 rounded-full bg-white animate-bounce duration-200"></div>
-									<div className="h-4 w-2 rounded-full bg-white animate-bounce duration-200"></div>
-								</div>
-							) : (
-								'Đăng nhập'
-							)}
+							{loader ? <LoadingBtn /> : 'Đăng nhập'}
 						</button>
 						<span className="text-center">hoặc</span>
 						<FacebookLogin
