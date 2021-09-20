@@ -3,7 +3,14 @@ import { NavLink } from 'react-router-dom'
 import { GlobalState } from '../../GlobalState'
 const SidebarAdmin = (props) => {
 	const { logout } = useContext(GlobalState)
-	const { handleSidebar, open } = props.option
+	const { handleSidebar, open, setOpen } = props.option
+	open
+		? document.body.classList.add('overflow-hidden')
+		: document.body.classList.remove('overflow-hidden')
+	window.addEventListener('resize', function () {
+		setOpen(false)
+	})
+
 	return (
 		<>
 			<div className="top-0 left-0 right-0 p-3 fixed bg-white lg:hidden z-30">
@@ -25,7 +32,7 @@ const SidebarAdmin = (props) => {
 				</button>
 			</div>
 			<div
-				className={`fixed h-screen w-56 bg-white flex-col shadow-xl transition flex justify-between z-40 transform lg:transform-none ${
+				className={`fixed h-screen w-56 bg-white overflow-y-auto flex-col shadow-xl transition flex justify-between z-40 transform lg:transform-none ${
 					!open && '-translate-x-full'
 				}`}
 			>
@@ -147,6 +154,11 @@ const SidebarAdmin = (props) => {
 					</button>
 				</div>
 			</div>
+			<div
+				className={`fixed lg:hidden h-screen w-full ml-56 bg-gray-600 bg-opacity-10 transition z-40 transform lg:transform-none ${
+					!open && 'translate-x-full'
+				}`}
+			></div>
 		</>
 	)
 }

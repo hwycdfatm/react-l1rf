@@ -29,7 +29,8 @@ const CategoryAdmin = () => {
 	}
 	const handleDelete = async (id) => {
 		try {
-			await productAPI.deletedForce(id, token)
+			const msg = await productAPI.deletedForce(id, token)
+			console.log(msg)
 			setProductList([...productList.filter((e) => e._id !== id)])
 		} catch (err) {
 			console.log(err)

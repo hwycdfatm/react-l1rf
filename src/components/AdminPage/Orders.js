@@ -12,8 +12,8 @@ const Orders = () => {
 		fetchAllOrder()
 	}, [token])
 	return (
-		<div className="mt-10 lg:mt-0 lg:ml-56 w-full">
-			<div className="py-2 overflow-auto">
+		<div className="mt-10 lg:mt-0 lg:ml-56 w-full overflow-x-scroll">
+			<div className="py-2 ">
 				<table className="min-w-full divide-y divide-gray-200 rounded-lg">
 					<thead className="bg-gray-50">
 						<tr>
@@ -69,6 +69,7 @@ const Orders = () => {
 												{order.name}
 											</div>
 											<div className="text-sm text-gray-500">{order.email}</div>
+											<div className="text-sm text-gray-500">{order.phone}</div>
 										</div>
 									</div>
 								</td>

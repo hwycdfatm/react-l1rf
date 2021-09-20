@@ -55,7 +55,7 @@ const CategoryAdmin = () => {
 				/>
 			)}
 
-			<div className="mt-10 lg:mt-0 lg:ml-56 p-3 flex flex-col space-y-4 relative">
+			<div className="mt-10 lg:mt-0 lg:ml-56 p-3 flex flex-col space-y-4 relative w-full ">
 				<div>phần lọc</div>
 				<div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
 					{productList.map((product, index) => (

@@ -8,7 +8,6 @@ const AllUsers = () => {
 	useEffect(() => {
 		async function fetchAllUsers() {
 			const res = await userAPI.getAllUsers(token)
-			console.log(res)
 			setUsers([...res.users])
 		}
 		fetchAllUsers()
@@ -41,6 +40,12 @@ const AllUsers = () => {
 								scope="col"
 								className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
 							>
+								Số điện thoại
+							</th>
+							<th
+								scope="col"
+								className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+							>
 								Quyền
 							</th>
 
@@ -53,8 +58,8 @@ const AllUsers = () => {
 						</tr>
 					</thead>
 					<tbody className="bg-white divide-y divide-gray-200">
-						{users?.map((order, index) => (
-							<tr key={order.paymentID}>
+						{users?.map((user, index) => (
+							<tr key={user._id}>
 								<td className="px-4 py-4 whitespace-nowrap">
 									<div className="text-sm text-gray-900">{index + 1}</div>
 								</td>
@@ -62,17 +67,22 @@ const AllUsers = () => {
 									<div className="flex items-center">
 										<div>
 											<div className="text-sm font-medium text-gray-900">
-												{order.name}
+												{user.name}
 											</div>
-											<div className="text-sm text-gray-500">{order.email}</div>
+											<div className="text-sm text-gray-500">{user.email}</div>
 										</div>
 									</div>
 								</td>
 								<td className="px-6 py-4 whitespace-nowrap">
-									<div className="text-sm text-gray-900">{order.address}</div>
+									<div className="text-sm text-gray-900">{user.address}</div>
 								</td>
 								<td className="px-6 py-4 whitespace-nowrap">
-									<div className="text-sm text-gray-900">{order.role}</div>
+									<div className="text-sm text-gray-900">
+										{user.phone ? user.phone : 'Chưa cập nhật'}
+									</div>
+								</td>
+								<td className="px-6 py-4 whitespace-nowrap">
+									<div className="text-sm text-gray-900">{user.role}</div>
 								</td>
 								<td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-4">
 									<button className="text-indigo-600 hover:text-indigo-900">

@@ -71,7 +71,7 @@ const Layout = () => {
 					/>
 				</>
 			) : (
-				<SidebarAdmin option={{ handleSidebar, open }} />
+				<SidebarAdmin option={{ handleSidebar, open, setOpen }} />
 			)}
 			<div
 				className={`flex ${

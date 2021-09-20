@@ -5,6 +5,9 @@ import { GlobalState } from '../../GlobalState'
 import productAPI from '../../api/productAPI'
 import uploadImageAPI from '../../api/uploadImageAPI'
 
+import LoadingBtn from '../../utils/LoadingBtn'
+import { toast } from 'react-toastify'
+
 const AddProduct = () => {
 	// Global state
 	const { admin, token, categories } = useContext(GlobalState)
@@ -20,6 +23,7 @@ const AddProduct = () => {
 		inStock: '',
 		images: [],
 	})
+	const [uploadLoading, setUploadLoading] = useState(false)
 
 	const [checked, setChecked] = useState(false)
 
@@ -81,7 +85,6 @@ const AddProduct = () => {
 			}
 
 			const res = await uploadImageAPI.upload(formData, token)
-			console.log(res)
 			setProduct({
 				...product,
 				images: [...product.images, ...res.images],
@@ -95,13 +98,25 @@ const AddProduct = () => {
 	const handleAddProduct = async (e) => {
 		e.preventDefault()
 		try {
-			console.log({ token, product })
 			if (!admin) return alert('Mày không có quyền')
+			setUploadLoading(true)
 			const check = await productAPI.creat({ ...product }, token)
 			if (check.status === 'Success') {
-				alert(check.message)
+				toast(check.message, { type: 'success', position: 'top-right' })
+				setProduct({
+					title: '',
+					description: '',
+					content: 'Đây là phần content của sản phẩm',
+					category: '',
+					slug: '',
+					price: '',
+					inStock: '',
+					images: [],
+				})
+				setUploadLoading(false)
 			}
 		} catch (error) {
+			setUploadLoading(false)
 			console.log(error)
 		}
 	}
@@ -350,9 +365,9 @@ const AddProduct = () => {
 							</select>
 							<button
 								type="submit"
-								className="px-2 py-2 text-gray-900 bg-gray-100 rounded font-semibold border shadow xl:px-4"
+								className="w-full md:w-44 font-semibold h-10 bg-green-300 rounded-md text-white outline-none focus:outline-none focus:shadow-outline hover:bg-green-500 transition-all shadow-md"
 							>
-								Thêm sản phẩm
+								{!uploadLoading ? 'Thêm sản phẩm' : <LoadingBtn />}
 							</button>
 						</div>
 					</div>
