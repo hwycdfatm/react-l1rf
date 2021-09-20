@@ -105,7 +105,7 @@ const Form = (props) => {
 				],
 			})
 		} catch (err) {
-			alert(err)
+			alert(err.message)
 		}
 	}
 
