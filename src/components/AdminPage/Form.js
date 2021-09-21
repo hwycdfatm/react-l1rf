@@ -7,7 +7,7 @@ import productAPI from '../../api/productAPI'
 
 const Form = (props) => {
 	// default Action is Add
-	const { onChangeInput, product, setProduct, fetchProduct } = props
+	const { onChangeInput, product, setProduct, setVisible } = props
 
 	// Global state
 	const { admin, token, categories } = useContext(GlobalState)
@@ -81,8 +81,9 @@ const Form = (props) => {
 			const check = await productAPI.update({ ...product }, product._id, token)
 
 			if (check.status === 'Success') {
-				fetchProduct()
+				// fetchProduct()
 				alert(check.message)
+				setVisible(false)
 			}
 		} catch (error) {
 			console.log(error)
@@ -172,7 +173,7 @@ const Form = (props) => {
 							onChange={handleUploadImages}
 						/>
 					</div>
-					<div className="w-full flex flex-col space-y-2 text-sm md:text-base md:w-1/2  md:pl-5">
+					<div className="w-full flex flex-col space-y-2 text-sm md:text-base md:w-1/2 md:pl-5 md:space-y-4">
 						<div className="space-y-1">
 							<h1 className="text-sm md:text-md md:font-semibold">
 								Tên sản phẩm
@@ -331,13 +332,22 @@ const Form = (props) => {
 										</option>
 									))}
 								</select>
-								<button
-									type="submit"
-									className="px-2 py-2 text-gray-900 bg-gray-100 rounded font-semibold border shadow xl:px-4"
-								>
-									Cập nhật sản phẩm
-								</button>
 							</div>
+						</div>
+						<div className="text-base flex flex-col md:flex-row space-y-1 md:space-y-0 md:space-x-3 justify-between">
+							<button
+								type="submit"
+								className="w-full px-2 py-2 text-white bg-green-300 rounded font-medium xl:px-4"
+							>
+								Cập nhật sản phẩm
+							</button>
+							<button
+								type="button"
+								onClick={() => setVisible(false)}
+								className="w-full px-2 py-2 text-white bg-red-400 rounded font-medium xl:px-4"
+							>
+								Hủy
+							</button>
 						</div>
 					</div>
 				</div>

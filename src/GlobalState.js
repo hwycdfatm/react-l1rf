@@ -55,11 +55,15 @@ export const DataProvider = ({ children }) => {
 	useEffect(() => {
 		if (login) {
 			const refreshToken = async () => {
-				const result = await userAPI.refreshToken()
-				setToken(result.accessToken)
-				setTimeout(() => {
-					refreshToken()
-				}, 10 * 60 * 1000)
+				try {
+					const result = await userAPI.refreshToken()
+					setToken(result.accessToken)
+					setTimeout(() => {
+						refreshToken()
+					}, 10 * 60 * 1000)
+				} catch (error) {
+					console.log(error)
+				}
 			}
 			refreshToken()
 		}
@@ -90,15 +94,15 @@ export const DataProvider = ({ children }) => {
 	}, [token])
 
 	useEffect(() => {
-		try {
-			const getCategories = async () => {
+		const getCategories = async () => {
+			try {
 				const res = await categoriesAPI.get()
 				setCategories(res.data)
+			} catch (error) {
+				console.log(error)
 			}
-			getCategories()
-		} catch (error) {
-			console.log(error)
 		}
+		getCategories()
 	}, [])
 
 	const logout = async () => {
@@ -109,26 +113,30 @@ export const DataProvider = ({ children }) => {
 	}
 
 	const addToCart = async (product) => {
-		if (!login) return alert('Vui lòng đăng nhập')
-		const check = cart.every((item) => item._id !== product._id)
-		if (!check) {
-			// Cập nhật số lượng sản phẩm
-			cart.forEach((item) => {
-				if (item._id === product._id) {
-					item.quantity += product.quantity
-				}
-			})
-			setCart([...cart])
-		} else {
-			// Thêm sản phẩm mới
-			cart.push(product)
-			// setCart([...cart, { ...product, quantity: product.quantity }])
-			setCart([...cart])
-		}
-		// Add to cart
-		const result = await userAPI.handleCart(cart, token)
-		if (result.status === 'Success') {
-			toast(result.message, { type: 'success' })
+		try {
+			if (!login) return alert('Vui lòng đăng nhập')
+			const check = cart.every((item) => item._id !== product._id)
+			if (!check) {
+				// Cập nhật số lượng sản phẩm
+				cart.forEach((item) => {
+					if (item._id === product._id) {
+						item.quantity += product.quantity
+					}
+				})
+				setCart([...cart])
+			} else {
+				// Thêm sản phẩm mới
+				cart.push(product)
+				// setCart([...cart, { ...product, quantity: product.quantity }])
+				setCart([...cart])
+			}
+			// Add to cart
+			const result = await userAPI.handleCart(cart, token)
+			if (result.status === 'Success') {
+				toast(result.message, { type: 'success' })
+			}
+		} catch (error) {
+			console.log(error)
 		}
 	}
 

@@ -99,7 +99,7 @@ const Layout = () => {
 					onClick={scrollToTop}
 					className={` ${
 						isVisible ? 'fixed' : 'hidden'
-					} bottom-10 right-5 lg:right-20 bg-white p-2 rounded-lg shadow-xl border overflow-hidden`}
+					} bottom-10 right-5 lg:right-20  overflow-hidden`}
 				>
 					<svg
 						className="w-6 h-6"

@@ -7,6 +7,7 @@ import uploadImageAPI from '../../api/uploadImageAPI'
 
 import LoadingBtn from '../../utils/LoadingBtn'
 import { toast } from 'react-toastify'
+import '../../css/unreset.css'
 
 const AddProduct = () => {
 	// Global state

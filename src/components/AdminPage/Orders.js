@@ -1,27 +1,35 @@
 import React, { useContext, useEffect, useState } from 'react'
 import paymentApi from '../../api/paymentAPI'
 import { GlobalState } from '../../GlobalState'
+import { format } from 'date-fns'
 const Orders = () => {
 	const [orders, setOrders] = useState([])
 	const { token } = useContext(GlobalState)
 	useEffect(() => {
 		async function fetchAllOrder() {
 			const result = await paymentApi.getAllPayements({ token })
+
 			setOrders(result.order)
 		}
 		fetchAllOrder()
 	}, [token])
 	return (
-		<div className="mt-10 lg:mt-0 lg:ml-56 w-full overflow-x-scroll">
+		<div className="mt-10 lg:mt-0 lg:ml-56 w-full overflow-x-scroll scrollbar">
 			<div className="py-2 ">
 				<table className="min-w-full divide-y divide-gray-200 rounded-lg">
 					<thead className="bg-gray-50">
 						<tr>
 							<th
 								scope="col"
-								className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+								className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
 							>
 								STT
+							</th>
+							<th
+								scope="col"
+								className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+							>
+								ID
 							</th>
 							<th
 								scope="col"
@@ -45,6 +53,12 @@ const Orders = () => {
 								scope="col"
 								className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
 							>
+								Tổng tiền
+							</th>
+							<th
+								scope="col"
+								className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+							>
 								Tình trạng
 							</th>
 
@@ -62,6 +76,11 @@ const Orders = () => {
 								<td className="px-4 py-4 whitespace-nowrap">
 									<div className="text-sm text-gray-900">{index + 1}</div>
 								</td>
+								<td className="px-4 py-4 whitespace-nowrap">
+									<div className="text-sm text-gray-900">
+										#{order.paymentID}
+									</div>
+								</td>
 								<td className="px-6 py-4 whitespace-nowrap">
 									<div className="flex items-center">
 										<div>
@@ -77,7 +96,14 @@ const Orders = () => {
 									<div className="text-sm text-gray-900">{order.address}</div>
 								</td>
 								<td className="px-6 py-4 whitespace-nowrap">
-									<div className="text-sm text-gray-900">{order.createdAt}</div>
+									<div className="text-sm text-gray-900">
+										{format(new Date(order.createdAt), 'h:m:s a | MM/dd/yyyy')}
+									</div>
+								</td>
+								<td className="px-6 py-4 whitespace-nowrap">
+									<div className="text-sm text-gray-900 text-left">
+										{parseInt(order.total).toLocaleString('en')} vnđ
+									</div>
 								</td>
 								<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
 									{order.status === 1
@@ -85,7 +111,7 @@ const Orders = () => {
 										: 'Giao hàng thành công'}
 								</td>
 								<td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-4">
-									<button className="text-indigo-600 hover:text-indigo-900">
+									<button className="text-blue-400 hover:text-blue-900">
 										<svg
 											className="w-5 h-5"
 											fill="none"

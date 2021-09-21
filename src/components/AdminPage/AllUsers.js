@@ -7,20 +7,25 @@ const AllUsers = () => {
 	const { token } = useContext(GlobalState)
 	useEffect(() => {
 		async function fetchAllUsers() {
-			const res = await userAPI.getAllUsers(token)
-			setUsers([...res.users])
+			try {
+				const res = await userAPI.getAllUsers({ token })
+				console.log(res)
+				setUsers([...res.users])
+			} catch (error) {
+				console.log(error)
+			}
 		}
 		fetchAllUsers()
 	}, [token])
 	return (
 		<div className="mt-10 lg:mt-0 lg:ml-56 w-full">
-			<div className="py-2 overflow-auto">
+			<div className="py-2 overflow-auto scrollbar">
 				<table className="min-w-full divide-y divide-gray-200 rounded-lg">
 					<thead className="bg-gray-50">
 						<tr>
 							<th
 								scope="col"
-								className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+								className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
 							>
 								STT
 							</th>
@@ -61,7 +66,9 @@ const AllUsers = () => {
 						{users?.map((user, index) => (
 							<tr key={user._id}>
 								<td className="px-4 py-4 whitespace-nowrap">
-									<div className="text-sm text-gray-900">{index + 1}</div>
+									<div className="text-sm text-center text-gray-900">
+										{index + 1}
+									</div>
 								</td>
 								<td className="px-6 py-4 whitespace-nowrap">
 									<div className="flex items-center">

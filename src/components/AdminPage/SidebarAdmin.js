@@ -53,29 +53,13 @@ const SidebarAdmin = (props) => {
 					</svg>
 				</button>
 				<div className="pt-16 pb-5 pl-2 flex space-x-1 justify-center items-center text-xl text-purple-600 font-extrabold">
-					<h1 className="patriot cursor-default">l1rf Store</h1>
-					<span>
-						<svg
-							className="w-6 h-6"
-							fill="none"
-							stroke="currentColor"
-							viewBox="0 0 24 24"
-							xmlns="http://www.w3.org/2000/svg"
-						>
-							<path
-								strokeLinecap="round"
-								strokeLinejoin="round"
-								strokeWidth={2}
-								d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
-							/>
-						</svg>
-					</span>
+					<h1 className="cursor-default">l1rf store</h1>
 				</div>
 				<div className="mb-auto flex flex-col p-2 space-y-2">
 					<NavLink
 						to="/"
 						onClick={handleSidebar}
-						className="flex items-center space-x-2 h-10 px-2 rounded-md transition duration-300  hover:bg-gray-300 text-sm font-semibold"
+						className="flex items-center space-x-2 h-10 px-2 rounded-md transition duration-300  hover:bg-green-300 bg-opacity-60 text-sm font-semibold"
 					>
 						<svg
 							className="w-5 h-5"
@@ -96,37 +80,40 @@ const SidebarAdmin = (props) => {
 					<NavLink
 						to="/products"
 						onClick={handleSidebar}
-						className="flex items-center space-x-2 h-10 px-2 rounded-md transition duration-300  hover:bg-gray-300 text-sm font-semibold"
-						activeClassName="bg-gray-300 dark:bg-gray-900 dark:text-white"
+						className="flex items-center space-x-2 h-10 px-2 rounded-md transition duration-300  hover:bg-green-300 bg-opacity-60 text-sm font-semibold"
+						activeClassName="bg-green-300 bg-opacity-60 dark:bg-gray-900 dark:text-white"
 					>
 						Tất cả sản phẩm
 					</NavLink>
 					<NavLink
 						to="/orders"
 						onClick={handleSidebar}
-						activeClassName="bg-gray-300 dark:bg-gray-900 dark:text-white"
-						className="flex items-center space-x-2 h-10 px-2 rounded-md transition duration-300  hover:bg-gray-300 text-sm font-semibold"
+						activeClassName="bg-green-300 bg-opacity-60 dark:bg-gray-900 dark:text-white"
+						className="flex items-center space-x-2 h-10 px-2 rounded-md transition duration-300  hover:bg-green-300 bg-opacity-60 text-sm font-semibold"
 					>
 						Tất cả hóa đơn
 					</NavLink>
 					<NavLink
 						to="/add"
 						onClick={handleSidebar}
-						className="flex items-center space-x-2 h-10 px-2 rounded-md transition duration-300  hover:bg-gray-300 text-sm font-semibold"
+						activeClassName="bg-green-300 bg-opacity-60 dark:bg-gray-900 dark:text-white"
+						className="flex items-center space-x-2 h-10 px-2 rounded-md transition duration-300  hover:bg-green-300 bg-opacity-60 text-sm font-semibold"
 					>
 						Thêm sản phẩm mới
 					</NavLink>
 					<NavLink
 						to="/allusers"
+						activeClassName="bg-green-300 bg-opacity-60 dark:bg-gray-900 dark:text-white"
 						onClick={handleSidebar}
-						className="flex items-center space-x-2 h-10 px-2 rounded-md transition duration-300  hover:bg-gray-300 text-sm font-semibold"
+						className="flex items-center space-x-2 h-10 px-2 rounded-md transition duration-300  hover:bg-green-300 bg-opacity-60 text-sm font-semibold"
 					>
 						Quản lý tài khoản
 					</NavLink>
 					<NavLink
 						to="/trash"
+						activeClassName="bg-green-300 bg-opacity-60 dark:bg-gray-900 dark:text-white"
 						onClick={handleSidebar}
-						className="flex items-center space-x-2 h-10 px-2 rounded-md transition duration-300  hover:bg-gray-300 text-sm font-semibold"
+						className="flex items-center space-x-2 h-10 px-2 rounded-md transition duration-300  hover:bg-green-300 bg-opacity-60 text-sm font-semibold"
 					>
 						BTS
 					</NavLink>
@@ -155,6 +142,7 @@ const SidebarAdmin = (props) => {
 				</div>
 			</div>
 			<div
+				onClick={handleSidebar}
 				className={`fixed lg:hidden h-screen w-full ml-56 bg-gray-600 bg-opacity-10 transition z-40 transform lg:transform-none ${
 					!open && 'translate-x-full'
 				}`}
