@@ -339,7 +339,7 @@ const Form = (props) => {
 								type="submit"
 								className="w-full px-2 py-2 text-white bg-green-300 rounded font-medium xl:px-4"
 							>
-								Cập nhật sản phẩm
+								Cập nhật
 							</button>
 							<button
 								type="button"

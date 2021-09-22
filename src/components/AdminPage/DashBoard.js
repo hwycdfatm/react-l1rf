@@ -33,7 +33,7 @@ const DashBoard = () => {
 			<section className="flex p-3 lg:p-5">
 				<div className="w-full flex flex-wrap ">
 					<div className="w-full px-3 sm:w-1/2 xl:w-1/4 h-32">
-						<div className="flex items-center px-5 py-6 shadow-sm rounded-md bg-green-300 h-full">
+						<div className="flex items-center px-5 py-6 shadow-lg border rounded-lg bg-white h-full">
 							<div className="p-2 text-gray-600">
 								<svg
 									className="w-10 h-10"
@@ -52,7 +52,7 @@ const DashBoard = () => {
 							</div>
 
 							<div className="mx-5">
-								<h4 className="text-2xl font-semibold text-gray-600">
+								<h4 className="text-xl font-semibold text-gray-600">
 									{totalProducts}
 								</h4>
 								<div className="text-gray-500">Sản phẩm</div>
@@ -61,7 +61,7 @@ const DashBoard = () => {
 					</div>
 
 					<div className="w-full mt-6 px-3 sm:w-1/2 xl:w-1/4 sm:mt-0 h-32">
-						<div className="flex items-center px-5 py-6 shadow-sm rounded-md bg-green-300 h-full">
+						<div className="flex items-center px-5 py-6 shadow-lg border rounded-lg bg-white h-full">
 							<div className="p-2 text-gray-600">
 								<svg
 									className="w-10 h-10"
@@ -80,7 +80,7 @@ const DashBoard = () => {
 							</div>
 
 							<div className="mx-5">
-								<h4 className="text-2xl font-semibold text-gray-600">
+								<h4 className="text-xl font-semibold text-gray-600">
 									{totalPayment}
 								</h4>
 								<div className="text-gray-500">Hóa đơn</div>
@@ -89,7 +89,7 @@ const DashBoard = () => {
 					</div>
 
 					<div className="w-full mt-6 px-3 sm:w-1/2 xl:w-1/4 xl:mt-0 h-32">
-						<div className="flex items-center px-5 py-6 shadow-sm rounded-md bg-green-300 h-full">
+						<div className="flex items-center px-5 py-6 shadow-lg border rounded-lg bg-white h-full">
 							<div className="p-3 text-gray-600">
 								<svg
 									className="w-10 h-10"
@@ -108,7 +108,7 @@ const DashBoard = () => {
 							</div>
 
 							<div className="mx-5">
-								<h4 className="text-2xl font-semibold text-gray-600">
+								<h4 className="text-xl font-semibold text-gray-600">
 									{totalUsers}
 								</h4>
 								<div className="text-gray-500">Thành viên</div>
@@ -116,7 +116,7 @@ const DashBoard = () => {
 						</div>
 					</div>
 					<div className="w-full mt-6 px-3 sm:w-1/2 xl:w-1/4 xl:mt-0 h-32">
-						<div className="flex items-center px-5 py-6 shadow-sm rounded-md bg-green-300 h-full">
+						<div className="flex items-center px-5 py-6 shadow-lg border rounded-lg bg-white h-full">
 							<div className="p-2 text-gray-600">
 								<svg
 									className="w-10 h-10"
@@ -135,7 +135,7 @@ const DashBoard = () => {
 							</div>
 
 							<div className="mx-5">
-								<h4 className="text-2xl font-semibold text-gray-600">
+								<h4 className="text-xl font-semibold text-gray-600">
 									{parseInt(totalIncome).toLocaleString('en')}
 								</h4>
 								<div className="text-gray-500">Doanh thu</div>

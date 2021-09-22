@@ -1,6 +1,12 @@
 import React, { useContext } from 'react'
 import { NavLink } from 'react-router-dom'
 import { GlobalState } from '../../GlobalState'
+import boxPNG from '../../images/box.png'
+import housePNG from '../../images/house.png'
+import ticketPNG from '../../images/ticket.png'
+import productPNG from '../../images/product.png'
+import userPNG from '../../images/user.png'
+import trashPNG from '../../images/delete.png'
 const SidebarAdmin = (props) => {
 	const { logout } = useContext(GlobalState)
 	const { handleSidebar, open, setOpen } = props.option
@@ -59,63 +65,56 @@ const SidebarAdmin = (props) => {
 					<NavLink
 						to="/"
 						onClick={handleSidebar}
-						className="flex items-center space-x-2 h-10 px-2 rounded-md transition duration-300  hover:bg-green-300 bg-opacity-60 text-sm font-semibold"
+						className="flex items-center space-x-2 h-10 px-2 rounded-md transition duration-300 hover:bg-green-300 bg-opacity-60 text-sm font-semibold"
 					>
-						<svg
-							className="w-5 h-5"
-							fill="none"
-							stroke="currentColor"
-							viewBox="0 0 24 24"
-							xmlns="http://www.w3.org/2000/svg"
-						>
-							<path
-								strokeLinecap="round"
-								strokeLinejoin="round"
-								strokeWidth={2}
-								d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-							/>
-						</svg>
+						<img src={housePNG} alt="" className="w-5 h-5" />
+
 						<span>Trang chủ</span>
 					</NavLink>
 					<NavLink
 						to="/products"
 						onClick={handleSidebar}
-						className="flex items-center space-x-2 h-10 px-2 rounded-md transition duration-300  hover:bg-green-300 bg-opacity-60 text-sm font-semibold"
+						className="flex items-center space-x-2 h-10 px-2 rounded-md transition duration-300 hover:bg-green-300 bg-opacity-60 text-sm font-semibold"
 						activeClassName="bg-green-300 bg-opacity-60 dark:bg-gray-900 dark:text-white"
 					>
-						Tất cả sản phẩm
+						<img src={boxPNG} alt="" className="w-5 h-5" />
+						<span>Tất cả sản phẩm</span>
 					</NavLink>
 					<NavLink
 						to="/orders"
 						onClick={handleSidebar}
 						activeClassName="bg-green-300 bg-opacity-60 dark:bg-gray-900 dark:text-white"
-						className="flex items-center space-x-2 h-10 px-2 rounded-md transition duration-300  hover:bg-green-300 bg-opacity-60 text-sm font-semibold"
+						className="flex items-center space-x-2 h-10 px-2 rounded-md transition duration-300 hover:bg-green-300 bg-opacity-60 text-sm font-semibold"
 					>
-						Tất cả hóa đơn
+						<img src={ticketPNG} alt="" className="w-5 h-5" />
+						<span>Tất cả hóa đơn</span>
 					</NavLink>
 					<NavLink
 						to="/add"
 						onClick={handleSidebar}
 						activeClassName="bg-green-300 bg-opacity-60 dark:bg-gray-900 dark:text-white"
-						className="flex items-center space-x-2 h-10 px-2 rounded-md transition duration-300  hover:bg-green-300 bg-opacity-60 text-sm font-semibold"
+						className="flex items-center space-x-2 h-10 px-2 rounded-md transition duration-300 hover:bg-green-300 bg-opacity-60 text-sm font-semibold"
 					>
-						Thêm sản phẩm mới
+						<img src={productPNG} alt="" className="w-5 h-5" />
+						<span>Thêm sản phẩm mới</span>
 					</NavLink>
 					<NavLink
 						to="/allusers"
 						activeClassName="bg-green-300 bg-opacity-60 dark:bg-gray-900 dark:text-white"
 						onClick={handleSidebar}
-						className="flex items-center space-x-2 h-10 px-2 rounded-md transition duration-300  hover:bg-green-300 bg-opacity-60 text-sm font-semibold"
+						className="flex items-center space-x-2 h-10 px-2 rounded-md transition duration-300 hover:bg-green-300 bg-opacity-60 text-sm font-semibold"
 					>
-						Quản lý tài khoản
+						<img src={userPNG} alt="" className="w-5 h-5" />
+						<span>Quản lý tài khoản</span>
 					</NavLink>
 					<NavLink
 						to="/trash"
 						activeClassName="bg-green-300 bg-opacity-60 dark:bg-gray-900 dark:text-white"
 						onClick={handleSidebar}
-						className="flex items-center space-x-2 h-10 px-2 rounded-md transition duration-300  hover:bg-green-300 bg-opacity-60 text-sm font-semibold"
+						className="flex items-center space-x-2 h-10 px-2 rounded-md transition duration-300 hover:bg-green-300 bg-opacity-60 text-sm font-semibold"
 					>
-						BTS
+						<img src={trashPNG} alt="" className="w-5 h-5" />
+						<span>BTS</span>
 					</NavLink>
 				</div>
 				<div className="p-2 mb-5">

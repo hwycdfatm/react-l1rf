@@ -22,7 +22,7 @@ const Category = () => {
 				const params = {
 					category: slug,
 					_page: currentPage,
-					_limit: 9, // tối đa bao nhiêu sản phẩm trong 1 trang
+					_limit: 20, // tối đa bao nhiêu sản phẩm trong 1 trang
 				}
 				setLoad(true)
 				const result = await productAPI.getAll(params)
@@ -80,7 +80,7 @@ const Category = () => {
 						</svg>
 					</button>
 				</div>
-				<div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5  py-2 overflow-hidden rounded-md">
+				<div className="grid gap-4 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5  py-2 overflow-hidden rounded-md">
 					{products.map((product, index) => (
 						<Product sp={product} key={index} />
 					))}

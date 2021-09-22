@@ -3,16 +3,19 @@ import productAPI from '../../api/productAPI'
 import Form from './Form'
 import { GlobalState } from '../../GlobalState'
 import { useDetectOutsideClick } from '../../utils/useDetectOutsideClick'
-
+import Pagination from '../../utils/Pagination'
 const CategoryAdmin = () => {
 	const { token, categories } = useContext(GlobalState)
 	const [productList, setProductList] = useState([])
 
+	const [currentPage, setCurrentPage] = useState(0)
 	const [product, setProduct] = useState({})
 
 	const [visible, setVisible] = useState(false)
 
-	const [filterCategory, setFilterCategory] = useState('Danh mục')
+	const [totalPage, setTotalPage] = useState(0)
+
+	const [filterCategory, setFilterCategory] = useState('Tất cả')
 
 	const onChangeInput = (e) => {
 		const { name, value } = e.target
@@ -22,16 +25,22 @@ const CategoryAdmin = () => {
 	useEffect(() => {
 		async function fetchProduct() {
 			try {
-				const result = await productAPI.getAll()
+				const params = {
+					category: filterCategory !== 'Tất cả' ? filterCategory : '',
+					_page: currentPage,
+					_limit: 2, // tối đa bao nhiêu sản phẩm trong 1 trang
+				}
+				const result = await productAPI.getAll(params)
 				if (result.status === 'Success') {
 					setProductList(result.data)
+					setTotalPage(result.pagination._total_Page)
 				}
 			} catch (err) {
 				console.log(err)
 			}
 		}
 		fetchProduct()
-	}, [product, filterCategory])
+	}, [filterCategory, currentPage])
 
 	useEffect(() => {
 		setVisible(false)
@@ -68,14 +77,14 @@ const CategoryAdmin = () => {
 				/>
 			)}
 
-			<div className="mt-10 lg:mt-0 lg:ml-56 p-3 flex flex-col space-y-4 relative w-full ">
+			<div className="mt-12 lg:mt-0 lg:ml-56 p-3 flex flex-col space-y-4 relative w-full ">
 				<div className="flex space-x-2 z-10">
 					<div className="flex w-56 relative">
 						<button
 							to="#"
 							ref={dropdownRef}
 							onClick={handleDropdown}
-							className="w-full flex items-center justify-between border h-10 px-2 rounded-md dark:text-white"
+							className="w-full flex items-center uppercase justify-between border h-9 px-2 text-sm font-bold rounded-md dark:text-white"
 						>
 							{filterCategory}
 							<svg
@@ -97,11 +106,17 @@ const CategoryAdmin = () => {
 						{isActive && (
 							<div className="absolute top-12 left-0 w-full rounded-md shadow-md bg-white dark:bg-gray-700 transform origin-top animation-down">
 								<div className="flex flex-col p-1 font-medium ">
+									<button
+										onClick={() => setFilterCategory('Tất cả')}
+										className="text-left font-medium text-sm uppercase hover:bg-gray-300 rounded-md p-2"
+									>
+										Tất cả
+									</button>
 									{categories.map((category) => (
 										<button
 											key={category._id}
-											onClick={() => setFilterCategory(category.name)}
-											className="text-left font-medium text-sm hover:bg-gray-300 rounded-md p-2"
+											onClick={() => setFilterCategory(category.slug)}
+											className="text-left font-medium text-sm uppercase hover:bg-gray-300 rounded-md p-2"
 										>
 											{category.name}
 										</button>
@@ -110,10 +125,10 @@ const CategoryAdmin = () => {
 							</div>
 						)}
 					</div>
-					<div className="flex flex-1 justify-between items-center border-2 border-gray-300 rounded-md h-10">
+					<div className="flex flex-1 justify-between items-center border border-gray-300 rounded-md h-9">
 						<button className="px-2">
 							<svg
-								className="w-6 h-6"
+								className="w-5 h-5"
 								fill="none"
 								stroke="currentColor"
 								viewBox="0 0 24 24"
@@ -130,7 +145,7 @@ const CategoryAdmin = () => {
 						<input
 							type="text"
 							placeholder="Tìm kiếm"
-							className="flex-1 p-1 pl-2 text-sm bg-transparent focus:outline-none focus:shadow-outline"
+							className="flex-1 p-1 text-sm bg-transparent focus:outline-none focus:shadow-outline"
 						/>
 					</div>
 				</div>
@@ -177,6 +192,14 @@ const CategoryAdmin = () => {
 						</div>
 					))}
 				</div>
+				{totalPage > 1 && (
+					<Pagination
+						totalPage={totalPage}
+						currentPage={currentPage}
+						setCurrentPage={setCurrentPage}
+						slug={filterCategory}
+					/>
+				)}
 			</div>
 		</>
 	)

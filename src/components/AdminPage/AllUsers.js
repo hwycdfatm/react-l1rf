@@ -9,7 +9,6 @@ const AllUsers = () => {
 		async function fetchAllUsers() {
 			try {
 				const res = await userAPI.getAllUsers({ token })
-				console.log(res)
 				setUsers([...res.users])
 			} catch (error) {
 				console.log(error)

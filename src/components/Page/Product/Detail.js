@@ -52,7 +52,7 @@ const Detail = () => {
 					<div className="w-full flex flex-col space-y-6 px-4 md:px-0 text-sm md:text-base md:w-1/2 lg:w-lg  rounded-lg lg:pl-4">
 						<h1
 							title="Quần jean rách gối ultimate vjp pr0 m1"
-							className="text-lg font-semibold mt-4 md:text-xl md:mt-0"
+							className="text-lg font-bold font-maven uppercase mt-4 md:text-xl md:mt-0"
 						>
 							{product.title}
 						</h1>

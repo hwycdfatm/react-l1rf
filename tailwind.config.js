@@ -6,6 +6,7 @@ module.exports = {
 			fontFamily: {
 				bebas: ['Bebas Neue', 'cursive'],
 				noto: ['Noto Sans', 'sans-serif'],
+				maven: ['Maven Pro', 'sans-serif'],
 			},
 			height: {
 				'10v': '10vh',

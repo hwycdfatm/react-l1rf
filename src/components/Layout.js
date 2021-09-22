@@ -32,6 +32,7 @@ import DashBoard from '../components/AdminPage/DashBoard'
 import SidebarAdmin from '../components/AdminPage/SidebarAdmin'
 import AddProduct from '../components/AdminPage/AddProduct'
 import AllUsers from '../components/AdminPage/AllUsers'
+import DetailOrder from './AdminPage/DetailOrder'
 
 const Layout = () => {
 	const { admin } = useContext(GlobalState)
@@ -81,6 +82,7 @@ const Layout = () => {
 				<Switch>
 					<Route exact path="/" component={admin ? DashBoard : Home} />
 					<Route path="/category/:slug" component={Category} />
+					<Route path="/order_detail" component={DetailOrder} />
 					<Route path="/product/:slug" component={Product} />
 					<Route exact path="/login" component={Login} />
 					<Route exact path="/register" component={Register} />

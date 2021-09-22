@@ -5,10 +5,10 @@ import { format } from 'date-fns'
 const Orders = () => {
 	const [orders, setOrders] = useState([])
 	const { token } = useContext(GlobalState)
+	// const [detailOrder, setDetailOrder] = useState('')
 	useEffect(() => {
 		async function fetchAllOrder() {
 			const result = await paymentApi.getAllPayements({ token })
-
 			setOrders(result.order)
 		}
 		fetchAllOrder()
@@ -19,6 +19,12 @@ const Orders = () => {
 				<table className="min-w-full divide-y divide-gray-200 rounded-lg">
 					<thead className="bg-gray-50">
 						<tr>
+							<th
+								scope="col"
+								className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+							>
+								<input type="checkbox" />
+							</th>
 							<th
 								scope="col"
 								className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
@@ -73,6 +79,9 @@ const Orders = () => {
 					<tbody className="bg-white divide-y divide-gray-200">
 						{orders.map((order, index) => (
 							<tr key={order.paymentID}>
+								<td className="px-3 py-4 whitespace-nowrap">
+									<input type="checkbox" />
+								</td>
 								<td className="px-4 py-4 whitespace-nowrap">
 									<div className="text-sm text-gray-900">{index + 1}</div>
 								</td>
