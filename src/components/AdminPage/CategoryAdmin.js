@@ -28,7 +28,7 @@ const CategoryAdmin = () => {
 				const params = {
 					category: filterCategory !== 'Tất cả' ? filterCategory : '',
 					_page: currentPage,
-					_limit: 2, // tối đa bao nhiêu sản phẩm trong 1 trang
+					_limit: 20, // tối đa bao nhiêu sản phẩm trong 1 trang
 				}
 				const result = await productAPI.getAll(params)
 				if (result.status === 'Success') {
@@ -73,7 +73,6 @@ const CategoryAdmin = () => {
 					product={product}
 					setProduct={setProduct}
 					setVisible={setVisible}
-					visible={visible}
 				/>
 			)}
 

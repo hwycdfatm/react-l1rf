@@ -80,10 +80,11 @@ const Category = () => {
 						</svg>
 					</button>
 				</div>
-				<div className="grid gap-4 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5  py-2 overflow-hidden rounded-md">
+				<div className="flex flex-wrap -mx-1 md:-mx-2 overflow-hidden transition-all">
 					{products.map((product, index) => (
 						<Product sp={product} key={index} />
 					))}
+
 					{products.length === 0 && <div className="mx-auto">Trống</div>}
 				</div>
 				{totalPage > 1 && (

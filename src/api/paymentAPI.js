@@ -12,9 +12,18 @@ const paymentApi = {
 		const url = '/payment'
 		return axiosAPI.get(url, { headers: { Authorization: token } })
 	},
-	getAllPayements: ({ token }) => {
+	getAllPayments: ({ token }) => {
 		const url = '/payment/admin'
 		return axiosAPI.get(url, { headers: { Authorization: token } })
+	},
+
+	updatePayment: ({ token, status, _id }) => {
+		const url = `/payment/${_id}`
+		return axiosAPI.patch(
+			url,
+			{ status },
+			{ headers: { Authorization: token } }
+		)
 	},
 }
 

@@ -67,7 +67,8 @@ export const DataProvider = ({ children }) => {
 			}
 			refreshToken()
 		}
-	}, [login])
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
 
 	useEffect(() => {
 		if (token) {

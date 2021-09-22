@@ -8,20 +8,20 @@ const Product = (props) => {
 	return (
 		<Link
 			to={`/product/${props.sp.slug}`}
-			className="w-ful flex flex-col border border-gray-100 bg-white transition-all transform hover:-translate-y-1 overflow-hidden"
+			className="my-1 px-1 w-1/2 overflow-hidden sm:w-1/3 md:my-2 md:px-2 md:w-1/4 lg:w-1/5 xl:w-1/6 transition-all"
 		>
-			<div className="w-full md:h-96 lg:h-80 flex justify-center overflow-hidden">
-				<img
-					src={image[0] ? image[0].url : NotFoundImage}
-					alt=""
-					className="w-full h-full object-cover"
-				/>
-			</div>
-			<div className="flex-1 px-3 py-2 font-maven">
-				<h3 className="text-base font-bold uppercase mb-3">{props.sp.title}</h3>
-				<h4 className="text-sm font-medium cursor-default text-gray-700">
-					{price.toLocaleString('en')} vnđ
-				</h4>
+			<div className="flex flex-col w-full bg-white dark:bg-gray-700  transform hover:-translate-y-1 transition-all">
+				<div className="h-48 sm:h-56 md:h-64">
+					<img
+						src={image[0] ? image[0].url : NotFoundImage}
+						alt=""
+						className="w-full h-full object-cover"
+					/>
+				</div>
+				<div className="h-auto py-2 font-maven text-sm font-medium space-y-1 text-gray-700 dark:text-white transition-all">
+					<p className="uppercase font-bold">{props.sp.title}</p>
+					<p>{price.toLocaleString('en')} vnđ</p>
+				</div>
 			</div>
 		</Link>
 	)
