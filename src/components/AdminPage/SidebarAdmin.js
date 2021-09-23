@@ -19,8 +19,8 @@ const SidebarAdmin = (props) => {
 
 	return (
 		<>
-			<div className="top-0 left-0 right-0 p-3 fixed bg-white lg:hidden z-30">
-				<button onClick={handleSidebar}>
+			<div className="top-0 left-0 right-0 h-10 flex items-center fixed bg-white lg:hidden z-30">
+				<button onClick={handleSidebar} className="p-3">
 					<svg
 						className="w-6 h-6"
 						fill="none"

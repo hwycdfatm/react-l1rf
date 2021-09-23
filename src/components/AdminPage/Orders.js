@@ -16,10 +16,14 @@ const Orders = () => {
 	}
 
 	const handleUpdateOrder = async ({ _id, status }) => {
-		const result = await paymentApi.updatePayment({ token, _id, status })
-		if (result.status === 'Success') {
-			toast(result.message)
-			setShowForm(false)
+		try {
+			const result = await paymentApi.updatePayment({ token, _id, status })
+			if (result.status === 'Success') {
+				toast(result.message, { type: 'success', position: 'top-center' })
+				setShowForm(false)
+			}
+		} catch (error) {
+			console.log(error)
 		}
 	}
 
@@ -73,12 +77,12 @@ const Orders = () => {
 								>
 									Tài khoản
 								</th>
-								<th
+								{/* <th
 									scope="col"
 									className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
 								>
 									Địa chỉ
-								</th>
+								</th> */}
 								<th
 									scope="col"
 									className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
@@ -129,15 +133,12 @@ const Orders = () => {
 												<div className="text-sm text-gray-500">
 													{order.email}
 												</div>
-												<div className="text-sm text-gray-500">
-													{order.phone}
-												</div>
 											</div>
 										</div>
 									</td>
-									<td className="px-6 py-4 whitespace-nowrap">
+									{/* <td className="px-6 py-4 whitespace-nowrap">
 										<div className="text-sm text-gray-900">{order.address}</div>
-									</td>
+									</td> */}
 									<td className="px-6 py-4 whitespace-nowrap">
 										<div className="text-sm text-gray-900">
 											{format(
@@ -153,8 +154,10 @@ const Orders = () => {
 									</td>
 									<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
 										{order.status === 1
-											? 'Đang chuẩn bị'
-											: 'Giao hàng thành công'}
+											? 'Đang chuẩn bị hàng'
+											: order.status === 2
+											? 'Đã chuyển cho đơn vị vận chuyển'
+											: order.status === 3 && 'Thành công'}
 									</td>
 									<td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-4">
 										<button

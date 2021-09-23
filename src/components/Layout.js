@@ -58,6 +58,7 @@ const Layout = () => {
 	}
 
 	useEffect(() => {
+		scrollToTop()
 		window.addEventListener('scroll', toggleVisibility)
 	}, [])
 
