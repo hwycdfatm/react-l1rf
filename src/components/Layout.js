@@ -48,8 +48,6 @@ const Layout = () => {
 		}
 	}
 
-	// Set the top cordinate to 0
-	// make scrolling smooth
 	const scrollToTop = () => {
 		window.scrollTo({
 			top: 0,
@@ -58,7 +56,8 @@ const Layout = () => {
 	}
 
 	useEffect(() => {
-		scrollToTop()
+		setOpen(false)
+		setIsVisible(false)
 		window.addEventListener('scroll', toggleVisibility)
 	}, [])
 

@@ -1,21 +1,26 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { format } from 'date-fns'
 import { useDetectOutsideClick } from '../../utils/useDetectOutsideClick'
-const DetailUser = ({ userDetail, setShowForm }) => {
+const DetailUser = ({ userDetail, setShowForm, handleUpdateUser }) => {
 	const dropdownRef = useRef(null)
 	const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false)
 	const [userRole, setUserRole] = useState('member')
+	const [userActivate, setUserActivate] = useState(false)
 	const handleDropdown = () => setIsActive(!isActive)
-	const { name, email, address, phone, role, cart, createdAt } = userDetail
+	const { _id, name, email, address, phone, role, cart, createdAt, activate } =
+		userDetail
 	useEffect(() => {
+		setUserActivate(activate)
 		setUserRole(role)
-	}, [role])
+	}, [role, activate])
 	return (
 		<div className="fixed z-20 mt-11 lg:mt-0 lg:pl-56 bg-white w-full h-full bg-opacity-80 font-maven overflow-y-scroll scrollbar animation-down">
 			<div className="flex flex-col my-3">
 				<div className="flex flex-col space-y-6 md:space-y-0 md:flex-row md:space-x-4 mx-6 my-3 lg:space-x-10">
 					<div className="rounded-lg border shadow-lg p-5 w-full lg:w-7/12 bg-white">
-						<h1 className="text-lg font-semibold ">Thông tin khách hàng</h1>
+						<h4 className="text-lg font-medium cursor-default">
+							Thông tin khách hàng
+						</h4>
 						<div className="pl-3 mt-2 space-y-1">
 							<p className="text-base text-gray-600">Tên: {name}</p>
 							<p className="text-base text-gray-600">Email: {email} </p>
@@ -30,16 +35,18 @@ const DetailUser = ({ userDetail, setShowForm }) => {
 							</p>
 						</div>
 					</div>
-					<div className="w-full md:w-2/6 bg-white">
+					<div className="w-full md:w-5/12 bg-white">
 						<div className="rounded-lg border shadow-lg p-5 w-full space-y-4">
 							<div className="space-y-2">
-								<h5>Thay đổi quyền hạn</h5>
+								<h4 className="font-medium cursor-default">
+									Thay đổi quyền hạn
+								</h4>
 								<div className="flex w-full relative">
 									<button
 										to="#"
 										ref={dropdownRef}
 										onClick={handleDropdown}
-										className="w-full flex items-center uppercase justify-between border h-9 px-2 text-sm rounded-md dark:text-white cursor-default"
+										className="w-full flex items-center uppercase justify-between border h-9 px-2 text-sm rounded-md dark:text-white"
 									>
 										<span>
 											{userRole === 'admin' ? 'Quản trị viên' : 'Thành viên'}
@@ -80,7 +87,16 @@ const DetailUser = ({ userDetail, setShowForm }) => {
 							</div>
 							<div className="space-y-2">
 								<div className="flex w-full">
-									<button className="w-full bg-green-300 text-white uppercase h-10 px-2 font-semibold text-sm lg:text-base rounded-md dark:text-white">
+									<button
+										onClick={() =>
+											handleUpdateUser({
+												_id,
+												activate: userActivate,
+												role: userRole,
+											})
+										}
+										className="w-full bg-green-300 text-white uppercase h-10 px-2 font-semibold text-sm lg:text-base rounded-md dark:text-white"
+									>
 										Cập nhật
 									</button>
 								</div>
@@ -97,9 +113,11 @@ const DetailUser = ({ userDetail, setShowForm }) => {
 					</div>
 				</div>
 				<div className="flex flex-col space-y-6 md:space-y-0  md:flex-row mx-6 my-6 md:space-x-4 lg:space-x-10">
-					<div className="rounded-lg border shadow-lg p-5 w-full md:w-4/6 bg-white">
-						Giỏ hàng hiện tại của khách hàng
-						{cart &&
+					<div className="rounded-lg border flex flex-col shadow-lg p-5 w-full md:w-8/12 bg-white">
+						<h4 className="font-medium cursor-default">
+							Giỏ hàng hiện tại của khách hàng
+						</h4>
+						{cart && cart.length > 0 ? (
 							cart.map((item) => (
 								<div
 									key={item._id}
@@ -125,7 +143,45 @@ const DetailUser = ({ userDetail, setShowForm }) => {
 										</div>
 									</div>
 								</div>
-							))}
+							))
+						) : (
+							<p className="text-sm text-center mt-5 cursor-default">
+								Không có sản phẩm nào trong giỏ hàng
+							</p>
+						)}
+					</div>
+					<div className="rounded-lg border shadow-lg p-5 w-full md:w-4/12 bg-white">
+						<h4 className="font-medium">Trạng thái tài khoản</h4>
+						<div className="flex flex-col space-y-2 p-3">
+							<label
+								htmlFor="disable"
+								className="flex items-center space-x-4 px-1"
+							>
+								<input
+									type="radio"
+									name="userActive"
+									id="disable"
+									onChange={() => setUserActivate(true)}
+									checked={userActivate === true}
+									className="appearance-none border rounded-full border-gray-700 w-3 h-3 checked:bg-green-300"
+								/>
+								<p className="text-green-500">Hoạt động</p>
+							</label>
+							<label
+								htmlFor="active"
+								className="flex items-center space-x-4 px-1"
+							>
+								<input
+									type="radio"
+									name="userActive"
+									id="active"
+									checked={userActivate !== true}
+									onChange={() => setUserActivate(false)}
+									className="appearance-none border rounded-full border-gray-700 w-3 h-3 checked:bg-red-300"
+								/>
+								<p className="text-red-500">Khóa</p>
+							</label>
+						</div>
 					</div>
 				</div>
 			</div>

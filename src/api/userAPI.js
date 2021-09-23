@@ -40,5 +40,13 @@ const userAPI = {
 		const url = '/user/all'
 		return axiosAPI.get(url, { headers: { Authorization: token } })
 	},
+	updateRoleAndActivate: ({ token, role, activate, _id }) => {
+		const url = `/user/${_id}`
+		return axiosAPI.patch(
+			url,
+			{ role, activate },
+			{ headers: { Authorization: token } }
+		)
+	},
 }
 export default userAPI

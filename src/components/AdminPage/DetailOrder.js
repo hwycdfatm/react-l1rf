@@ -98,11 +98,10 @@ const DetailOrder = ({ orderDetail, setShowForm, handleUpdateOrder }) => {
 										className="w-full flex items-center uppercase justify-between border h-9 px-2 text-sm rounded-md dark:text-white cursor-default"
 									>
 										{statusOrder === 1
-											? 'Đang cập nhật'
+											? 'Đang chuẩn bị hàng'
 											: statusOrder === 2
-											? 'Đã chuyển cho đơn vị vận chuyển'
-											: statusOrder === 3 &&
-											  'Vận chuyển thành công, người mua đã nhận được hàng'}
+											? 'Đang giao hàng'
+											: statusOrder === 3 && 'Thành công'}
 										<svg
 											className="w-5 h-5"
 											fill="none"
@@ -125,19 +124,19 @@ const DetailOrder = ({ orderDetail, setShowForm, handleUpdateOrder }) => {
 												onClick={() => setStatusOrder(1)}
 												className="text-left font-medium text-sm uppercase hover:bg-gray-300 rounded-md p-2 w-full"
 											>
-												Đang cập nhật
+												Đang chuẩn bị hàng
 											</button>
 											<button
 												onClick={() => setStatusOrder(2)}
 												className="text-left font-medium text-sm uppercase hover:bg-gray-300 rounded-md p-2 w-full"
 											>
-												Đã chuyển cho đơn vị vận chuyển
+												Đang giao hàng
 											</button>
 											<button
 												onClick={() => setStatusOrder(3)}
 												className="text-left font-medium text-sm uppercase hover:bg-gray-300 rounded-md p-2 w-full"
 											>
-												Vận chuyển thành công, người mua đã nhận được hàng
+												Thành công
 											</button>
 										</div>
 									)}
