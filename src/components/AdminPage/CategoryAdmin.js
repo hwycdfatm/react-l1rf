@@ -76,7 +76,7 @@ const CategoryAdmin = () => {
 				/>
 			)}
 
-			<div className="mt-12 lg:mt-0 lg:ml-56 p-3 flex flex-col space-y-4 relative w-full ">
+			<div className="mt-12 lg:mt-0 lg:ml-56 p-3 flex flex-col space-y-4 relative">
 				<div className="flex space-x-2 z-10">
 					<div className="flex w-56 relative">
 						<button

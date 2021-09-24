@@ -48,7 +48,7 @@ const Orders = () => {
 					handleUpdateOrder={handleUpdateOrder}
 				/>
 			)}
-			<div className="mt-10 lg:mt-0 lg:ml-56 w-full overflow-x-scroll scrollbar">
+			<div className="mt-10 lg:mt-0 lg:ml-56 overflow-x-scroll scrollbar">
 				<div className="py-2 ">
 					<table className="min-w-full divide-y divide-gray-200 rounded-lg">
 						<thead className="bg-gray-50">
@@ -143,7 +143,7 @@ const Orders = () => {
 										<div className="text-sm text-gray-900">
 											{format(
 												new Date(order.createdAt),
-												'h:m:s a | MM/dd/yyyy'
+												'HH:mm:ss | dd/MM/yyyy'
 											)}
 										</div>
 									</td>

@@ -16,7 +16,7 @@ const AllUsers = () => {
 	useEffect(() => {
 		async function fetchAllUsers() {
 			try {
-				const res = await userAPI.getAllUsers({ token })
+				const res = await userAPI.getAllUsers({ token, sort: 'createdAt' })
 				setUsers([...res.users])
 			} catch (error) {
 				console.log(error)
@@ -54,7 +54,7 @@ const AllUsers = () => {
 					handleUpdateUser={handleUpdateUser}
 				/>
 			)}
-			<div className="mt-10 lg:mt-0 lg:ml-56 w-full">
+			<div className="mt-10 lg:mt-0 lg:ml-56">
 				<div className="py-2 overflow-auto scrollbar">
 					<table className="min-w-full divide-y divide-gray-200 rounded-lg">
 						<thead className="bg-gray-50">

@@ -17,7 +17,7 @@ export default function Sidebar(props) {
 	const handleDropdown = () => setDropdown(!dropdown)
 
 	return (
-		<div className="md:hidden z-10">
+		<div className="lg:hidden z-10">
 			<div
 				className={`fixed top-0 left-0 bottom-0 right-0 transform transition ${
 					!sideBar && '-translate-x-full'

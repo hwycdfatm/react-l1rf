@@ -83,7 +83,11 @@ const Login = () => {
 				history.push('/')
 			}
 		} catch (err) {
-			console.log({ err })
+			setError(
+				<div className="w-full bg-red-100 rounded text-red-700 py-1 text-center animate-bounce text-opacity-80">
+					{err.response.data?.message}
+				</div>
+			)
 		}
 	}
 

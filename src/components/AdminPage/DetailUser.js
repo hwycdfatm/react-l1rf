@@ -31,7 +31,7 @@ const DetailUser = ({ userDetail, setShowForm, handleUpdateUser }) => {
 								Địa chỉ: {address ? address : 'Chưa cập nhật'}
 							</p>
 							<p className="text-base text-gray-600">
-								Tham gia: {format(new Date(createdAt), 'h:m:s a | MM/dd/yyyy')}
+								Tham gia: {format(new Date(createdAt), 'HH:mm:ss | dd/MM/yyyy')}
 							</p>
 						</div>
 					</div>

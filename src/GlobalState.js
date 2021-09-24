@@ -62,7 +62,7 @@ export const DataProvider = ({ children }) => {
 						refreshToken()
 					}, 10 * 60 * 1000)
 				} catch (error) {
-					console.log(error)
+					alert(error.message)
 				}
 			}
 			refreshToken()
@@ -84,7 +84,7 @@ export const DataProvider = ({ children }) => {
 						setCart([...result.user.cart])
 					}
 				} catch (error) {
-					alert(error)
+					alert(error.message)
 				}
 			}
 
@@ -106,10 +106,16 @@ export const DataProvider = ({ children }) => {
 	}, [])
 
 	const logout = async () => {
-		await userAPI.logout()
-		setLogin(false)
-		setAdmin(false)
-		setCart([])
+		try {
+			const checkLogout = await userAPI.logout()
+			if (checkLogout.status === 'Success') {
+				setLogin(false)
+				setAdmin(false)
+				setCart([])
+			}
+		} catch (error) {
+			console.log(error)
+		}
 	}
 
 	const addToCart = async (product) => {

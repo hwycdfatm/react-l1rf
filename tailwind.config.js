@@ -25,7 +25,9 @@ module.exports = {
 			width: {
 				lg: '542px',
 			},
-
+			screens: {
+				xs: '555px',
+			},
 			scale: ['responsive', 'hover', 'focus'],
 		},
 		backgroundColor: (theme) => ({

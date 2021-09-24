@@ -36,9 +36,12 @@ const userAPI = {
 		const url = '/user/register'
 		return axiosAPI.post(url, { ...data })
 	},
-	getAllUsers: ({ token }) => {
+	getAllUsers: ({ token, params }) => {
 		const url = '/user/all'
-		return axiosAPI.get(url, { headers: { Authorization: token } })
+		return axiosAPI.get(url, {
+			params,
+			headers: { Authorization: token },
+		})
 	},
 	updateRoleAndActivate: ({ token, role, activate, _id }) => {
 		const url = `/user/${_id}`

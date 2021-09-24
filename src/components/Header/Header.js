@@ -26,8 +26,8 @@ const Header = () => {
 	}
 
 	return (
-		<header className="fixed bg-white dark:bg-black dark:text-white w-full top-0 z-50 left-0 right-0 h-16 transition-all">
-			<div className="max-w-screen-xl mx-auto px-4 lg:px-8 xl:px-0 h-full flex flex-row justify-between items-center transition duration-500">
+		<header className="fixed bg-white dark:bg-black dark:text-white w-full top-0 z-50 left-0 right-0 h-16 transition duration-500 xl:px-10">
+			<div className="mx-auto px-4 lg:px-8 xl:px-0 h-full flex flex-row justify-between items-center">
 				<Sidebar
 					darkModeFuntion={darkMode}
 					colorTheme={colorTheme}
@@ -39,7 +39,7 @@ const Header = () => {
 					l1rf
 				</Link>
 
-				<div className="hidden flex-row space-x-6 font-semibold md:flex md:space-x-2 lg:ml-28">
+				<div className="hidden flex-row space-x-6 font-semibold lg:flex md:space-x-2 lg:ml-28">
 					{categories.map((sidebar, index) => (
 						<NavLink
 							key={index}
@@ -53,9 +53,9 @@ const Header = () => {
 				</div>
 
 				{/* User */}
-				<div className="flex md:space-x-3">
+				<div className="flex md:space-x-2">
 					{login ? (
-						<div className="space-x-2 hidden md:flex relative">
+						<div className="space-x-2 hidden lg:flex relative">
 							<button
 								to="#"
 								ref={dropdownRef}
@@ -105,7 +105,7 @@ const Header = () => {
 							)}
 						</div>
 					) : (
-						<div className="space-x-3 hidden md:flex">
+						<div className="space-x-3 hidden lg:flex">
 							<Link
 								to="/login"
 								className="flex justify-center items-center h-10 px-2 font-semibold text-green-400"
@@ -124,7 +124,7 @@ const Header = () => {
 					{/* Dark Mode Toggle */}
 					<button
 						onClick={darkMode}
-						className="hidden justify-center items-center h-10 px-2 rounded-md dark:text-white md:flex"
+						className="hidden justify-center items-center h-10 px-2 rounded-md dark:text-white lg:flex"
 					>
 						{colorTheme === 'light' ? (
 							<svg

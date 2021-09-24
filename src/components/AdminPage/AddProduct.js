@@ -141,10 +141,7 @@ const AddProduct = () => {
 		}
 	}
 	return (
-		<form
-			onSubmit={handleAddProduct}
-			className="p-3 lg:ml-56 w-full mt-16 lg:mt-5"
-		>
+		<form onSubmit={handleAddProduct} className="p-3 lg:ml-56 mt-16 lg:mt-5">
 			<div className="flex flex-col p-1 w-full max-w-screen-lg mx-auto md:flex-row md:space-x-4">
 				<div className="h-96 md:h-542px md:w-1/2 shadow appearance-none border rounded w-full text-gray-700 leading-tight overflow-hidden flex items-center justify-center focus:outline-none focus:shadow-outline relative">
 					{product.images[0] ? (

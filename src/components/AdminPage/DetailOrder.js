@@ -22,8 +22,8 @@ const DetailOrder = ({ orderDetail, setShowForm, handleUpdateOrder }) => {
 		setStatusOrder(status)
 	}, [status])
 	return (
-		<div className="fixed z-20 mt-11 lg:mt-0 lg:pl-56 bg-white w-full h-full bg-opacity-80 font-maven overflow-y-scroll scrollbar animation-down">
-			<div className="flex flex-col my-3">
+		<div className="fixed z-20 mt-11 lg:mt-0 lg:pl-56 w-full bg-white h-full bg-opacity-80 font-maven overflow-y-scroll scrollbar animation-down">
+			<div className="flex flex-col lg:pt-3 pb-10">
 				<div className="flex flex-col space-y-6 md:space-y-0 md:flex-row md:space-x-4 mx-6 my-3 lg:space-x-10">
 					<div className="rounded-lg border shadow-lg p-5 w-full bg-white">
 						<h1 className="text-lg font-semibold ">Thông tin khách hàng</h1>

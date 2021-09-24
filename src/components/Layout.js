@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Switch, Route } from 'react-router-dom'
 
 import { GlobalState } from '../GlobalState'
@@ -55,11 +55,7 @@ const Layout = () => {
 		})
 	}
 
-	useEffect(() => {
-		setOpen(false)
-		setIsVisible(false)
-		window.addEventListener('scroll', toggleVisibility)
-	}, [])
+	window.addEventListener('scroll', toggleVisibility)
 
 	return (
 		<>
@@ -75,7 +71,7 @@ const Layout = () => {
 				<SidebarAdmin option={{ handleSidebar, open, setOpen }} />
 			)}
 			<div
-				className={`flex ${
+				className={`${
 					!admin && 'pt-16'
 				} bg-white min-h-screen relative overflow-hidden font-noto w-full dark:bg-gray-700 transition duration-500`}
 			>
@@ -101,7 +97,7 @@ const Layout = () => {
 					onClick={scrollToTop}
 					className={` ${
 						isVisible ? 'fixed' : 'hidden'
-					} bottom-10 right-5 lg:right-20  overflow-hidden`}
+					} bottom-32 right-8 lg:right-20  overflow-hidden rounded-full bg-black text-white p-2`}
 				>
 					<svg
 						className="w-6 h-6"

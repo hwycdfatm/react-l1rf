@@ -22,7 +22,10 @@ const DashBoard = () => {
 			setTotalIncome(result.total)
 		}
 		async function fetchTotalUsers() {
-			const result = await userAPI.getAllUsers({ token })
+			const result = await userAPI.getAllUsers({
+				token,
+				params: { _limit: 10 },
+			})
 			setUsers(result.users)
 		}
 		fetchTotalUsers()
@@ -52,7 +55,7 @@ const DashBoard = () => {
 		},
 	}
 	return (
-		<div className="lg:ml-56 mt-10 lg:mt-0 w-full min-h-screen flex flex-col">
+		<div className="lg:ml-56 mt-10 lg:mt-0 min-h-screen flex flex-col">
 			<section className="flex p-3 lg:p-5 flex-wrap">
 				<div className="w-full px-3 sm:w-1/2 xl:w-1/4 h-32">
 					<div className="flex items-center px-5 py-6 shadow-lg border rounded-lg bg-white h-full">
@@ -186,7 +189,6 @@ const DashBoard = () => {
 										className="w-full flex justify-between border-b border-blue-200 h-8 px-3 last:border-white"
 									>
 										<span>{user.name}</span>
-										<span>Đã trượt vào shop</span>
 									</div>
 								))}
 						</div>
