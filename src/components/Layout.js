@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Switch, Route } from 'react-router-dom'
 
 import { GlobalState } from '../GlobalState'
@@ -55,7 +55,9 @@ const Layout = () => {
 		})
 	}
 
-	window.addEventListener('scroll', toggleVisibility)
+	useEffect(() => {
+		window.addEventListener('scroll', toggleVisibility)
+	}, [])
 
 	return (
 		<>
@@ -94,7 +96,7 @@ const Layout = () => {
 					<Route path="*" component={Error} />
 				</Switch>
 				<button
-					onClick={scrollToTop}
+					onClick={() => scrollToTop()}
 					className={` ${
 						isVisible ? 'fixed' : 'hidden'
 					} bottom-32 right-8 lg:right-20  overflow-hidden rounded-full bg-black text-white p-2`}

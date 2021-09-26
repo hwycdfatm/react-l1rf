@@ -40,8 +40,8 @@ const Detail = () => {
 	if (fail) return <Error />
 	return (
 		<>
-			<section className="flex flex-col mx-auto bg-transparent transition duration-700 dark:text-white">
-				<div className="mt-4 flex flex-col w-full mx-auto md:flex-row md:space-x-4">
+			<section className="flex flex-col bg-transparent transition duration-700 dark:text-white">
+				<div className="mt-4 flex flex-col mx-auto md:flex-row md:space-x-4">
 					<div className="w-full h-96 md:w-1/2 rounded-lg overflow-hidden flex items-center justify-center md:h-542px lg:w-lg">
 						<img
 							src={imageMain ? imageMain : NotFoundImage}

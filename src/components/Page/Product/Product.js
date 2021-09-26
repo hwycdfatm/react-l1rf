@@ -11,9 +11,9 @@ const Product = (props) => {
 			to={`/product/${props.sp.slug}`}
 			className={`my-1 px-1 ${
 				grid ? 'w-full' : 'w-1/2'
-			} overflow-hidden sm:w-1/3 md:my-2 md:px-2 md:w-1/4 lg:w-1/5 xl:w-1/6 transition-all`}
+			} sm:w-1/3 md:my-2 md:px-2 md:w-1/4 lg:w-1/5 xl:w-1/6 transition-all`}
 		>
-			<div className="flex flex-col w-full bg-white dark:bg-gray-700  transform hover:-translate-y-1 transition-all">
+			<div className="flex flex-col w-full bg-white dark:bg-gray-700 h-full overflow-hidden transition-all">
 				<div className={`${grid ? '' : 'h-56'} xs:h-64 sm:h-56 md:h-64`}>
 					<img
 						src={image[0] ? image[0].url : NotFoundImage}

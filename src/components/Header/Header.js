@@ -11,14 +11,12 @@ import useDarkMode from '../../utils/useDarkMode.js'
 import Sidebar from './Sidebar'
 
 const Header = () => {
-	// Global State
 	const { login, logout, cart, categories } = useContext(GlobalState)
 
 	// Dropdown
 	const dropdownRef = useRef(null)
 	const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false)
 	const handleDropdown = () => setIsActive(!isActive)
-
 	const [colorTheme, setColorTheme] = useDarkMode()
 
 	function darkMode() {
@@ -35,16 +33,16 @@ const Header = () => {
 					login={login}
 					logout={logout}
 				/>
-				<Link to="/" className="font-bebas text-3xl font-semibold">
+				<Link to="/" className="font-bebas text-3xl font-semibold ">
 					l1rf
 				</Link>
 
-				<div className="hidden flex-row space-x-6 font-semibold lg:flex md:space-x-2 lg:ml-28">
+				<div className="hidden flex-row space-x-6 font-semibold md:flex md:space-x-2 lg:ml-28">
 					{categories.map((sidebar, index) => (
 						<NavLink
 							key={index}
 							to={'/category/' + sidebar.slug}
-							className="flex justify-center items-center h-10 px-7 rounded-md hover:bg-gray-100 dark:hover:bg-gray-600"
+							className="flex justify-center items-center  h-10 px-7 rounded-md hover:bg-gray-100 dark:hover:bg-gray-600"
 							activeClassName="bg-gray-300 dark:bg-gray-900 dark:text-white"
 						>
 							{sidebar.name}
@@ -55,12 +53,12 @@ const Header = () => {
 				{/* User */}
 				<div className="flex md:space-x-2">
 					{login ? (
-						<div className="space-x-2 hidden lg:flex relative">
+						<div className="space-x-2 hidden md:flex relative">
 							<button
 								to="#"
 								ref={dropdownRef}
 								onClick={handleDropdown}
-								className="flex justify-center items-center h-10 px-2 font-semibold rounded-md dark:text-white"
+								className="flex justify-center items-center h-10 px-2 font-semibold rounded-md "
 							>
 								<svg
 									className="w-6 h-6"
@@ -105,7 +103,7 @@ const Header = () => {
 							)}
 						</div>
 					) : (
-						<div className="space-x-3 hidden lg:flex">
+						<div className="space-x-3 hidden md:flex">
 							<Link
 								to="/login"
 								className="flex justify-center items-center h-10 px-2 font-semibold text-green-400"
@@ -114,7 +112,7 @@ const Header = () => {
 							</Link>
 							<Link
 								to="/register"
-								className="flex justify-center items-center h-10 px-4 font-semibold text-white rounded-md shadow-md dark:text-white bg-green-400"
+								className="flex justify-center items-center h-10 px-4 font-semibold  rounded-md shadow-md text-white bg-green-400"
 							>
 								Register
 							</Link>
@@ -124,7 +122,7 @@ const Header = () => {
 					{/* Dark Mode Toggle */}
 					<button
 						onClick={darkMode}
-						className="hidden justify-center items-center h-10 px-2 rounded-md dark:text-white lg:flex"
+						className="hidden justify-center items-center h-10 px-2 rounded-md lg:flex"
 					>
 						{colorTheme === 'light' ? (
 							<svg
@@ -163,7 +161,7 @@ const Header = () => {
 
 					<Link
 						to="/cart"
-						className="relative flex justify-center items-center h-10 px-2 rounded-md dark:text-white"
+						className="relative flex justify-center items-center h-10 px-2 rounded-md "
 					>
 						<svg
 							className="w-6 h-6"

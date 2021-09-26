@@ -35,61 +35,19 @@ const User = () => {
 					</div>
 				</div>
 			</div>
-			<div className="py-3 grid grid-cols-12 gap-2 lg:gap-4 xl:gap-5">
-				{load ? (
-					<div className="col-span-12">
-						<h3>Các đơn hàng đã mua ({paymentList.length})</h3>
-						<div className="flex flex-col space-y-3 mt-3">
-							{paymentList &&
-								paymentList.map((payment, index) => (
-									<div
-										key={index}
-										className="w-full h-full bg-white flex rounded-lg flex-col shadow p-2 space-y-1"
-									>
-										<div className="py-2">
-											<span>#{payment.paymentID}</span>{' '}
-										</div>
-										<div className="flex border-t-2 py-2 flex-col px-2 ">
-											{payment.order?.map((order) => (
-												<div
-													key={order._id}
-													className="flex items-center space-x-2 w-full justify-between"
-												>
-													<div className="flex h-14 items-center space-x-2">
-														<div>
-															<img
-																src={order.images[0]?.url}
-																alt=""
-																className="w-10 h-10 object-cover"
-															/>
-														</div>
-														<div className="flex flex-col">
-															<h4 className="text-sm">{order.title}</h4>
-															<span className="text-xs font-semibold">
-																x{order.quantity}
-															</span>
-														</div>
-													</div>
-													<div>
-														{parseInt(order.price)?.toLocaleString('en')}₫
-													</div>
-												</div>
-											))}
-										</div>
-										<div className="py-2 flex flex-col md:flex-row justify-between border-t-2">
-											<span>Tổng số lượng: {payment.quantity}</span>
-											<span>
-												Tổng tiền:{' '}
-												{parseInt(payment.total)?.toLocaleString('en')} vnđ
-											</span>
-										</div>
-									</div>
-								))}
-						</div>
-					</div>
-				) : (
-					<Loading />
-				)}
+			<div className="py-3 flex flex-col">
+				<div className="flex">
+					<button className="h-10 py-2 px-5 bg-red-200">Tất cả</button>
+					<button className="h-10 py-2 px-5 bg-red-200">Đang giao</button>
+					<button className="h-10 py-2 px-5 bg-red-200">Đã giao</button>
+					<button className="h-10 py-2 px-5 bg-red-200">Đã hủy</button>
+				</div>
+				<div>
+					<div>Đơn hàng 1</div>
+					<div>Đơn hàng 2</div>
+					<div>Đơn hàng 3</div>
+					<div>Đơn hàng 4</div>
+				</div>
 			</div>
 		</div>
 	)

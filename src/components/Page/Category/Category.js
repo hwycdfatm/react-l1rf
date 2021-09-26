@@ -43,6 +43,9 @@ const Category = () => {
 
 	return (
 		<>
+			<section className="h-56 hidden lg:flex justify-center items-center bg-green-200">
+				<p>Ảnh ở đây</p>
+			</section>
 			<section className="w-full px-4 xl:px-10 lg:pt-4 flex flex-col space-y-4">
 				<div className="flex items-center lg:justify-end w-full">
 					<button className="bg-white h-9 flex items-center justify-center mr-2 px-3 space-x-2 border-2 border-gray-200 rounded">
@@ -81,7 +84,7 @@ const Category = () => {
 					</button>
 					<button
 						onClick={() => setGrid(!grid)}
-						className="bg-white h-9 flex md:hidden w-9 ml-auto items-center justify-center border-2 border-gray-200 rounded"
+						className="bg-white h-9 flex sm:hidden w-9 ml-auto items-center justify-center border-2 border-gray-200 rounded"
 					>
 						<svg
 							className="w-6 h-6"
@@ -99,7 +102,7 @@ const Category = () => {
 						</svg>
 					</button>
 				</div>
-				<div className="flex flex-wrap -mx-1 md:-mx-2 overflow-hidden transition-all">
+				<div className="flex flex-wrap -mx-1 md:-mx-2 overflow-hidden transition-all pt-1 pb-5">
 					{products.map((product, index) => (
 						<Product sp={product} key={index} grid={grid} />
 					))}

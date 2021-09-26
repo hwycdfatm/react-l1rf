@@ -17,6 +17,12 @@
 .patriot {
 	font-family: Patriot;
 }
+
+html,
+body {
+	scroll-behavior: smooth;
+}
+
 html::-webkit-scrollbar {
 	background-color: #fff;
 	width: 16px;
