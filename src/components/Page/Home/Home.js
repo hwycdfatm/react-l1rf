@@ -1,8 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import productAPI from '../../../api/productAPI'
+import Slider from 'react-slick'
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
+
 const Home = () => {
 	const [newProducts, setNewProducts] = useState([])
 	const [activeSlide, setActiveSlide] = useState(0)
+	const slideRef = useRef(null)
 
 	useEffect(() => {
 		const fetchNewProducts = async () => {
@@ -20,6 +25,7 @@ const Home = () => {
 		}
 		fetchNewProducts()
 	}, [])
+
 	const sliderData = [
 		{
 			image:
@@ -54,8 +60,47 @@ const Home = () => {
 		}
 	})
 
+	const settings = {
+		dots: false,
+		infinite: false,
+		slidesToShow: 4,
+		slidesToScroll: 1,
+		initialSlide: 0,
+		responsive: [
+			{
+				breakpoint: 1280,
+				settings: {
+					slidesToShow: 3,
+					slidesToScroll: 1,
+				},
+			},
+			{
+				breakpoint: 1024,
+				settings: {
+					slidesToShow: 3,
+					slidesToScroll: 1,
+				},
+			},
+			{
+				breakpoint: 768,
+				settings: {
+					slidesToShow: 2,
+					slidesToScroll: 2,
+				},
+			},
+			{
+				breakpoint: 640,
+				settings: {
+					slidesToShow: 1,
+					slidesToScroll: 1,
+				},
+			},
+		],
+	}
+
 	return (
 		<div className="flex flex-col">
+			{/* slide show */}
 			<section className="h-screen -mt-16 pt-16 relative overflow-hidden">
 				{sliderData.map((slide, index) => (
 					<div
@@ -137,6 +182,7 @@ const Home = () => {
 					</svg>
 				</button>
 			</section>
+			{/* Banner hello */}
 			<section
 				style={{ clipPath: 'polygon(0 20%, 100% 0, 100% 80%, 0% 100%)' }}
 				className="flex flex-col h-32 lg:h-72 items-center justify-center bg-green-300 dark:bg-green-600 my-10"
@@ -146,7 +192,8 @@ const Home = () => {
 					<span className="lg:text-xl">Chào mừng bạn đến với l1rf store</span>
 				</div>
 			</section>
-			<section className="lg:px-10">
+			{/* 2 product news */}
+			<section className="px-2 lg:px-10">
 				<div className="flex flex-col md:flex-row md:gap-5">
 					<div className="w-full md:w-1/2 h-screen md:h-70v shadow-lg rounded-xl overflow-hidden border flex items-center">
 						<div className="w-1/2">
@@ -172,11 +219,16 @@ const Home = () => {
 					</div>
 				</div>
 			</section>
-			<section className="h-screen lg:px-10 my-10 overflow-hidden">
+			{/* SLide Show new products */}
+			<section className="px-2 h-screen lg:px-10 my-10">
+				{/* btn next & prev */}
 				<div className="flex justify-between items-center h-16">
 					<p className="text-xl">Các sản phẩm mới</p>
 					<div className="flex space-x-5">
-						<button className="flex items-center justify-center w-10 h-10 rounded-full bg-white shadow-md outline-none focus:outline-none focus:shadow-outline">
+						<button
+							onClick={() => slideRef.current.slickPrev()}
+							className="flex items-center justify-center w-10 h-10 rounded-full bg-white shadow-md outline-none focus:outline-none focus:shadow-outline"
+						>
 							<svg
 								className="w-6 h-6"
 								fill="currentColor"
@@ -190,7 +242,10 @@ const Home = () => {
 								/>
 							</svg>
 						</button>
-						<button className="flex items-center justify-center w-10 h-10 rounded-full bg-white shadow-md outline-none focus:outline-none focus:shadow-outline">
+						<button
+							onClick={() => slideRef.current.slickNext()}
+							className="flex items-center justify-center w-10 h-10 rounded-full bg-white shadow-md outline-none focus:outline-none focus:shadow-outline"
+						>
 							<svg
 								className="w-6 h-6"
 								fill="currentColor"
@@ -206,120 +261,27 @@ const Home = () => {
 						</button>
 					</div>
 				</div>
-				<div className="flex max-h-screen transition-all duration-700 -translate-x-full transform">
-					<div
-						style={{ minWidth: '25%' }}
-						className="w-1/4 flex flex-col border transition-all duration-700"
-					>
-						<img
-							src="https://zunezx.com/upload/image/data/san-pham/bottoms/pants/kuro-pant/KURO-PANT-1-8c9.jpg"
-							alt=""
-							className="w-full h-full object-cover"
-						/>
-						<div className="px-1">
-							<p>Quần jean rách gói</p>
-							<span>1,000,000 vnđ</span>
+
+				<Slider ref={slideRef} {...settings}>
+					{newProducts?.map((product) => (
+						<div
+							key={product._id}
+							className="w-full h-full flex transition-all duration-700"
+						>
+							<div className="flex border flex-col w-full h-full">
+								<img
+									src={product.images[0]?.url}
+									alt={product.title}
+									className="w-full h-96 object-cover"
+								/>
+								<div className="px-1">
+									<p>{product.title}</p>
+									<span>{parseInt(product.price).toLocaleString('en')}vnđ</span>
+								</div>
+							</div>
 						</div>
-					</div>
-					<div
-						style={{ minWidth: '25%' }}
-						className="w-1/4 flex flex-col border transition-all duration-700"
-					>
-						<img
-							src="https://zunezx.com/upload/image/data/san-pham/bottoms/pants/kuro-pant/KURO-PANT-1-8c9.jpg"
-							alt=""
-							className="w-full h-full object-cover"
-						/>
-						<div className="px-1">
-							<p>Quần jean rách gói</p>
-							<span>2,000,000 vnđ</span>
-						</div>
-					</div>
-					<div
-						style={{ minWidth: '25%' }}
-						className="w-1/4 flex flex-col border transition-all duration-700"
-					>
-						<img
-							src="https://zunezx.com/upload/image/data/san-pham/bottoms/pants/kuro-pant/KURO-PANT-1-8c9.jpg"
-							alt=""
-							className="w-full h-full object-cover"
-						/>
-						<div className="px-1">
-							<p>Quần jean rách gói</p>
-							<span>3,000,000 vnđ</span>
-						</div>
-					</div>
-					<div
-						style={{ minWidth: '25%' }}
-						className="w-1/4 flex flex-col border transition-all duration-700"
-					>
-						<img
-							src="https://zunezx.com/upload/image/data/san-pham/bottoms/pants/kuro-pant/KURO-PANT-1-8c9.jpg"
-							alt=""
-							className="w-full h-full object-cover"
-						/>
-						<div className="px-1">
-							<p>Quần jean rách gói</p>
-							<span>4,000,000 vnđ</span>
-						</div>
-					</div>
-					<div
-						style={{ minWidth: '25%' }}
-						className="w-1/4 flex flex-col border transition-all duration-700"
-					>
-						<img
-							src="https://zunezx.com/upload/image/data/san-pham/bottoms/pants/kuro-pant/KURO-PANT-1-8c9.jpg"
-							alt=""
-							className="w-full h-full object-cover"
-						/>
-						<div className="px-1">
-							<p>Quần jean rách gói</p>
-							<span>5,000,000 vnđ</span>
-						</div>
-					</div>
-					<div
-						style={{ minWidth: '25%' }}
-						className="w-1/4 flex flex-col border transition-all duration-700"
-					>
-						<img
-							src="https://zunezx.com/upload/image/data/san-pham/bottoms/pants/kuro-pant/KURO-PANT-1-8c9.jpg"
-							alt=""
-							className="w-full h-full object-cover"
-						/>
-						<div className="px-1">
-							<p>Quần jean rách gói</p>
-							<span>6,000,000 vnđ</span>
-						</div>
-					</div>
-					<div
-						style={{ minWidth: '25%' }}
-						className="w-1/4 flex flex-col border transition-all duration-700"
-					>
-						<img
-							src="https://zunezx.com/upload/image/data/san-pham/bottoms/pants/kuro-pant/KURO-PANT-1-8c9.jpg"
-							alt=""
-							className="w-full h-full object-cover"
-						/>
-						<div className="px-1">
-							<p>Quần jean rách gói</p>
-							<span>7,000,000 vnđ</span>
-						</div>
-					</div>
-					<div
-						style={{ minWidth: '25%' }}
-						className="w-1/4 flex flex-col border transition-all duration-700"
-					>
-						<img
-							src="https://zunezx.com/upload/image/data/san-pham/bottoms/pants/kuro-pant/KURO-PANT-1-8c9.jpg"
-							alt=""
-							className="w-full h-full object-cover"
-						/>
-						<div className="px-1">
-							<p>Quần jean rách gói</p>
-							<span>8,000,000 vnđ</span>
-						</div>
-					</div>
-				</div>
+					))}
+				</Slider>
 			</section>
 		</div>
 	)

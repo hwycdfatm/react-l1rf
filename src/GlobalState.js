@@ -87,7 +87,6 @@ export const DataProvider = ({ children }) => {
 					alert(error.message)
 				}
 			}
-
 			getUser()
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps

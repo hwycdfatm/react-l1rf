@@ -43,10 +43,13 @@ const User = () => {
 					<button className="h-10 py-2 px-5 bg-red-200">Đã hủy</button>
 				</div>
 				<div>
-					<div>Đơn hàng 1</div>
-					<div>Đơn hàng 2</div>
-					<div>Đơn hàng 3</div>
-					<div>Đơn hàng 4</div>
+					{load ? (
+						<Loading />
+					) : (
+						paymentList.map((payment) => (
+							<div key={payment.paymentID}>{payment.total}</div>
+						))
+					)}
 				</div>
 			</div>
 		</div>
