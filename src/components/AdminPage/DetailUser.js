@@ -21,7 +21,7 @@ const DetailUser = ({ userDetail, setShowForm, handleUpdateUser }) => {
 						<h4 className="text-lg font-medium cursor-default">
 							Thông tin khách hàng
 						</h4>
-						<div className="pl-3 mt-2 space-y-1">
+						<div className="pl-3 mt-2 space-y-1 font-medium">
 							<p className="text-base text-gray-600">Tên: {name}</p>
 							<p className="text-base text-gray-600">Email: {email} </p>
 							<p className="text-base text-gray-600">
@@ -145,7 +145,7 @@ const DetailUser = ({ userDetail, setShowForm, handleUpdateUser }) => {
 								</div>
 							))
 						) : (
-							<p className="text-sm text-center mt-5 cursor-default">
+							<p className="text-center mt-5 cursor-default">
 								Không có sản phẩm nào trong giỏ hàng
 							</p>
 						)}

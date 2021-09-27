@@ -31,6 +31,7 @@ const Login = () => {
 			.required('Vui lòng nhập mật khẩu')
 			.min(6, 'Mật khẩu phải lớn hơn 6 ký tự'),
 	})
+
 	// lấy react hook form
 	const {
 		register,
@@ -39,6 +40,7 @@ const Login = () => {
 	} = useForm({
 		resolver: yupResolver(schema),
 	})
+
 	// init input Field value
 	const inputs = [
 		{
@@ -54,6 +56,7 @@ const Login = () => {
 			icon: 'M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z',
 		},
 	]
+
 	// xử lý đăng nhập bằng tài khoản được tạo
 	const loginSubmit = async (user) => {
 		try {
@@ -91,7 +94,10 @@ const Login = () => {
 		}
 	}
 
-	if (login) return <Redirect to="/" />
+	if (login) {
+		return <Redirect to="/" />
+	}
+
 	return (
 		<div className="w-full">
 			<div className="max-w-md bg-white mx-auto rounded-lg mt-20 px-5 py-7">

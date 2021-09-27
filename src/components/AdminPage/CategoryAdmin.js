@@ -17,6 +17,10 @@ const CategoryAdmin = () => {
 
 	const [filterCategory, setFilterCategory] = useState('Tất cả')
 
+	const [searchTerm, setSearchTerm] = useState('')
+
+	const typeingTimeoutRef = useRef(null)
+
 	const onChangeInput = (e) => {
 		const { name, value } = e.target
 		setProduct({ ...product, [name]: value })
@@ -65,6 +69,41 @@ const CategoryAdmin = () => {
 	const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false)
 	const handleDropdown = () => setIsActive(!isActive)
 
+	// xử lý dữ liệu nhập vào
+	const handleSearchTerm = (e) => {
+		const value = e.target.value
+
+		setSearchTerm(value)
+		if (typeingTimeoutRef.current) {
+			clearTimeout(typeingTimeoutRef.current)
+		}
+		typeingTimeoutRef.current = setTimeout(() => {
+			handleSubmitSearch(value)
+		}, 300)
+	}
+
+	const [valueSearch, setValueSearch] = useState(false)
+	// Submit search
+	const handleSubmitSearch = async (query) => {
+		const searchQuery = query
+			.toLowerCase()
+			.normalize('NFD')
+			.replace(/[\u0300-\u036f]/g, '')
+			.replace(/[đĐ]/g, 'd')
+			.trim()
+		console.log(searchQuery)
+
+		const params = {
+			q: searchQuery,
+		}
+		const result = await productAPI.getAll(params)
+		if (result.data.length >= 1) {
+			setValueSearch([...result.data])
+		} else {
+			setValueSearch(false)
+		}
+	}
+
 	return (
 		<>
 			{visible && (
@@ -75,15 +114,14 @@ const CategoryAdmin = () => {
 					setVisible={setVisible}
 				/>
 			)}
-
 			<div className="mt-12 lg:mt-0 lg:ml-56 p-3 flex flex-col space-y-4 relative">
-				<div className="flex space-x-2 z-10">
+				<div className="flex flex-col-reverse md:flex-row md:space-x-2 z-10">
 					<div className="flex w-56 relative">
 						<button
 							to="#"
 							ref={dropdownRef}
 							onClick={handleDropdown}
-							className="w-full flex items-center uppercase justify-between border h-9 px-2 text-sm font-bold rounded-md dark:text-white"
+							className="w-full mt-2 md:mt-0 flex items-center uppercase justify-between border h-9 px-2 text-sm font-bold rounded-md dark:text-white"
 						>
 							{filterCategory}
 							<svg
@@ -124,28 +162,53 @@ const CategoryAdmin = () => {
 							</div>
 						)}
 					</div>
-					<div className="flex flex-1 justify-between items-center border border-gray-300 rounded-md h-9">
-						<button className="px-2">
-							<svg
-								className="w-5 h-5"
-								fill="none"
-								stroke="currentColor"
-								viewBox="0 0 24 24"
-								xmlns="http://www.w3.org/2000/svg"
-							>
-								<path
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									strokeWidth={2}
-									d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-								/>
-							</svg>
-						</button>
-						<input
-							type="text"
-							placeholder="Tìm kiếm"
-							className="flex-1 p-1 text-sm bg-transparent focus:outline-none focus:shadow-outline"
-						/>
+					<div className="relative w-full h-9">
+						<form className="flex flex-1 justify-between items-center border border-gray-300 rounded-md h-full">
+							<button className="px-2">
+								<svg
+									className="w-5 h-5"
+									fill="none"
+									stroke="currentColor"
+									viewBox="0 0 24 24"
+									xmlns="http://www.w3.org/2000/svg"
+								>
+									<path
+										strokeLinecap="round"
+										strokeLinejoin="round"
+										strokeWidth={2}
+										d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+									/>
+								</svg>
+							</button>
+							<input
+								onChange={handleSearchTerm}
+								value={searchTerm}
+								type="text"
+								placeholder="Tìm kiếm"
+								className="flex-1 p-1 text-sm bg-transparent focus:outline-none focus:shadow-outline"
+							/>
+						</form>
+						{valueSearch &&
+							valueSearch.map((value) => (
+								<div className="absloute top-0 right-0 left-0 bg-white rounded-md h-auto">
+									<div className="flex flex-col space-y-2 p-2">
+										{/* gợi ý của tìm kiếm */}
+										<div className="flex shadow-md rounded-lg">
+											<img
+												src={value.images[0].url}
+												alt=""
+												className="w-16 h-16 rounded-lg"
+											/>
+											<div className="flex-1 pl-4 flex flex-col">
+												<p className="font-maven">{value.title}</p>
+												<span className="font-maven text-sm">
+													{parseInt(value.price).toLocaleString('en')} vnđ
+												</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							))}
 					</div>
 				</div>
 				<div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">

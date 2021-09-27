@@ -19,7 +19,6 @@ const AddProduct = () => {
 		description: '',
 		content: 'Đây là phần content của sản phẩm',
 		category: '',
-		slug: '',
 		price: '',
 		inStock: '',
 		images: [],
@@ -32,25 +31,6 @@ const AddProduct = () => {
 	const onChangeInput = (e) => {
 		const { name, value } = e.target
 		setProduct({ ...product, [name]: value })
-	}
-
-	// convers title to slug
-	function string_to_slug(str) {
-		str = str.toLowerCase()
-
-		str = str.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-
-		str = str.replace(/[đĐ]/g, 'd')
-
-		str = str.replace(/([^0-9a-z-\s])/g, '')
-
-		str = str.replace(/(\s+)/g, '-')
-
-		str = str.replace(/-+/g, '-')
-
-		str = str.replace(/^-+|-+$/g, '')
-
-		product.slug = str
 	}
 
 	// function check Image
@@ -211,15 +191,10 @@ const AddProduct = () => {
 							autoComplete="off"
 							value={product.title}
 							onChange={onChangeInput}
-							onInput={string_to_slug(product.title)}
 							className="shadow text-lg appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
 						/>
 					</div>
-					<p className="text-gray-400 h-6" id="slug-innner">
-						{product.slug
-							? '/' + product.slug
-							: 'Phần slug sẽ được tạo tự động ở đây'}
-					</p>
+
 					<input
 						type="text"
 						name="slug"
