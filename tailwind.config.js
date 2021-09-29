@@ -47,6 +47,7 @@ module.exports = {
 			backgroundColor: ['checked'],
 			borderColor: ['checked', 'last'],
 			padding: ['last'],
+			margin: ['last'],
 		},
 	},
 	plugins: [],

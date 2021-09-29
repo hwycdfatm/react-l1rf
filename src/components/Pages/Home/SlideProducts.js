@@ -48,7 +48,7 @@ const SlideProducts = ({ newProducts, show }) => {
 			{/* btn next & prev */}
 			<div className="flex justify-between items-center h-16">
 				<p className="text-xl font-maven">Các sản phẩm mới</p>
-				<div className="hidden md:flex space-x-5">
+				<div className="flex space-x-5">
 					<button
 						onClick={prev}
 						className={`flex items-center justify-center ${

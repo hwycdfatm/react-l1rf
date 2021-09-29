@@ -62,7 +62,7 @@ const Layout = () => {
 				<>
 					<Header />
 					<MessengerCustomerChat
-						pagesId="2118692731747671"
+						pageId="2118692731747671"
 						appId="512680796465992"
 					/>
 				</>
