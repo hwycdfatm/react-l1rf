@@ -21,11 +21,11 @@ const SlideProducts = ({ newProducts, show }) => {
 		const diff = touchDown - currentTouch
 
 		if (diff > 5) {
-			console.log(diff)
+		   next()
 		}
 
 		if (diff < -5) {
-			console.log(diff)
+			prev()
 		}
 
 		setTouchPosition(null)
