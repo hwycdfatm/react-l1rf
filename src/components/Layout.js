@@ -2,70 +2,67 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Switch, Route } from 'react-router-dom'
 
 import { GlobalState } from '../GlobalState'
+import Home from '../components/Pages/Home/Home'
+import Product from '../components/Pages/Product/Detail'
+import Cart from '../components/Pages/Cart/Cart'
+import Category from '../components/Pages/Category/Category'
 
-import Home from '../components/Page/Home/Home'
-import Product from '../components/Page/Product/Detail'
-import Cart from '../components/Page/Cart/Cart'
-import Category from '../components/Page/Category/Category'
+import User from '../components/Pages/User/User'
+import Login from '../components/Pages/Login/Login'
+import Register from '../components/Pages/Register/Register'
+import Forget from '../components/Pages/Forget/Forget'
 
-import User from '../components/Page/Auth/User'
-import Login from '../components/Page/Auth/Login'
-import Register from '../components/Page/Auth/Register'
-import Forget from '../components/Page/Auth/Forget'
-
-import Privacy from '../components/Page/Privacy/Privacy'
-import Error from '../components/Page/Error/Error'
+import Privacy from '../components/Pages/Privacy/Privacy'
+import Error from '../components/Pages/Error/Error'
 
 import MessengerCustomerChat from 'react-messenger-customer-chat'
 
 import AdminRoute from '../routes/AdminRoute'
 import ProtectedRoute from '../routes/ProtectedRoute'
 
-import CategoryAdmin from './AdminPage/CategoryAdmin'
-import CategoryTrash from './AdminPage/CategoryTrash'
-import Orders from '../components/AdminPage/Orders'
+import CategoryAdmin from './AdminPages/CategoryAdmin'
+import CategoryTrash from './AdminPages/CategoryTrash'
+import Orders from '../components/AdminPages/Orders'
 
-import Header from '../components/Header/Header'
-import Footer from '../components/Footer/Footer'
+import Header from '../components/Blocks/Header/Header'
+import Footer from '../components/Blocks/Footer/Footer'
 
-import DashBoard from '../components/AdminPage/DashBoard'
-import SidebarAdmin from '../components/AdminPage/SidebarAdmin'
-import AddProduct from '../components/AdminPage/AddProduct'
-import AllUsers from '../components/AdminPage/AllUsers'
-import DetailOrder from './AdminPage/DetailOrder'
+import DashBoard from '../components/AdminPages/DashBoard'
+import SidebarAdmin from '../components/AdminPages/SidebarAdmin'
+import AddProduct from '../components/AdminPages/AddProduct'
+import AllUsers from '../components/AdminPages/AllUsers'
+import DetailOrder from './AdminPages/DetailOrder'
 
 const Layout = () => {
 	const { admin } = useContext(GlobalState)
 	const [open, setOpen] = useState(false)
 	const handleSidebar = () => setOpen(!open)
-	const [isVisible, setIsVisible] = useState(false)
+	const [visible, setVisible] = useState(false)
 
-	const toggleVisibility = () => {
-		if (window.pageYOffset > 300) {
-			setIsVisible(true)
+	const scrollToTop = () => {
+		window.scrollTo({ top: 0, behavior: 'smooth' })
+	}
+	const functionShowToggleButton = () => {
+		if (window.pagesYOffset > 300) {
+			setVisible(true)
 		} else {
-			setIsVisible(false)
+			setVisible(false)
 		}
 	}
 
-	const scrollToTop = () => {
-		window.scrollTo({
-			top: 0,
-			behavior: 'smooth',
-		})
-	}
-
 	useEffect(() => {
-		window.addEventListener('scroll', toggleVisibility)
+		window.addEventListener('scroll', functionShowToggleButton)
+		return () => {
+			window.removeEventListener('scroll', functionShowToggleButton)
+		}
 	}, [])
-
 	return (
 		<>
 			{!admin ? (
 				<>
 					<Header />
 					<MessengerCustomerChat
-						pageId="2118692731747671"
+						pagesId="2118692731747671"
 						appId="512680796465992"
 					/>
 				</>
@@ -95,28 +92,17 @@ const Layout = () => {
 					<AdminRoute exact path="/allusers" component={AllUsers} />
 					<Route path="*" component={Error} />
 				</Switch>
-				<button
-					onClick={() => scrollToTop()}
-					className={` ${
-						isVisible ? 'fixed' : 'hidden'
-					} bottom-32 right-8 lg:right-20  overflow-hidden rounded-full bg-black text-white p-2`}
-				>
-					<svg
-						className="w-6 h-6"
-						fill="none"
-						stroke="currentColor"
-						viewBox="0 0 24 24"
-						xmlns="http://www.w3.org/2000/svg"
-					>
-						<path
-							strokeLinecap="round"
-							strokeLinejoin="round"
-							strokeWidth={2}
-							d="M5 11l7-7 7 7M5 19l7-7 7 7"
-						/>
-					</svg>
-				</button>
 			</div>
+
+			{visible && (
+				<div
+					onClick={() => scrollToTop()}
+					className="z-30 fixed h-8 w-8 bottom-24 shadow-lg font-maven rounded-lg p-1 flex items-center justify-center cursor-pointer right-9 bg-black text-white"
+				>
+					Top
+				</div>
+			)}
+
 			{!admin && <Footer />}
 		</>
 	)

@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import FacebookIcon from '../../images/facebook.png'
-import InstgramIcon from '../../images/instagram.png'
-import TwitterIcon from '../../images/twitter.png'
+import FacebookIcon from '../../../images/facebook.png'
+import InstgramIcon from '../../../images/instagram.png'
+import TwitterIcon from '../../../images/twitter.png'
 
 const Footer = () => {
 	return (

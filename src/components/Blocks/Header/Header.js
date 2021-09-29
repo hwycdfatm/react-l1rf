@@ -1,12 +1,12 @@
 import React, { useRef, useContext } from 'react'
 
-import { GlobalState } from '../../GlobalState'
+import { GlobalState } from '../../../GlobalState'
 
 import { Link, NavLink } from 'react-router-dom'
 
-import { useDetectOutsideClick } from '../../utils/useDetectOutsideClick'
+import { useDetectOutsideClick } from '../../../utils/useDetectOutsideClick'
 
-import useDarkMode from '../../utils/useDarkMode.js'
+import useDarkMode from '../../../utils/useDarkMode.js'
 
 import Sidebar from './Sidebar'
 

@@ -132,7 +132,6 @@ export const DataProvider = ({ children }) => {
 			} else {
 				// Thêm sản phẩm mới
 				cart.push(product)
-				// setCart([...cart, { ...product, quantity: product.quantity }])
 				setCart([...cart])
 			}
 			// Add to cart

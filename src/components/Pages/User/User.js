@@ -9,9 +9,10 @@ const User = () => {
 	useEffect(() => {
 		const fetchPayment = async () => {
 			try {
+				setLoad(true)
 				const result = await paymentApi.getForUser({ token })
 				setPaymentList(result.order)
-				setLoad(true)
+				setLoad(false)
 			} catch (error) {
 				console.log(error)
 			}
