@@ -20,11 +20,19 @@ const SlideProducts = ({ newProducts, show }) => {
 		const diff = touchDown - currentTouch
 
 		if (diff > 5) {
+<<<<<<< HEAD
 			next()
 		}
 
 		if (diff < -5) {
 			prev()
+=======
+		   next()
+		}
+
+		if (diff < -5) {
+	           prev()
+>>>>>>> 5226e3bdfc6af94fb60ff7b349e5ce0e8de5ef2a
 		}
 
 		setTouchPosition(null)
@@ -47,7 +55,7 @@ const SlideProducts = ({ newProducts, show }) => {
 			{/* btn next & prev */}
 			<div className="flex justify-between items-center h-16">
 				<p className="text-xl font-maven">Các sản phẩm mới</p>
-				<div className="flex space-x-5">
+				<div className="hidden md:flex space-x-5">
 					<button
 						onClick={prev}
 						className={`flex items-center justify-center ${
