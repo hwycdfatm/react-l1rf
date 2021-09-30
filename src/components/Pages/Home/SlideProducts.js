@@ -20,19 +20,11 @@ const SlideProducts = ({ newProducts, show }) => {
 		const diff = touchDown - currentTouch
 
 		if (diff > 5) {
-<<<<<<< HEAD
 			next()
 		}
 
 		if (diff < -5) {
 			prev()
-=======
-		   next()
-		}
-
-		if (diff < -5) {
-	           prev()
->>>>>>> 5226e3bdfc6af94fb60ff7b349e5ce0e8de5ef2a
 		}
 
 		setTouchPosition(null)
