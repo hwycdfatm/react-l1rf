@@ -4,7 +4,7 @@ const SlideProducts = ({ newProducts, show }) => {
 	const [currentIndex, setCurrentIndex] = useState(0)
 
 	const [touchPosition, setTouchPosition] = useState(null)
-	// ...
+
 	const handleTouchStart = (e) => {
 		const touchDown = e.touches[0].clientX
 		setTouchPosition(touchDown)
@@ -14,18 +14,17 @@ const SlideProducts = ({ newProducts, show }) => {
 		const touchDown = touchPosition
 
 		if (touchDown === null) {
-			return console.log('null rồi')
+			return
 		}
-
 		const currentTouch = e.touches[0].clientX
 		const diff = touchDown - currentTouch
 
 		if (diff > 5) {
-			console.log(diff)
+			next()
 		}
 
 		if (diff < -5) {
-			console.log(diff)
+			prev()
 		}
 
 		setTouchPosition(null)

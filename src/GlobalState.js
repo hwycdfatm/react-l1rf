@@ -52,21 +52,23 @@ export const DataProvider = ({ children }) => {
 	const [categories, setCategories] = useState([])
 	const [user, setUser] = useState('')
 
+	const refreshToken = async () => {
+		try {
+			const result = await userAPI.refreshToken()
+			setToken(result.accessToken)
+			setTimeout(() => {
+				refreshToken()
+			}, 10 * 60 * 1000)
+		} catch (error) {
+			alert(error.message)
+		}
+	}
+
 	useEffect(() => {
 		if (login) {
-			const refreshToken = async () => {
-				try {
-					const result = await userAPI.refreshToken()
-					setToken(result.accessToken)
-					setTimeout(() => {
-						refreshToken()
-					}, 10 * 60 * 1000)
-				} catch (error) {
-					alert(error.message)
-				}
-			}
 			refreshToken()
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [login])
 
 	useEffect(() => {
@@ -111,6 +113,7 @@ export const DataProvider = ({ children }) => {
 				setLogin(false)
 				setAdmin(false)
 				setCart([])
+				window.location.reload()
 			}
 		} catch (error) {
 			console.log(error)
@@ -165,6 +168,7 @@ export const DataProvider = ({ children }) => {
 				removeProduct,
 				setCart,
 				user,
+				refreshToken,
 			}}
 		>
 			{children}

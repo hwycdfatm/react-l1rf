@@ -4,7 +4,7 @@ import { GlobalState } from '../../../GlobalState'
 import Loading from '../../../utils/Loading'
 import PaymentContainer from './PaymentContainer'
 const User = () => {
-	const { user, token } = useContext(GlobalState)
+	const { user, token, refreshToken } = useContext(GlobalState)
 	const [paymentList, setPaymentList] = useState([])
 	const [load, setLoad] = useState(false)
 	useEffect(() => {
@@ -12,31 +12,31 @@ const User = () => {
 			try {
 				setLoad(true)
 				const result = await paymentApi.getForUser({ token })
-				setPaymentList(result.order)
-				setLoad(false)
+				if (result.status === 'Success') {
+					setPaymentList(result.order)
+					setLoad(false)
+				} else if (result.status === 'exptoken') {
+					refreshToken()
+				}
 			} catch (error) {
 				console.log(error)
 			}
 		}
 		fetchPayment()
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [token])
 
 	return (
 		<div className="w-full max-w-screen-xl mx-auto bg-transparent transition duration-500 flex flex-col p-1 xl:p-0 xl:pb-2 space-y-5">
-			<div className="flex flex-wrap border h-56 rounded-lg overflow-hidden">
-				<div className="flex items-center md:w-1/2">
-					<div className="w-36 h-36 rounded-full overflow-hidden ml-5 border-4 border-green-200">
-						<img
-							src="https://s3-ap-southeast-1.amazonaws.com/images.spiderum.com/sp-images/e9fef2d083cf11ea8f996dbfbe6e50b1.jpg"
-							alt=""
-							className="w-full h-full object-cover"
-						/>
-					</div>
-					<div className="ml-5 flex flex-col">
-						<span>{user.name}</span>
-						<span>{user.email}</span>
-						<span>{user.address}</span>
-						<span>{user.phone}</span>
+			<div className="flex flex-wrap border h-56 rounded-lg overflow-hidden mt-5">
+				<div className="w-full md:w-1/2">
+					<div className="flex flex-col p-4 font-maven bg-white">
+						<p>Thông tin cá nhân</p>
+						<div className="flex flex-col font-sm space-y-2">
+							<span>Email: {user.email}</span>
+							<span>Địa chỉ: {user.address}</span>
+							<span>Số điện thoại: {user.phone}</span>
+						</div>
 					</div>
 				</div>
 			</div>
