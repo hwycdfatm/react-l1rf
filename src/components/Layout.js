@@ -21,7 +21,7 @@ import AdminRoute from '../routes/AdminRoute'
 import ProtectedRoute from '../routes/ProtectedRoute'
 
 import CategoryAdmin from './AdminPages/CategoryAdmin'
-import CategoryTrash from './AdminPages/CategoryTrash'
+import CategoryTrash from './AdminPages/Trash'
 import Orders from '../components/AdminPages/Orders'
 
 import Header from '../components/Blocks/Header/Header'
@@ -32,6 +32,7 @@ import SidebarAdmin from '../components/AdminPages/SidebarAdmin'
 import AddProduct from '../components/AdminPages/AddProduct'
 import AllUsers from '../components/AdminPages/AllUsers'
 import DetailOrder from './AdminPages/DetailOrder'
+import CategoryManager from './AdminPages/CategoryManager'
 
 const Layout = () => {
 	const { admin } = useContext(GlobalState)
@@ -86,8 +87,13 @@ const Layout = () => {
 					<ProtectedRoute exact path="/cart" component={Cart} />
 					<ProtectedRoute exact path="/user" component={User} />
 					<AdminRoute exact path="/products" component={CategoryAdmin} />
+					<AdminRoute
+						exact
+						path="/category-manager"
+						component={CategoryManager}
+					/>
 					<AdminRoute exact path="/add" component={AddProduct} />
-					<AdminRoute exact path="/trash" component={CategoryTrash} />
+					<AdminRoute exact path="/trash/:option" component={CategoryTrash} />
 					<AdminRoute exact path="/orders" component={Orders} />
 					<AdminRoute exact path="/allusers" component={AllUsers} />
 					<Route path="*" component={Error} />

@@ -89,7 +89,12 @@ const AllUsers = () => {
 								>
 									Quyền
 								</th>
-
+								<th
+									scope="col"
+									className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+								>
+									Trạng thái
+								</th>
 								<th
 									scope="col"
 									className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
@@ -132,6 +137,13 @@ const AllUsers = () => {
 										<div className="text-sm text-gray-900">
 											{user.role === 'admin' ? 'Quản trị viên' : 'Thành viên'}
 										</div>
+									</td>
+									<td className="px-6 py-4 whitespace-nowrap">
+										{user.activate ? (
+											<div className="text-sm text-green-400">Hoạt động</div>
+										) : (
+											<div className="text-sm text-red-400">Khóa</div>
+										)}
 									</td>
 									<td className="px-6 py-4 whitespace-nowrap text-sm font-medium ">
 										<div className="flex space-x-4 w-full justify-center">

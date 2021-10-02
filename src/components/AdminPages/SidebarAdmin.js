@@ -1,5 +1,5 @@
-import React, { useContext } from 'react'
-import { NavLink } from 'react-router-dom'
+import React, { useContext, useState } from 'react'
+import { Link, NavLink } from 'react-router-dom'
 import { GlobalState } from '../../GlobalState'
 import boxPNG from '../../images/box.png'
 import housePNG from '../../images/house.png'
@@ -7,6 +7,7 @@ import ticketPNG from '../../images/ticket.png'
 import productPNG from '../../images/product.png'
 import userPNG from '../../images/user.png'
 import trashPNG from '../../images/delete.png'
+import categoryPNG from '../../images/categoryicon.png'
 const SidebarAdmin = (props) => {
 	const { logout } = useContext(GlobalState)
 	const { handleSidebar, open, setOpen } = props.option
@@ -16,6 +17,8 @@ const SidebarAdmin = (props) => {
 	window.addEventListener('resize', function () {
 		setOpen(false)
 	})
+
+	const [openTrash, setOpenTrash] = useState(false)
 
 	return (
 		<>
@@ -99,6 +102,15 @@ const SidebarAdmin = (props) => {
 						<span>Thêm sản phẩm mới</span>
 					</NavLink>
 					<NavLink
+						to="/category-manager"
+						onClick={handleSidebar}
+						activeClassName="bg-green-300 bg-opacity-60 dark:bg-gray-900 dark:text-white"
+						className="flex items-center space-x-2 h-10 px-2 rounded-md transition duration-300 hover:bg-green-300 bg-opacity-60 text-sm font-semibold"
+					>
+						<img src={categoryPNG} alt="" className="w-5 h-5" />
+						<span>Quản lý danh mục</span>
+					</NavLink>
+					<NavLink
 						to="/allusers"
 						activeClassName="bg-green-300 bg-opacity-60 dark:bg-gray-900 dark:text-white"
 						onClick={handleSidebar}
@@ -107,15 +119,60 @@ const SidebarAdmin = (props) => {
 						<img src={userPNG} alt="" className="w-5 h-5" />
 						<span>Quản lý tài khoản</span>
 					</NavLink>
-					<NavLink
-						to="/trash"
-						activeClassName="bg-green-300 bg-opacity-60 dark:bg-gray-900 dark:text-white"
-						onClick={handleSidebar}
-						className="flex items-center space-x-2 h-10 px-2 rounded-md transition duration-300 hover:bg-green-300 bg-opacity-60 text-sm font-semibold"
-					>
-						<img src={trashPNG} alt="" className="w-5 h-5" />
-						<span>BTS</span>
-					</NavLink>
+					<div className="flex flex-col rounded-md">
+						<button onClick={() => setOpenTrash(!openTrash)}>
+							<div className="w-full flex items-center justify-between space-x-2 h-10 px-2 rounded-md text-sm font-semibold">
+								<div className="flex space-x-2">
+									<img src={trashPNG} alt="" className="w-5 h-5" />
+									<span>BTS</span>
+								</div>
+								<div
+									className={`transform ${
+										openTrash && 'rotate-180'
+									} transition-transform`}
+								>
+									<svg
+										className="w-5 h-5"
+										fill="none"
+										stroke="currentColor"
+										viewBox="0 0 24 24"
+										xmlns="http://www.w3.org/2000/svg"
+									>
+										<path
+											strokeLinecap="round"
+											strokeLinejoin="round"
+											strokeWidth={2}
+											d="M19 9l-7 7-7-7"
+										/>
+									</svg>
+								</div>
+							</div>
+						</button>
+						<div
+							className={`flex flex-col ${
+								openTrash ? 'max-h-0' : 'max-h-full'
+							} overflow-hidden transition-all duration-500`}
+						>
+							<Link
+								to="/trash/products"
+								className="h-10 rounded-md flex items-center flex-shrink-0 flex-grow"
+							>
+								<span className="text-sm font-semibold ml-10">Sản phẩm</span>
+							</Link>
+							<Link
+								to="/trash/users"
+								className="h-10 rounded-md flex items-center flex-shrink-0 flex-grow"
+							>
+								<span className="text-sm font-semibold ml-10">Tài khoản</span>
+							</Link>
+							<Link
+								to="/trash/orders"
+								className="h-10 rounded-md flex items-center flex-shrink-0 flex-grow"
+							>
+								<span className="text-sm font-semibold ml-10">Hóa đơn</span>
+							</Link>
+						</div>
+					</div>
 				</div>
 				<div className="p-2 mb-5">
 					<button

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
-import productAPI from '../../api/productAPI'
-import { GlobalState } from '../../GlobalState'
-const CategoryAdmin = () => {
+import productAPI from '../../../api/productAPI'
+import { GlobalState } from '../../../GlobalState'
+const ProductTrash = () => {
 	const { token } = useContext(GlobalState)
 	const [productList, setProductList] = useState([])
 
@@ -38,10 +38,9 @@ const CategoryAdmin = () => {
 	}
 
 	return (
-		<div className="mt-10 lg:mt-0 lg:ml-56 p-3 flex flex-col space-y-4 relative">
-			<div>phần lọc</div>
-			<div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
-				{productList.map((product, index) => (
+		<div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
+			{productList.length > 0 ? (
+				productList.map((product, index) => (
 					<div
 						key={index}
 						className="rounded-lg shadow-lg hover:shadow-xl transition duration-700 border overflow-hidden relative"
@@ -75,10 +74,12 @@ const CategoryAdmin = () => {
 							</div>
 						</div>
 					</div>
-				))}
-			</div>
+				))
+			) : (
+				<p>Trống</p>
+			)}
 		</div>
 	)
 }
 
-export default CategoryAdmin
+export default ProductTrash

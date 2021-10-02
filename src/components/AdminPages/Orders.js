@@ -27,6 +27,18 @@ const Orders = () => {
 		}
 	}
 
+	const handleDeleteOrder = async (_id) => {
+		try {
+			const result = await paymentApi.deletePayment({ token, _id })
+			if (result.status === 'Success') {
+				toast(result.message, { type: 'success', position: 'top-center' })
+				setOrders([...orders.filter((e) => e._id !== _id)])
+			}
+		} catch (error) {
+			console.log(error)
+		}
+	}
+
 	useEffect(() => {
 		async function fetchAllOrder() {
 			const result = await paymentApi.getAllPayments({ token })
@@ -180,7 +192,10 @@ const Orders = () => {
 													/>
 												</svg>
 											</button>
-											<button className="text-red-600 hover:text-red-900">
+											<button
+												onClick={() => handleDeleteOrder(order._id)}
+												className="text-red-600 hover:text-red-900"
+											>
 												<svg
 													className="w-5 h-5"
 													fill="none"
