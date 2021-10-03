@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 const SlideProducts = ({ newProducts, show }) => {
 	const [currentIndex, setCurrentIndex] = useState(0)
 
 	const [touchPosition, setTouchPosition] = useState(null)
+
+	const slideRef = useRef(null)
 
 	const handleTouchStart = (e) => {
 		const touchDown = e.touches[0].clientX
@@ -41,6 +43,20 @@ const SlideProducts = ({ newProducts, show }) => {
 			setCurrentIndex(currentIndex - 1)
 		}
 	}
+
+	useEffect(() => {
+		const slide = slideRef.current
+		slide.addEventListener('touchstart', handleTouchStart, { passive: false })
+		slide.addEventListener('touchmove', handleTouchMove, { passive: false })
+		return () => {
+			slide.removeEventListener('touchstart', handleTouchStart, {
+				passive: false,
+			})
+			slide.removeEventListener('touchmove', handleTouchMove, {
+				passive: false,
+			})
+		}
+	})
 
 	return (
 		<section className="px-2 h-screen lg:px-10 my-10">
@@ -89,11 +105,7 @@ const SlideProducts = ({ newProducts, show }) => {
 				</div>
 			</div>
 
-			<div
-				onTouchStart={handleTouchStart}
-				onTouchMove={handleTouchMove}
-				className="flex w-full overflow-hidden"
-			>
+			<div ref={slideRef} className="flex w-full overflow-hidden">
 				<div
 					className="flex w-full transition-all duration-500"
 					style={{

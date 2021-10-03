@@ -18,7 +18,7 @@ const SidebarAdmin = (props) => {
 		setOpen(false)
 	})
 
-	const [openTrash, setOpenTrash] = useState(false)
+	const [openTrash, setOpenTrash] = useState(true)
 
 	return (
 		<>
@@ -155,19 +155,19 @@ const SidebarAdmin = (props) => {
 						>
 							<Link
 								to="/trash/products"
-								className="h-10 rounded-md flex items-center flex-shrink-0 flex-grow"
+								className="h-10 rounded-md flex items-center flex-shrink-0 flex-grow hover:bg-green-200 transition-colors"
 							>
 								<span className="text-sm font-semibold ml-10">Sản phẩm</span>
 							</Link>
 							<Link
 								to="/trash/users"
-								className="h-10 rounded-md flex items-center flex-shrink-0 flex-grow"
+								className="h-10 rounded-md flex items-center flex-shrink-0 flex-grow hover:bg-green-200 transition-colors"
 							>
 								<span className="text-sm font-semibold ml-10">Tài khoản</span>
 							</Link>
 							<Link
 								to="/trash/orders"
-								className="h-10 rounded-md flex items-center flex-shrink-0 flex-grow"
+								className="h-10 rounded-md flex items-center flex-shrink-0 flex-grow hover:bg-green-200 transition-colors"
 							>
 								<span className="text-sm font-semibold ml-10">Hóa đơn</span>
 							</Link>

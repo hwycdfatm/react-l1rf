@@ -81,7 +81,7 @@ const Home = () => {
 						? 4
 						: windowSize >= 1024
 						? 3
-						: windowSize >= 648
+						: windowSize >= 555
 						? 2
 						: 1
 				}

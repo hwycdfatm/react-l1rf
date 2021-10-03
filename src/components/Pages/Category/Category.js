@@ -5,9 +5,8 @@ import productAPI from '../../../api/productAPI'
 
 import Pagination from '../../../utils/Pagination'
 import Product from '../Product/Product'
-import Loading from '../../../utils/Loading'
+import ProductsLoading from '../Product/ProductsLoading'
 import Error from '../Error/Error'
-
 const Category = () => {
 	const { slug } = useParams()
 	const [products, setProducts] = useState([])
@@ -43,9 +42,6 @@ const Category = () => {
 
 	return (
 		<>
-			<section className="h-56 hidden lg:flex justify-center items-center bg-green-200">
-				<p>Ảnh ở đây</p>
-			</section>
 			<section className="w-full px-4 xl:px-10 lg:pt-4 flex flex-col space-y-4">
 				<div className="flex items-center lg:justify-end w-full">
 					<button className="bg-white h-9 flex items-center justify-center mr-2 px-3 space-x-2 border-2 border-gray-200 rounded">
@@ -103,11 +99,15 @@ const Category = () => {
 					</button>
 				</div>
 				<div className="flex flex-wrap -mx-1 md:-mx-2 overflow-hidden transition-all pt-1 pb-5">
-					{products.map((product, index) => (
-						<Product sp={product} key={index} grid={grid} />
-					))}
-
-					{products.length === 0 && <div className="mx-auto">Trống</div>}
+					{load ? (
+						<ProductsLoading grid={grid} />
+					) : products.length === 0 ? (
+						<div className="mx-auto">Trống</div>
+					) : (
+						products.map((product, index) => (
+							<Product sp={product} key={index} grid={grid} />
+						))
+					)}
 				</div>
 				{totalPage > 1 && (
 					<Pagination
@@ -118,7 +118,6 @@ const Category = () => {
 					/>
 				)}
 			</section>
-			{load && <Loading />}
 		</>
 	)
 }

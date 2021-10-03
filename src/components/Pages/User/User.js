@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import paymentApi from '../../../api/paymentAPI'
 import { GlobalState } from '../../../GlobalState'
-import Loading from '../../../utils/Loading'
+import Skeleton from 'react-loading-skeleton'
 import PaymentContainer from './PaymentContainer'
 const User = () => {
 	const { user, token, refreshToken } = useContext(GlobalState)
@@ -32,17 +32,26 @@ const User = () => {
 				<div className="w-full md:w-1/2">
 					<div className="flex flex-col p-4 font-maven bg-white">
 						<p>Thông tin cá nhân</p>
-						<div className="flex flex-col font-sm space-y-2">
-							<span>Email: {user.email}</span>
-							<span>Địa chỉ: {user.address}</span>
-							<span>Số điện thoại: {user.phone}</span>
+						<div className="flex flex-col font-sm space-y-2 mt-6">
+							{load ? (
+								<>
+									<Skeleton height={20} width={200} />
+									<Skeleton height={20} />
+									<Skeleton height={20} width={170} />
+									<Skeleton height={20} width={140} />
+								</>
+							) : (
+								<>
+									<span>Email: {user.email}</span>
+									<span>Địa chỉ: {user.address}</span>
+									<span>Số điện thoại: {user.phone}</span>
+								</>
+							)}
 						</div>
 					</div>
 				</div>
 			</div>
 			<PaymentContainer paymentList={paymentList} />
-
-			{load && <Loading />}
 		</div>
 	)
 }
