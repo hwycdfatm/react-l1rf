@@ -113,7 +113,6 @@ export const DataProvider = ({ children }) => {
 				setLogin(false)
 				setAdmin(false)
 				setCart([])
-				window.location.reload()
 			}
 		} catch (error) {
 			console.log(error)

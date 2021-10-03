@@ -6,9 +6,11 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import userAPI from '../../../api/userAPI'
+import LoadingBtn from '../../../utils/LoadingBtn'
 const Register = () => {
 	const { login } = useContext(GlobalState)
 	const [noti, setNoti] = useState('')
+	const [registerSend, setRegisterSend] = useState(false)
 	// check privacy
 	const [privacy, setPrivacy] = useState(false)
 	// định nghĩa các rule
@@ -91,6 +93,7 @@ const Register = () => {
 
 	const handleRegister = async (data) => {
 		try {
+			setRegisterSend(true)
 			const result = await userAPI.register(data)
 			if (result.status === 'Success') {
 				setNoti(
@@ -100,12 +103,14 @@ const Register = () => {
 						Hệ thống sẽ tự chuyển đến trang đăng nhập sau 5 giây
 					</div>
 				)
+				setRegisterSend(false)
 				setTimeout(handleHistory, 5000)
 			}
 		} catch (err) {
+			setRegisterSend(false)
 			setNoti(
 				<div className="text-center py-1 bg-red-400 text-white animate-bounce rounded bg-opacity-70">
-					Email đã được đăng ký
+					{err.response.data.message}
 				</div>
 			)
 		}
@@ -113,7 +118,7 @@ const Register = () => {
 
 	if (login) return <Redirect to="/" />
 	return (
-		<div className="w-full bg-white p-3">
+		<div className="w-full bg-white p-3 pb-20">
 			<h1 className="py-5 text-2xl font-semibold text-center">
 				Chào mừng bạn đến với shop l1rf!
 			</h1>
@@ -173,9 +178,10 @@ const Register = () => {
 
 					<button
 						type="submit"
-						className="mx-auto w-32 p-2  rounded-md text-white outline-none focus:outline-none focus:shadow-outline transition-all bg-green-400 shadow-lg"
+						disabled={registerSend}
+						className="w-32 mx-auto font-semibold h-10 bg-green-300 rounded-md text-white outline-none focus:outline-none focus:shadow-outline hover:bg-green-500 transition-all shadow-md"
 					>
-						Đăng ký
+						{registerSend ? <LoadingBtn /> : 'Đăng ký'}
 					</button>
 					<div className="pt-2 flex flex-row  font-medium text-sm space-x-2">
 						<span>Đã có tài khoản ?</span>

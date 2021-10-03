@@ -1,7 +1,7 @@
 import React from 'react'
 
 const UserTrash = () => {
-	return <div>hẻllo</div>
+	return <div className="py-2 overflow-x-scroll scrollbar">hẻllo</div>
 }
 
 export default UserTrash

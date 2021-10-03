@@ -9,6 +9,7 @@ const SlideProducts = ({ newProducts, show }) => {
 
 	const handleTouchStart = (e) => {
 		const touchDown = e.touches[0].clientX
+
 		setTouchPosition(touchDown)
 	}
 
@@ -18,14 +19,16 @@ const SlideProducts = ({ newProducts, show }) => {
 		if (touchDown === null) {
 			return
 		}
+
 		const currentTouch = e.touches[0].clientX
+
 		const diff = touchDown - currentTouch
 
-		if (diff > 5) {
+		if (diff > 10) {
 			next()
 		}
 
-		if (diff < -5) {
+		if (diff < -10) {
 			prev()
 		}
 
@@ -117,24 +120,24 @@ const SlideProducts = ({ newProducts, show }) => {
 							key={product._id}
 							className={`${
 								show > 1 ? `w-1/${show}` : 'w-full'
-							} flex flex-shrink-0 flex-grow h-96 px-2`}
+							} flex flex-shrink-0 flex-grow px-2`}
 						>
 							<Link
 								to={`/product/${product.slug}`}
-								className="flex border flex-col-reverse w-full h-full"
+								className="flex flex-col w-full h-full"
 							>
-								<div className="px-1 font-maven">
-									<p className="font-semibold">{product.title}</p>
-									<span className="text-sm">
-										{parseInt(product.price).toLocaleString('en')}vnđ
-									</span>
-								</div>
-								<div className="flex-1">
+								<div className="sm:h-72 md:h-80 lg:h-96 w-full">
 									<img
 										src={product.images[0]?.url}
 										alt={product.title}
 										className="w-full h-full object-cover"
 									/>
+								</div>
+								<div className="px-1 pt-4 font-maven">
+									<p className="font-semibold text-lg">{product.title}</p>
+									<span className="text-sm">
+										{parseInt(product.price).toLocaleString('en')}vnđ
+									</span>
 								</div>
 							</Link>
 						</div>

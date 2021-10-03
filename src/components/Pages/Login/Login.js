@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { Link, Redirect } from 'react-router-dom'
+import { Link, Redirect, useHistory } from 'react-router-dom'
 
 import FacebookLogin from 'react-facebook-login'
 import { GlobalState } from '../../../GlobalState'
@@ -14,6 +14,8 @@ const Login = () => {
 	const { login, setLogin } = useContext(GlobalState)
 	const [error, setError] = useState('')
 	const [loader, setLoader] = useState(false)
+
+	const history = useHistory()
 
 	function removeMsg() {
 		setError('')
@@ -61,11 +63,10 @@ const Login = () => {
 		try {
 			setLoader(true)
 			const res = await userAPI.login(user)
-
 			if (res.status === 'Success') {
 				setLogin(true)
 				setLoader(false)
-				window.location.href = '/'
+				history.push('/')
 			}
 		} catch (err) {
 			setLoader(false)
@@ -82,7 +83,7 @@ const Login = () => {
 			const res = await userAPI.loginWithFacebook(response)
 			if (res.status === 'Success') {
 				setLogin(true)
-				window.location.href = '/'
+				history.push('/')
 			}
 		} catch (err) {
 			setLogin(false)
@@ -99,7 +100,7 @@ const Login = () => {
 	}
 
 	return (
-		<div className="w-full">
+		<div className="w-full pb-32">
 			<div className="max-w-md bg-white mx-auto rounded-lg mt-20 px-5 py-7">
 				<form
 					onSubmit={handleSubmit(loginSubmit)}

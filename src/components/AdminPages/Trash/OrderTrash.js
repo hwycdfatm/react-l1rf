@@ -45,7 +45,7 @@ const OrderTrash = () => {
 		}
 	}
 	return (
-		<div className="py-2 ">
+		<div className="py-2 overflow-x-scroll scrollbar">
 			<table className="min-w-full divide-y divide-gray-200 rounded-lg">
 				<thead className="bg-gray-50">
 					<tr>

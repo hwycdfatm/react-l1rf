@@ -39,7 +39,7 @@ const paymentApi = {
 
 	restorePayment: ({ token, _id }) => {
 		const url = `/payment/${_id}/restore`
-		return axiosAPI.patch(url, { headers: { Authorization: token } })
+		return axiosAPI.patch(url, {}, { headers: { Authorization: token } })
 	},
 }
 
