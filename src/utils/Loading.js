@@ -1,10 +1,65 @@
 import React from 'react'
-import catLoading from '../images/loading.webp'
+import '../css/styleLoading.css'
 export default function Loading() {
 	return (
-		<div className="fixed top-16 left-0 right-0 bottom-0 flex items-center justify-center bg-white">
-			<div>
-				<img src={catLoading} alt="" />
+		<div className="fixed inset-0 bg-black overscroll-hidden">
+			<div className="text-loading">
+				<h2>
+					<span>L1rf L1rf L1rf</span>
+					<span>L1rf L1rf L1rf</span>
+					<span>L1rf L1rf L1rf</span>
+					<span>L1rf L1rf L1rf</span>
+					<span>L1rf L1rf L1rf</span>
+					<span>L1rf L1rf L1rf</span>
+				</h2>
+				<h2>
+					<span>L1rf L1rf L1rf</span>
+					<span>L1rf L1rf L1rf</span>
+					<span>L1rf L1rf L1rf</span>
+					<span>L1rf L1rf L1rf</span>
+					<span>L1rf L1rf L1rf</span>
+					<span>L1rf L1rf L1rf</span>
+				</h2>
+				<h2>
+					<span>L1rf L1rf L1rf</span>
+					<span>L1rf L1rf L1rf</span>
+					<span>L1rf L1rf L1rf</span>
+					<span>L1rf L1rf L1rf</span>
+					<span>L1rf L1rf L1rf</span>
+					<span>L1rf L1rf L1rf</span>
+				</h2>
+				<h2>
+					<span>L1rf L1rf L1rf</span>
+					<span>L1rf L1rf L1rf</span>
+					<span>L1rf L1rf L1rf</span>
+					<span>L1rf L1rf L1rf</span>
+					<span>L1rf L1rf L1rf</span>
+					<span>L1rf L1rf L1rf</span>
+				</h2>
+				<h2>
+					<span>L1rf L1rf L1rf</span>
+					<span>L1rf L1rf L1rf</span>
+					<span>L1rf L1rf L1rf</span>
+					<span>L1rf L1rf L1rf</span>
+					<span>L1rf L1rf L1rf</span>
+					<span>L1rf L1rf L1rf</span>
+				</h2>
+				<h2>
+					<span>L1rf L1rf L1rf</span>
+					<span>L1rf L1rf L1rf</span>
+					<span>L1rf L1rf L1rf</span>
+					<span>L1rf L1rf L1rf</span>
+					<span>L1rf L1rf L1rf</span>
+					<span>L1rf L1rf L1rf</span>
+				</h2>
+				<h2>
+					<span>L1rf L1rf L1rf</span>
+					<span>L1rf L1rf L1rf</span>
+					<span>L1rf L1rf L1rf</span>
+					<span>L1rf L1rf L1rf</span>
+					<span>L1rf L1rf L1rf</span>
+					<span>L1rf L1rf L1rf</span>
+				</h2>
 			</div>
 		</div>
 	)

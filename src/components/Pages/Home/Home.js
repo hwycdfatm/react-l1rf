@@ -37,7 +37,7 @@ const Home = () => {
 			{/* slide show */}
 			<SlideShow />
 			{/* Banner hello */}
-			<section
+			{/* <section
 				style={{ clipPath: 'polygon(0 40%, 100% 0, 100% 60%, 0% 100%)' }}
 				className="flex flex-col h-screen md:h-70v items-center justify-center bg-green-300 dark:bg-green-600 my-10"
 			>
@@ -45,7 +45,8 @@ const Home = () => {
 					<p className="text-center mb-3 text-lg lg:text-5xl">Xin chào</p>
 					<span className="lg:text-xl">Chào mừng bạn đến với l1rf store</span>
 				</div>
-			</section>
+			</section> */}
+
 			{/* 2 product news */}
 			<section className="px-2 lg:px-10">
 				<div className="flex flex-col md:flex-row md:gap-5">

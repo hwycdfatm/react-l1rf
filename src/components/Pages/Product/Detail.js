@@ -56,13 +56,16 @@ const Detail = () => {
 							/>
 						)}
 					</div>
-					<div className="w-full md:w-6/12 md:pl-4 space-y-6">
+					<div className="flex flex-col w-full md:w-6/12 md:pl-4 font-maven">
 						<h1
 							title={product.title}
-							className="text-lg font-bold font-maven uppercase md:text-xl mt-4 md:mt-0"
+							className="text-lg font-bold font-maven uppercase md:text-xl mt-4 md:mt-0 md:mb-3"
 						>
+							<span className="text-sm font-light">/ {product.category} /</span>
+							<br />
 							{load ? <Skeleton height={30} /> : product.title}
 						</h1>
+
 						<span>
 							{load ? (
 								<Skeleton count={3} height={20} width="80%" />
@@ -74,11 +77,11 @@ const Detail = () => {
 							{load ? (
 								<Skeleton height={20} />
 							) : (
-								price.toLocaleString('en') + 'vnđ'
+								'Giá: ' + price.toLocaleString('en') + ' vnđ'
 							)}
 						</p>
-						<div className="flex order-first items-center justify-center space-x-2 md:order-none md:justify-start">
-							{load ? (
+						<div className="flex order-first items-center justify-center space-x-2 md:order-none md:justify-start md:mt-10">
+							{!load ? (
 								<>
 									<Skeleton width={56} height={56} />
 									<Skeleton width={56} height={56} />
@@ -102,7 +105,7 @@ const Detail = () => {
 								))
 							)}
 						</div>
-						<div className="flex items-center space-x-4">
+						<div className="flex items-center space-x-4 mt-6">
 							<span>Số lượng</span>
 							<div className="flex bg-gray-100 rounded items-center overflow-hidden">
 								<button
@@ -114,7 +117,7 @@ const Detail = () => {
 								<input
 									type="number"
 									id="quantity"
-									className="w-10 text-center bg-transparent focus:outline-none focus:shadow-outline"
+									className="w-10 text-center text-base bg-transparent focus:outline-none focus:shadow-outline"
 									value={count}
 									onChange={(e) =>
 										setCount(e.target.value > 100 ? 100 : +e.target.value)
@@ -130,13 +133,13 @@ const Detail = () => {
 							</div>
 						</div>
 
-						<div className="flex text-base">
+						<div className="flex text-base mt-4">
 							<button
 								onClick={() => {
 									product.quantity = count
 									addToCart(product)
 								}}
-								className="px-4 py-2 text-gray-900 bg-gray-100 rounded font-semibold hover:bg-gray-500 transition-all border border-gray-200"
+								className="px-4 py-2 text-gray-900 bg-gray-100 rounded font-semibold hover:bg-gray-400 transition-all border border-gray-200"
 							>
 								Thêm vào giỏ hàng
 							</button>
@@ -153,7 +156,7 @@ const Detail = () => {
 					</div>
 				) : (
 					<div
-						className="unreset py-2 w-full border-t border-gray-700 mt-10"
+						className="unreset py-2 w-full border-t border-gray-700 mt-10 font-maven"
 						dangerouslySetInnerHTML={{ __html: product.content }}
 					/>
 				)}

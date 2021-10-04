@@ -28,11 +28,17 @@ const User = () => {
 
 	return (
 		<div className="w-full max-w-screen-xl mx-auto bg-transparent transition duration-500 flex flex-col p-1 xl:p-0 xl:pb-2 space-y-5">
-			<div className="flex flex-wrap border h-56 rounded-lg overflow-hidden mt-5">
-				<div className="w-full md:w-1/2">
-					<div className="flex flex-col p-4 font-maven bg-white">
+			<div className="flex flex-wrap">
+				<div className="w-full md:w-4/12 xl:w-3/12 md:pr-3">
+					<div className="flex flex-col p-4 font-maven bg-white border rounded-lg">
+						<div>
+							<img
+								src="https://vietwebgroup.vn/admin/uploads/wibu-la-gi-nguon-goc-cua-wibu.png"
+								alt=""
+							/>
+						</div>
 						<p>Thông tin cá nhân</p>
-						<div className="flex flex-col font-sm space-y-2 mt-6">
+						<div className="flex flex-col font-sm space-y-2 mt-2">
 							{load ? (
 								<>
 									<Skeleton height={20} width={200} />
@@ -50,8 +56,10 @@ const User = () => {
 						</div>
 					</div>
 				</div>
+				<div className="w-full mt-5 md:mt-0 md:w-8/12 xl:w-9/12">
+					<PaymentContainer paymentList={paymentList} />
+				</div>
 			</div>
-			<PaymentContainer paymentList={paymentList} />
 		</div>
 	)
 }
