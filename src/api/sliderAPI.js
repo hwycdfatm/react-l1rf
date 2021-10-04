@@ -1,22 +1,22 @@
 import axiosAPI from './axiosAPI'
 
-const categoriesAPI = {
+const sliderAPI = {
 	get: () => {
-		const url = '/category'
+		const url = '/slider'
 		return axiosAPI.get(url)
 	},
 	create: (data, token) => {
-		const url = '/category'
+		const url = '/slider'
 		return axiosAPI.post(url, data, { headers: { Authorization: token } })
 	},
 	update: (data, token, id) => {
-		const url = `/category/${id}`
+		const url = `/slider/${id}`
 		return axiosAPI.put(url, data, { headers: { Authorization: token } })
 	},
 	delete: (token, id) => {
-		const url = `/category/${id}`
+		const url = `/slider/${id}`
 		return axiosAPI.delete(url, { headers: { Authorization: token } })
 	},
 }
 
-export default categoriesAPI
+export default sliderAPI

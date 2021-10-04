@@ -13,6 +13,10 @@ const SlideProducts = ({ newProducts, show }) => {
 		setTouchPosition(touchDown)
 	}
 
+	const handleTouchEnd = () => {
+		document.body.style.overflowY = 'scroll'
+	}
+
 	const handleTouchMove = (e) => {
 		const touchDown = touchPosition
 
@@ -25,10 +29,12 @@ const SlideProducts = ({ newProducts, show }) => {
 		const diff = touchDown - currentTouch
 
 		if (diff > 10) {
+			document.body.style.overflowY = 'hidden'
 			next()
 		}
 
 		if (diff < -10) {
+			document.body.style.overflowY = 'hidden'
 			prev()
 		}
 
@@ -51,6 +57,7 @@ const SlideProducts = ({ newProducts, show }) => {
 		const slide = slideRef.current
 		slide.addEventListener('touchstart', handleTouchStart, { passive: false })
 		slide.addEventListener('touchmove', handleTouchMove, { passive: false })
+		slide.addEventListener('touchend', handleTouchEnd, { passive: false })
 		return () => {
 			slide.removeEventListener('touchstart', handleTouchStart, {
 				passive: false,
@@ -58,6 +65,7 @@ const SlideProducts = ({ newProducts, show }) => {
 			slide.removeEventListener('touchmove', handleTouchMove, {
 				passive: false,
 			})
+			slide.removeEventListener('touchend', handleTouchEnd, { passive: false })
 		}
 	})
 
@@ -133,11 +141,9 @@ const SlideProducts = ({ newProducts, show }) => {
 										className="w-full h-full object-cover"
 									/>
 								</div>
-								<div className="px-1 pt-4 font-maven">
+								<div className="px-1 py-3 font-maven bg-white dark:bg-product">
 									<p className="font-semibold text-lg">{product.title}</p>
-									<span className="text-sm">
-										{parseInt(product.price).toLocaleString('en')}vnđ
-									</span>
+									<span>{parseInt(product.price).toLocaleString('en')}vnđ</span>
 								</div>
 							</Link>
 						</div>

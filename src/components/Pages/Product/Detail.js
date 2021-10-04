@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { useParams } from 'react-router-dom'
-import Loading from '../../../utils/Loading'
 import { GlobalState } from '../../../GlobalState'
 import Error from '../Error/Error'
 import NotFoundImage from './image-not-found.jpg'
 import productAPI from '../../../api/productAPI'
 import '../../../css/unreset.css'
+
+import Skeleton from 'react-loading-skeleton'
 const Detail = () => {
 	const { addToCart } = useContext(GlobalState)
 	const [count, setCount] = useState(1)
@@ -39,93 +40,125 @@ const Detail = () => {
 	}, [slug])
 	if (fail) return <Error />
 	return (
-		<>
-			<section className="flex flex-col bg-transparent transition duration-700 dark:text-white">
-				<div className="w-full">
-					<div className="mt-4 mx-auto flex flex-col justify-center md:flex-row md:space-x-4">
-						<div className="w-full h-96 md:w-1/2 rounded-lg overflow-hidden flex items-center justify-center xs:h-80v lg:w-lg lg:h-70v">
+		<section className="bg-transparent transition duration-700 dark:text-white py-2">
+			<div className="flex flex-col max-w-screen-lg mx-auto px-2 xs:px-5">
+				<div className="flex flex-wrap">
+					<div className="w-full sm:w-8/12 sm:mx-auto md:w-6/12 rounded-lg overflow-hidden">
+						{load ? (
+							<div className="w-full h-96 xs:h-542px">
+								<Skeleton height="100%" />
+							</div>
+						) : (
 							<img
 								src={imageMain ? imageMain : NotFoundImage}
 								alt=""
 								className="w-full h-full object-cover"
 							/>
+						)}
+					</div>
+					<div className="w-full md:w-6/12 md:pl-4 space-y-6">
+						<h1
+							title={product.title}
+							className="text-lg font-bold font-maven uppercase md:text-xl mt-4 md:mt-0"
+						>
+							{load ? <Skeleton height={30} /> : product.title}
+						</h1>
+						<span>
+							{load ? (
+								<Skeleton count={3} height={20} width="80%" />
+							) : (
+								product.description
+							)}
+						</span>
+						<p className="text-base font-medium mt-8">
+							{load ? (
+								<Skeleton height={20} />
+							) : (
+								price.toLocaleString('en') + 'vnđ'
+							)}
+						</p>
+						<div className="flex order-first items-center justify-center space-x-2 md:order-none md:justify-start">
+							{load ? (
+								<>
+									<Skeleton width={56} height={56} />
+									<Skeleton width={56} height={56} />
+									<Skeleton width={56} height={56} />
+									<Skeleton width={56} height={56} />
+								</>
+							) : (
+								images.length > 1 &&
+								images.map((item, index) => (
+									<div
+										onClick={() => setImageMain(item.url)}
+										className="h-14 w-14 cursor-pointer border border-gray-200 rounded overflow-hidden"
+										key={index}
+									>
+										<img
+											src={item.url}
+											alt=""
+											className="object-cover w-full h-full"
+										/>
+									</div>
+								))
+							)}
 						</div>
-						<div className="w-full flex flex-col space-y-6 px-4 md:px-0 text-sm md:text-base md:w-1/2 lg:w-lg  rounded-lg lg:pl-4">
-							<h1
-								title="Quần jean rách gối ultimate vjp pr0 m1"
-								className="text-lg font-bold font-maven uppercase mt-4 md:text-xl md:mt-0"
-							>
-								{product.title}
-							</h1>
-							<span>{product.description}</span>
-							<p className="text-base font-medium mt-8">
-								{price.toLocaleString('en')} vnđ
-							</p>
-							<div className="flex order-first items-center justify-center space-x-2 md:order-none md:justify-start">
-								{images.length > 1 &&
-									images.map((item, index) => (
-										<div
-											onClick={() => setImageMain(item.url)}
-											className="h-14 w-14 cursor-pointer border border-gray-200 rounded overflow-hidden"
-											key={index}
-										>
-											<img
-												src={item.url}
-												alt=""
-												className="object-cover w-full h-full"
-											/>
-										</div>
-									))}
-							</div>
-							<div className="flex items-center space-x-4">
-								<span>Số lượng</span>
-								<div className="flex bg-gray-100 rounded items-center overflow-hidden">
-									<button
-										onClick={() => setCount(count > 1 ? count - 1 : count)}
-										className="p-1 px-2 hover:bg-gray-200"
-									>
-										<span>-</span>
-									</button>
-									<input
-										type="number"
-										id="quantity"
-										className="w-10 text-center bg-transparent focus:outline-none focus:shadow-outline"
-										value={count}
-										onChange={(e) =>
-											setCount(e.target.value > 100 ? 100 : +e.target.value)
-										}
-										min="1"
-									/>
-									<button
-										onClick={() => setCount(count + 1)}
-										className="p-1 px-2 hover:bg-gray-200"
-									>
-										<span>+</span>
-									</button>
-								</div>
-							</div>
-
-							<div className="flex text-base">
+						<div className="flex items-center space-x-4">
+							<span>Số lượng</span>
+							<div className="flex bg-gray-100 rounded items-center overflow-hidden">
 								<button
-									onClick={() => {
-										product.quantity = count
-										addToCart(product)
-									}}
-									className="px-4 py-2 text-gray-900 bg-gray-100 rounded font-semibold hover:bg-gray-500 transition-all border border-gray-200"
+									onClick={() => setCount(count > 1 ? count - 1 : count)}
+									className="p-1 px-2 hover:bg-gray-200"
 								>
-									Thêm vào giỏ hàng
+									<span>-</span>
+								</button>
+								<input
+									type="number"
+									id="quantity"
+									className="w-10 text-center bg-transparent focus:outline-none focus:shadow-outline"
+									value={count}
+									onChange={(e) =>
+										setCount(e.target.value > 100 ? 100 : +e.target.value)
+									}
+									min="1"
+								/>
+								<button
+									onClick={() => setCount(count + 1)}
+									className="p-1 px-2 hover:bg-gray-200"
+								>
+									<span>+</span>
 								</button>
 							</div>
 						</div>
+
+						<div className="flex text-base">
+							<button
+								onClick={() => {
+									product.quantity = count
+									addToCart(product)
+								}}
+								className="px-4 py-2 text-gray-900 bg-gray-100 rounded font-semibold hover:bg-gray-500 transition-all border border-gray-200"
+							>
+								Thêm vào giỏ hàng
+							</button>
+						</div>
 					</div>
+				</div>
+				{load ? (
+					<div className="unreset py-2 w-full border-t border-gray-700 mt-10">
+						<Skeleton count={2} />
+						<Skeleton count={2} width="60%" />
+						<Skeleton count={2} width="70%" />
+						<Skeleton count={2} width="90%" />
+						<Skeleton count={2} width="80%" />
+					</div>
+				) : (
 					<div
-						className="unreset py-3 mt-10 w-full max-w-screen-xl mx-auto"
+						className="unreset py-2 w-full border-t border-gray-700 mt-10"
 						dangerouslySetInnerHTML={{ __html: product.content }}
 					/>
-				</div>
-			</section>
-			{load && <Loading />}
-		</>
+				)}
+			</div>
+		</section>
 	)
 }
 

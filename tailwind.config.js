@@ -40,6 +40,7 @@ module.exports = {
 		backgroundColor: (theme) => ({
 			...theme('colors'),
 			sidebar: '#D8E3E7',
+			product: '#e0dedf',
 		}),
 	},
 	variants: {
