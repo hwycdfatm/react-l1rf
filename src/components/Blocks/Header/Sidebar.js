@@ -25,7 +25,7 @@ export default function Sidebar(props) {
 			>
 				<div className="relative h-full bg-gray-50 dark:bg-gray-600 overflow-y-scroll">
 					{/* X button */}
-					<button className="absolute top-4 right-4" onClick={handleSidebar}>
+					<button className="absolute top-6 left-6" onClick={handleSidebar}>
 						<svg
 							className="w-6 h-6"
 							fill="none"
@@ -95,7 +95,10 @@ export default function Sidebar(props) {
 											<Link
 												to={`/category/${data.slug}`}
 												key={index}
-												onClick={handleSidebar}
+												onClick={() => {
+													handleSidebar()
+													handleDropdown()
+												}}
 												className="px-3 h-8 leading-8 rounded-md hover:bg-gray-600"
 											>
 												{data.name}

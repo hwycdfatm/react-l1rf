@@ -33,7 +33,6 @@ const PaymentSkeleton = () => {
 						<Skeleton />
 					</span>
 					<span className="text-sm md:text-base">
-						{' '}
 						<Skeleton />
 					</span>
 				</div>

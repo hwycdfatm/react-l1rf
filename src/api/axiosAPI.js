@@ -25,7 +25,7 @@ axiosAPI.interceptors.response.use(
 	},
 	(error) => {
 		// Handle errors
-		throw error
+		throw error.response.data
 	}
 )
 

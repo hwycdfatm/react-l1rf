@@ -8,6 +8,7 @@ import uploadImageAPI from '../../api/uploadImageAPI'
 import LoadingBtn from '../../utils/LoadingBtn'
 import { toast } from 'react-toastify'
 import '../../css/unreset.css'
+import { checkImage } from '../../utils/handleUploadAndDeleteImage'
 
 const AddProduct = () => {
 	// Global state
@@ -23,6 +24,7 @@ const AddProduct = () => {
 		inStock: '',
 		images: [],
 	})
+
 	const [uploadLoading, setUploadLoading] = useState(false)
 
 	const [checked, setChecked] = useState(false)
@@ -31,14 +33,6 @@ const AddProduct = () => {
 	const onChangeInput = (e) => {
 		const { name, value } = e.target
 		setProduct({ ...product, [name]: value })
-	}
-
-	// function check Image
-	function checkImage(image) {
-		if (image.type !== 'image/png' && image.type !== 'image/jpeg')
-			return alert('Vui lòng chọn file ảnh')
-		if (image.size > 1024 * 1024 * 1024) return alert('Kích thước ảnh quá to')
-		return true
 	}
 
 	// Upload hình ảnh
@@ -107,7 +101,7 @@ const AddProduct = () => {
 		try {
 			if (!admin) return alert('Mày không có quyền')
 
-			await uploadImageAPI.delete([public_name], token)
+			await uploadImageAPI.delete(public_name, token)
 			setProduct({
 				...product,
 				images: [

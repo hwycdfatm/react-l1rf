@@ -23,11 +23,11 @@
 	pointer-events: none;
 	white-space: nowrap;
 	line-height: 1em;
-	animation: transformAnimation 20s infinite linear;
+	animation: transformAnimation 0.6s infinite linear;
 }
 
 .text-loading h2:nth-child(even) {
-	animation: transformAnimationReverses 20s infinite linear;
+	animation: transformAnimationReverses 0.6s infinite linear;
 }
 
 @keyframes transformAnimation {

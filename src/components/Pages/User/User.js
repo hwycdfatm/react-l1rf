@@ -3,10 +3,20 @@ import paymentApi from '../../../api/paymentAPI'
 import { GlobalState } from '../../../GlobalState'
 import Skeleton from 'react-loading-skeleton'
 import PaymentContainer from './PaymentContainer'
+import userAPI from '../../../api/userAPI'
 const User = () => {
-	const { user, token, refreshToken } = useContext(GlobalState)
+	const { user, token, refreshToken, getUser } = useContext(GlobalState)
 	const [paymentList, setPaymentList] = useState([])
 	const [load, setLoad] = useState(false)
+
+	const [updateProfile, setUpdateProfile] = useState(false)
+
+	const [userTemp, setUserTemp] = useState({
+		name: user.name,
+		address: user.address,
+		phone: user.phone,
+	})
+
 	useEffect(() => {
 		const fetchPayment = async () => {
 			try {
@@ -26,6 +36,18 @@ const User = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [token])
 
+	const handleUpdateProfile = async () => {
+		try {
+			const result = await userAPI.updateProfile({ data: userTemp, token })
+			if (result.status === 'Success') {
+				alert(result.message)
+				getUser()
+				setUpdateProfile(false)
+			}
+		} catch (error) {
+			console.log(error)
+		}
+	}
 	return (
 		<div className="w-full max-w-screen-xl mx-auto bg-transparent transition duration-500 flex flex-col p-1 xl:p-0 xl:pb-2 space-y-5">
 			<div className="flex flex-wrap">
@@ -38,26 +60,75 @@ const User = () => {
 							/>
 						</div>
 						<p>Thông tin cá nhân</p>
-						<div className="flex flex-col font-sm space-y-2 mt-2">
-							{load ? (
-								<>
-									<Skeleton height={20} width={200} />
-									<Skeleton height={20} />
-									<Skeleton height={20} width={170} />
-									<Skeleton height={20} width={140} />
-								</>
-							) : (
-								<>
-									<span>Email: {user.email}</span>
-									<span>Địa chỉ: {user.address}</span>
-									<span>Số điện thoại: {user.phone}</span>
-								</>
-							)}
-						</div>
+						{updateProfile ? (
+							<div className="flex flex-col font-sm space-y-2 mt-2">
+								<span>Tên:</span>
+								<input
+									value={userTemp.name}
+									onChange={(e) => {
+										setUserTemp({ ...userTemp, name: e.target.value })
+									}}
+									className="border text-base rounded py-1 px-2 outline-none focus:outline-none focus:shadow-outline"
+									type="text"
+								/>
+								<span>Địa chỉ: </span>
+								<input
+									value={userTemp.address}
+									onChange={(e) => {
+										setUserTemp({ ...userTemp, address: e.target.value })
+									}}
+									className="border text-base rounded py-1 px-2 outline-none focus:outline-none focus:shadow-outline"
+									type="text"
+								/>
+								<span>Số điện thoại</span>
+								<input
+									value={userTemp.phone}
+									onChange={(e) => {
+										setUserTemp({ ...userTemp, phone: e.target.value })
+									}}
+									className="border text-base rounded py-1 px-2 outline-none focus:outline-none focus:shadow-outline"
+									type="text"
+								/>
+							</div>
+						) : (
+							<div className="flex flex-col font-sm space-y-2 mt-2">
+								{load ? (
+									<>
+										<Skeleton height={20} width={200} />
+										<Skeleton height={20} width={200} />
+										<Skeleton height={20} />
+										<Skeleton height={20} width={170} />
+										<Skeleton height={20} width={140} />
+									</>
+								) : (
+									<>
+										<span>Tên: {user.name}</span>
+										<span>Email: {user.email}</span>
+										<span>Địa chỉ: {user.address}</span>
+										<span>Số điện thoại: {user.phone}</span>
+									</>
+								)}
+							</div>
+						)}
+						{updateProfile ? (
+							<button
+								onClick={handleUpdateProfile}
+								className="p-2 border mt-4 rounded-lg"
+							>
+								Cập nhật thông tin cá nhân
+							</button>
+						) : (
+							<button
+								onClick={() => setUpdateProfile(!updateProfile)}
+								className="p-2 border mt-4 rounded-lg"
+							>
+								Chỉnh sửa thông tin cá nhân
+							</button>
+						)}
 					</div>
 				</div>
 				<div className="w-full mt-5 md:mt-0 md:w-8/12 xl:w-9/12">
-					<PaymentContainer paymentList={paymentList} />
+					<PaymentContainer paymentList={paymentList} load={load} />
 				</div>
 			</div>
 		</div>

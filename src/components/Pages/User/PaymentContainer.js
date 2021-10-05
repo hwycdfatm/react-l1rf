@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import ViewPayment from './ViewPayment'
-const Tabs = ({ paymentList }) => {
+import PaymentSkeleton from './PaymentSkeleton'
+
+const Tabs = ({ paymentList, load }) => {
 	const [openTab, setOpenTab] = useState(0)
 	const [readyPayment, setReadyPayment] = useState([])
 	const [transportPay, setTransportPay] = useState([])
@@ -67,7 +69,9 @@ const Tabs = ({ paymentList }) => {
 				</div>
 				{/* Shows */}
 				<div className="bg-white mx-2">
-					{openTab === 0 ? (
+					{load ? (
+						<PaymentSkeleton />
+					) : openTab === 0 ? (
 						<ViewPayment list={paymentList} />
 					) : openTab === 1 ? (
 						<ViewPayment list={readyPayment} />

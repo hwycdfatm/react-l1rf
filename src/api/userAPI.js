@@ -16,9 +16,9 @@ const userAPI = {
 			{ headers: { Authorization: token } }
 		)
 	},
-	updateProfile: (profile) => {
-		const url = '/user/addcart'
-		return axiosAPI.patch(url)
+	updateProfile: ({ data, token }) => {
+		const url = '/user/info'
+		return axiosAPI.put(url, { ...data }, { headers: { Authorization: token } })
 	},
 	refreshToken: () => {
 		const url = '/user/refresh_token'

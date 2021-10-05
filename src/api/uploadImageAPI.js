@@ -11,7 +11,7 @@ const uploadImageAPI = {
 		})
 	},
 	delete: (public_name, token) => {
-		const url = '/destroy'
+		const url = `/destroy/${public_name}`
 		return axioxAPI.post(
 			url,
 			{ public_name },

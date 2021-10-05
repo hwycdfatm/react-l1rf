@@ -71,24 +71,24 @@ export const DataProvider = ({ children }) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [login])
 
+	const getUser = async () => {
+		try {
+			const result = await userAPI.getUser(token)
+			if (result) {
+				setUser(result.user)
+				setLogin(true)
+				if (result.user.role === 'admin') {
+					setAdmin(true)
+				}
+
+				setCart([...result.user.cart])
+			}
+		} catch (error) {
+			alert(error.message)
+		}
+	}
 	useEffect(() => {
 		if (token) {
-			const getUser = async () => {
-				try {
-					const result = await userAPI.getUser(token)
-					if (result) {
-						setUser(result.user)
-						setLogin(true)
-						if (result.user.role === 'admin') {
-							setAdmin(true)
-						}
-
-						setCart([...result.user.cart])
-					}
-				} catch (error) {
-					alert(error.message)
-				}
-			}
 			getUser()
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -168,6 +168,7 @@ export const DataProvider = ({ children }) => {
 				setCart,
 				user,
 				refreshToken,
+				getUser,
 			}}
 		>
 			{children}

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Switch, Route } from 'react-router-dom'
 
 import { GlobalState } from '../GlobalState'
@@ -34,29 +34,12 @@ import AllUsers from '../components/AdminPages/AllUsers'
 import DetailOrder from './AdminPages/DetailOrder'
 import CategoryManager from './AdminPages/CategoryManager'
 
+import ScrollToTopBtn from '../utils/ScrollToTopBtn'
 const Layout = () => {
 	const { admin } = useContext(GlobalState)
 	const [open, setOpen] = useState(false)
 	const handleSidebar = () => setOpen(!open)
-	const [visible, setVisible] = useState(false)
 
-	const scrollToTop = () => {
-		window.scrollTo({ top: 0, behavior: 'smooth' })
-	}
-	const functionShowToggleButton = () => {
-		if (window.pagesYOffset > 300) {
-			setVisible(true)
-		} else {
-			setVisible(false)
-		}
-	}
-
-	useEffect(() => {
-		window.addEventListener('scroll', functionShowToggleButton)
-		return () => {
-			window.removeEventListener('scroll', functionShowToggleButton)
-		}
-	}, [])
 	return (
 		<>
 			{!admin ? (
@@ -99,16 +82,7 @@ const Layout = () => {
 					<Route path="*" component={Error} />
 				</Switch>
 			</div>
-
-			{visible && (
-				<div
-					onClick={() => scrollToTop()}
-					className="z-30 fixed h-8 w-8 bottom-24 shadow-lg font-maven rounded-lg p-1 flex items-center justify-center cursor-pointer right-9 bg-black text-white"
-				>
-					Top
-				</div>
-			)}
-
+			<ScrollToTopBtn />
 			{!admin && <Footer />}
 		</>
 	)

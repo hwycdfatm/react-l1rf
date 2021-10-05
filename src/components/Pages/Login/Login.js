@@ -72,7 +72,7 @@ const Login = () => {
 			setLoader(false)
 			setError(
 				<div className="w-full bg-red-100 rounded text-red-700 py-1 text-center animate-bounce text-opacity-80">
-					{err.response.data?.message}
+					{err.message}
 				</div>
 			)
 		}
@@ -89,7 +89,7 @@ const Login = () => {
 			setLogin(false)
 			setError(
 				<div className="w-full bg-red-100 rounded text-red-700 py-1 text-center animate-bounce text-opacity-80">
-					{err.response.data?.message}
+					{err.message}
 				</div>
 			)
 		}

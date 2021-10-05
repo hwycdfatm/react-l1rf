@@ -4,6 +4,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import { GlobalState } from '../../GlobalState'
 import uploadImageAPI from '../../api/uploadImageAPI'
 import productAPI from '../../api/productAPI'
+import { checkImage } from '../../utils/handleUploadAndDeleteImage'
 
 const Form = (props) => {
 	// default Action is Add
@@ -11,14 +12,6 @@ const Form = (props) => {
 
 	// Global state
 	const { admin, token, categories } = useContext(GlobalState)
-
-	// function check Image
-	function checkImage(image) {
-		if (image.type !== 'image/png' && image.type !== 'image/jpeg')
-			return alert('Vui lòng chọn file ảnh')
-		if (image.size > 1024 * 1024 * 1024) return alert('Kích thước ảnh quá to')
-		return true
-	}
 
 	// Upload hình ảnh
 	const handleUploadImages = async (e) => {
@@ -62,7 +55,6 @@ const Form = (props) => {
 			const check = await productAPI.update({ ...product }, product._id, token)
 
 			if (check.status === 'Success') {
-				// fetchProduct()
 				alert(check.message)
 				setVisible(false)
 			}
@@ -76,7 +68,7 @@ const Form = (props) => {
 		try {
 			if (!admin) return alert('Mày không có quyền')
 
-			await uploadImageAPI.delete([public_name], token)
+			await uploadImageAPI.delete(public_name, token)
 
 			setProduct({
 				...product,
