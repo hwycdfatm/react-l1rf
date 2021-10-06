@@ -37,7 +37,6 @@ const Form = (props) => {
 			}
 
 			const res = await uploadImageAPI.upload(formData, token)
-			console.log(res.images)
 			setProduct({
 				...product,
 				images: [...product.images, ...res.images],
@@ -85,7 +84,7 @@ const Form = (props) => {
 
 	return (
 		<div
-			className={`fixed top-0 bottom-0 right-0 left-0 pt-6 lg:pt-10 z-30 lg:pl-56  xl:pl-44 shadows-xl min-h-screen flex flex-col bg-white bg-opacity-90 transition duration-700 transform overflow-y-scroll animation-scale scrollbar animation-down`}
+			className={`fixed top-0 bottom-0 right-0 left-0 pt-6 lg:pt-10 z-30 lg:pl-56 xl:pl-44 shadows-xl min-h-screen flex flex-col bg-white bg-opacity-90 transition duration-700 transform overflow-y-scroll animation-scale scrollbar animation-down`}
 		>
 			<form onSubmit={handleEditProduct} className="p-3">
 				<div className="flex flex-col p-1 w-full max-w-screen-lg mx-auto md:flex-row md:space-x-4">

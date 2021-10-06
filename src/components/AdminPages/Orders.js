@@ -60,17 +60,11 @@ const Orders = () => {
 					handleUpdateOrder={handleUpdateOrder}
 				/>
 			)}
-			<div className="mt-10 lg:mt-0 lg:ml-56 overflow-x-scroll scrollbar">
-				<div className="py-2 ">
+			<div className="mt-10 lg:mt-0 lg:ml-56 overflow-x-scroll scrollbar min-h-screen">
+				<div className="py-2">
 					<table className="min-w-full divide-y divide-gray-200 rounded-lg">
 						<thead className="bg-gray-50">
 							<tr>
-								<th
-									scope="col"
-									className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
-								>
-									<input type="checkbox" />
-								</th>
 								<th
 									scope="col"
 									className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
@@ -89,12 +83,7 @@ const Orders = () => {
 								>
 									Tài khoản
 								</th>
-								{/* <th
-									scope="col"
-									className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-								>
-									Địa chỉ
-								</th> */}
+
 								<th
 									scope="col"
 									className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
@@ -106,6 +95,12 @@ const Orders = () => {
 									className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
 								>
 									Tổng tiền
+								</th>
+								<th
+									scope="col"
+									className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+								>
+									Phương thức
 								</th>
 								<th
 									scope="col"
@@ -125,11 +120,10 @@ const Orders = () => {
 						<tbody className="bg-white divide-y divide-gray-200">
 							{orders.map((order, index) => (
 								<tr key={order.paymentID}>
-									<td className="px-3 py-4 whitespace-nowrap">
-										<input type="checkbox" />
-									</td>
 									<td className="px-4 py-4 whitespace-nowrap">
-										<div className="text-sm text-gray-900">{index + 1}</div>
+										<div className="text-sm text-center text-gray-900">
+											{index + 1}
+										</div>
 									</td>
 									<td className="px-4 py-4 whitespace-nowrap">
 										<div className="text-sm text-gray-900">
@@ -148,9 +142,6 @@ const Orders = () => {
 											</div>
 										</div>
 									</td>
-									{/* <td className="px-6 py-4 whitespace-nowrap">
-										<div className="text-sm text-gray-900">{order.address}</div>
-									</td> */}
 									<td className="px-6 py-4 whitespace-nowrap">
 										<div className="text-sm text-gray-900">
 											{format(
@@ -162,6 +153,11 @@ const Orders = () => {
 									<td className="px-6 py-4 whitespace-nowrap">
 										<div className="text-sm text-gray-900 text-left">
 											{parseInt(order.total).toLocaleString('en')} vnđ
+										</div>
+									</td>
+									<td className="px-3 py-4 whitespace-nowrap">
+										<div className="text-sm text-gray-900 text-center">
+											{order.method}
 										</div>
 									</td>
 									<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">

@@ -44,7 +44,7 @@ const Cart = () => {
 		}
 		try {
 			const result = await paymentAPI.create(
-				{ order: cart, user, total, quantity },
+				{ order: cart, user, total, quantity, method: methodPaid },
 				token
 			)
 			if (result.status === 'Success') {

@@ -6,8 +6,8 @@ import UserTrash from './UserTrash'
 const Trash = () => {
 	const { option } = useParams()
 	return (
-		<div className="mt-10 lg:mt-0 lg:ml-56 p-3 flex flex-col space-y-4 relative">
-			{option === 'user' ? (
+		<div className="mt-10 lg:mt-0 lg:ml-56 overflow-x-scroll scrollbar min-h-screen">
+			{option === 'users' ? (
 				<UserTrash />
 			) : option === 'products' ? (
 				<ProductTrash />

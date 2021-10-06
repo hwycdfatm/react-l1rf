@@ -7,11 +7,11 @@ const sliderAPI = {
 	},
 	create: (data, token) => {
 		const url = '/slider'
-		return axiosAPI.post(url, data, { headers: { Authorization: token } })
-	},
-	update: (data, token, id) => {
-		const url = `/slider/${id}`
-		return axiosAPI.put(url, data, { headers: { Authorization: token } })
+		return axiosAPI.post(
+			url,
+			{ ...data },
+			{ headers: { Authorization: token } }
+		)
 	},
 	delete: (token, id) => {
 		const url = `/slider/${id}`

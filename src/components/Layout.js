@@ -35,10 +35,13 @@ import DetailOrder from './AdminPages/DetailOrder'
 import CategoryManager from './AdminPages/CategoryManager'
 
 import ScrollToTopBtn from '../utils/ScrollToTopBtn'
+import SliderManager from './AdminPages/SliderManager'
 const Layout = () => {
 	const { admin } = useContext(GlobalState)
 	const [open, setOpen] = useState(false)
-	const handleSidebar = () => setOpen(!open)
+	function handleSidebar() {
+		setOpen(!open)
+	}
 
 	return (
 		<>
@@ -79,6 +82,7 @@ const Layout = () => {
 					<AdminRoute exact path="/trash/:option" component={CategoryTrash} />
 					<AdminRoute exact path="/orders" component={Orders} />
 					<AdminRoute exact path="/allusers" component={AllUsers} />
+					<AdminRoute exact path="/slideshow" component={SliderManager} />
 					<Route path="*" component={Error} />
 				</Switch>
 			</div>

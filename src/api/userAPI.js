@@ -43,6 +43,13 @@ const userAPI = {
 			headers: { Authorization: token },
 		})
 	},
+	getAllUsersDeleted: ({ token, params }) => {
+		const url = '/user/all-deleted'
+		return axiosAPI.get(url, {
+			params,
+			headers: { Authorization: token },
+		})
+	},
 	updateRoleAndActivate: ({ token, role, activate, _id }) => {
 		const url = `/user/${_id}`
 		return axiosAPI.patch(

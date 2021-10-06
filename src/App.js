@@ -15,7 +15,7 @@ function App() {
 				const response = await categoriesAPI.get()
 				response.status === 'Success' && setApiReady(true)
 			} catch (error) {
-				console.log(error)
+				console.log(error.message)
 			}
 		}
 		fetchApi()

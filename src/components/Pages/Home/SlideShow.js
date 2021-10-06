@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-const SlideShow = () => {
+const SlideShow = ({ slideData }) => {
 	const [activeSlide, setActiveSlide] = useState(0)
 
 	const sliderData = [

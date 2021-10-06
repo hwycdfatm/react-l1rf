@@ -1,10 +1,10 @@
 import axiosAPI from './axiosAPI'
 const paymentApi = {
-	create: ({ order, user, total, quantity }, token) => {
+	create: ({ order, user, total, quantity, method }, token) => {
 		const url = '/payment'
 		return axiosAPI.post(
 			url,
-			{ order, user, total, quantity },
+			{ order, user, total, quantity, method },
 			{ headers: { Authorization: token } }
 		)
 	},

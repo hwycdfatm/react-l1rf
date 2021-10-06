@@ -8,6 +8,7 @@ import productPNG from '../../images/product.png'
 import userPNG from '../../images/user.png'
 import trashPNG from '../../images/delete.png'
 import categoryPNG from '../../images/categoryicon.png'
+import SlideShowPNG from '../../images/slideshow.png'
 const SidebarAdmin = (props) => {
 	const { logout } = useContext(GlobalState)
 	const { handleSidebar, open, setOpen } = props.option
@@ -41,7 +42,7 @@ const SidebarAdmin = (props) => {
 				</button>
 			</div>
 			<div
-				className={`fixed h-screen w-56 bg-white overflow-y-auto flex-col shadow-xl transition flex justify-between z-40 transform lg:transform-none ${
+				className={`fixed scrollbar h-screen w-56 bg-white overflow-y-auto flex-col shadow-xl transition flex justify-between z-40 transform lg:transform-none ${
 					!open && '-translate-x-full'
 				}`}
 			>
@@ -118,6 +119,15 @@ const SidebarAdmin = (props) => {
 					>
 						<img src={userPNG} alt="" className="w-5 h-5" />
 						<span>Quản lý tài khoản</span>
+					</NavLink>
+					<NavLink
+						to="/slideshow"
+						activeClassName="bg-green-300 bg-opacity-60 dark:bg-gray-900 dark:text-white"
+						onClick={handleSidebar}
+						className="flex items-center space-x-2 h-10 px-2 rounded-md transition duration-300 hover:bg-green-300 bg-opacity-60 text-sm font-semibold"
+					>
+						<img src={SlideShowPNG} alt="" className="w-5 h-5" />
+						<span>Quản lý Slider</span>
 					</NavLink>
 					<div className="flex flex-col rounded-md">
 						<button onClick={() => setOpenTrash(!openTrash)}>
