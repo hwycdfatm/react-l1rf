@@ -6,32 +6,44 @@ import TwitterIcon from '../../../images/twitter.png'
 
 const Footer = () => {
 	return (
-		<div className="w-full flex justify-center items-center bg-black text-white py-14">
+		<div className="w-full flex justify-center items-center bg-black text-white py-5">
 			<div className="flex flex-col space-y-5">
-				<div className="flex space-x-5">
+				<div className="flex space-x-10">
 					<a
 						target="_blank"
 						rel="noreferrer"
 						href="https://www.facebook.com/mai.tritoann/"
-						className="w-10 h-10 flex justify-center items-center rounded-full overflow-hidden bg-white"
+						className="flex flex-col justify-center items-center space-y-2"
 					>
-						<img src={FacebookIcon} alt="" className="w-full h-full" />
+						<img
+							src={FacebookIcon}
+							alt="l1rf-facebook"
+							className="w-10 h-10 rounded-full"
+						/>
 					</a>
 					<a
 						target="_blank"
 						rel="noreferrer"
 						href="https://www.instagram.com/hwycdfatm/"
-						className="w-10 h-10 flex justify-center items-center rounded-full overflow-hidden bg-white"
+						className="flex flex-col justify-center items-center space-y-2"
 					>
-						<img src={InstgramIcon} alt="" className="w-full h-full" />
+						<img
+							src={InstgramIcon}
+							alt="l1rf-instagram"
+							className="w-10 h-10 rounded-full"
+						/>
 					</a>
 					<a
 						target="_blank"
 						rel="noreferrer"
 						href="https://www.instagram.com/hwycdfatm/"
-						className="w-10 h-10 flex justify-center items-center rounded-full overflow-hidden bg-white"
+						className="flex flex-col justify-center items-center space-y-2"
 					>
-						<img src={TwitterIcon} alt="" className="w-full h-full" />
+						<img
+							src={TwitterIcon}
+							alt="l1rf-twitter"
+							className="w-10 h-10 rounded-full"
+						/>
 					</a>
 				</div>
 				<div className="text-center">

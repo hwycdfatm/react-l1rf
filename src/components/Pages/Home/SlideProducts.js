@@ -14,7 +14,7 @@ const SlideProducts = ({ newProducts, show }) => {
 	}
 
 	const handleTouchEnd = () => {
-		document.body.style.overflowY = 'scroll'
+		document.body.style.overflow = 'scroll'
 	}
 
 	const handleTouchMove = (e) => {
@@ -29,12 +29,12 @@ const SlideProducts = ({ newProducts, show }) => {
 		const diff = touchDown - currentTouch
 
 		if (diff > 10) {
-			document.body.style.overflowY = 'hidden'
+			document.body.style.overflow = 'hidden'
 			next()
 		}
 
 		if (diff < -10) {
-			document.body.style.overflowY = 'hidden'
+			document.body.style.overflow = 'hidden'
 			prev()
 		}
 
