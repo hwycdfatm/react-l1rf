@@ -23,7 +23,7 @@ export default function Sidebar(props) {
 					!sideBar && '-translate-x-full'
 				}`}
 			>
-				<div className="relative h-full bg-gray-50 dark:bg-gray-600 overflow-y-scroll">
+				<div className="relative h-full bg-gray-50 dark:bg-darkHeaderColor overflow-y-scroll transition-all">
 					{/* X button */}
 					<button className="absolute top-6 left-6" onClick={handleSidebar}>
 						<svg
@@ -47,7 +47,7 @@ export default function Sidebar(props) {
 						<div className="flex justify-between items-center border-2 border-gray-300 rounded-md h-10">
 							<input
 								type="text"
-								className="flex-1 p-1 pl-2 text-sm bg-transparent focus:outline-none focus:shadow-outline"
+								className="flex-1 p-1 pl-2 text-base bg-transparent focus:outline-none focus:shadow-outline"
 							/>
 
 							<button className="px-2">
@@ -71,7 +71,7 @@ export default function Sidebar(props) {
 							<div className="flex flex-col rounded-md shadow-sm">
 								<button
 									onClick={handleDropdown}
-									className="rounded-md px-3 w-full flex flex-row justify-between shadow-sm items-center h-10 bg-white dark:bg-gray-200"
+									className="rounded-md px-3 w-full flex flex-row justify-between shadow-sm items-center h-10 bg-white dark:bg-darkBgColor transition-all"
 								>
 									<span>Danh mục sản phẩm</span>
 									<svg
@@ -113,7 +113,7 @@ export default function Sidebar(props) {
 									<Link
 										to="/user"
 										onClick={handleSidebar}
-										className="flex flex-row items-center justify-between h-10 rounded-md bg-white dark:bg-gray-200 px-3 shadow-sm"
+										className="flex flex-row items-center justify-between h-10 rounded-md bg-white dark:bg-darkBgColor px-3 shadow-sm transition-all"
 									>
 										<span>Thông tin cá nhân</span>
 										<svg
@@ -137,7 +137,7 @@ export default function Sidebar(props) {
 											logout()
 											handleSidebar()
 										}}
-										className="flex flex-row items-center justify-between h-10 rounded-md bg-white dark:bg-gray-200 px-3 shadow-sm"
+										className="flex flex-row items-center justify-between h-10 rounded-md bg-white dark:bg-darkBgColor px-3 shadow-sm transition-all"
 									>
 										<span>Đăng xuất</span>
 										<svg
@@ -160,7 +160,7 @@ export default function Sidebar(props) {
 								<Link
 									to="/login"
 									onClick={handleSidebar}
-									className="flex flex-row items-center justify-between h-10 rounded-md bg-white dark:bg-gray-200 px-3 shadow-sm"
+									className="flex flex-row items-center justify-between h-10 rounded-md bg-white dark:bg-darkBgColor px-3 shadow-sm transition-all"
 								>
 									Đăng nhập
 								</Link>
@@ -168,14 +168,14 @@ export default function Sidebar(props) {
 							<Link
 								to="#"
 								onClick={darkModeFuntion}
-								className="flex flex-row items-center justify-between h-10 rounded-md bg-white dark:bg-gray-200 px-3 shadow-sm"
+								className="flex flex-row items-center justify-between h-10 rounded-md bg-white dark:bg-darkBgColor px-3 shadow-sm transition-all"
 							>
 								<span>Dark mode</span>
 								<div className="flex items-center justify-center w-10">
 									<div className="relative">
 										<div className="block bg-gray-600 w-10 h-6 rounded-full"></div>
 										<div
-											className={`absolute left-1 top-1  w-4 h-4 rounded-full transition ${
+											className={`absolute left-1 top-1  w-4 h-4 rounded-full transition-all ${
 												colorTheme === 'dark'
 													? 'bg-white'
 													: 'transform translate-x-full bg-green-400'

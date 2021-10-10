@@ -6,44 +6,32 @@ import TwitterIcon from '../../../images/twitter.png'
 
 const Footer = () => {
 	return (
-		<div className="w-full flex justify-center items-center bg-black text-white py-5">
+		<div className="w-full flex justify-center items-center bg-white border-t text-black dark:bg-darkHeaderColor transition-all font-semibold dark:text-white dark:border-transparent py-16">
 			<div className="flex flex-col space-y-5">
 				<div className="flex space-x-10">
 					<a
 						target="_blank"
 						rel="noreferrer"
 						href="https://www.facebook.com/mai.tritoann/"
-						className="flex flex-col justify-center items-center space-y-2"
+						className="w-12 h-12 rounded-full overflow-hidden border dark:border-transparent flex flex-col justify-center items-center"
 					>
-						<img
-							src={FacebookIcon}
-							alt="l1rf-facebook"
-							className="w-10 h-10 rounded-full"
-						/>
+						<img src={FacebookIcon} alt="l1rf-facebook" className="w-full" />
 					</a>
 					<a
 						target="_blank"
 						rel="noreferrer"
 						href="https://www.instagram.com/hwycdfatm/"
-						className="flex flex-col justify-center items-center space-y-2"
+						className="w-12 h-12 rounded-full overflow-hidden border dark:border-transparent flex flex-col justify-center items-center"
 					>
-						<img
-							src={InstgramIcon}
-							alt="l1rf-instagram"
-							className="w-10 h-10 rounded-full"
-						/>
+						<img src={InstgramIcon} alt="l1rf-instagram" className="w-full" />
 					</a>
 					<a
 						target="_blank"
 						rel="noreferrer"
 						href="https://www.instagram.com/hwycdfatm/"
-						className="flex flex-col justify-center items-center space-y-2"
+						className="w-12 h-12 rounded-full overflow-hidden border dark:border-transparent flex flex-col justify-center items-center"
 					>
-						<img
-							src={TwitterIcon}
-							alt="l1rf-twitter"
-							className="w-10 h-10 rounded-full"
-						/>
+						<img src={TwitterIcon} alt="l1rf-twitter" className="w-full" />
 					</a>
 				</div>
 				<div className="text-center">
@@ -52,7 +40,7 @@ const Footer = () => {
 				<a className="text-center" href="tel:0339331767">
 					Liên hệ với Toànn
 				</a>
-				<p className="text-center text-sm text-gray-300">
+				<p className="text-center text-sm text-gray-600 dark:text-gray-200">
 					@2021 Mai Trí Toàn I Tờ
 				</p>
 			</div>

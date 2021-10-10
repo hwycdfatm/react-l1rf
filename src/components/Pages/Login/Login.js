@@ -9,7 +9,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import userAPI from '../../../api/userAPI'
 import LoadingBtn from '../../../utils/LoadingBtn'
-
+import { Helmet } from 'react-helmet'
 const Login = () => {
 	const { login, setLogin } = useContext(GlobalState)
 	const [error, setError] = useState('')
@@ -101,6 +101,9 @@ const Login = () => {
 
 	return (
 		<div className="w-full pb-32">
+			<Helmet>
+				<title>Đăng nhập</title>
+			</Helmet>
 			<div className="max-w-md bg-white mx-auto rounded-lg mt-20 px-5 py-7">
 				<form
 					onSubmit={handleSubmit(loginSubmit)}

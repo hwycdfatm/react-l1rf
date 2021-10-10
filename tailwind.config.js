@@ -41,6 +41,8 @@ module.exports = {
 			...theme('colors'),
 			sidebar: '#D8E3E7',
 			product: '#e0dedf',
+			darkHeaderColor: '#222831',
+			darkBgColor: '#393E46',
 		}),
 	},
 	variants: {

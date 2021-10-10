@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import productAPI from '../../../api/productAPI'
 import SlideProducts from './SlideProducts'
 import SlideShow from './SlideShow'
-
+import { Helmet } from 'react-helmet'
 const Home = () => {
 	const [newProducts, setNewProducts] = useState([])
 	useEffect(() => {
@@ -34,6 +34,9 @@ const Home = () => {
 
 	return (
 		<div className="flex flex-col">
+			<Helmet>
+				<title>l1rf shop</title>
+			</Helmet>
 			{/* slide show */}
 			<SlideShow />
 			{/* Banner hello */}

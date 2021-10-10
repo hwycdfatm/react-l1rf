@@ -1,8 +1,12 @@
 import React from 'react'
+import { Helmet } from 'react-helmet'
 
 export default function Privacy() {
 	return (
 		<div className="dark:text-white mt-1">
+			<Helmet>
+				<title>Điều khoản dịch vụ</title>
+			</Helmet>
 			<h1 className="text-center ">ĐIỀU KHOẢN DỊCH VỤ </h1>
 			1. GIỚI THIỆU 1.1 Chào mừng bạn đến với sàn giao dịch thương mại điện tử
 			l1rf Store qua giao diện website hoặc ứng dụng di động (“Trang l1rf

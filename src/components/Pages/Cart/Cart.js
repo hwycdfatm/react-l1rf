@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom'
 import VNPayIcon from '../../../images/vnpayicon.png'
 import MoMoIcon from '../../../images/momoicon.png'
 import CodIcon from '../../../images/codicon.png'
+import { Helmet } from 'react-helmet'
 
 const Cart = () => {
 	const { cart, removeProduct, user, token, setCart } = useContext(GlobalState)
@@ -58,6 +59,9 @@ const Cart = () => {
 	}
 	return (
 		<div className="w-full max-w-screen-xl mx-auto px-2 lg:px-8 xl:p-0 lg:mt-2">
+			<Helmet>
+				<title>Giỏ hàng</title>
+			</Helmet>
 			<div className=" h-full md:h-screen bg-transparent rounded-lg ">
 				<div className="grid grid-cols-12 gap-2 lg:gap-4 xl:gap-5">
 					<div className="col-span-12 sm:col-span-12 md:col-span-7 lg:col-span-8 2xl:col-span-8">

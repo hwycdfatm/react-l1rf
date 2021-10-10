@@ -7,6 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import userAPI from '../../../api/userAPI'
 import LoadingBtn from '../../../utils/LoadingBtn'
+import { Helmet } from 'react-helmet'
 const Register = () => {
 	const { login } = useContext(GlobalState)
 	const [noti, setNoti] = useState('')
@@ -119,6 +120,9 @@ const Register = () => {
 	if (login) return <Redirect to="/" />
 	return (
 		<div className="w-full bg-white p-3 pb-20">
+			<Helmet>
+				<title>Đăng ký</title>
+			</Helmet>
 			<h1 className="py-5 text-2xl font-semibold text-center">
 				Chào mừng bạn đến với shop l1rf!
 			</h1>

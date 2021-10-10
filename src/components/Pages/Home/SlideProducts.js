@@ -141,7 +141,7 @@ const SlideProducts = ({ newProducts, show }) => {
 										className="w-full h-full object-cover"
 									/>
 								</div>
-								<div className="px-1 py-3 font-maven bg-white dark:bg-product">
+								<div className="px-1 py-3 font-maven bg-transparent dark:text-white">
 									<p className="font-semibold text-lg">{product.title}</p>
 									<span>{parseInt(product.price).toLocaleString('en')}vnđ</span>
 								</div>

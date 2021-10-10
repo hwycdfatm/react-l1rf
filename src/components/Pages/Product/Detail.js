@@ -5,7 +5,7 @@ import Error from '../Error/Error'
 import NotFoundImage from './image-not-found.jpg'
 import productAPI from '../../../api/productAPI'
 import '../../../css/unreset.css'
-
+import { Helmet } from 'react-helmet'
 import Skeleton from 'react-loading-skeleton'
 const Detail = () => {
 	const { addToCart } = useContext(GlobalState)
@@ -41,6 +41,26 @@ const Detail = () => {
 	if (fail) return <Error />
 	return (
 		<section className="bg-transparent transition duration-700 dark:text-white py-2">
+			<Helmet>
+				<title>{product?.title}</title>
+				<meta
+					name="description"
+					content={`${product?.title} một sản phẩm của L1rf Store`}
+				/>
+				<meta
+					name="og:description"
+					content={`${product?.title} một sản phẩm của L1rf Store`}
+				/>
+				<meta name="og:title" content={product?.title} />
+				<meta
+					property="og:image"
+					content={imageMain ? imageMain : NotFoundImage}
+				></meta>
+				<meta
+					property="image"
+					content={imageMain ? imageMain : NotFoundImage}
+				></meta>
+			</Helmet>
 			<div className="flex flex-col max-w-screen-lg mx-auto px-2 xs:px-5">
 				<div className="flex flex-wrap">
 					<div className="w-full sm:w-8/12 sm:mx-auto md:w-6/12 rounded-lg overflow-hidden">
@@ -147,16 +167,13 @@ const Detail = () => {
 					</div>
 				</div>
 				{load ? (
-					<div className="unreset py-2 w-full border-t border-gray-700 mt-10">
-						<Skeleton count={2} />
-						<Skeleton count={2} width="60%" />
-						<Skeleton count={2} width="70%" />
-						<Skeleton count={2} width="90%" />
-						<Skeleton count={2} width="80%" />
+					<div className="unreset pt-2 pb-10 w-full mt-10">
+						<Skeleton />
+						<Skeleton width="60%" />
 					</div>
 				) : (
 					<div
-						className="unreset py-2 w-full border-t border-gray-700 mt-10 font-maven"
+						className="unreset pt-2 pb-10 w-full mt-10 font-maven"
 						dangerouslySetInnerHTML={{ __html: product.content }}
 					/>
 				)}

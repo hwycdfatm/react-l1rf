@@ -24,7 +24,7 @@ const Header = () => {
 	}
 
 	return (
-		<header className="fixed bg-white dark:bg-black dark:text-white w-full top-0 z-50 left-0 right-0 h-16 transition duration-500 xl:px-10">
+		<header className="fixed bg-white dark:bg-darkHeaderColor dark:text-white w-full top-0 z-50 left-0 right-0 h-16 transition-all xl:px-10">
 			<div className="mx-auto px-4 lg:px-8 xl:px-0 h-full flex flex-row justify-between items-center">
 				<Sidebar
 					darkModeFuntion={darkMode}
