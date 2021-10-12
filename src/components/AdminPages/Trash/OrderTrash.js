@@ -181,7 +181,9 @@ const OrderTrash = () => {
 							</tr>
 						))
 					) : (
-						<div>Trống</div>
+						<tr>
+							<div>Trống</div>
+						</tr>
 					)}
 				</tbody>
 			</table>

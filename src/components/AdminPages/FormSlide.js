@@ -4,7 +4,7 @@ import { GlobalState } from '../../GlobalState'
 import uploadImageAPI from '../../api/uploadImageAPI'
 import { checkImage } from '../../utils/handleUploadAndDeleteImage'
 
-const FormSlide = () => {
+const FormSlide = ({ showFormSlide, setShowFormSlide }) => {
 	const { token } = useContext(GlobalState)
 
 	const handleUploadImage = async (e) => {
@@ -70,6 +70,7 @@ const FormSlide = () => {
 						</svg>
 					</label>
 				</div>
+
 				<form>
 					<input
 						type="file"
@@ -77,6 +78,13 @@ const FormSlide = () => {
 						id="image-upload"
 						onChange={handleUploadImage}
 					/>
+					<div className="mx-auto max-w-screen-md mt-10">
+						<input
+							type="text"
+							placeholder="Nhập tiêu đề của Slide ở đây"
+							className="w-full text-base p-3 border-2 border-gray-800 rounded focus:outline-none focus:shadow-outline"
+						/>
+					</div>
 					<div className="text-base max-w-screen-md mt-10 mx-auto space-y-4 flex flex-col md:flex-row space-y-1 md:space-y-0 md:space-x-3 justify-between">
 						<button
 							type="submit"
@@ -85,6 +93,7 @@ const FormSlide = () => {
 							Thêm
 						</button>
 						<button
+							onClick={() => setShowFormSlide(!showFormSlide)}
 							type="button"
 							className="w-full px-2 py-2 text-white bg-red-400 rounded font-medium xl:px-4"
 						>

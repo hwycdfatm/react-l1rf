@@ -13,6 +13,14 @@ const sliderAPI = {
 			{ headers: { Authorization: token } }
 		)
 	},
+	update: (token, id, data) => {
+		const url = `/slider/${id}`
+		return axiosAPI.patch(
+			url,
+			{ activate: data },
+			{ headers: { Authorization: token } }
+		)
+	},
 	delete: (token, id) => {
 		const url = `/slider/${id}`
 		return axiosAPI.delete(url, { headers: { Authorization: token } })

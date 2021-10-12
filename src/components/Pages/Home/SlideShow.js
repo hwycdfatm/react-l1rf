@@ -1,26 +1,18 @@
 import React, { useState, useEffect } from 'react'
+import sliderAPI from '../../../api/sliderAPI'
 
 const SlideShow = ({ slideData }) => {
 	const [activeSlide, setActiveSlide] = useState(0)
-
-	const sliderData = [
-		{
-			image:
-				'https://media.gq.com/photos/6137a6599ea62dbe4a6ea9c6/master/pass/casual-pants.jpg',
-		},
-		{
-			image:
-				'https://stylesatlife.com/wp-content/uploads/2018/05/15-Best-Checks-Shirts-for-Mens-New-Fashion-2019-1.jpg.webp',
-		},
-		{
-			image:
-				'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/weekendbags-1624468650.jpg?crop=1.00xw:1.00xh;0,0&resize=1200:*',
-		},
-		{
-			image:
-				'https://eslforums.com/wp-content/uploads/2019/05/FASHION-ACCESSORIES-2.jpg',
-		},
-	]
+	const [sliderData, setSliderData] = useState([])
+	useEffect(() => {
+		const fetchSlide = async () => {
+			const result = await sliderAPI.get()
+			setSliderData([
+				...result.sliders.filter((slide) => slide.activate === true),
+			])
+		}
+		fetchSlide()
+	}, [])
 
 	useEffect(() => {
 		const interval = setInterval(() => {
