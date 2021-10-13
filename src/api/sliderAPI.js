@@ -5,7 +5,7 @@ const sliderAPI = {
 		const url = '/slider'
 		return axiosAPI.get(url)
 	},
-	create: (data, token) => {
+	create: ({ data, token }) => {
 		const url = '/slider'
 		return axiosAPI.post(
 			url,

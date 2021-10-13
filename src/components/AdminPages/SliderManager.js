@@ -10,26 +10,32 @@ const SlideManager = () => {
 	const [slideActive, setSlideActive] = useState([])
 	const [slideNoneActive, setSlideNoneActive] = useState([])
 
-	useEffect(() => {
-		const fetchSlide = async () => {
-			try {
-				const result = await sliderAPI.get()
-				setSlideNoneActive([
-					...result.sliders.filter((slide) => slide.activate === false),
-				])
-				setSlideActive([
-					...result.sliders.filter((slide) => slide.activate === true),
-				])
-			} catch (error) {
-				console.log(error)
-			}
+	const [slider, setSlider] = useState({
+		image: '',
+		title: '',
+	})
+
+	const fetchSlide = async () => {
+		try {
+			const result = await sliderAPI.get()
+			setSlideNoneActive([
+				...result.sliders.filter((slide) => slide.activate === false),
+			])
+			setSlideActive([
+				...result.sliders.filter((slide) => slide.activate === true),
+			])
+		} catch (error) {
+			console.log(error)
 		}
+	}
+	useEffect(() => {
 		fetchSlide()
 	}, [])
 
 	useEffect(() => {
 		setshowFormSlide(false)
 	}, [])
+
 	// Nút để thêm slide vào chỗ hiển thị
 	const handleActiveSlide = async (slideObj) => {
 		try {
@@ -60,7 +66,25 @@ const SlideManager = () => {
 	// Xóa slide khỏi Database
 	const handleDestroySlide = async (_id) => {
 		try {
-			console.log(_id)
+			await sliderAPI.delete(token, _id)
+			setSlideNoneActive([
+				...slideNoneActive.filter((slide) => slide._id !== _id),
+			])
+		} catch (error) {
+			console.log(error)
+		}
+	}
+
+	const handleUploadSlider = async (e) => {
+		e.preventDefault()
+		try {
+			const result = await sliderAPI.create({ data: slider, token })
+			if (result.status === 'Success') {
+				alert(result.message)
+				fetchSlide()
+				setshowFormSlide(!showFormSlide)
+				setSlider({ image: '', title: '' })
+			}
 		} catch (error) {
 			console.log(error)
 		}
@@ -71,9 +95,12 @@ const SlideManager = () => {
 				<FormSlide
 					showFormSlide={showFormSlide}
 					setShowFormSlide={setshowFormSlide}
+					setSlider={setSlider}
+					slider={slider}
+					handleUploadSlider={handleUploadSlider}
 				/>
 			)}
-			<div className="mt-10 lg:mt-0 lg:ml-56 overflow-x-scroll scrollbar min-h-screen md:px-4">
+			<div className="mt-10 lg:mt-0 lg:ml-56 scrollbar min-h-screen md:px-4">
 				<button
 					onClick={() => setshowFormSlide(!showFormSlide)}
 					className="fixed bottom-5 right-5 p-1 rounded-full bg-red-400 text-white z-10"
@@ -105,7 +132,7 @@ const SlideManager = () => {
 									<div key={slide._id} className="w-full md:w-1/2 lg:w-1/3 p-1">
 										<div className="rounded-lg h-full w-full overflow-hidden relative">
 											<img
-												src={slide.image}
+												src={slide.image.url}
 												alt={slide.title}
 												className="h-full w-full object-cover"
 											/>
@@ -137,7 +164,7 @@ const SlideManager = () => {
 									<div key={slide._id} className="w-full md:w-1/2 lg:w-1/3 p-1">
 										<div className="rounded-lg h-full w-full overflow-hidden relative">
 											<img
-												src={slide.image}
+												src={slide.image.url}
 												alt={slide.title}
 												className="h-full w-full object-cover"
 											/>

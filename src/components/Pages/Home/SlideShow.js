@@ -39,7 +39,7 @@ const SlideShow = ({ slideData }) => {
 					}`}
 				>
 					<img
-						src={slide.image}
+						src={slide.image.url}
 						alt=""
 						className="w-full h-full object-cover"
 					/>

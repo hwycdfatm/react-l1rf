@@ -58,5 +58,17 @@ const userAPI = {
 			{ headers: { Authorization: token } }
 		)
 	},
+	restore: ({ token, _id }) => {
+		const url = `/user/${_id}/restore`
+		return axiosAPI.patch(url, {}, { headers: { Authorization: token } })
+	},
+	delete: ({ _id, token }) => {
+		const url = `/user/${_id}`
+		return axiosAPI.delete(url, { headers: { Authorization: token } })
+	},
+	deleteForce: ({ _id, token }) => {
+		const url = `/user/${_id}/force`
+		return axiosAPI.delete(url, { headers: { Authorization: token } })
+	},
 }
 export default userAPI

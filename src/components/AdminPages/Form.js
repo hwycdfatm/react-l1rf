@@ -4,7 +4,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import { GlobalState } from '../../GlobalState'
 import uploadImageAPI from '../../api/uploadImageAPI'
 import productAPI from '../../api/productAPI'
-import { checkImage } from '../../utils/handleUploadAndDeleteImage'
+import CheckImages from '../../utils/CheckImages'
 
 const Form = (props) => {
 	// default Action is Add
@@ -22,14 +22,14 @@ const Form = (props) => {
 			if (files.length === 0) return alert('Vui lòng chọn ảnh')
 			let formData = new FormData()
 			if (files.length === 1) {
-				const check = checkImage(files[0])
+				const check = CheckImages(files[0])
 				if (check) {
 					formData.append('file', files[0])
 				}
 			} else {
 				if (files.length > 4) return alert('Tối đa 4 ảnh thôi bạn !')
 				for (let file of files) {
-					const check = checkImage(file)
+					const check = CheckImages(file)
 					if (check) {
 						formData.append('file', file)
 					}

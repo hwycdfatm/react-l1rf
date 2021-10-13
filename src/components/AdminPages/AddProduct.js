@@ -8,7 +8,7 @@ import uploadImageAPI from '../../api/uploadImageAPI'
 import LoadingBtn from '../../utils/LoadingBtn'
 import { toast } from 'react-toastify'
 import '../../css/unreset.css'
-import { checkImage } from '../../utils/handleUploadAndDeleteImage'
+import CheckImages from '../../utils/CheckImages'
 
 const AddProduct = () => {
 	// Global state
@@ -44,7 +44,7 @@ const AddProduct = () => {
 			if (files.length === 0) return alert('Vui lòng chọn ảnh')
 			let formData = new FormData()
 			if (files.length === 1) {
-				const check = checkImage(files[0])
+				const check = CheckImages(files[0])
 				if (check) {
 					setChecked(true)
 					formData.append('images', files[0])
@@ -52,7 +52,7 @@ const AddProduct = () => {
 			} else {
 				if (files.length > 4) return alert('Tối đa 4 ảnh thôi bạn !')
 				for (let file of files) {
-					const check = checkImage(file)
+					const check = CheckImages(file)
 					if (check) {
 						formData.append('images', file)
 					}

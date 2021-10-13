@@ -42,6 +42,24 @@ const AllUsers = () => {
 			console.log(error)
 		}
 	}
+
+	const handleDeleteUser = async (_id) => {
+		try {
+			const result = await userAPI.delete({
+				token,
+				_id,
+			})
+			console.log(result)
+			if (result.status === 'Success') {
+				toast(result.message, { type: 'success', position: 'top-center' })
+				setShowForm(false)
+				setUsers((pre) => [...pre.filter((user) => user._id !== _id)])
+			}
+		} catch (error) {
+			console.log(error)
+		}
+	}
+
 	showForm
 		? document.body.classList.add('overflow-hidden')
 		: document.body.classList.remove('overflow-hidden')
@@ -167,7 +185,10 @@ const AllUsers = () => {
 												</svg>
 											</button>
 
-											<button className="text-red-600 hover:text-red-900">
+											<button
+												onClick={() => handleDeleteUser(user._id)}
+												className="text-red-600 hover:text-red-900"
+											>
 												<svg
 													className="w-5 h-5"
 													fill="none"
