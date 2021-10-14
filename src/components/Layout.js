@@ -41,6 +41,8 @@ import DetailOrder from './AdminPages/DetailOrder'
 import CategoryManager from './AdminPages/CategoryManager'
 
 import SliderManager from './AdminPages/SliderManager'
+import ForgortPassword from './Pages/ForgortPassword/ForgortPassword'
+import ChangePassword from './Pages/ChangePassword/ChangePassword'
 
 const Layout = () => {
 	const { admin } = useContext(GlobalState)
@@ -77,6 +79,8 @@ const Layout = () => {
 					<Route exact path="/register" component={Register} />
 					<Route exact path="/forget" component={Forget} />
 					<Route exact path="/dieu-khoan" component={Privacy} />
+					<Route exact path="/quen-mat-khau" component={ForgortPassword} />
+					<Route exact path="/doi-mat-khau" component={ChangePassword} />
 					<ProtectedRoute exact path="/cart" component={Cart} />
 					<ProtectedRoute exact path="/user" component={User} />
 					<AdminRoute exact path="/products" component={CategoryAdmin} />

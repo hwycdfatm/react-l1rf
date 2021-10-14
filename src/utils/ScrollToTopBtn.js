@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 const ScrollToTopBtn = () => {
 	const [isActive, setIsActive] = useState(false)
@@ -17,7 +17,12 @@ const ScrollToTopBtn = () => {
 			behavior: 'smooth',
 		})
 	}
-	window.addEventListener('scroll', toggleVisible)
+	useEffect(() => {
+		window.addEventListener('scroll', toggleVisible)
+		return () => {
+			window.removeEventListener('scroll', toggleVisible)
+		}
+	})
 	return (
 		<button
 			onClick={scrollToTop}

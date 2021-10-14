@@ -5,6 +5,7 @@ import Skeleton from 'react-loading-skeleton'
 import PaymentContainer from './PaymentContainer'
 import userAPI from '../../../api/userAPI'
 import { Helmet } from 'react-helmet'
+import { Link } from 'react-router-dom'
 const User = () => {
 	const { user, token, refreshToken, getUser } = useContext(GlobalState)
 	const [paymentList, setPaymentList] = useState([])
@@ -129,6 +130,12 @@ const User = () => {
 								Chỉnh sửa thông tin cá nhân
 							</button>
 						)}
+						<Link
+							to="/doi-mat-khau"
+							className="p-2 border mt-4 rounded-lg text-center"
+						>
+							Đổi mật khẩu
+						</Link>
 					</div>
 				</div>
 				<div className="w-full mt-5 md:mt-0 md:w-8/12 xl:w-9/12">

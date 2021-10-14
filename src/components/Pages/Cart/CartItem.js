@@ -3,7 +3,7 @@ export default function CartItem(props) {
 	const { images, price, title, _id } = props.item
 	const priceParse = parseInt(price)
 	return (
-		<div className="bg-white py-4 px-4 border border-gray-200 shadow-md rounded-lg my-4 flex overflow-hidden">
+		<div className="bg-white text-gray-700 dark:text-white dark:bg-darkBgColor transition-all py-4 px-4 border border-gray-200 shadow-md rounded-lg my-4 flex overflow-hidden">
 			<div className="h-16 w-14 flex items-center justify-center mr-6 ">
 				<img
 					src={images && images[0].url}

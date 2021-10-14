@@ -104,12 +104,12 @@ const Login = () => {
 			<Helmet>
 				<title>Đăng nhập</title>
 			</Helmet>
-			<div className="max-w-md bg-white mx-auto rounded-lg mt-20 px-5 py-7">
+			<div className="max-w-md bg-transparent mx-auto rounded-lg mt-20 px-5 py-7">
 				<form
 					onSubmit={handleSubmit(loginSubmit)}
 					className="flex flex-col space-y-6 text-gray-400"
 				>
-					<h1 className="text-2xl text-center font-normal">
+					<h1 className="text-2xl text-center font-normal text-gray-700 dark:text-white mb-6">
 						Chào mừng đến với l1rf Shop
 					</h1>
 
@@ -140,7 +140,7 @@ const Login = () => {
 										id={e.name}
 										name={e.name}
 										onFocus={() => removeMsg()}
-										className="h-full outline-none flex-1 ml-1 pl-1 font-normal"
+										className="h-full outline-none flex-1 ml-1 pl-1 font-normal dark:bg-transparent transition-all bg-white"
 										{...register(e.name)}
 									/>
 								</div>
@@ -170,7 +170,7 @@ const Login = () => {
 					<div className="flex flex-row text-blue-300 font-medium text-sm justify-between pt-5">
 						<Link to="/register">Đăng ký ngay</Link>
 
-						<Link to="/forget_password">Quên mật khẩu ?</Link>
+						<Link to="/quen-mat-khau">Quên mật khẩu ?</Link>
 					</div>
 				</form>
 			</div>

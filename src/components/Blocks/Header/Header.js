@@ -86,7 +86,7 @@ const Header = () => {
 											Thông tin cá nhân
 										</Link>
 										<Link
-											to="/changepassword"
+											to="/doi-mat-khau"
 											className="text-left font-medium text-sm hover:bg-gray-300 rounded-md p-2"
 										>
 											Thay đổi mật khẩu

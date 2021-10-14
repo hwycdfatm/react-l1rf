@@ -119,11 +119,11 @@ const Register = () => {
 
 	if (login) return <Redirect to="/" />
 	return (
-		<div className="w-full bg-white p-3 pb-20">
+		<div className="w-full bg-transaprent p-3 pb-20">
 			<Helmet>
 				<title>Đăng ký</title>
 			</Helmet>
-			<h1 className="py-5 text-2xl font-semibold text-center">
+			<h1 className="py-5 text-2xl font-semibold text-center text-gray-700 dark:text-white">
 				Chào mừng bạn đến với shop l1rf!
 			</h1>
 			<div className="max-w-md mx-auto p-3 flex flex-col space-y-10">
@@ -157,7 +157,7 @@ const Register = () => {
 									id={data.name}
 									name={data.name}
 									{...register(data.name)}
-									className="outline-none flex-1 ml-2 font-normal h-full appearance-none bg-none"
+									className="outline-none flex-1 ml-2 font-normal h-full appearance-none bg-transparent"
 								/>
 							</div>
 							<div className="text-sm mt-2 ml-4 text-red-500">

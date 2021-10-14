@@ -74,11 +74,11 @@ const Cart = () => {
 								/>
 							))
 						) : (
-							<div className="flex justify-center items-center h-32 py-4">
+							<div className="flex justify-center items-center h-32 py-4 text-gray-700 dark:text-white">
 								Bạn ơi giỏ hàng đang trống, bạn hãy mua đồ nhé !! 🤔
 							</div>
 						)}
-						<Link to={'/'} className="flex">
+						<Link to={'/'} className="flex text-gray-700 dark:text-white">
 							<svg
 								className="w-6 h-6"
 								fill="none"
@@ -97,7 +97,7 @@ const Cart = () => {
 						</Link>
 					</div>
 					<div className="col-span-12 sm:col-span-12 md:col-span-5 lg:col-span-4 2xl:col-span-4">
-						<div className="bg-white py-4 px-4 border border-gray-200 shadow-md rounded-lg md:my-4">
+						<div className="bg-white dark:bg-darkBgColor transition-all text-gray-700 dark:text-white py-4 px-4 border border-gray-200 shadow-md rounded-lg md:my-4">
 							<div className="flex justify-between border-b-2 mb-2">
 								<div className="text-lg py-2">
 									<p>Tổng số lượng hàng</p>
@@ -131,9 +131,9 @@ const Cart = () => {
 								</div>
 							</div>
 						</div>
-						<div className="space-y-4 py-2">
-							<h2 className="text-lg">Phương thức thanh toán</h2>
-							<div className="flex flex-col space-y-3 ml-4">
+						<div className="space-y-4 py-2 text-gray-700 dark:text-white transition-all border rounded-lg p-3 shadow-lg">
+							<h2 className="text-lg pt-2">Phương thức thanh toán</h2>
+							<div className="flex flex-col space-y-3 ml-4 pb-3">
 								<div className="flex items-center justify-center space-x-4 w-full">
 									<input
 										type="radio"
