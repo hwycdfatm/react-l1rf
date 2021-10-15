@@ -1,25 +1,36 @@
-import React, { useState } from 'react'
-
+import React, { useContext, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
+import userAPI from '../../../api/userAPI'
+import { GlobalState } from '../../../GlobalState'
 const ChangePassword = () => {
-	const [error, setError] = useState('')
+	const { token } = useContext(GlobalState)
+
+	const [errorMesage, setErrorMessage] = useState('')
 	function removeMsg() {
-		setError('')
+		setErrorMessage('')
 	}
 	const schema = yup.object().shape({
-		email: yup
-			.string()
-			.email('Vui lòng nhập mật khẩu')
-			.required('Vui lòng nhập mật khẩu'),
 		password: yup
 			.string()
 			.required('Vui lòng nhập mật khẩu')
 			.min(6, 'Mật khẩu phải lớn hơn 6 ký tự'),
+		newpassword: yup
+			.string()
+			.required('Vui lòng nhập mật khẩu')
+			.min(6, 'Mật khẩu phải lớn hơn 6 ký tự'),
+		renewpassword: yup
+			.string()
+			.required('Vui lòng nhập mật khẩu')
+			.min(6, 'Mật khẩu phải lớn hơn 6 ký tự')
+			.oneOf([yup.ref('newpassword'), null], 'Mật khẩu không hợp lệ'),
 	})
 	const {
 		register,
+		handleSubmit,
+		setError,
 		formState: { errors },
 	} = useForm({
 		resolver: yupResolver(schema),
@@ -33,29 +44,70 @@ const ChangePassword = () => {
 		},
 		{
 			type: 'password',
-			name: 'password',
-			placeholder: 'Mật khẩu mới',
+			name: 'newpassword',
+			placeholder: 'Nhập lại mật khẩu mới',
 			icon: 'M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z',
 		},
 		{
 			type: 'password',
-			name: 'password',
-			placeholder: 'Nhập lại mật khẩu mới',
+			name: 'renewpassword',
+			placeholder: 'Mật khẩu mới',
 			icon: 'M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z',
 		},
 	]
+
+	const handleSumbitChangePassword = async (data) => {
+		try {
+			const result = await userAPI.changePassword({ token, data })
+			setErrorMessage(
+				<div className="w-full text-center bg-blue-300 text-white rounded-md p-2 animate-bounce">
+					{result.message}
+				</div>
+			)
+		} catch (error) {
+			if (error.status === 'FailPassword') {
+				setError(
+					'password',
+					{
+						type: 'manual',
+						message: error.message,
+					},
+					{ shouldFocus: true }
+				)
+			} else {
+				setErrorMessage(
+					<div className="w-full text-center bg-red-300 text-white rounded-md p-2 animate-bounce">
+						{error.message}
+					</div>
+				)
+			}
+		}
+	}
+
 	return (
 		<div className="w-full pb-32">
-			<div className="max-w-md bg-transparent mx-auto rounded-lg mt-20 px-5 py-7">
-				<form className="flex flex-col space-y-6 text-gray-400">
-					<h1 className="text-2xl font-normal text-gray-700 dark:text-white mb-6">
+			<div className="max-w-md bg-transparent mx-auto rounded-lg mt-20 px-5">
+				<form
+					onSubmit={handleSubmit(handleSumbitChangePassword)}
+					className="flex flex-col space-y-6 text-gray-400"
+				>
+					<h4 className="text-2xl font-normal text-gray-700 dark:text-white mb-2">
 						Đổi mật khẩu
-					</h1>
-					{error && errors}
-					<div className="flex flex-col space-y-4">
+						<br />
+						<span className="text-sm">
+							Bạn nên đặt mật khẩu <strong>MẠNH</strong> mà bạn chưa dùng ở bất
+							kì đâu
+						</span>
+					</h4>
+
+					{errorMesage && errorMesage}
+					<div className="flex flex-col space-y-2">
 						{inputs.map((e, i) => (
 							<div key={i}>
-								<div className="flex items-center h-10 rounded-md border border-gray-100 overflow-hidden">
+								<div className="mb-2">
+									<span className="text-gray-700">{e.placeholder}</span>
+								</div>
+								<div className="flex items-center h-10 rounded-md border border-gray-200 overflow-hidden">
 									<label htmlFor={e.name} className="p-1 ml-1">
 										<svg
 											className="w-6 h-6"
@@ -74,7 +126,6 @@ const ChangePassword = () => {
 									</label>
 									<input
 										type={e.type}
-										placeholder={e.placeholder}
 										id={e.name}
 										name={e.name}
 										onFocus={() => removeMsg()}
@@ -88,6 +139,11 @@ const ChangePassword = () => {
 							</div>
 						))}
 					</div>
+					<div>
+						<Link to="/quen-mat-khau" className="text-blue-400">
+							Quên mật khẩu ?
+						</Link>
+					</div>
 					<div className="flex flex-col w-full justify-center space-y-2">
 						<button
 							type="submit"
@@ -95,7 +151,6 @@ const ChangePassword = () => {
 						>
 							Cập nhật
 						</button>
-						<span className="text-center">hoặc</span>
 					</div>
 				</form>
 			</div>

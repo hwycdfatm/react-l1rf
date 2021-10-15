@@ -50,6 +50,14 @@ const userAPI = {
 			headers: { Authorization: token },
 		})
 	},
+	changePassword: ({ token, data }) => {
+		const url = '/user/change-password'
+		return axiosAPI.post(
+			url,
+			{ ...data },
+			{ headers: { Authorization: token } }
+		)
+	},
 	updateRoleAndActivate: ({ token, role, activate, _id }) => {
 		const url = `/user/${_id}`
 		return axiosAPI.patch(
@@ -57,6 +65,10 @@ const userAPI = {
 			{ role, activate },
 			{ headers: { Authorization: token } }
 		)
+	},
+	forgortPassword: ({ email }) => {
+		const url = `/user/forgort-password`
+		return axiosAPI.post(url, { email })
 	},
 	restore: ({ token, _id }) => {
 		const url = `/user/${_id}/restore`

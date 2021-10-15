@@ -51,7 +51,7 @@ const Footer = () => {
 								<span className="block uppercase text-blueGray-500 text-sm font-semibold mb-2">
 									Hỗ trợ
 								</span>
-								<ul className="pl-4">
+								<ul className="pl-4 max-w-max">
 									<li>
 										<Link
 											className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
@@ -74,7 +74,7 @@ const Footer = () => {
 								<span className="block uppercase text-blueGray-500 text-sm font-semibold mb-2">
 									Liên hệ
 								</span>
-								<ul className="pl-4">
+								<ul className="pl-4 max-w-max">
 									<li>
 										<a
 											className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
@@ -97,7 +97,7 @@ const Footer = () => {
 								<span className="block uppercase text-blueGray-500 text-sm font-semibold mb-2">
 									Danh mục
 								</span>
-								<ul className="pl-4">
+								<ul className="pl-4 max-w-max">
 									{categories.map((category) => (
 										<li key={category._id}>
 											<Link

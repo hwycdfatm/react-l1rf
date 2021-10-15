@@ -100,7 +100,7 @@ const Detail = () => {
 								'Giá: ' + price.toLocaleString('en') + ' vnđ'
 							)}
 						</p>
-						<div className="flex order-first items-center justify-center space-x-2 md:order-none md:justify-start md:mt-10">
+						<div className="flex order-first items-center justify-center space-x-2 md:order-none md:justify-start mt-4 md:mt-10">
 							{load ? (
 								<>
 									<Skeleton width={56} height={56} />

@@ -22,7 +22,6 @@ import Category from '../components/Pages/Category/Category'
 import User from '../components/Pages/User/User'
 import Login from '../components/Pages/Login/Login'
 import Register from '../components/Pages/Register/Register'
-import Forget from '../components/Pages/Forget/Forget'
 
 import Privacy from '../components/Pages/Privacy/Privacy'
 import Error from '../components/Pages/Error/Error'
@@ -77,7 +76,6 @@ const Layout = () => {
 					<Route path="/product/:slug" component={Product} />
 					<Route exact path="/login" component={Login} />
 					<Route exact path="/register" component={Register} />
-					<Route exact path="/forget" component={Forget} />
 					<Route exact path="/dieu-khoan" component={Privacy} />
 					<Route exact path="/quen-mat-khau" component={ForgortPassword} />
 					<Route exact path="/doi-mat-khau" component={ChangePassword} />
