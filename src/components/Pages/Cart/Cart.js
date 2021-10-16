@@ -1,21 +1,20 @@
 import React, { useContext, useEffect, useState } from 'react'
 import CartItem from './CartItem'
-import paymentAPI from '../../../api/paymentAPI'
-import userAPI from '../../../api/userAPI'
 import { GlobalState } from '../../../GlobalState'
 import { Link } from 'react-router-dom'
-import VNPayIcon from '../../../images/vnpayicon.png'
 import MoMoIcon from '../../../images/momoicon.png'
 import CodIcon from '../../../images/codicon.png'
 import { Helmet } from 'react-helmet'
+import Checkout from './Checkout'
 
 const Cart = () => {
-	const { cart, removeProduct, user, token, setCart } = useContext(GlobalState)
+	const { cart, removeProduct, user } = useContext(GlobalState)
 	const [tempTotal, setTempTotal] = useState(0)
 	const ship = 50000
 	const total = tempTotal + ship
 	const [quantity, setQuantity] = useState(0)
 	const [methodPaid, setMethodPaid] = useState('')
+	const [checkout, setCheckout] = useState(false)
 
 	useEffect(() => {
 		const getTotal = () => {
@@ -33,30 +32,17 @@ const Cart = () => {
 		getLength()
 		getTotal()
 	}, [cart])
-	const emptyCart = async () => {
-		await userAPI.handleCart([], token)
-	}
-	const handlePayment = async () => {
-		if (methodPaid === '' || methodPaid === undefined)
-			return alert('Vui lòng chọn phương thức thanh toán')
-		if (cart.length === 0) return alert('Giỏ hàng bạn đang trống mà :((')
-		if (!user.address) {
-			return alert('Vui lòng cập nhật nơi ở của bạn')
-		}
-		try {
-			const result = await paymentAPI.create(
-				{ order: cart, user, total, quantity, method: methodPaid },
-				token
-			)
-			if (result.status === 'Success') {
-				setCart([])
-				emptyCart()
-				alert(result.message)
-			}
-		} catch (error) {
-			console.log(error)
-		}
-	}
+
+	if (checkout && methodPaid !== '')
+		return (
+			<Checkout
+				user={user}
+				order={cart}
+				method={methodPaid}
+				setCheckout={setCheckout}
+				total={total}
+			/>
+		)
 	return (
 		<div className="w-full max-w-screen-xl mx-auto px-2 lg:px-8 xl:p-0 lg:mt-2">
 			<Helmet>
@@ -97,7 +83,7 @@ const Cart = () => {
 						</Link>
 					</div>
 					<div className="col-span-12 sm:col-span-12 md:col-span-5 lg:col-span-4 2xl:col-span-4">
-						<div className="bg-white dark:bg-darkBgColor transition-all text-gray-700 dark:text-white py-4 px-4 border border-gray-200 shadow-md rounded-lg md:my-4">
+						<div className="bg-white dark:bg-darkBgColor transition-all text-gray-700 dark:text-white py-4 px-4 border border-gray-200 shadow-md rounded-lg my-4">
 							<div className="flex justify-between border-b-2 mb-2">
 								<div className="text-lg py-2">
 									<p>Tổng số lượng hàng</p>
@@ -131,14 +117,14 @@ const Cart = () => {
 								</div>
 							</div>
 						</div>
-						<div className="space-y-4 py-2 text-gray-700 dark:text-white transition-all border rounded-lg p-3 shadow-lg">
+						<div className="space-y-4 py-2 text-gray-700 dark:text-white transition-all border rounded-lg p-3 shadow-md">
 							<h2 className="text-lg pt-2">Phương thức thanh toán</h2>
 							<div className="flex flex-col space-y-3 ml-4 pb-3">
 								<div className="flex items-center justify-center space-x-4 w-full">
 									<input
 										type="radio"
-										name="method-pay"
 										id="momo"
+										checked={methodPaid === 'momo'}
 										className="appearance-none w-5 h-5 rounded-full border-2 outline-none checked:bg-blue-400"
 										onChange={(e) => setMethodPaid(e.target.id)}
 									/>
@@ -157,28 +143,8 @@ const Cart = () => {
 								<div className="flex items-center justify-center space-x-4 w-full">
 									<input
 										type="radio"
-										name="method-pay"
-										id="vnpay"
-										className="appearance-none w-5 h-5 rounded-full border-2 outline-none checked:bg-blue-400"
-										onChange={(e) => setMethodPaid(e.target.id)}
-									/>
-									<label
-										htmlFor="vnpay"
-										className="flex-1 flex items-center justify-between pr-6"
-									>
-										<span className="text-md">Thanh toán VnPay</span>
-										<img
-											src={VNPayIcon}
-											alt=""
-											className="w-10 h-10 rounded-lg shadow-lg object-cover"
-										/>
-									</label>
-								</div>
-								<div className="flex items-center justify-center space-x-4 w-full">
-									<input
-										type="radio"
-										name="method-pay"
 										id="cod"
+										checked={methodPaid === 'cod'}
 										className="appearance-none w-5 h-5 rounded-full border-2 outline-none checked:bg-blue-400"
 										onChange={(e) => setMethodPaid(e.target.id)}
 									/>
@@ -198,7 +164,7 @@ const Cart = () => {
 						</div>
 
 						<div
-							onClick={handlePayment}
+							onClick={() => setCheckout(true)}
 							className="bg-green-400 cursor-pointer py-4 border-2 border-green-400 text-center text-white hover:text-green-400 font-bold  px-4 rounded-lg my-4 hover:bg-white dark:hover:bg-black"
 						>
 							Tiến hành thanh toán
