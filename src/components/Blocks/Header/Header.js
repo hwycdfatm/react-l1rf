@@ -10,6 +10,8 @@ import useDarkMode from '../../../utils/useDarkMode.js'
 
 import Sidebar from './Sidebar'
 
+import { scrollToTop } from '../../../utils/ScrollToTopBtn'
+
 const Header = () => {
 	const { login, logout, cart, categories } = useContext(GlobalState)
 
@@ -33,7 +35,11 @@ const Header = () => {
 					login={login}
 					logout={logout}
 				/>
-				<Link to="/" className="font-bebas text-3xl font-semibold ">
+				<Link
+					to="/"
+					onClick={() => scrollToTop()}
+					className="font-bebas text-3xl font-semibold "
+				>
 					l1rf
 				</Link>
 
@@ -55,7 +61,6 @@ const Header = () => {
 					{login ? (
 						<div className="space-x-2 hidden md:flex relative">
 							<button
-								to="#"
 								ref={dropdownRef}
 								onClick={handleDropdown}
 								className="flex justify-center items-center h-10 px-2 font-semibold rounded-md "

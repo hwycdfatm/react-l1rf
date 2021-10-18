@@ -71,6 +71,7 @@ const Detail = () => {
 						) : (
 							<img
 								src={imageMain ? imageMain : NotFoundImage}
+								srcSet={imageMain ? imageMain : NotFoundImage}
 								alt=""
 								className="w-full h-full object-cover"
 							/>
@@ -118,6 +119,7 @@ const Detail = () => {
 									>
 										<img
 											src={item.url}
+											srcSet={item.url}
 											alt=""
 											className="object-cover w-full h-full"
 										/>
@@ -127,7 +129,7 @@ const Detail = () => {
 						</div>
 						<div className="flex items-center space-x-4 mt-6">
 							<span>Số lượng</span>
-							<div className="flex bg-gray-100 rounded items-center overflow-hidden">
+							<div className="flex bg-gray-100 dark:text-gray-800 rounded items-center overflow-hidden">
 								<button
 									onClick={() => setCount(count > 1 ? count - 1 : count)}
 									className="p-1 px-2 hover:bg-gray-200"

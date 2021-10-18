@@ -125,7 +125,7 @@ const SlideProducts = ({ newProducts, show }) => {
 				>
 					{newProducts.map((product) => (
 						<div
-							key={product._id}
+							key={product.slug}
 							className={`${
 								show > 1 ? `w-1/${show}` : 'w-full'
 							} flex flex-shrink-0 flex-grow px-2`}
@@ -136,7 +136,7 @@ const SlideProducts = ({ newProducts, show }) => {
 							>
 								<div className="sm:h-72 md:h-80 lg:h-96 w-full">
 									<img
-										src={product.images[0]?.url}
+										src={product.images?.url}
 										alt={product.title}
 										className="w-full h-full object-cover"
 									/>

@@ -1,11 +1,45 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
-
+import Search from '../../Search/Search'
+import productAPI from '../../../api/productAPI'
 export default function Sidebar(props) {
 	const { darkModeFuntion, colorTheme, categorys, login, logout } = props
 	// Show/ Hidden Sidebar
 	const [sideBar, setSideBar] = useState(false)
+
 	const handleSidebar = () => setSideBar(!sideBar)
+
+	const [searchValue, setSearchValue] = useState('')
+	const [resultSearchValue, setResultSearchValue] = useState([])
+	const typeingTimeoutRef = useRef(null)
+
+	const handleSubmitSearch = async (value) => {
+		if (value && value.trim() !== '') {
+			const params = {
+				q: value,
+			}
+			const result = await productAPI.getAll(params)
+			if (result.status === 'Success') {
+				setResultSearchValue(result.data)
+			}
+		} else {
+			setResultSearchValue([])
+			setSearchValue('')
+		}
+	}
+
+	const handleSearch = (e) => {
+		const value = e.target.value
+		setSearchValue(value)
+		if (value) {
+			if (typeingTimeoutRef.current) {
+				clearTimeout(typeingTimeoutRef.current)
+			}
+			typeingTimeoutRef.current = setTimeout(() => {
+				handleSubmitSearch(value.trim())
+			}, 300)
+		}
+	}
 
 	// Block scroll out page when open sidebar
 	sideBar
@@ -16,6 +50,11 @@ export default function Sidebar(props) {
 	const [dropdown, setDropdown] = useState(false)
 	const handleDropdown = () => setDropdown(!dropdown)
 
+	const closeSearch = () => {
+		setSearchValue('')
+		setResultSearchValue([])
+	}
+
 	return (
 		<div className="md:hidden z-10">
 			<div
@@ -25,7 +64,13 @@ export default function Sidebar(props) {
 			>
 				<div className="relative h-full bg-gray-50 dark:bg-darkHeaderColor overflow-y-scroll transition-all">
 					{/* X button */}
-					<button className="absolute top-6 left-6" onClick={handleSidebar}>
+					<button
+						className="absolute top-6 left-6"
+						onClick={() => {
+							handleSidebar()
+							closeSearch()
+						}}
+					>
 						<svg
 							className="w-6 h-6"
 							fill="none"
@@ -44,28 +89,55 @@ export default function Sidebar(props) {
 					{/* Content sidebar */}
 					<div className="flex flex-col w-4/5 mx-auto py-20 space-y-6">
 						{/* Search Input Field */}
-						<div className="flex justify-between items-center border-2 border-gray-300 rounded-md h-10">
+						<div className="flex justify-between items-center border-2 border-gray-300 rounded-md h-10 relative">
 							<input
+								value={searchValue}
+								onChange={handleSearch}
 								type="text"
 								className="flex-1 p-1 pl-2 text-base bg-transparent focus:outline-none focus:shadow-outline"
 							/>
 
-							<button className="px-2">
-								<svg
-									className="w-6 h-6"
-									fill="none"
-									stroke="currentColor"
-									viewBox="0 0 24 24"
-									xmlns="http://www.w3.org/2000/svg"
-								>
-									<path
-										strokeLinecap="round"
-										strokeLinejoin="round"
-										strokeWidth={2}
-										d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-									/>
-								</svg>
+							<button onClick={() => closeSearch()} className="px-2">
+								{searchValue ? (
+									<svg
+										className="w-6 h-6"
+										fill="none"
+										stroke="currentColor"
+										viewBox="0 0 24 24"
+										xmlns="http://www.w3.org/2000/svg"
+									>
+										<path
+											strokeLinecap="round"
+											strokeLinejoin="round"
+											strokeWidth={2}
+											d="M6 18L18 6M6 6l12 12"
+										/>
+									</svg>
+								) : (
+									<svg
+										className="w-6 h-6"
+										fill="none"
+										stroke="currentColor"
+										viewBox="0 0 24 24"
+										xmlns="http://www.w3.org/2000/svg"
+									>
+										<path
+											strokeLinecap="round"
+											strokeLinejoin="round"
+											strokeWidth={2}
+											d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+										/>
+									</svg>
+								)}
 							</button>
+
+							{searchValue && searchValue.trim() !== '' && (
+								<Search
+									value={resultSearchValue}
+									handleSidebar={handleSidebar}
+									closeSearch={closeSearch}
+								/>
+							)}
 						</div>
 						<div className="flex flex-col space-y-4">
 							<div className="flex flex-col rounded-md shadow-sm">

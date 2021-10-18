@@ -109,8 +109,12 @@ const User = () => {
 									<>
 										<span>Tên: {user.name}</span>
 										<span>Email: {user.email}</span>
-										<span>Địa chỉ: {user.address}</span>
-										<span>Số điện thoại: {user.phone}</span>
+										<span>
+											Địa chỉ: {user.address ? user.address : 'Chưa cập nhật'}
+										</span>
+										<span>
+											Số điện thoại: {user.phone ? user.phone : 'Chưa cập nhật'}
+										</span>
 									</>
 								)}
 							</div>

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
-import userAPI from '../../../api/userAPI'
-import paymentAPI from '../../../api/paymentAPI'
+// import userAPI from '../../../api/userAPI'
+// import paymentAPI from '../../../api/paymentAPI'
 
 import { GlobalState } from '../../../GlobalState'
 const Checkout = ({ user, order, method, total, setCheckout }) => {
@@ -95,7 +95,7 @@ const Checkout = ({ user, order, method, total, setCheckout }) => {
 								<div className="h-16 w-16 flex items-center justify-center mr-6 ">
 									<img
 										src={item.images[0].url}
-										alt=""
+										alt={token}
 										className="h-full object-contain rounded"
 									/>
 								</div>

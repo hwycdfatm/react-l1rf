@@ -1,29 +1,38 @@
-import React, { useEffect } from 'react'
-
+import React from 'react'
+import { useHistory } from 'react-router-dom'
+import { scrollToTop } from './ScrollToTopBtn'
 const Pagination = (props) => {
 	const page = []
 	const maxPage = props.totalPage
 	const currentPage = parseInt(props.currentPage)
-	const setCurrentPage = props.setCurrentPage
-
-	useEffect(() => {
-		setCurrentPage(1)
-	}, [props.slug, setCurrentPage])
+	const history = useHistory()
 
 	const nextPage = () => {
-		if (currentPage < maxPage) setCurrentPage(currentPage + 1)
+		if (currentPage < maxPage) {
+			scrollToTop()
+			history.push(`/category/${props.slug}?_page=${currentPage + 1}`)
+		}
 	}
 	const prePage = () => {
-		if (currentPage > 1) setCurrentPage(currentPage - 1)
+		if (currentPage > 1) {
+			scrollToTop()
+			history.push(`/category/${props.slug}?_page=${currentPage - 1}`)
+		}
 	}
 	for (let i = 1; i <= maxPage; i++) {
 		page.push(i)
 	}
 	return (
-		<div className="flex flex-col items-center my-12 justify-center">
+		<div className="flex flex-col items-center my-8 justify-center">
 			<div className="flex text-gray-500 space-x-6">
 				<div className="flex space-x-3">
-					<button onClick={() => setCurrentPage(1)} className="w-6 h-8 rounded">
+					<button
+						onClick={() => {
+							scrollToTop()
+							history.push(`/category/${props.slug}?_page=1`)
+						}}
+						className="w-6 h-8 rounded"
+					>
 						<svg
 							className="w-5 h-5"
 							fill="none"
@@ -61,7 +70,8 @@ const Pagination = (props) => {
 						<button
 							key={page}
 							onClick={() => {
-								setCurrentPage(page)
+								scrollToTop()
+								history.push(`/category/${props.slug}?_page=${page}`)
 							}}
 							className={`w-6 h-8 rounded text-center font-bold hover:bg-gray-300 ${
 								page === currentPage ? 'bg-blue-100' : ''
@@ -89,7 +99,10 @@ const Pagination = (props) => {
 						</svg>
 					</button>
 					<button
-						onClick={() => setCurrentPage(maxPage)}
+						onClick={() => {
+							scrollToTop()
+							history.push(`/category/${props.slug}?_page=${maxPage}`)
+						}}
 						className="w-6 h-8 rounded"
 					>
 						<svg
