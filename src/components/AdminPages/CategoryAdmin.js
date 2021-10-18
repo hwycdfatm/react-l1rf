@@ -14,6 +14,8 @@ const CategoryAdmin = () => {
 
 	const [filterCategory, setFilterCategory] = useState('Tất cả')
 
+	const [searchValue, setSearchValue] = useState('')
+
 	const onChangeInput = (e) => {
 		const { name, value } = e.target
 		setProduct({ ...product, [name]: value })
@@ -24,7 +26,7 @@ const CategoryAdmin = () => {
 			try {
 				const params = {
 					category: filterCategory !== 'Tất cả' ? filterCategory : '',
-
+					q: searchValue,
 					_limit: 1000, // tối đa bao nhiêu sản phẩm trong 1 trang
 				}
 				const result = await productAPI.getAll(params)
@@ -36,7 +38,7 @@ const CategoryAdmin = () => {
 			}
 		}
 		fetchProduct()
-	}, [filterCategory])
+	}, [filterCategory, searchValue])
 
 	useEffect(() => {
 		setVisible(false)
@@ -58,39 +60,24 @@ const CategoryAdmin = () => {
 	}
 
 	const dropdownRef = useRef(null)
+
 	const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false)
+
 	const handleDropdown = () => setIsActive(!isActive)
 
-	const [searchValue, setSearchValue] = useState('')
-
-	const [resultSearchValue, setResultSearchValue] = useState([])
 	const typeingTimeoutRef = useRef(null)
-
-	const handleSubmitSearch = async (value) => {
-		if (value !== ' ' && value) {
-			const params = {
-				q: value,
-				_limit: 10,
-			}
-			const result = await productAPI.getAll(params)
-			if (result.status === 'Success') {
-				setResultSearchValue(result.data)
-			}
-		} else {
-			setResultSearchValue([])
-		}
-	}
 
 	const handleSearch = (e) => {
 		const value = e.target.value
-		setSearchValue(value)
 		if (value) {
 			if (typeingTimeoutRef.current) {
 				clearTimeout(typeingTimeoutRef.current)
 			}
 			typeingTimeoutRef.current = setTimeout(() => {
-				handleSubmitSearch(value.trim())
+				setSearchValue(value)
 			}, 300)
+		} else {
+			setSearchValue('')
 		}
 	}
 
@@ -108,7 +95,6 @@ const CategoryAdmin = () => {
 				<div className="flex flex-col-reverse md:flex-row md:space-x-2 z-10">
 					<div className="flex w-56 relative">
 						<button
-							to="#"
 							ref={dropdownRef}
 							onClick={handleDropdown}
 							className="w-full mt-2 md:mt-0 flex items-center uppercase justify-between border h-9 px-2 text-sm font-bold rounded-md dark:text-white"
@@ -171,7 +157,6 @@ const CategoryAdmin = () => {
 								</svg>
 							</button>
 							<input
-								value={searchValue}
 								onChange={handleSearch}
 								placeholder="Tìm kiếm"
 								className="flex-1 p-1 text-sm bg-transparent focus:outline-none focus:shadow-outline"
@@ -180,89 +165,43 @@ const CategoryAdmin = () => {
 					</div>
 				</div>
 				<div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
-					{resultSearchValue.length > 1
-						? resultSearchValue.map((product, index) => (
-								<div
-									key={index}
-									title={product.title}
-									className="rounded-lg shadow-lg hover:shadow-xl transition duration-700 border overflow-hidden relative"
-								>
-									<input
-										type="checkbox"
-										className="w-4 h-4 absolute top-1 right-1"
-									/>
-									<div className="bg-white">
-										<img
-											src={product.images?.url}
-											alt={product.title}
-											className="w-full object-cover h-48"
-										/>
-										<div className="flex flex-col space-y-1 py-1 px-2">
-											<span className="text-sm font-medium text-gray-500 truncate">
-												{product.title}
-											</span>
-											<span className="text-xs font-medium text-gray-500">
-												{parseInt(product.price).toLocaleString('en')} vnđ
-											</span>
-											<div className="flex p-1 justify-center item-center space-x-3">
-												<button
-													onClick={() => handleShowFormEdit(product._id)}
-													className="bg-yellow-400 w-20 rounded-md font-medium text-white transform hover:-translate-y-1 transition-all"
-												>
-													Sửa
-												</button>
-												<button
-													onClick={() => handleDelete(product._id)}
-													className="bg-red-400 w-20 rounded-md font-medium text-white transform hover:-translate-y-1 transition-all"
-												>
-													Xóa
-												</button>
-											</div>
-										</div>
+					{productList.map((product, index) => (
+						<div
+							key={index}
+							title={product.title}
+							className="rounded-lg shadow-lg hover:shadow-xl transition duration-700 border overflow-hidden relative"
+						>
+							<div className="bg-white">
+								<img
+									src={product.images[0]?.url}
+									alt={product.title}
+									className="w-full object-cover h-48"
+								/>
+								<div className="flex flex-col space-y-1 py-1 px-2">
+									<span className="text-sm font-medium text-gray-500 truncate">
+										{product.title}
+									</span>
+									<span className="text-xs font-medium text-gray-500">
+										{parseInt(product.price).toLocaleString('en')} vnđ
+									</span>
+									<div className="flex p-1 justify-center item-center space-x-3">
+										<button
+											onClick={() => handleShowFormEdit(product._id)}
+											className="bg-yellow-400 w-20 rounded-md font-medium text-white transform hover:-translate-y-1 transition-all"
+										>
+											Sửa
+										</button>
+										<button
+											onClick={() => handleDelete(product._id)}
+											className="bg-red-400 w-20 rounded-md font-medium text-white transform hover:-translate-y-1 transition-all"
+										>
+											Xóa
+										</button>
 									</div>
 								</div>
-						  ))
-						: productList.map((product, index) => (
-								<div
-									key={index}
-									title={product.title}
-									className="rounded-lg shadow-lg hover:shadow-xl transition duration-700 border overflow-hidden relative"
-								>
-									<input
-										type="checkbox"
-										className="w-4 h-4 absolute top-1 right-1"
-									/>
-									<div className="bg-white">
-										<img
-											src={product.images?.url}
-											alt={product.title}
-											className="w-full object-cover h-48"
-										/>
-										<div className="flex flex-col space-y-1 py-1 px-2">
-											<span className="text-sm font-medium text-gray-500 truncate">
-												{product.title}
-											</span>
-											<span className="text-xs font-medium text-gray-500">
-												{parseInt(product.price).toLocaleString('en')} vnđ
-											</span>
-											<div className="flex p-1 justify-center item-center space-x-3">
-												<button
-													onClick={() => handleShowFormEdit(product._id)}
-													className="bg-yellow-400 w-20 rounded-md font-medium text-white transform hover:-translate-y-1 transition-all"
-												>
-													Sửa
-												</button>
-												<button
-													onClick={() => handleDelete(product._id)}
-													className="bg-red-400 w-20 rounded-md font-medium text-white transform hover:-translate-y-1 transition-all"
-												>
-													Xóa
-												</button>
-											</div>
-										</div>
-									</div>
-								</div>
-						  ))}
+							</div>
+						</div>
+					))}
 				</div>
 			</div>
 		</>

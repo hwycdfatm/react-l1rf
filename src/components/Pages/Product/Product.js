@@ -16,8 +16,8 @@ const Product = (props) => {
 			<div className="flex flex-col w-full bg-transparent dark:text-white h-full overflow-hidden transition-all">
 				<div className={`${grid ? '' : 'h-56'} xs:h-72`}>
 					<img
-						srcSet={image.url || NotFoundImage}
-						src={image.url || NotFoundImage}
+						srcSet={image[0].url || NotFoundImage}
+						src={image[0].url || NotFoundImage}
 						alt=""
 						className="w-full h-full object-cover"
 					/>

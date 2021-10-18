@@ -9,11 +9,7 @@ const categoriesAPI = {
 		const url = '/category'
 		return axiosAPI.post(url, data, { headers: { Authorization: token } })
 	},
-	update: (data, token, id) => {
-		const url = `/category/${id}`
-		return axiosAPI.put(url, data, { headers: { Authorization: token } })
-	},
-	delete: (token, id) => {
+	delete: (id, token) => {
 		const url = `/category/${id}`
 		return axiosAPI.delete(url, { headers: { Authorization: token } })
 	},

@@ -6,7 +6,7 @@ import productAPI from '../../../api/productAPI'
 import Pagination from '../../../utils/Pagination'
 import Product from '../Product/Product'
 import ProductsLoading from '../Product/ProductsLoading'
-import Error from '../Error/Error'
+
 import { Helmet } from 'react-helmet'
 
 import { useLocalStorage } from '../../../GlobalState'
@@ -20,7 +20,6 @@ const Category = () => {
 	const { slug } = useParams()
 	const [products, setProducts] = useState([])
 	const [load, setLoad] = useState(true)
-	const [fail, setFail] = useState(false)
 	const [totalPage, setTotalPage] = useState('')
 	const [grid, setGrid] = useLocalStorage('grid', false)
 
@@ -50,7 +49,6 @@ const Category = () => {
 				}
 			} catch (err) {
 				console.log(err)
-				if (err) return setFail(true)
 			}
 		}
 		fetchProduct()
@@ -74,8 +72,6 @@ const Category = () => {
 			text: 'Đắt nhất',
 		},
 	]
-
-	if (fail) return <Error />
 
 	return (
 		<section className="w-full px-4 xl:px-10 lg:pt-4 flex flex-col space-y-4">

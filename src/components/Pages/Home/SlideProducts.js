@@ -136,7 +136,7 @@ const SlideProducts = ({ newProducts, show }) => {
 							>
 								<div className="sm:h-72 md:h-80 lg:h-96 w-full">
 									<img
-										src={product.images?.url}
+										src={product.images[0]?.url}
 										alt={product.title}
 										className="w-full h-full object-cover"
 									/>
