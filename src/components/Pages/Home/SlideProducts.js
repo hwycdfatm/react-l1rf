@@ -73,7 +73,9 @@ const SlideProducts = ({ newProducts, show }) => {
 		<section className="px-2 h-screen lg:px-10 my-10">
 			{/* btn next & prev */}
 			<div className="flex justify-between items-center h-16">
-				<p className="text-xl font-maven">Các sản phẩm mới</p>
+				<p className="text-xl font-maven text-gray-800 dark:text-white">
+					Các sản phẩm mới
+				</p>
 				<div className="hidden md:flex space-x-5">
 					<button
 						onClick={prev}
@@ -142,7 +144,9 @@ const SlideProducts = ({ newProducts, show }) => {
 									/>
 								</div>
 								<div className="px-1 py-3 font-maven bg-transparent dark:text-white">
-									<p className="font-semibold text-lg">{product.title}</p>
+									<p className="font-semibold text-lg uppercase">
+										{product.title}
+									</p>
 									<span>{parseInt(product.price).toLocaleString('en')}vnđ</span>
 								</div>
 							</Link>

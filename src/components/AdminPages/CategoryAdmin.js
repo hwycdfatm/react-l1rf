@@ -12,7 +12,7 @@ const CategoryAdmin = () => {
 
 	const [visible, setVisible] = useState(false)
 
-	const [filterCategory, setFilterCategory] = useState('Tất cả')
+	const [filterCategory, setFilterCategory] = useState('tất cả')
 
 	const [searchValue, setSearchValue] = useState('')
 
@@ -20,12 +20,10 @@ const CategoryAdmin = () => {
 		const { name, value } = e.target
 		setProduct({ ...product, [name]: value })
 	}
-
 	useEffect(() => {
 		async function fetchProduct() {
 			try {
 				const params = {
-					category: filterCategory !== 'Tất cả' ? filterCategory : '',
 					q: searchValue,
 					_limit: 1000, // tối đa bao nhiêu sản phẩm trong 1 trang
 				}
@@ -37,8 +35,27 @@ const CategoryAdmin = () => {
 				console.log(err)
 			}
 		}
+
 		fetchProduct()
-	}, [filterCategory, searchValue])
+	}, [searchValue])
+
+	useEffect(() => {
+		async function fetchProduct() {
+			try {
+				const params = {
+					category: filterCategory !== 'tất cả' ? filterCategory : '',
+					_limit: 10000, // tối đa bao nhiêu sản phẩm trong 1 trang
+				}
+				const result = await productAPI.getAll(params)
+				if (result.status === 'Success') {
+					setProductList(result.data)
+				}
+			} catch (err) {
+				console.log(err)
+			}
+		}
+		fetchProduct()
+	}, [filterCategory])
 
 	useEffect(() => {
 		setVisible(false)
@@ -88,6 +105,7 @@ const CategoryAdmin = () => {
 					onChangeInput={onChangeInput}
 					product={product}
 					setProduct={setProduct}
+					visible={visible}
 					setVisible={setVisible}
 				/>
 			)}
@@ -120,7 +138,7 @@ const CategoryAdmin = () => {
 							<div className="absolute top-12 left-0 w-full rounded-md shadow-md bg-white dark:bg-gray-700 transform origin-top animation-down">
 								<div className="flex flex-col p-1 font-medium ">
 									<button
-										onClick={() => setFilterCategory('Tất cả')}
+										onClick={() => setFilterCategory('tất cả')}
 										className="text-left font-medium text-sm uppercase hover:bg-gray-300 rounded-md p-2"
 									>
 										Tất cả

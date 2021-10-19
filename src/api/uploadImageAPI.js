@@ -20,6 +20,17 @@ const uploadImageAPI = {
 			}
 		)
 	},
+
+	deleteArrayImage: (data, token) => {
+		const url = `/destroy-array/`
+		return axioxAPI.post(
+			url,
+			{ images: data },
+			{
+				headers: { Authorization: token },
+			}
+		)
+	},
 }
 
 export default uploadImageAPI

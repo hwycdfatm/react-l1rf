@@ -14,7 +14,7 @@ const SearchForm = (props) => {
 		>
 			<div className="h-16 w-14 flex items-center justify-center ml-2 mr-6 ">
 				<img
-					src={images?.url}
+					src={images[0]?.url}
 					alt=""
 					className="h-full object-contain rounded"
 				/>

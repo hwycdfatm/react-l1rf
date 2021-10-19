@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { CKEditor } from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import { GlobalState } from '../../GlobalState'
@@ -8,10 +8,20 @@ import CheckImages from '../../utils/CheckImages'
 
 const Form = (props) => {
 	// default Action is Add
-	const { onChangeInput, product, setProduct, setVisible } = props
+	const { onChangeInput, product, setProduct, setVisible, visible } = props
 
 	// Global state
 	const { admin, token, categories } = useContext(GlobalState)
+
+	const [arrayImageDelete, setArrayImageDelete] = useState([])
+
+	const [images, setImage] = useState([])
+
+	useEffect(() => {
+		setImage(product.images)
+		setArrayImageDelete([])
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
 
 	// Upload hình ảnh
 	const handleUploadImages = async (e) => {
@@ -24,23 +34,21 @@ const Form = (props) => {
 			if (files.length === 1) {
 				const check = CheckImages(files[0])
 				if (check) {
-					formData.append('file', files[0])
+					formData.append('images', files[0])
 				}
 			} else {
 				if (files.length > 4) return alert('Tối đa 4 ảnh thôi bạn !')
 				for (let file of files) {
 					const check = CheckImages(file)
 					if (check) {
-						formData.append('file', file)
+						formData.append('images', file)
 					}
 				}
 			}
 
 			const res = await uploadImageAPI.upload(formData, token)
-			setProduct({
-				...product,
-				images: [...product.images, ...res.images],
-			})
+
+			setImage((pre) => [...pre, ...res.images])
 		} catch (error) {
 			console.log(error)
 		}
@@ -49,36 +57,36 @@ const Form = (props) => {
 	// Handle Edit product
 	const handleEditProduct = async (e) => {
 		e.preventDefault()
+		product.images = images
 		try {
 			if (!admin) return alert('Mày không có quyền')
 			const check = await productAPI.update({ ...product }, product._id, token)
 
+			if (arrayImageDelete.length > 0) {
+				await uploadImageAPI.deleteArrayImage(arrayImageDelete, token)
+			}
 			if (check.status === 'Success') {
 				alert(check.message)
-				setVisible(false)
+				setVisible(!visible)
 			}
 		} catch (error) {
 			console.log(error)
 		}
 	}
 
-	// delete image
-	const handleDestroy = async (public_name) => {
+	const handleHiddenImage = (obj) => {
+		setImage((pre) => pre.filter((img) => img.public_name !== obj.public_name))
+		setArrayImageDelete([...arrayImageDelete, obj])
+	}
+
+	const handleCancelEdit = async () => {
 		try {
-			if (!admin) return alert('Mày không có quyền')
-
-			await uploadImageAPI.delete(public_name, token)
-
-			setProduct({
-				...product,
-				images: [
-					...product.images.filter(
-						(image) => image.public_name !== public_name
-					),
-				],
-			})
-		} catch (err) {
-			alert(err.message)
+			setVisible(!visible)
+			if (arrayImageDelete.length > 0 && images.length > 0) {
+				await uploadImageAPI.deleteArrayImage(images, token)
+			}
+		} catch (error) {
+			console.log(error)
 		}
 	}
 
@@ -89,15 +97,15 @@ const Form = (props) => {
 			<form onSubmit={handleEditProduct} className="p-3">
 				<div className="flex flex-col p-1 w-full max-w-screen-lg mx-auto md:flex-row md:space-x-4">
 					<div className="h-96 md:h-542px md:w-1/2 shadow appearance-none border rounded w-full text-gray-700 leading-tight overflow-hidden flex items-center justify-center focus:outline-none focus:shadow-outline relative">
-						{product.images && product.images[0] ? (
+						{images && images[0] ? (
 							<>
 								<img
-									src={product.images[0].url}
+									src={images[0].url}
 									alt=""
 									className="h-full object-cover"
 								/>
 								<div
-									onClick={() => handleDestroy(product.images[0].public_name)}
+									onClick={() => handleHiddenImage(images[0])}
 									className="absolute top-1 right-1 text-red-300 cursor-pointer"
 								>
 									<svg
@@ -202,7 +210,7 @@ const Form = (props) => {
 								Các ảnh khác (tối đa 4 ảnh / vui lòng chọn ảnh lớn trước)
 							</h1>
 							<div className="flex md:justify-start justify-center items-center space-x-2">
-								{product.images.length < 2 ? (
+								{images.length < 2 ? (
 									<label
 										htmlFor="imagess"
 										className="w-20 h-20 rounded bg-gray-100 shadow flex items-center justify-center"
@@ -223,10 +231,10 @@ const Form = (props) => {
 										</svg>
 									</label>
 								) : (
-									product.images.map((image, index) => (
+									images.map((image) => (
 										<div
 											className="w-20 h-20 rounded bg-gray-100 shadow flex items-center justify-center overflow-hidden relative"
-											key={index}
+											key={image.public_name}
 										>
 											<img
 												className="h-full object-cover"
@@ -234,7 +242,7 @@ const Form = (props) => {
 												alt=""
 											/>
 											<div
-												onClick={() => handleDestroy(image.public_name)}
+												onClick={() => handleHiddenImage(image)}
 												className="absolute top-1 right-1 text-red-300 cursor-pointer"
 											>
 												<svg
@@ -310,7 +318,7 @@ const Form = (props) => {
 							</button>
 							<button
 								type="button"
-								onClick={() => setVisible(false)}
+								onClick={() => handleCancelEdit()}
 								className="w-full px-2 py-2 text-white bg-red-400 rounded font-medium xl:px-4"
 							>
 								Hủy

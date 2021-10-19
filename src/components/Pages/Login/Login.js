@@ -117,7 +117,7 @@ const Login = () => {
 					<div className="flex flex-col space-y-4">
 						{inputs.map((e, i) => (
 							<div key={i}>
-								<div className="flex items-center h-10 rounded-md border border-gray-100 overflow-hidden">
+								<div className="flex items-center h-10 rounded-md border border-gray-200 overflow-hidden">
 									<label htmlFor={e.name} className="p-1 ml-1">
 										<svg
 											className="w-6 h-6"

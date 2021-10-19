@@ -11,13 +11,7 @@ import categoryPNG from '../../images/categoryicon.png'
 import SlideShowPNG from '../../images/slideshow.png'
 const SidebarAdmin = (props) => {
 	const { logout } = useContext(GlobalState)
-	const { handleSidebar, open, setOpen } = props.option
-	open
-		? document.body.classList.add('overflow-hidden')
-		: document.body.classList.remove('overflow-hidden')
-	window.addEventListener('resize', function () {
-		setOpen(false)
-	})
+	const { handleSidebar, open } = props.option
 
 	const [openTrash, setOpenTrash] = useState(true)
 
