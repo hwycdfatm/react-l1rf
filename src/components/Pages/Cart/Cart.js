@@ -2,13 +2,13 @@ import React, { useContext, useEffect, useState } from 'react'
 import CartItem from './CartItem'
 import { GlobalState } from '../../../GlobalState'
 import { Link } from 'react-router-dom'
-import MoMoIcon from '../../../images/momoicon.png'
+import PayPalIcon from '../../../images/paypalicon.png'
 import CodIcon from '../../../images/codicon.png'
 import { Helmet } from 'react-helmet'
 import Checkout from './Checkout'
 
 const Cart = () => {
-	const { cart, removeProduct, user } = useContext(GlobalState)
+	const { cart, removeProduct } = useContext(GlobalState)
 	const [tempTotal, setTempTotal] = useState(0)
 	const ship = 50000
 	const total = tempTotal + ship
@@ -33,16 +33,22 @@ const Cart = () => {
 		getTotal()
 	}, [cart])
 
+	const handleCheckOut = () => {
+		if (methodPaid === '' || cart.length === 0) return
+		setCheckout(true)
+	}
+
 	if (checkout && methodPaid !== '')
 		return (
 			<Checkout
-				user={user}
 				order={cart}
 				method={methodPaid}
 				setCheckout={setCheckout}
+				quantity={quantity}
 				total={total}
 			/>
 		)
+
 	return (
 		<div className="w-full max-w-screen-xl mx-auto px-2 lg:px-8 xl:p-0 lg:mt-2">
 			<Helmet>
@@ -60,8 +66,8 @@ const Cart = () => {
 								/>
 							))
 						) : (
-							<div className="flex justify-center items-center h-32 py-4 text-gray-700 dark:text-white">
-								Bạn ơi giỏ hàng đang trống, bạn hãy mua đồ nhé !! 🤔
+							<div className="flex justify-center text-center items-center h-32 py-4 text-gray-700 dark:text-white">
+								Bạn ơi giỏ hàng đang trống bạn hãy mua đồ nhé !! 🤔
 							</div>
 						)}
 						<Link to={'/'} className="flex text-gray-700 dark:text-white">
@@ -123,18 +129,18 @@ const Cart = () => {
 								<div className="flex items-center justify-center space-x-4 w-full">
 									<input
 										type="radio"
-										id="momo"
-										checked={methodPaid === 'momo'}
+										id="paypal"
+										checked={methodPaid === 'paypal'}
 										className="appearance-none w-5 h-5 rounded-full border-2 outline-none checked:bg-blue-400"
 										onChange={(e) => setMethodPaid(e.target.id)}
 									/>
 									<label
-										htmlFor="momo"
+										htmlFor="paypal"
 										className="flex-1 flex items-center justify-between pr-6"
 									>
-										<span className="text-md">Thanh toán Momo</span>
+										<span className="text-md">Thanh toán Paypal</span>
 										<img
-											src={MoMoIcon}
+											src={PayPalIcon}
 											alt=""
 											className="w-10 h-10 rounded-lg shadow-lg object-cover"
 										/>
@@ -164,7 +170,7 @@ const Cart = () => {
 						</div>
 
 						<div
-							onClick={() => setCheckout(true)}
+							onClick={handleCheckOut}
 							className="bg-green-400 cursor-pointer py-4 border-2 border-green-400 text-center text-white hover:text-green-400 font-bold  px-4 rounded-lg my-4 hover:bg-white dark:hover:bg-black"
 						>
 							Tiến hành thanh toán

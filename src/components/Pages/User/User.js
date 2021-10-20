@@ -6,6 +6,9 @@ import PaymentContainer from './PaymentContainer'
 import userAPI from '../../../api/userAPI'
 import { Helmet } from 'react-helmet'
 import { Link } from 'react-router-dom'
+
+import Modal from '../../../utils/Modal/Modal'
+import useModal from '../../../utils/Modal/useModal'
 const User = () => {
 	const { user, token, refreshToken, getUser } = useContext(GlobalState)
 	const [paymentList, setPaymentList] = useState([])
@@ -18,6 +21,7 @@ const User = () => {
 		address: user.address,
 		phone: user.phone,
 	})
+	const { isShowing, toggle } = useModal()
 
 	useEffect(() => {
 		const fetchPayment = async () => {
@@ -38,11 +42,14 @@ const User = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [token])
 
+	const [text, setText] = useState('')
+
 	const handleUpdateProfile = async () => {
 		try {
 			const result = await userAPI.updateProfile({ data: userTemp, token })
 			if (result.status === 'Success') {
-				alert(result.message)
+				setText(result.message)
+				toggle()
 				getUser()
 				setUpdateProfile(false)
 			}
@@ -52,6 +59,7 @@ const User = () => {
 	}
 	return (
 		<div className="w-full max-w-screen-xl mx-auto bg-transparent transition duration-500 flex flex-col p-1 xl:p-0 xl:pb-2 space-y-5">
+			<Modal isShowing={isShowing} hide={toggle} text={text} type="ok" />
 			<Helmet>
 				<title>Trang cá nhân của {userTemp.name}</title>
 			</Helmet>

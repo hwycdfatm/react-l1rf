@@ -1,37 +1,30 @@
 import React, { useContext } from 'react'
-// import userAPI from '../../../api/userAPI'
-// import paymentAPI from '../../../api/paymentAPI'
+import paymentAPI from '../../../api/paymentAPI'
 
 import { GlobalState } from '../../../GlobalState'
-const Checkout = ({ user, order, method, total, setCheckout }) => {
-	const { token } = useContext(GlobalState)
+const Checkout = ({ order, method, total, setCheckout, quantity }) => {
+	const { token, setCart, user } = useContext(GlobalState)
 
 	const { name, email, phone, address } = user
 
-	// const emptyCart = async () => {
-	// 	await userAPI.handleCart([], token)
-	// }
-	// const handlePayment = async () => {
-	// 	if (methodPaid === '' || methodPaid === undefined)
-	// 		return alert('Vui lòng chọn phương thức thanh toán')
-	// 	if (cart.length === 0) return alert('Giỏ hàng bạn đang trống mà :((')
-	// 	if (!user.address) {
-	// 		return alert('Vui lòng cập nhật nơi ở của bạn')
-	// 	}
-	// 	try {
-	// 		const result = await paymentAPI.create(
-	// 			{ order: cart, user, total, quantity, method: methodPaid },
-	// 			token
-	// 		)
-	// 		if (result.status === 'Success') {
-	// 			setCart([])
-	// 			emptyCart()
-	// 			alert(result.message)
-	// 		}
-	// 	} catch (error) {
-	// 		console.log(error)
-	// 	}
-	// }
+	const handlePayment = async () => {
+		if (method === '' || method === undefined)
+			return alert('Vui lòng chọn phương thức thanh toán')
+
+		try {
+			const result = await paymentAPI.create(
+				{ order, total, quantity, method, user },
+				token
+			)
+			if (result.status === 'Success') {
+				setCart([])
+
+				alert(result.message)
+			}
+		} catch (error) {
+			console.log(error)
+		}
+	}
 
 	return (
 		<div className="flex flex-col w-full max-w-5xl mx-auto pt-4 pb-8">
@@ -85,7 +78,7 @@ const Checkout = ({ user, order, method, total, setCheckout }) => {
 			</div>
 			<div className="flex flex-col space-y-6 mx-6 my-4">
 				<div className="rounded-lg border shadow-lg p-5 w-full bg-white">
-					Các sản phẩm: (10)
+					Các sản phẩm: ({quantity})
 					{order &&
 						order.map((item) => (
 							<div
@@ -114,7 +107,10 @@ const Checkout = ({ user, order, method, total, setCheckout }) => {
 				</div>
 			</div>
 			<div className="mx-6 my-4">
-				<button className="bg-green-300 p-3 rounded-lg w-full shadow-lg border-2 border-transparent hover:border-green-300 hover:bg-white text-white hover:text-green-400 transition-all font-semibold  outline-none focus:outline-none focus:shadow-outline">
+				<button
+					onClick={() => handlePayment()}
+					className="bg-green-300 p-3 rounded-lg w-full shadow-lg border-2 border-transparent hover:border-green-300 hover:bg-white text-white hover:text-green-400 transition-all font-semibold  outline-none focus:outline-none focus:shadow-outline"
+				>
 					THANH TOÁN
 				</button>
 			</div>

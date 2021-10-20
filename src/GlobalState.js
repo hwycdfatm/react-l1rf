@@ -3,8 +3,6 @@ import React, { createContext, useEffect, useState } from 'react'
 import userAPI from './api/userAPI'
 import categoriesAPI from './api/categoryAPI'
 
-import 'react-toastify/dist/ReactToastify.css'
-
 export const GlobalState = createContext()
 
 export function useLocalStorage(key, initialValue) {
@@ -59,6 +57,9 @@ export const DataProvider = ({ children }) => {
 				refreshToken()
 			}, 10 * 60 * 1000)
 		} catch (error) {
+			setLogin(false)
+			setAdmin(false)
+			setCart([])
 			alert(error.message)
 		}
 	}
@@ -83,7 +84,7 @@ export const DataProvider = ({ children }) => {
 				setCart([...result.user.cart])
 			}
 		} catch (error) {
-			alert(error.message)
+			console.log(error.message)
 		}
 	}
 	useEffect(() => {
@@ -120,7 +121,7 @@ export const DataProvider = ({ children }) => {
 
 	const addToCart = async (product) => {
 		try {
-			if (!login) return alert('Vui lòng đăng nhập')
+			if (!login) return false
 			const check = cart.every((item) => item._id !== product._id)
 			if (!check) {
 				// Cập nhật số lượng sản phẩm
@@ -146,10 +147,8 @@ export const DataProvider = ({ children }) => {
 	}
 
 	const removeProduct = async (id) => {
-		if (window.confirm('Bạn không muốn mua sản phẩm này sao bạn yêu?')) {
-			setCart([...cart.filter((e) => e._id !== id)])
-			await userAPI.handleCart([...cart.filter((e) => e._id !== id)], token)
-		}
+		setCart([...cart.filter((e) => e._id !== id)])
+		await userAPI.handleCart([...cart.filter((e) => e._id !== id)], token)
 	}
 
 	return (

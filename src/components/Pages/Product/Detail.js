@@ -7,6 +7,9 @@ import productAPI from '../../../api/productAPI'
 import '../../../css/unreset.css'
 import { Helmet } from 'react-helmet'
 import Skeleton from 'react-loading-skeleton'
+
+import Modal from '../../../utils/Modal/Modal'
+import useModal from '../../../utils/Modal/useModal'
 const Detail = () => {
 	const { addToCart } = useContext(GlobalState)
 	const [count, setCount] = useState(1)
@@ -16,6 +19,8 @@ const Detail = () => {
 	const [product, setProduct] = useState([])
 
 	const [awaitAdd, setAwaitAdd] = useState(false)
+
+	const { isShowing, toggle } = useModal()
 
 	const images = product.images || []
 	// Image
@@ -41,12 +46,22 @@ const Detail = () => {
 		fetchProduct()
 	}, [slug])
 
-	const addToCartBtn = () => {
+	useEffect(() => {
+		isShowing
+			? (document.body.style.overflow = 'hidden')
+			: (document.body.style.overflow = 'scroll')
+	}, [isShowing])
+
+	const addToCartBtn = async () => {
 		product.quantity = count
-		const check = addToCart(product)
-		if (check) setAwaitAdd(true)
-		const timeOut = setTimeout(() => setAwaitAdd(false), 1500)
-		return () => clearTimeout(timeOut)
+		const check = await addToCart(product)
+		if (check) {
+			setAwaitAdd(true)
+			const timeOut = setTimeout(() => setAwaitAdd(false), 900)
+			return () => clearTimeout(timeOut)
+		} else {
+			toggle()
+		}
 	}
 	if (fail) return <Error />
 	return (
@@ -177,21 +192,19 @@ const Detail = () => {
 										awaitAdd
 											? 'w-10 h-10 text-green-400 bg-gray-100 rounded-full'
 											: 'h-10 w-44 text-gray-900 bg-gray-100 rounded'
-									} flex items-center justify-center  font-semibold hover:bg-gray-400 transition-all border border-gray-200`}
+									} flex items-center justify-center  font-semibold hover:border-gray-300 transition-all overflow-hidden border border-gray-200`}
 								>
 									{awaitAdd ? (
 										<svg
 											className="w-6 h-6"
-											fill="none"
-											stroke="currentColor"
-											viewBox="0 0 24 24"
+											fill="currentColor"
+											viewBox="0 0 20 20"
 											xmlns="http://www.w3.org/2000/svg"
 										>
 											<path
-												strokeLinecap="round"
-												strokeLinejoin="round"
-												strokeWidth={2}
-												d="M5 13l4 4L19 7"
+												fillRule="evenodd"
+												d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+												clipRule="evenodd"
 											/>
 										</svg>
 									) : (
@@ -213,6 +226,12 @@ const Detail = () => {
 						dangerouslySetInnerHTML={{ __html: product.content }}
 					/>
 				)}
+				<Modal
+					isShowing={isShowing}
+					hide={toggle}
+					text="Vui lòng đăng nhập"
+					type="alert"
+				/>
 			</div>
 		</section>
 	)

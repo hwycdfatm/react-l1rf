@@ -91,3 +91,16 @@ input[type='number']::-webkit-outer-spin-button {
 		transform: scaleY(1);
 	}
 }
+
+.animation-opacity {
+	animation: animation-opacity 0.3s;
+}
+
+@keyframes animation-opacity {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}

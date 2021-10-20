@@ -1,12 +1,8 @@
 import axiosAPI from './axiosAPI'
 const paymentApi = {
-	create: ({ order, user, total, quantity, method }, token) => {
+	create: (data, token) => {
 		const url = '/payment'
-		return axiosAPI.post(
-			url,
-			{ order, user, total, quantity, method },
-			{ headers: { Authorization: token } }
-		)
+		return axiosAPI.post(url, data, { headers: { Authorization: token } })
 	},
 
 	getForUser: ({ token }) => {
