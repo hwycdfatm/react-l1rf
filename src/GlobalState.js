@@ -3,7 +3,6 @@ import React, { createContext, useEffect, useState } from 'react'
 import userAPI from './api/userAPI'
 import categoriesAPI from './api/categoryAPI'
 
-import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 export const GlobalState = createContext()
@@ -139,7 +138,7 @@ export const DataProvider = ({ children }) => {
 			// Add to cart
 			const result = await userAPI.handleCart(cart, token)
 			if (result.status === 'Success') {
-				toast(result.message, { type: 'success' })
+				return true
 			}
 		} catch (error) {
 			console.log(error)

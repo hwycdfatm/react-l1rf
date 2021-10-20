@@ -15,6 +15,8 @@ const Detail = () => {
 	const { slug } = useParams()
 	const [product, setProduct] = useState([])
 
+	const [awaitAdd, setAwaitAdd] = useState(false)
+
 	const images = product.images || []
 	// Image
 	const [imageMain, setImageMain] = useState('')
@@ -38,6 +40,14 @@ const Detail = () => {
 		}
 		fetchProduct()
 	}, [slug])
+
+	const addToCartBtn = () => {
+		product.quantity = count
+		const check = addToCart(product)
+		if (check) setAwaitAdd(true)
+		const timeOut = setTimeout(() => setAwaitAdd(false), 1500)
+		return () => clearTimeout(timeOut)
+	}
 	if (fail) return <Error />
 	return (
 		<section className="bg-transparent transition duration-700 dark:text-white py-2">
@@ -69,12 +79,14 @@ const Detail = () => {
 								<Skeleton height="100%" />
 							</div>
 						) : (
-							<img
-								src={imageMain ? imageMain : NotFoundImage}
-								srcSet={imageMain ? imageMain : NotFoundImage}
-								alt=""
-								className="w-full h-full object-cover"
-							/>
+							<div className="w-full h-96 xs:h-542px">
+								<img
+									src={imageMain ? imageMain : NotFoundImage}
+									srcSet={imageMain ? imageMain : NotFoundImage}
+									alt=""
+									className="w-full h-full object-cover"
+								/>
+							</div>
 						)}
 					</div>
 					<div className="flex flex-col w-full md:w-6/12 md:pl-4 font-maven">
@@ -155,16 +167,38 @@ const Detail = () => {
 							</div>
 						</div>
 
-						<div className="flex text-base mt-4">
-							<button
-								onClick={() => {
-									product.quantity = count
-									addToCart(product)
-								}}
-								className="px-4 py-2 text-gray-900 bg-gray-100 rounded font-semibold hover:bg-gray-400 transition-all border border-gray-200"
-							>
-								Thêm vào giỏ hàng
-							</button>
+						<div className="flex mt-4">
+							<div className="flex justify-center w-44">
+								<button
+									onClick={() => {
+										!awaitAdd && addToCartBtn()
+									}}
+									className={`${
+										awaitAdd
+											? 'w-10 h-10 text-green-400 bg-gray-100 rounded-full'
+											: 'h-10 w-44 text-gray-900 bg-gray-100 rounded'
+									} flex items-center justify-center  font-semibold hover:bg-gray-400 transition-all border border-gray-200`}
+								>
+									{awaitAdd ? (
+										<svg
+											className="w-6 h-6"
+											fill="none"
+											stroke="currentColor"
+											viewBox="0 0 24 24"
+											xmlns="http://www.w3.org/2000/svg"
+										>
+											<path
+												strokeLinecap="round"
+												strokeLinejoin="round"
+												strokeWidth={2}
+												d="M5 13l4 4L19 7"
+											/>
+										</svg>
+									) : (
+										'Thêm vào giỏ hàng'
+									)}
+								</button>
+							</div>
 						</div>
 					</div>
 				</div>

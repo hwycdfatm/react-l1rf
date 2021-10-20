@@ -174,7 +174,7 @@ const DashBoard = () => {
 			</section>
 			<section className="flex p-3 lg:p-5 flex-wrap">
 				<div className="w-full px-3 lg:w-8/12">
-					<div className="flex items-center px-5 py-6 shadow-lg border rounded-lg bg-white">
+					<div className="flex flex-col px-5 py-6 shadow-lg border rounded-lg bg-white">
 						<Line data={data} />
 					</div>
 				</div>

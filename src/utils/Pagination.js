@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { scrollToTop } from './ScrollToTopBtn'
 const Pagination = (props) => {
@@ -19,19 +19,48 @@ const Pagination = (props) => {
 			history.push(`/category/${props.slug}?_page=${currentPage - 1}`)
 		}
 	}
+
+	const firstPage = () => {
+		if (currentPage === 1) return
+		scrollToTop()
+		history.push(`/category/${props.slug}`)
+	}
+
+	const lastPage = () => {
+		if (currentPage === maxPage) return
+		scrollToTop()
+		history.push(`/category/${props.slug}?_page=${maxPage}`)
+	}
+
 	for (let i = 1; i <= maxPage; i++) {
 		page.push(i)
 	}
+	const [pageShow, setPageShow] = useState([])
+
+	useEffect(() => {
+		if (currentPage === 1) {
+			setPageShow(page.slice(0, 5))
+		} else if (currentPage > 2) {
+			if (currentPage === maxPage - 1) {
+				setPageShow(page.slice(currentPage - 4, currentPage + 2))
+			} else if (currentPage === maxPage) {
+				setPageShow(page.slice(currentPage - 5, currentPage + 2))
+			} else {
+				setPageShow(page.slice(currentPage - 3, currentPage + 2))
+			}
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [currentPage])
+
 	return (
 		<div className="flex flex-col items-center my-8 justify-center">
 			<div className="flex text-gray-500 space-x-6">
 				<div className="flex space-x-3">
 					<button
-						onClick={() => {
-							scrollToTop()
-							history.push(`/category/${props.slug}?_page=1`)
-						}}
-						className="w-6 h-8 rounded"
+						onClick={() => firstPage()}
+						className={`w-6 h-8 rounded ${
+							currentPage === 1 ? 'text-gray-300' : 'text-gray-800'
+						}`}
 					>
 						<svg
 							className="w-5 h-5"
@@ -48,7 +77,12 @@ const Pagination = (props) => {
 							/>
 						</svg>
 					</button>
-					<button onClick={prePage} className="w-6 h-8 rounded">
+					<button
+						onClick={prePage}
+						className={`w-6 h-8 rounded ${
+							currentPage === 1 ? 'text-gray-300' : 'text-gray-800'
+						}`}
+					>
 						<svg
 							className="w-5 h-5"
 							fill="none"
@@ -66,15 +100,15 @@ const Pagination = (props) => {
 					</button>
 				</div>
 				<div className="flex space-x-2 mx-2">
-					{page.map((page) => (
+					{pageShow.map((page) => (
 						<button
 							key={page}
 							onClick={() => {
 								scrollToTop()
 								history.push(`/category/${props.slug}?_page=${page}`)
 							}}
-							className={`w-6 h-8 rounded text-center font-bold hover:bg-gray-300 ${
-								page === currentPage ? 'bg-blue-100' : ''
+							className={`w-6 h-8 rounded text-center font-bold bg-opacity-70 hover:bg-green-100 ${
+								page === currentPage ? 'bg-green-300' : ''
 							}`}
 						>
 							{page}
@@ -82,7 +116,12 @@ const Pagination = (props) => {
 					))}
 				</div>
 				<div className="flex space-x-3">
-					<button onClick={nextPage} className="w-6 h-8 rounded">
+					<button
+						onClick={nextPage}
+						className={`w-6 h-8 rounded ${
+							currentPage === page.length ? 'text-gray-300' : 'text-gray-800'
+						}`}
+					>
 						<svg
 							className="w-5 h-5"
 							fill="none"
@@ -99,11 +138,10 @@ const Pagination = (props) => {
 						</svg>
 					</button>
 					<button
-						onClick={() => {
-							scrollToTop()
-							history.push(`/category/${props.slug}?_page=${maxPage}`)
-						}}
-						className="w-6 h-8 rounded"
+						onClick={() => lastPage()}
+						className={`w-6 h-8 rounded ${
+							currentPage === page.length ? 'text-gray-300' : 'text-gray-800'
+						}`}
 					>
 						<svg
 							className="w-5 h-5"
