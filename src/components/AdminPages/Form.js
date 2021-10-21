@@ -6,6 +6,7 @@ import uploadImageAPI from '../../api/uploadImageAPI'
 import productAPI from '../../api/productAPI'
 import CheckImages from '../../utils/CheckImages'
 
+import { toast } from 'react-toastify'
 const Form = (props) => {
 	// default Action is Add
 	const { onChangeInput, product, setProduct, setVisible, visible } = props
@@ -66,8 +67,9 @@ const Form = (props) => {
 				await uploadImageAPI.deleteArrayImage(arrayImageDelete, token)
 			}
 			if (check.status === 'Success') {
-				alert(check.message)
+				toast(check.message, { type: 'success', position: 'top-center' })
 				setVisible(!visible)
+				props.fetchProduct()
 			}
 		} catch (error) {
 			console.log(error)

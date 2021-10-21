@@ -3,8 +3,11 @@ import productAPI from '../../../api/productAPI'
 import SlideProducts from './SlideProducts'
 import SlideShow from './SlideShow'
 import { Helmet } from 'react-helmet'
+import sliderAPI from '../../../api/sliderAPI'
+
 const Home = () => {
 	const [newProducts, setNewProducts] = useState([])
+
 	useEffect(() => {
 		const fetchNewProducts = async () => {
 			try {
@@ -22,6 +25,17 @@ const Home = () => {
 		fetchNewProducts()
 	}, [])
 
+	const [sliderData, setSliderData] = useState([])
+	useEffect(() => {
+		const fetchSlide = async () => {
+			const result = await sliderAPI.get()
+			setSliderData([
+				...result.sliders.filter((slide) => slide.activate === true),
+			])
+		}
+		fetchSlide()
+	}, [])
+
 	const [windowSize, setWindowSize] = useState(window.innerWidth)
 
 	useEffect(() => {
@@ -37,13 +51,13 @@ const Home = () => {
 			<Helmet>
 				<title>l1rf shop</title>
 			</Helmet>
-			{/* slide show */}
-			<SlideShow />
+			<section className="h-screen -mt-16 pt-16">
+				{/* slide show */}
+				<SlideShow sliderData={sliderData} button={true} dots={true} />
+			</section>
 			{/* Banner hello */}
-			<section
-				style={{ clipPath: 'polygon(0 40%, 100% 0, 100% 60%, 0% 100%)' }}
-				className="flex flex-col h-screen md:h-70v items-center justify-center bg-green-300 dark:bg-green-600 my-10"
-			>
+
+			<section className="flex flex-col h-32 md:h-56 items-center justify-center bg-green-300 dark:bg-green-600 ">
 				<div className="text-white font-maven font-black">
 					<p className="text-center mb-3 text-lg lg:text-5xl">Xin chào</p>
 					<span className="lg:text-xl">Chào mừng bạn đến với l1rf store</span>

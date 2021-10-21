@@ -114,7 +114,7 @@ const Category = () => {
 						</div>
 					</div>
 					{dropdown && (
-						<div className="absolute top-full bg-white dark:bg-darkBgColor dark:text-white z-20 mt-1 border w-full">
+						<div className="absolute top-full bg-white dark:bg-darkBgColor dark:text-white z-20 mt-1 border w-full animation-down transform origin-top">
 							{dataSort.map(
 								(data) =>
 									data.sortBy !== sort && (

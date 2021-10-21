@@ -53,6 +53,7 @@ const Detail = () => {
 	}, [isShowing])
 
 	const addToCartBtn = async () => {
+		if (product.inStock === 0) return
 		product.quantity = count
 		const check = await addToCart(product)
 		if (check) {
@@ -208,7 +209,9 @@ const Detail = () => {
 											/>
 										</svg>
 									) : (
-										'Thêm vào giỏ hàng'
+										<span className="flex-shrink-0 flex-grow">
+											{product.inStock > 0 ? 'Thêm vào giỏ hàng' : 'Hết hàng'}
+										</span>
 									)}
 								</button>
 							</div>

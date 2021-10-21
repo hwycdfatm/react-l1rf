@@ -1,11 +1,28 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import paymentAPI from '../../../api/paymentAPI'
-
+import PaypalBtn from './PaypalBtn'
 import { GlobalState } from '../../../GlobalState'
+import axios from 'axios'
 const Checkout = ({ order, method, total, setCheckout, quantity }) => {
 	const { token, setCart, user } = useContext(GlobalState)
 
 	const { name, email, phone, address } = user
+
+	const [totalPaypal, setTotalPaypal] = useState(0)
+	const [show, setShow] = useState(false)
+
+	useEffect(() => {
+		const getCurrencyConverter = async () => {
+			const result = await axios.get(
+				'https://free.currconv.com/api/v7/convert?q=VND_USD&compact=ultra&apiKey=ab40abe35a686c41d81c'
+			)
+			setTotalPaypal(Math.floor(result.data.VND_USD * total))
+			setShow(true)
+		}
+		method === 'paypal' && getCurrencyConverter()
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [total])
 
 	const handlePayment = async () => {
 		if (method === '' || method === undefined)
@@ -26,6 +43,23 @@ const Checkout = ({ order, method, total, setCheckout, quantity }) => {
 		}
 	}
 
+	const tranSuccess = async () => {
+		try {
+			const result = await paymentAPI.create(
+				{ order, total, quantity, method, user },
+				token
+			)
+			if (result.status === 'Success') {
+				setCart([])
+
+				alert(result.message)
+
+				setCheckout(2)
+			}
+		} catch (error) {
+			console.log(error)
+		}
+	}
 	return (
 		<div className="flex flex-col w-full max-w-5xl mx-auto pt-4 pb-8">
 			<div className="mx-6 my-2 flex justify-between">
@@ -72,6 +106,11 @@ const Checkout = ({ order, method, total, setCheckout, quantity }) => {
 							<p className="text-3xl ml-3">
 								{parseInt(total).toLocaleString('en')} vnđ
 							</p>
+							{method === 'paypal' && (
+								<p className="text-gray-500 ml-3 text-sm">
+									({parseInt(totalPaypal).toLocaleString('en')} USD )
+								</p>
+							)}
 						</div>
 					</div>
 				</div>
@@ -106,13 +145,25 @@ const Checkout = ({ order, method, total, setCheckout, quantity }) => {
 						))}
 				</div>
 			</div>
-			<div className="mx-6 my-4">
-				<button
-					onClick={() => handlePayment()}
-					className="bg-green-300 p-3 rounded-lg w-full shadow-lg border-2 border-transparent hover:border-green-300 hover:bg-white text-white hover:text-green-400 transition-all font-semibold  outline-none focus:outline-none focus:shadow-outline"
-				>
-					THANH TOÁN
-				</button>
+			<div className="mx-6 my-4 ">
+				{method === 'paypal' ? (
+					show ? (
+						<PaypalBtn total={totalPaypal} tranSuccess={tranSuccess} />
+					) : (
+						<div
+							style={{ maxWidth: '750px', height: '50px' }}
+							className="w-full bg-gray-300 rounded mx-auto"
+						/>
+					)
+				) : (
+					<button
+						onClick={() => handlePayment()}
+						style={{ maxWidth: '750px' }}
+						className="bg-green-300 p-3 mx-auto block rounded-lg w-full shadow-lg border-2 border-transparent hover:border-green-300 hover:bg-white text-white hover:text-green-400 transition-all font-semibold  outline-none focus:outline-none focus:shadow-outline"
+					>
+						THANH TOÁN
+					</button>
+				)}
 			</div>
 		</div>
 	)

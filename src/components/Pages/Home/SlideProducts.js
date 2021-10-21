@@ -70,7 +70,7 @@ const SlideProducts = ({ newProducts, show }) => {
 	})
 
 	return (
-		<section className="px-2 h-screen lg:px-10 my-10">
+		<section className="px-2 h-screen lg:h-auto lg:px-10 my-10">
 			{/* btn next & prev */}
 			<div className="flex justify-between items-center h-16">
 				<p className="text-xl font-maven text-gray-800 dark:text-white">

@@ -6,7 +6,7 @@ import { DataProvider } from './GlobalState'
 import Loading from './utils/Loading'
 import { ToastContainer } from 'react-toastify'
 import ScrollToTop from './utils/ScrollToTop'
-
+import 'react-toastify/dist/ReactToastify.css'
 function App() {
 	const [apiReady, setApiReady] = useState(false)
 	useEffect(() => {

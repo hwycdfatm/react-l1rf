@@ -39,22 +39,23 @@ const CategoryAdmin = () => {
 		fetchProduct()
 	}, [searchValue])
 
-	useEffect(() => {
-		async function fetchProduct() {
-			try {
-				const params = {
-					category: filterCategory !== 'tất cả' ? filterCategory : '',
-					_limit: 10000, // tối đa bao nhiêu sản phẩm trong 1 trang
-				}
-				const result = await productAPI.getAll(params)
-				if (result.status === 'Success') {
-					setProductList(result.data)
-				}
-			} catch (err) {
-				console.log(err)
+	async function fetchProduct() {
+		try {
+			const params = {
+				category: filterCategory !== 'tất cả' ? filterCategory : '',
+				_limit: 10000, // tối đa bao nhiêu sản phẩm trong 1 trang
 			}
+			const result = await productAPI.getAll(params)
+			if (result.status === 'Success') {
+				setProductList(result.data)
+			}
+		} catch (err) {
+			console.log(err)
 		}
+	}
+	useEffect(() => {
 		fetchProduct()
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [filterCategory])
 
 	useEffect(() => {
@@ -107,6 +108,7 @@ const CategoryAdmin = () => {
 					setProduct={setProduct}
 					visible={visible}
 					setVisible={setVisible}
+					fetchProduct={fetchProduct}
 				/>
 			)}
 			<div className="mt-12 lg:mt-0 lg:ml-56 p-3 flex flex-col space-y-4 relative">
@@ -196,11 +198,14 @@ const CategoryAdmin = () => {
 									className="w-full object-cover h-48"
 								/>
 								<div className="flex flex-col space-y-1 py-1 px-2">
-									<span className="text-sm font-medium text-gray-500 truncate">
+									<span className="text-sm font-medium text-gray-500 truncate uppercase">
 										{product.title}
 									</span>
 									<span className="text-xs font-medium text-gray-500">
 										{parseInt(product.price).toLocaleString('en')} vnđ
+									</span>
+									<span className="text-xs font-medium text-gray-500">
+										Số lượng: {product.inStock}
 									</span>
 									<div className="flex p-1 justify-center item-center space-x-3">
 										<button
