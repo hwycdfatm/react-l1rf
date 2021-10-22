@@ -1,12 +1,47 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useContext, useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
+import userAPI from '../../../api/userAPI'
+import paymentAPI from '../../../api/paymentAPI'
+import { GlobalState } from '../../../GlobalState'
+
+function useQuery() {
+	return new URLSearchParams(useLocation().search)
+}
 const Thanks = () => {
+	const { setCart, token } = useContext(GlobalState)
+	let query = useQuery()
+	// const token = query.get('token')
+	const id = query.get('id')
+	const [success, setSuccess] = useState(true)
+	useEffect(() => {
+		const checkOrder = async () => {
+			try {
+				const result = await paymentAPI.getForUser({ token })
+				console.log(result.order)
+				const check = result.order.every((order) => order.paymentID !== id)
+				if (!check) {
+					await userAPI.handleCart([], token)
+					setCart([])
+					setSuccess(true)
+				} else {
+					setSuccess(false)
+				}
+			} catch (error) {
+				setSuccess(false)
+			}
+		}
+		checkOrder()
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
+	console.log(success)
 	return (
 		<div className="flex flex-col w-full max-w-5xl mx-auto pt-4 pb-8 h-screen">
 			<div className="mx-auto text-center">
 				<p className="text-center text-5xl font-maven mt-3">
-					Cảm ơn bạn đã mua hàng
+					{success ? 'Cảm ơn bạn đã mua hàng' : 'Đơn hàng không tồn tại'}
 				</p>
+
 				<div className="text-green-300 my-10">
 					<svg
 						className="w-56 h-56 mx-auto"
@@ -23,7 +58,8 @@ const Thanks = () => {
 						/>
 					</svg>
 				</div>
-				<p className="my-10 font-maven">
+
+				<p className="mb-10 mt-5 font-maven">
 					Cảm ơn bạn đã mua hàng tại L1rf Store, thật vinh hạnh khi được nhận
 					đơn đặt hàng từ bạn, nó làm mình cảm thầy thật tuyệt vời sao 4 tháng
 					để mình làm ra sản phẩm là trang web này để bạn mua đó ^^

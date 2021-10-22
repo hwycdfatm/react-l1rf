@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import paymentAPI from '../../../api/paymentAPI'
 import PaypalBtn from './PaypalBtn'
 import { GlobalState } from '../../../GlobalState'
+
 import axios from 'axios'
 const Checkout = ({ order, method, total, setCheckout, quantity }) => {
 	const { token, setCart, user } = useContext(GlobalState)
@@ -25,9 +26,6 @@ const Checkout = ({ order, method, total, setCheckout, quantity }) => {
 	}, [total])
 
 	const handlePayment = async () => {
-		if (method === '' || method === undefined)
-			return alert('Vui lòng chọn phương thức thanh toán')
-
 		try {
 			const result = await paymentAPI.create(
 				{ order, total, quantity, method, user },
@@ -37,6 +35,21 @@ const Checkout = ({ order, method, total, setCheckout, quantity }) => {
 				setCart([])
 
 				alert(result.message)
+			}
+		} catch (error) {
+			console.log(error)
+		}
+	}
+
+	const handlePaymentMomo = async () => {
+		try {
+			const result = await paymentAPI.create(
+				{ order, total, quantity, method, user },
+				token
+			)
+			if (result.status === 'Success') {
+				setCart([])
+				window.open('https://facebook.com/mai.tritoann', '_blank')
 			}
 		} catch (error) {
 			console.log(error)
@@ -157,7 +170,11 @@ const Checkout = ({ order, method, total, setCheckout, quantity }) => {
 					)
 				) : (
 					<button
-						onClick={() => handlePayment()}
+						onClick={() => {
+							method === 'cod'
+								? handlePayment()
+								: method === 'momo' && handlePaymentMomo()
+						}}
 						style={{ maxWidth: '750px' }}
 						className="bg-green-300 p-3 mx-auto block rounded-lg w-full shadow-lg border-2 border-transparent hover:border-green-300 hover:bg-white text-white hover:text-green-400 transition-all font-semibold  outline-none focus:outline-none focus:shadow-outline"
 					>

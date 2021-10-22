@@ -20,7 +20,7 @@ const Detail = () => {
 
 	const [awaitAdd, setAwaitAdd] = useState(false)
 
-	const { isShowing, toggle } = useModal()
+	const [isShowing, toggle] = useModal()
 
 	const images = product.images || []
 	// Image

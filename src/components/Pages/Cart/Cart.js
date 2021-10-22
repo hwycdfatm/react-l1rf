@@ -4,18 +4,21 @@ import { GlobalState } from '../../../GlobalState'
 import { Link } from 'react-router-dom'
 import PayPalIcon from '../../../images/paypalicon.png'
 import CodIcon from '../../../images/codicon.png'
+import MomoIcon from '../../../images/momoicon.png'
 import { Helmet } from 'react-helmet'
 import Checkout from './Checkout'
-import Thanks from '../Thanks/Thanks'
 
+import Modal from '../../../utils/Modal/Modal'
+import useModal from '../../../utils/Modal/useModal'
 const Cart = () => {
-	const { cart, removeProduct } = useContext(GlobalState)
+	const { cart, removeProduct, user } = useContext(GlobalState)
 	const [tempTotal, setTempTotal] = useState(0)
 	const ship = 50000
 	const total = tempTotal + ship
 	const [quantity, setQuantity] = useState(0)
-	const [methodPaid, setMethodPaid] = useState('')
+	const [methodPaid, setMethodPaid] = useState('cod')
 	const [checkout, setCheckout] = useState(0)
+	const [isShowing, toggle] = useModal()
 
 	useEffect(() => {
 		const getTotal = () => {
@@ -35,9 +38,16 @@ const Cart = () => {
 	}, [cart])
 
 	const handleCheckOut = () => {
+		if (!user.address || !user.phone) return toggle()
 		if (methodPaid === '' || cart.length === 0) return
 		setCheckout(1)
 	}
+
+	useEffect(() => {
+		isShowing
+			? (document.body.style.overflow = 'hidden')
+			: (document.body.style.overflow = 'scroll')
+	}, [isShowing])
 
 	if (checkout === 1 && methodPaid !== '')
 		return (
@@ -49,9 +59,14 @@ const Cart = () => {
 				total={total}
 			/>
 		)
-	if (checkout === 2) return <Thanks />
+
 	return (
 		<div className="w-full max-w-screen-xl mx-auto px-2 lg:px-8 xl:p-0 lg:mt-2">
+			<Modal
+				isShowing={isShowing}
+				text={'Bạn ơi vui lòng cập nhật đầy đủ thông tin giúp mình !! >.<'}
+				hide={toggle}
+			/>
 			<Helmet>
 				<title>Giỏ hàng</title>
 			</Helmet>
@@ -130,26 +145,6 @@ const Cart = () => {
 								<div className="flex items-center justify-center space-x-4 w-full">
 									<input
 										type="radio"
-										id="paypal"
-										checked={methodPaid === 'paypal'}
-										className="appearance-none w-5 h-5 rounded-full border-2 outline-none checked:bg-blue-400"
-										onChange={(e) => setMethodPaid(e.target.id)}
-									/>
-									<label
-										htmlFor="paypal"
-										className="flex-1 flex items-center justify-between pr-6"
-									>
-										<span className="text-md">Thanh toán Paypal</span>
-										<img
-											src={PayPalIcon}
-											alt=""
-											className="w-10 h-10 rounded-lg shadow-lg object-cover"
-										/>
-									</label>
-								</div>
-								<div className="flex items-center justify-center space-x-4 w-full">
-									<input
-										type="radio"
 										id="cod"
 										checked={methodPaid === 'cod'}
 										className="appearance-none w-5 h-5 rounded-full border-2 outline-none checked:bg-blue-400"
@@ -162,7 +157,48 @@ const Cart = () => {
 										<span className="text-md">Thanh toán khi nhận hàng</span>
 										<img
 											src={CodIcon}
-											alt=""
+											alt="icon cod"
+											className="w-10 h-10 rounded-lg shadow-lg object-cover"
+										/>
+									</label>
+								</div>
+
+								<div className="flex items-center justify-center space-x-4 w-full">
+									<input
+										type="radio"
+										id="momo"
+										checked={methodPaid === 'momo'}
+										className="appearance-none w-5 h-5 rounded-full border-2 outline-none checked:bg-blue-400"
+										onChange={(e) => setMethodPaid(e.target.id)}
+									/>
+									<label
+										htmlFor="momo"
+										className="flex-1 flex items-center justify-between pr-6"
+									>
+										<span className="text-md">Thanh toán Momo</span>
+										<img
+											src={MomoIcon}
+											alt="icon momo"
+											className="w-10 h-10 rounded-lg shadow-lg object-cover"
+										/>
+									</label>
+								</div>
+								<div className="flex items-center justify-center space-x-4 w-full">
+									<input
+										type="radio"
+										id="paypal"
+										checked={methodPaid === 'paypal'}
+										className="appearance-none w-5 h-5 rounded-full border-2 outline-none checked:bg-blue-400"
+										onChange={(e) => setMethodPaid(e.target.id)}
+									/>
+									<label
+										htmlFor="paypal"
+										className="flex-1 flex items-center justify-between pr-6"
+									>
+										<span className="text-md">Thanh toán Paypal</span>
+										<img
+											src={PayPalIcon}
+											alt="icon paypal"
 											className="w-10 h-10 rounded-lg shadow-lg object-cover"
 										/>
 									</label>

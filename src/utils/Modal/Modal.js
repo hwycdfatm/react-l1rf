@@ -6,7 +6,7 @@ const Modal = ({ isShowing, hide, text, type }) =>
 		? ReactDOM.createPortal(
 				<React.Fragment>
 					<div className="fixed flex items-center justify-center bg-opacity-70 bg-gray-200 inset-0 z-50 animation-opacity">
-						<div className="w-72 h-44 md:w-96 md:h-48 p-3 flex flex-col justify-between -mt-44 bg-white rounded-lg shadow-md">
+						<div className="w-72 h-48 mh:h-56 md:w-96 p-5 flex flex-col justify-between lg:-mt-44 bg-white rounded-lg shadow-md">
 							<p className="text-gray-800 text-center text-lg font-maven">
 								{text}
 								{type === 'ok' ? (

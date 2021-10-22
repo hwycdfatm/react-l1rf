@@ -7,38 +7,38 @@ import { GlobalState } from '../GlobalState'
 import MessengerCustomerChat from 'react-messenger-customer-chat'
 import ScrollToTopBtn from '../utils/ScrollToTopBtn'
 
-import Header from '../components/Blocks/Header/Header'
-import Footer from '../components/Blocks/Footer/Footer'
+import Header from './Blocks/Header/Header'
+import Footer from './Blocks/Footer/Footer'
 
-import Home from '../components/Pages/Home/Home'
+import Home from './Pages/Home/Home'
 import ForgortPassword from './Pages/ForgortPassword/ForgortPassword'
 import ChangePassword from './Pages/ChangePassword/ChangePassword'
 import ProtectedRoute from '../routes/ProtectedRoute'
 import AdminRoute from '../routes/AdminRoute'
 
-import Product from '../components/Pages/Product/Detail'
-import Cart from '../components/Pages/Cart/Cart'
-import Category from '../components/Pages/Category/Category'
-import Orders from '../components/AdminPages/Orders'
+import Product from './Pages/Product/Detail'
+import Cart from './Pages/Cart/Cart'
+import Category from './Pages/Category/Category'
 
-import User from '../components/Pages/User/User'
-import Login from '../components/Pages/Login/Login'
-import Register from '../components/Pages/Register/Register'
+import User from './Pages/User/User'
+import Login from './Pages/Login/Login'
+import Register from './Pages/Register/Register'
 
-import Privacy from '../components/Pages/Privacy/Privacy'
-import Error from '../components/Pages/Error/Error'
-import SidebarAdmin from '../components/AdminPages/SidebarAdmin'
+import SidebarAdmin from './AdminPages/SidebarAdmin'
 import Loading from '../utils/Loading'
 
-const DashBoard = lazy(() => import('../components/AdminPages/DashBoard'))
+const Orders = lazy(() => import('./AdminPages/Orders'))
+const DashBoard = lazy(() => import('./AdminPages/DashBoard'))
 const CategoryAdmin = lazy(() => import('./AdminPages/CategoryAdmin'))
 const CategoryTrash = lazy(() => import('./AdminPages/Trash'))
-const AddProduct = lazy(() => import('../components/AdminPages/AddProduct'))
-const AllUsers = lazy(() => import('../components/AdminPages/AllUsers'))
+const AddProduct = lazy(() => import('./AdminPages/AddProduct'))
+const AllUsers = lazy(() => import('./AdminPages/AllUsers'))
 const DetailOrder = lazy(() => import('./AdminPages/DetailOrder'))
 const CategoryManager = lazy(() => import('./AdminPages/CategoryManager'))
 const SliderManager = lazy(() => import('./AdminPages/SliderManager'))
-
+const Privacy = lazy(() => import('./Pages/Privacy/Privacy'))
+const Error = lazy(() => import('./Pages/Error/Error'))
+const Thanks = lazy(() => import('./Pages/Thanks/Thanks'))
 const Layout = () => {
 	const { admin } = useContext(GlobalState)
 	const [open, setOpen] = useState(false)
@@ -77,6 +77,7 @@ const Layout = () => {
 						<Route exact path="/doi-mat-khau" component={ChangePassword} />
 						<ProtectedRoute exact path="/cart" component={Cart} />
 						<ProtectedRoute exact path="/user" component={User} />
+						<ProtectedRoute exact path="/order" component={Thanks} />
 						<AdminRoute exact path="/products" component={CategoryAdmin} />
 						<AdminRoute
 							exact

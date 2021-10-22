@@ -21,7 +21,7 @@ const User = () => {
 		address: user.address,
 		phone: user.phone,
 	})
-	const { isShowing, toggle } = useModal()
+	const [isShowing, toggle] = useModal()
 
 	useEffect(() => {
 		const fetchPayment = async () => {
