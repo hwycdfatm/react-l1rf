@@ -53,7 +53,8 @@ const Detail = () => {
 	}, [isShowing])
 
 	const addToCartBtn = async () => {
-		if (selectSize === '') return alert('Vui lòng chọn size')
+		if (product.size.length > 0 && selectSize === '')
+			return alert('Vui lòng chọn size')
 		if (product.inStock === 0) return
 		product.quantity = count
 		const check = await addToCart(product)
