@@ -23,8 +23,10 @@ const AddProduct = () => {
 		price: '',
 		inStock: '',
 		images: [],
+		size: [],
 	})
 
+	const size = ['s', 'm', 'xl', '2xl', 'free']
 	const [uploadLoading, setUploadLoading] = useState(false)
 
 	const [checked, setChecked] = useState(false)
@@ -39,6 +41,7 @@ const AddProduct = () => {
 	const handleUploadImages = async (e) => {
 		e.preventDefault()
 		try {
+			if (product.images.length >= 4) return alert('Tối đa 4 ảnh thôi')
 			if (!admin) return alert('bạn không có quyền')
 			const files = e.target.files
 			if (files.length === 0) return alert('Vui lòng chọn ảnh')
@@ -74,6 +77,8 @@ const AddProduct = () => {
 		e.preventDefault()
 		try {
 			if (!admin) return alert('Mày không có quyền')
+			if (!Object.values(product).every((item) => item !== ''))
+				return alert('Vui lòng nhập đầy đủ thông tin nào')
 			setUploadLoading(true)
 			const check = await productAPI.creat({ ...product }, token)
 			if (check.status === 'Success') {
@@ -87,6 +92,7 @@ const AddProduct = () => {
 					price: '',
 					inStock: '',
 					images: [],
+					size: [],
 				})
 				setUploadLoading(false)
 			}
@@ -113,6 +119,21 @@ const AddProduct = () => {
 		} catch (err) {
 			alert(err)
 		}
+	}
+
+	const handleArraySize = (e) => {
+		const tempSize = e.target.id
+		const check = product.size.every((size) => size !== tempSize)
+		if (check)
+			return setProduct((product) => ({
+				...product,
+				size: [...product.size, tempSize],
+			}))
+
+		setProduct((product) => ({
+			...product,
+			size: product.size.filter((size) => size !== tempSize),
+		}))
 	}
 	return (
 		<form onSubmit={handleAddProduct} className="p-3 lg:ml-56 mt-16 lg:mt-5">
@@ -176,16 +197,14 @@ const AddProduct = () => {
 				</div>
 				<div className="w-full flex flex-col space-y-2 text-sm md:text-base md:w-1/2  md:pl-5">
 					<div className="space-y-1">
-						<h1 className="text-sm md:text-md md:font-semibold">
-							Tên sản phẩm
-						</h1>
+						<p className="text-sm md:text-md md:font-semibold">Tên sản phẩm</p>
 						<input
 							placeholder="Nhập tên sản phẩm ở đây......"
 							name="title"
 							autoComplete="off"
 							value={product.title}
 							onChange={onChangeInput}
-							className="shadow text-lg appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+							className="shadow text-base appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
 						/>
 					</div>
 
@@ -197,9 +216,9 @@ const AddProduct = () => {
 						onChange={onChangeInput}
 					/>
 					<div className="space-y-1">
-						<h1 className="text-sm md:text-md md:font-semibold">Mô tả</h1>
+						<p className="text-sm md:text-md md:font-semibold">Mô tả</p>
 						<textarea
-							className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+							className="shadow text-base appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
 							placeholder="Nhập mô tả ngắn ở đây nè"
 							rows="5"
 							name="description"
@@ -208,17 +227,17 @@ const AddProduct = () => {
 						></textarea>
 					</div>
 					<div className="space-y-1">
-						<h1 className="text-sm md:text-md md:font-semibold">
+						<p className="text-sm md:text-md md:font-semibold">
 							Giá :{' '}
 							<span className="ml-2">
 								{product.price && parseInt(product.price).toLocaleString('en')}{' '}
 								VNĐ
 							</span>
-						</h1>
+						</p>
 						<input
 							type="number"
 							placeholder="Nhập giá nè"
-							className="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+							className="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-base"
 							name="price"
 							value={product.price}
 							onChange={onChangeInput}
@@ -226,62 +245,60 @@ const AddProduct = () => {
 						<span className="ml-2 text-sm font-semibold">VNĐ</span>
 					</div>
 					<div className="flex flex-col order-first space-y-2 md:order-none md:justify-start pb-2 lg:pb-0">
-						<h1 className="text-sm md:text-md md:font-semibold">
+						<p className="text-sm md:text-md md:font-semibold">
 							Các ảnh khác (tối đa 4 ảnh / vui lòng chọn ảnh lớn trước)
-						</h1>
+						</p>
 						<div className="flex md:justify-start justify-center items-center space-x-2">
-							{product.images.length < 2 ? (
-								<label
-									htmlFor="imagess"
-									className="w-20 h-20 rounded bg-gray-100 shadow flex items-center justify-center"
+							{product.images.map((image, index) => (
+								<div
+									className="w-20 h-20 rounded bg-gray-100 shadow flex items-center justify-center overflow-hidden relative"
+									key={index}
 								>
-									<svg
-										className="w-6 h-6"
-										fill="none"
-										stroke="currentColor"
-										viewBox="0 0 24 24"
-										xmlns="http://www.w3.org/2000/svg"
-									>
-										<path
-											strokeLinecap="round"
-											strokeLinejoin="round"
-											strokeWidth={2}
-											d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-										/>
-									</svg>
-								</label>
-							) : (
-								product.images.map((image, index) => (
+									<img className="h-full object-cover" src={image.url} alt="" />
 									<div
-										className="w-20 h-20 rounded bg-gray-100 shadow flex items-center justify-center overflow-hidden relative"
-										key={index}
+										onClick={() => handleDestroy(image.public_name)}
+										className="absolute top-1 right-1 text-red-300 cursor-pointer"
 									>
-										<img
-											className="h-full object-cover"
-											src={image.url}
-											alt=""
-										/>
-										<div
-											onClick={() => handleDestroy(image.public_name)}
-											className="absolute top-1 right-1 text-red-300 cursor-pointer"
+										<svg
+											className="w-3 h-3"
+											fill="none"
+											stroke="currentColor"
+											viewBox="0 0 24 24"
+											xmlns="http://www.w3.org/2000/svg"
 										>
-											<svg
-												className="w-3 h-3"
-												fill="none"
-												stroke="currentColor"
-												viewBox="0 0 24 24"
-												xmlns="http://www.w3.org/2000/svg"
-											>
-												<path
-													strokeLinecap="round"
-													strokeLinejoin="round"
-													strokeWidth={2}
-													d="M6 18L18 6M6 6l12 12"
-												/>
-											</svg>
-										</div>
+											<path
+												strokeLinecap="round"
+												strokeLinejoin="round"
+												strokeWidth={2}
+												d="M6 18L18 6M6 6l12 12"
+											/>
+										</svg>
 									</div>
-								))
+								</div>
+							))}
+
+							{product.images.length < 4 && (
+								<div>
+									<label
+										htmlFor="imagess"
+										className="w-20 h-20 rounded bg-gray-100 shadow flex items-center justify-center"
+									>
+										<svg
+											className="w-6 h-6"
+											fill="none"
+											stroke="currentColor"
+											viewBox="0 0 24 24"
+											xmlns="http://www.w3.org/2000/svg"
+										>
+											<path
+												strokeLinecap="round"
+												strokeLinejoin="round"
+												strokeWidth={2}
+												d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+											/>
+										</svg>
+									</label>
+								</div>
 							)}
 						</div>
 						{checked ? (
@@ -297,11 +314,11 @@ const AddProduct = () => {
 						)}
 					</div>
 					<div className="space-y-1">
-						<h1 className="text-sm md:text-md md:font-semibold">
+						<p className="text-sm md:text-md md:font-semibold">
 							Nhập số lượng trong kho
-						</h1>
+						</p>
 						<input
-							className="shadow appearance-none border rounded  py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+							className="shadow appearance-none border rounded text-base py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
 							placeholder="Nhập số lượng ở đây nè"
 							type="number"
 							name="inStock"
@@ -310,10 +327,33 @@ const AddProduct = () => {
 						/>
 					</div>
 
+					<div className="space-y-1">
+						<p className="text-sm md:text-md md:font-semibold">Size</p>
+						<div className="flex space-x-2">
+							{size.map((size) => (
+								<label
+									htmlFor={size}
+									key={size}
+									className={`w-20 h-9 rounded-lg border  flex items-center justify-center ${
+										product.size.includes(size) && 'border-green-500'
+									}`}
+								>
+									<input
+										type="checkbox"
+										id={size}
+										hidden
+										onChange={handleArraySize}
+									/>
+									<span className="font-semibold uppercase text-sm">
+										{size}
+									</span>
+								</label>
+							))}
+						</div>
+					</div>
+
 					<div className="text-base flex flex-col space-y-1">
-						<h1 className="text-sm md:text-md md:font-semibold">
-							Chọn danh mục
-						</h1>
+						<p className="text-sm md:text-md md:font-semibold">Chọn danh mục</p>
 						<div className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4">
 							<select
 								onChange={onChangeInput}
@@ -340,7 +380,7 @@ const AddProduct = () => {
 					</div>
 				</div>
 			</div>
-			<div className="mt-2 mx-auto w-full max-w-screen-lg p-1 unreset">
+			<div className="mt-2 mx-auto w-full max-w-screen-lg text-base p-1 unreset">
 				<CKEditor
 					editor={ClassicEditor}
 					data={product.content}

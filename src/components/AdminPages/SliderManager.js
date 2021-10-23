@@ -129,7 +129,10 @@ const SlideManager = () => {
 						<div className="flex flex-wrap">
 							{slideActive.length > 0 ? (
 								slideActive.map((slide) => (
-									<div key={slide._id} className="w-full md:w-1/2 lg:w-1/3 p-1">
+									<div
+										key={slide._id}
+										className="w-full md:w-1/2 lg:w-1/3 p-1 h-96"
+									>
 										<div className="rounded-lg h-full w-full overflow-hidden relative">
 											<img
 												src={slide.image.url}

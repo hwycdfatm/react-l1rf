@@ -112,8 +112,8 @@ export const DataProvider = ({ children }) => {
 	const addToCart = async (product) => {
 		try {
 			if (!login) return false
-			const check = cart.every((item) => item._id !== product._id)
-			if (!check) {
+			const productAvailable = cart.every((item) => item._id !== product._id)
+			if (!productAvailable) {
 				// Cập nhật số lượng sản phẩm
 				cart.forEach((item) => {
 					if (item._id === product._id) {

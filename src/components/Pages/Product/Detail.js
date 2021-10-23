@@ -17,7 +17,7 @@ const Detail = () => {
 	const [fail, setFail] = useState(false)
 	const { slug } = useParams()
 	const [product, setProduct] = useState([])
-
+	const [selectSize, setSelectSize] = useState('')
 	const [awaitAdd, setAwaitAdd] = useState(false)
 
 	const [isShowing, toggle] = useModal()
@@ -53,6 +53,7 @@ const Detail = () => {
 	}, [isShowing])
 
 	const addToCartBtn = async () => {
+		if (selectSize === '') return alert('Vui lòng chọn size')
 		if (product.inStock === 0) return
 		product.quantity = count
 		const check = await addToCart(product)
@@ -148,13 +149,47 @@ const Detail = () => {
 										<img
 											src={item.url}
 											srcSet={item.url}
-											alt=""
+											alt="thịnh ăn cứt"
 											className="object-cover w-full h-full"
 										/>
 									</div>
 								))
 							)}
 						</div>
+
+						{product.size?.length > 0 && (
+							<div className="flex flex-col mt-6">
+								<span>Size</span>
+								<div className="flex flex-wrap w-full max-w-sm mx-auto md:mx-0">
+									{product.size.map((size) => (
+										<div
+											key={size}
+											className="w-1/2 flex-shrink flex-grow-0 p-1"
+										>
+											<label
+												htmlFor={size}
+												className={`h-10 ${
+													size === selectSize
+														? 'border-gray-700 bg-black text-white'
+														: 'border-gray-200 bg-white'
+												} border w-full flex rounded-md justify-center items-center transition-all bg-opacity-90`}
+											>
+												<input
+													type="radio"
+													id={size}
+													onChange={(e) => setSelectSize(e.target.id)}
+													hidden
+													checked={size === selectSize}
+												/>
+												<span className="font-semibold">
+													{size.toUpperCase()}
+												</span>
+											</label>
+										</div>
+									))}
+								</div>
+							</div>
+						)}
 						<div className="flex items-center space-x-4 mt-6">
 							<span>Số lượng</span>
 							<div className="flex bg-gray-100 dark:text-gray-800 rounded items-center overflow-hidden">

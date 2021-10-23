@@ -10,6 +10,7 @@ const DetailOrder = ({ orderDetail, setShowForm, handleUpdateOrder }) => {
 		email,
 		address,
 		paymentID,
+		method,
 		total,
 		quantity,
 		status,
@@ -37,9 +38,10 @@ const DetailOrder = ({ orderDetail, setShowForm, handleUpdateOrder }) => {
 						</div>
 					</div>
 					<div className="rounded-lg border shadow-lg p-5 w-full bg-white">
-						<h1 className="text-lg font-semibold ">
-							Thông tin hóa đơn: #{paymentID}
-						</h1>
+						<div className="text-lg font-semibold flex flex-col lg:flex-row justify-between lg:items-center">
+							<p>Thông tin hóa đơn: #{paymentID}</p>
+							<p className="text-base">Phương thức thanh toán: {method}</p>
+						</div>
 						<div className="px-3 mt-5 flex flex-col lg:flex-row">
 							<div className="text-base text-gray-600 w-full lg:w-1/2">
 								<span>Số lượng sản phẩm:</span>

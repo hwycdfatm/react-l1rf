@@ -40,6 +40,10 @@ const Cart = () => {
 	const handleCheckOut = () => {
 		if (!user.address || !user.phone) return toggle()
 		if (methodPaid === '' || cart.length === 0) return
+		if (methodPaid === 'momo')
+			return alert(
+				'Phương thức thanh toán hiện đang bảo trì, bạn vui lòng chọn phương thức thanh toán khác nhé!!'
+			)
 		setCheckout(1)
 	}
 

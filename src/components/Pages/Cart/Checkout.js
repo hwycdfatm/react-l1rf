@@ -41,19 +41,8 @@ const Checkout = ({ order, method, total, setCheckout, quantity }) => {
 		}
 	}
 
-	const handlePaymentMomo = async () => {
-		try {
-			const result = await paymentAPI.create(
-				{ order, total, quantity, method, user },
-				token
-			)
-			if (result.status === 'Success') {
-				setCart([])
-				window.open('https://facebook.com/mai.tritoann', '_blank')
-			}
-		} catch (error) {
-			console.log(error)
-		}
+	const handlePaymentMomo = () => {
+		alert('Hệ thống hiện đang phát triển')
 	}
 
 	const tranSuccess = async () => {

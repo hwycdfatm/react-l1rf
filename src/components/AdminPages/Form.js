@@ -17,7 +17,7 @@ const Form = (props) => {
 	const [arrayImageDelete, setArrayImageDelete] = useState([])
 
 	const [images, setImage] = useState([])
-
+	const size = ['s', 'm', 'xl', '2xl', 'free']
 	useEffect(() => {
 		setImage(product.images)
 		setArrayImageDelete([])
@@ -53,6 +53,21 @@ const Form = (props) => {
 		} catch (error) {
 			console.log(error)
 		}
+	}
+
+	const handleArraySize = (e) => {
+		const tempSize = e.target.id
+		const check = product.size.every((size) => size !== tempSize)
+		if (check)
+			return setProduct((product) => ({
+				...product,
+				size: [...product.size, tempSize],
+			}))
+
+		setProduct((product) => ({
+			...product,
+			size: product.size.filter((size) => size !== tempSize),
+		}))
 	}
 
 	// Handle Edit product
@@ -288,7 +303,30 @@ const Form = (props) => {
 								onChange={onChangeInput}
 							/>
 						</div>
-
+						<div className="space-y-1">
+							<p className="text-sm md:text-md md:font-semibold">Size</p>
+							<div className="flex space-x-2">
+								{size.map((size) => (
+									<label
+										htmlFor={size}
+										key={size}
+										className={`w-20 h-9 rounded-lg border bg-white flex items-center justify-center ${
+											product.size.includes(size) && 'border-green-500'
+										}`}
+									>
+										<input
+											type="checkbox"
+											id={size}
+											hidden
+											onChange={handleArraySize}
+										/>
+										<span className="font-semibold uppercase text-sm">
+											{size}
+										</span>
+									</label>
+								))}
+							</div>
+						</div>
 						<div className="text-base flex flex-col space-y-1">
 							<h1 className="text-sm md:text-md md:font-semibold">
 								Chọn danh mục
