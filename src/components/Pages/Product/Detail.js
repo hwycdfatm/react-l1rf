@@ -5,7 +5,7 @@ import Error from '../Error/Error'
 import NotFoundImage from './image-not-found.jpg'
 import productAPI from '../../../api/productAPI'
 import '../../../css/unreset.css'
-import { Helmet } from 'react-helmet'
+import { Helmet } from 'react-helmet-async'
 import Skeleton from 'react-loading-skeleton'
 
 import Modal from '../../../utils/Modal/Modal'
@@ -17,7 +17,7 @@ const Detail = () => {
 	const [fail, setFail] = useState(false)
 	const { slug } = useParams()
 	const [product, setProduct] = useState([])
-	const [selectSize, setSelectSize] = useState('')
+	// const [selectSize, setSelectSize] = useState('')
 	const [awaitAdd, setAwaitAdd] = useState(false)
 
 	const [isShowing, toggle] = useModal()
@@ -53,11 +53,15 @@ const Detail = () => {
 	}, [isShowing])
 
 	const addToCartBtn = async () => {
-		if (product.size.length > 0 && selectSize === '')
-			return alert('Vui lòng chọn size')
+		// if (product.size.length > 0 && selectSize === '')
+		// 	return alert('Vui lòng chọn size')
 		if (product.inStock === 0) return
-		product.quantity = count
-		const check = await addToCart(product)
+
+		const check = await addToCart({
+			...product,
+			// size: selectSize,
+			quantity: count,
+		})
 		if (check) {
 			setAwaitAdd(true)
 			const timeOut = setTimeout(() => setAwaitAdd(false), 900)
@@ -70,7 +74,7 @@ const Detail = () => {
 	return (
 		<section className="bg-transparent transition duration-700 dark:text-white py-2">
 			<Helmet>
-				<title>{product?.title}</title>
+				<title>{product?.title?.toUpperCase()}</title>
 				<meta
 					name="description"
 					content={`${product?.title} một sản phẩm của L1rf Store`}
@@ -158,7 +162,7 @@ const Detail = () => {
 							)}
 						</div>
 
-						{product.size?.length > 0 && (
+						{/* {product.size?.length > 0 && (
 							<div className="flex flex-col mt-6">
 								<span>Size</span>
 								<div className="flex flex-wrap w-full max-w-sm mx-auto md:mx-0">
@@ -190,7 +194,7 @@ const Detail = () => {
 									))}
 								</div>
 							</div>
-						)}
+						)} */}
 						<div className="flex items-center space-x-4 mt-6">
 							<span>Số lượng</span>
 							<div className="flex bg-gray-100 dark:text-gray-800 rounded items-center overflow-hidden">

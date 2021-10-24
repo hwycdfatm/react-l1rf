@@ -35,6 +35,7 @@ const OrderTrash = () => {
 
 	const handleDeletedForceOrder = async (_id) => {
 		try {
+			if (!window.confirm('Bạn có chắc chắn muốn xóa')) return
 			const res = await paymentAPI.deleteForcePayment({ _id, token })
 			if (res.status === 'Success') {
 				toast(res.message, { type: 'success', position: 'top-center' })

@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import paymentAPI from '../../../api/paymentAPI'
 import PaypalBtn from './PaypalBtn'
 import { GlobalState } from '../../../GlobalState'
+import { Helmet } from 'react-helmet-async'
 
 import axios from 'axios'
 const Checkout = ({ order, method, total, setCheckout, quantity }) => {
@@ -35,6 +36,7 @@ const Checkout = ({ order, method, total, setCheckout, quantity }) => {
 				setCart([])
 
 				alert(result.message)
+				setCheckout(2)
 			}
 		} catch (error) {
 			console.log(error)
@@ -64,6 +66,9 @@ const Checkout = ({ order, method, total, setCheckout, quantity }) => {
 	}
 	return (
 		<div className="flex flex-col w-full max-w-5xl mx-auto pt-4 pb-8">
+			<Helmet>
+				<title>Checkout</title>
+			</Helmet>
 			<div className="mx-6 my-2 flex justify-between">
 				<p className="text-xl text-left">Check Out</p>
 				<button

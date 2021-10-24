@@ -7,6 +7,7 @@ import Loading from './utils/Loading'
 import { ToastContainer } from 'react-toastify'
 import ScrollToTop from './utils/ScrollToTop'
 import 'react-toastify/dist/ReactToastify.css'
+import { HelmetProvider } from 'react-helmet-async'
 function App() {
 	const [apiReady, setApiReady] = useState(false)
 	useEffect(() => {
@@ -22,14 +23,16 @@ function App() {
 	}, [])
 	return (
 		<DataProvider>
-			<Router>
-				<ToastContainer
-					position="bottom-left"
-					autoClose={3000}
-					hideProgressBar={true}
-				/>
-				<ScrollToTop>{!apiReady ? <Loading /> : <Layout />}</ScrollToTop>
-			</Router>
+			<HelmetProvider>
+				<Router>
+					<ToastContainer
+						position="bottom-left"
+						autoClose={3000}
+						hideProgressBar={true}
+					/>
+					<ScrollToTop>{!apiReady ? <Loading /> : <Layout />}</ScrollToTop>
+				</Router>
+			</HelmetProvider>
 		</DataProvider>
 	)
 }

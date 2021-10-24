@@ -9,7 +9,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import userAPI from '../../../api/userAPI'
 import LoadingBtn from '../../../utils/LoadingBtn'
-import { Helmet } from 'react-helmet'
+import { Helmet } from 'react-helmet-async'
 const Login = () => {
 	const { login, setLogin } = useContext(GlobalState)
 	const [error, setError] = useState('')

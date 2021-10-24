@@ -45,11 +45,11 @@ const Orders = () => {
 			setOrders(result.order)
 		}
 		fetchAllOrder()
-	}, [token, showForm])
 
-	showForm
-		? document.body.classList.add('overflow-hidden')
-		: document.body.classList.remove('overflow-hidden')
+		showForm
+			? document.body.classList.add('overflow-hidden')
+			: document.body.classList.remove('overflow-hidden')
+	}, [token, showForm])
 
 	return (
 		<>

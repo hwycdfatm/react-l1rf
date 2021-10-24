@@ -7,7 +7,7 @@ import Pagination from '../../../utils/Pagination'
 import Product from '../Product/Product'
 import ProductsLoading from '../Product/ProductsLoading'
 
-import { Helmet } from 'react-helmet'
+import { Helmet } from 'react-helmet-async'
 
 import { useLocalStorage } from '../../../GlobalState'
 import { useDetectOutsideClick } from '../../../utils/useDetectOutsideClick'

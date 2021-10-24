@@ -23,10 +23,19 @@ const AddProduct = () => {
 		price: '',
 		inStock: '',
 		images: [],
-		size: [],
+		// size: [],
 	})
 
-	const size = ['s', 'm', 'xl', '2xl', 'free']
+	// const size = ['s', 'm', 'l', 'xl', '2xl', 'free']
+
+	// const sizeCheck = {
+	// 	s: 1,
+	// 	m: 2,
+	// 	l: 3,
+	// 	xl: 4,
+	// 	'2xl': 5,
+	// 	free: 6,
+	// }
 	const [uploadLoading, setUploadLoading] = useState(false)
 
 	const [checked, setChecked] = useState(false)
@@ -92,7 +101,7 @@ const AddProduct = () => {
 					price: '',
 					inStock: '',
 					images: [],
-					size: [],
+					// size: [],
 				})
 				setUploadLoading(false)
 			}
@@ -121,20 +130,23 @@ const AddProduct = () => {
 		}
 	}
 
-	const handleArraySize = (e) => {
-		const tempSize = e.target.id
-		const check = product.size.every((size) => size !== tempSize)
-		if (check)
-			return setProduct((product) => ({
-				...product,
-				size: [...product.size, tempSize],
-			}))
+	// const handleArraySize = (e) => {
+	// 	const tempSize = e.target.id
+	// 	const check = product.size.every((size) => size !== tempSize)
+	// 	if (check)
+	// 		return setProduct((product) => ({
+	// 			...product,
+	// 			size: [...product.size, tempSize].sort(
+	// 				(a, b) => sizeCheck[a] - sizeCheck[b]
+	// 			),
+	// 		}))
 
-		setProduct((product) => ({
-			...product,
-			size: product.size.filter((size) => size !== tempSize),
-		}))
-	}
+	// 	setProduct((product) => ({
+	// 		...product,
+	// 		size: product.size.filter((size) => size !== tempSize),
+	// 	}))
+	// }
+
 	return (
 		<form onSubmit={handleAddProduct} className="p-3 lg:ml-56 mt-16 lg:mt-5">
 			<div className="flex flex-col p-1 w-full max-w-screen-lg mx-auto md:flex-row md:space-x-4">
@@ -327,7 +339,7 @@ const AddProduct = () => {
 						/>
 					</div>
 
-					<div className="space-y-1">
+					{/* <div className="space-y-1">
 						<p className="text-sm md:text-md md:font-semibold">Size</p>
 						<div className="flex space-x-2">
 							{size.map((size) => (
@@ -350,7 +362,7 @@ const AddProduct = () => {
 								</label>
 							))}
 						</div>
-					</div>
+					</div> */}
 
 					<div className="text-base flex flex-col space-y-1">
 						<p className="text-sm md:text-md md:font-semibold">Chọn danh mục</p>

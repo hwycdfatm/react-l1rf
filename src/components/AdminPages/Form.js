@@ -17,7 +17,18 @@ const Form = (props) => {
 	const [arrayImageDelete, setArrayImageDelete] = useState([])
 
 	const [images, setImage] = useState([])
-	const size = ['s', 'm', 'xl', '2xl', 'free']
+
+	// const size = ['s', 'm', 'xl', '2xl', 'free']
+
+	// const sizeCheck = {
+	// 	s: 1,
+	// 	m: 2,
+	// 	l: 3,
+	// 	xl: 4,
+	// 	'2xl': 5,
+	// 	free: 6,
+	// }
+
 	useEffect(() => {
 		setImage(product.images)
 		setArrayImageDelete([])
@@ -55,20 +66,22 @@ const Form = (props) => {
 		}
 	}
 
-	const handleArraySize = (e) => {
-		const tempSize = e.target.id
-		const check = product.size.every((size) => size !== tempSize)
-		if (check)
-			return setProduct((product) => ({
-				...product,
-				size: [...product.size, tempSize],
-			}))
+	// const handleArraySize = (e) => {
+	// 	const tempSize = e.target.id
+	// 	const check = product.size.every((size) => size !== tempSize)
+	// 	if (check)
+	// 		return setProduct((product) => ({
+	// 			...product,
+	// 			size: [...product.size, tempSize].sort(
+	// 				(a, b) => sizeCheck[a] - sizeCheck[b]
+	// 			),
+	// 		}))
 
-		setProduct((product) => ({
-			...product,
-			size: product.size.filter((size) => size !== tempSize),
-		}))
-	}
+	// 	setProduct((product) => ({
+	// 		...product,
+	// 		size: product.size.filter((size) => size !== tempSize),
+	// 	}))
+	// }
 
 	// Handle Edit product
 	const handleEditProduct = async (e) => {
@@ -303,7 +316,7 @@ const Form = (props) => {
 								onChange={onChangeInput}
 							/>
 						</div>
-						<div className="space-y-1">
+						{/* <div className="space-y-1">
 							<p className="text-sm md:text-md md:font-semibold">Size</p>
 							<div className="flex space-x-2">
 								{size.map((size) => (
@@ -326,7 +339,7 @@ const Form = (props) => {
 									</label>
 								))}
 							</div>
-						</div>
+						</div> */}
 						<div className="text-base flex flex-col space-y-1">
 							<h1 className="text-sm md:text-md md:font-semibold">
 								Chọn danh mục

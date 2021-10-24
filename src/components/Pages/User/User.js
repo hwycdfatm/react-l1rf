@@ -4,7 +4,7 @@ import { GlobalState } from '../../../GlobalState'
 import Skeleton from 'react-loading-skeleton'
 import PaymentContainer from './PaymentContainer'
 import userAPI from '../../../api/userAPI'
-import { Helmet } from 'react-helmet'
+import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
 
 import Modal from '../../../utils/Modal/Modal'

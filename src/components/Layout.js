@@ -38,7 +38,6 @@ const CategoryManager = lazy(() => import('./AdminPages/CategoryManager'))
 const SliderManager = lazy(() => import('./AdminPages/SliderManager'))
 const Privacy = lazy(() => import('./Pages/Privacy/Privacy'))
 const Error = lazy(() => import('./Pages/Error/Error'))
-const Thanks = lazy(() => import('./Pages/Thanks/Thanks'))
 const Layout = () => {
 	const { admin } = useContext(GlobalState)
 	const [open, setOpen] = useState(false)
@@ -77,7 +76,6 @@ const Layout = () => {
 						<Route exact path="/doi-mat-khau" component={ChangePassword} />
 						<ProtectedRoute exact path="/cart" component={Cart} />
 						<ProtectedRoute exact path="/user" component={User} />
-						<ProtectedRoute exact path="/order" component={Thanks} />
 						<AdminRoute exact path="/products" component={CategoryAdmin} />
 						<AdminRoute
 							exact

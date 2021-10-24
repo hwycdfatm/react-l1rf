@@ -5,11 +5,13 @@ import { Link } from 'react-router-dom'
 import PayPalIcon from '../../../images/paypalicon.png'
 import CodIcon from '../../../images/codicon.png'
 import MomoIcon from '../../../images/momoicon.png'
-import { Helmet } from 'react-helmet'
+import { Helmet } from 'react-helmet-async'
+
 import Checkout from './Checkout'
 
 import Modal from '../../../utils/Modal/Modal'
 import useModal from '../../../utils/Modal/useModal'
+import Thanks from './Thanks'
 const Cart = () => {
 	const { cart, removeProduct, user } = useContext(GlobalState)
 	const [tempTotal, setTempTotal] = useState(0)
@@ -64,6 +66,7 @@ const Cart = () => {
 			/>
 		)
 
+	if (checkout === 2) return <Thanks />
 	return (
 		<div className="w-full max-w-screen-xl mx-auto px-2 lg:px-8 xl:p-0 lg:mt-2">
 			<Modal

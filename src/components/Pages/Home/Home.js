@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import productAPI from '../../../api/productAPI'
 import SlideProducts from './SlideProducts'
 import SlideShow from './SlideShow'
-import { Helmet } from 'react-helmet'
+import { Helmet } from 'react-helmet-async'
 import sliderAPI from '../../../api/sliderAPI'
 
 const Home = () => {

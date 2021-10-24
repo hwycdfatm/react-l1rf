@@ -7,7 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import userAPI from '../../../api/userAPI'
 import LoadingBtn from '../../../utils/LoadingBtn'
-import { Helmet } from 'react-helmet'
+import { Helmet } from 'react-helmet-async'
 const Register = () => {
 	const { login } = useContext(GlobalState)
 	const [noti, setNoti] = useState('')
