@@ -62,6 +62,11 @@ const CategoryAdmin = () => {
 		setVisible(false)
 	}, [])
 
+	useEffect(() => {
+		visible
+			? document.body.classList.add('overflow-hidden')
+			: document.body.classList.remove('overflow-hidden')
+	}, [visible])
 	const handleShowFormEdit = (id) => {
 		if (!visible) {
 			setVisible(true)

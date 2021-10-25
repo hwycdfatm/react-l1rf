@@ -112,9 +112,9 @@ export const DataProvider = ({ children }) => {
 	const addToCart = async (product) => {
 		try {
 			if (!login) return false
-			// check sản phẩm tồn tại trong giỏ hàng chưa
-			const productAvailable = cart.every((item) => item._id !== product._id)
+			// Thêm vào giỏ hàng
 
+			const productAvailable = cart.every((item) => item._id !== product._id)
 			if (!productAvailable) {
 				// Cập nhật số lượng sản phẩm
 				cart.forEach((item) => {
@@ -122,7 +122,6 @@ export const DataProvider = ({ children }) => {
 						item.quantity += product.quantity
 					}
 				})
-				setCart([...cart])
 			} else {
 				// Thêm sản phẩm mới
 				cart.push(product)

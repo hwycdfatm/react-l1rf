@@ -11,8 +11,7 @@ import Header from './Blocks/Header/Header'
 import Footer from './Blocks/Footer/Footer'
 
 import Home from './Pages/Home/Home'
-import ForgortPassword from './Pages/ForgortPassword/ForgortPassword'
-import ChangePassword from './Pages/ChangePassword/ChangePassword'
+
 import ProtectedRoute from '../routes/ProtectedRoute'
 import AdminRoute from '../routes/AdminRoute'
 
@@ -27,6 +26,13 @@ import Register from './Pages/Register/Register'
 import SidebarAdmin from './AdminPages/SidebarAdmin'
 import Loading from '../utils/Loading'
 
+const ForgortPassword = lazy(() =>
+	import('./Pages/ForgortPassword/ForgortPassword')
+)
+const ChangePassword = lazy(() =>
+	import('./Pages/ChangePassword/ChangePassword')
+)
+const ResetPassword = lazy(() => import('./Pages/ResetPassword/ResetPassword'))
 const Orders = lazy(() => import('./AdminPages/Orders'))
 const DashBoard = lazy(() => import('./AdminPages/DashBoard'))
 const CategoryAdmin = lazy(() => import('./AdminPages/CategoryAdmin'))
@@ -72,8 +78,13 @@ const Layout = () => {
 						<Route exact path="/login" component={Login} />
 						<Route exact path="/register" component={Register} />
 						<Route exact path="/dieu-khoan" component={Privacy} />
+						<Route exact path="/user/reset/:token" component={ResetPassword} />
 						<Route exact path="/quen-mat-khau" component={ForgortPassword} />
-						<Route exact path="/doi-mat-khau" component={ChangePassword} />
+						<ProtectedRoute
+							exact
+							path="/doi-mat-khau"
+							component={ChangePassword}
+						/>
 						<ProtectedRoute exact path="/cart" component={Cart} />
 						<ProtectedRoute exact path="/user" component={User} />
 						<AdminRoute exact path="/products" component={CategoryAdmin} />

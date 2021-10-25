@@ -58,6 +58,14 @@ const userAPI = {
 			{ headers: { Authorization: token } }
 		)
 	},
+	resetPassword: ({ token, password }) => {
+		const url = '/user/reset-password'
+		return axiosAPI.post(
+			url,
+			{ password },
+			{ headers: { Authorization: token } }
+		)
+	},
 	updateRoleAndActivate: ({ token, role, activate, _id }) => {
 		const url = `/user/${_id}`
 		return axiosAPI.patch(

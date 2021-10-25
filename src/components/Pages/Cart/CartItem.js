@@ -21,6 +21,9 @@ export default function CartItem(props) {
 						{priceParse.toLocaleString('en')} vnđ
 						<span className="ml-2 font-light">x{props.item.quantity}</span>
 					</p>
+					{/* <p className="text-gray-400 text-sm">
+						<span>Size: {size?.toUpperCase()}</span>
+					</p> */}
 				</div>
 				{!search && (
 					<div className="text-lg font-semibold">

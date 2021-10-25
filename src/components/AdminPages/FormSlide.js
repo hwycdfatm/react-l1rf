@@ -41,7 +41,7 @@ const FormSlide = ({
 	}
 	return (
 		<div
-			className={`fixed top-0 bottom-0 right-0 left-0 z-30 lg:pl-56 shadows-xl min-h-screen flex flex-col bg-white bg-opacity-90 transition duration-700 transform animation-scale scrollbar animation-down`}
+			className={`fixed top-0 bottom-0 right-0 left-0 z-50 lg:pl-56 shadows-xl min-h-screen flex flex-col bg-white bg-opacity-90 transition duration-700 transform animation-scale scrollbar animation-down`}
 		>
 			<div className="p-3">
 				<div className="w-full h-60v">

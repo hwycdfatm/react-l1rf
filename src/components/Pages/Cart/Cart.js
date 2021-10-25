@@ -93,9 +93,12 @@ const Cart = () => {
 								Bạn ơi giỏ hàng đang trống bạn hãy mua đồ nhé !! 🤔
 							</div>
 						)}
-						<Link to={'/'} className="flex text-gray-700 dark:text-white">
+						<Link
+							to={'/'}
+							className="flex text-gray-700 items-center space-x-2 dark:text-white"
+						>
 							<svg
-								className="w-6 h-6"
+								className="w-5 h-5"
 								fill="none"
 								stroke="currentColor"
 								viewBox="0 0 24 24"
@@ -108,7 +111,7 @@ const Cart = () => {
 									d="M10 19l-7-7m0 0l7-7m-7 7h18"
 								/>
 							</svg>
-							<h3>Tiếp tục mua hàng</h3>
+							<p>Tiếp tục mua hàng</p>
 						</Link>
 					</div>
 					<div className="col-span-12 sm:col-span-12 md:col-span-5 lg:col-span-4 2xl:col-span-4">
