@@ -161,8 +161,8 @@ const Detail = () => {
 								))
 							)}
 						</div>
-
-						{/* {product.size?.length > 0 && (
+						{/* 
+						{product.size?.length > 0 && (
 							<div className="flex flex-col mt-6">
 								<span>Size</span>
 								<div className="flex flex-wrap w-full max-w-sm mx-auto md:mx-0">

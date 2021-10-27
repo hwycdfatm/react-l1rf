@@ -6,6 +6,7 @@ import { useDetectOutsideClick } from '../../utils/useDetectOutsideClick'
 
 const CategoryAdmin = () => {
 	const { token, categories } = useContext(GlobalState)
+
 	const [productList, setProductList] = useState([])
 
 	const [product, setProduct] = useState({})
@@ -67,6 +68,7 @@ const CategoryAdmin = () => {
 			? document.body.classList.add('overflow-hidden')
 			: document.body.classList.remove('overflow-hidden')
 	}, [visible])
+
 	const handleShowFormEdit = (id) => {
 		if (!visible) {
 			setVisible(true)

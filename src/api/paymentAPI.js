@@ -9,7 +9,10 @@ const paymentApi = {
 		const url = '/payment'
 		return axiosAPI.get(url, { headers: { Authorization: token } })
 	},
-
+	getDataPayment: ({ token, _from, _to }) => {
+		const url = `/payment/dataofpayment?_from=${_from}&_to=${_to}`
+		return axiosAPI.get(url, { headers: { Authorization: token } })
+	},
 	getAllPayments: ({ token }) => {
 		const url = '/payment/admin'
 		return axiosAPI.get(url, { headers: { Authorization: token } })

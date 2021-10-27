@@ -9,6 +9,7 @@ import userPNG from '../../images/user.png'
 import trashPNG from '../../images/delete.png'
 import categoryPNG from '../../images/categoryicon.png'
 import SlideShowPNG from '../../images/slideshow.png'
+import ProfilePNG from '../../images/profile.png'
 const SidebarAdmin = (props) => {
 	const { logout } = useContext(GlobalState)
 	const { handleSidebar, open } = props.option
@@ -70,6 +71,15 @@ const SidebarAdmin = (props) => {
 						<span>Trang chủ</span>
 					</NavLink>
 					<NavLink
+						to="/accesst"
+						onClick={handleSidebar}
+						className="flex items-center space-x-2 h-10 px-2 rounded-md transition duration-300 hover:bg-green-300 bg-opacity-60 text-sm font-semibold"
+						activeClassName="bg-green-300 bg-opacity-60 dark:bg-gray-900 dark:text-white"
+					>
+						<img src={ProfilePNG} alt="" className="w-5 h-5" />
+						<span>Thông tin cơ bản</span>
+					</NavLink>
+					<NavLink
 						to="/products"
 						onClick={handleSidebar}
 						className="flex items-center space-x-2 h-10 px-2 rounded-md transition duration-300 hover:bg-green-300 bg-opacity-60 text-sm font-semibold"
@@ -128,7 +138,7 @@ const SidebarAdmin = (props) => {
 							<div className="w-full flex items-center justify-between space-x-2 h-10 px-2 rounded-md text-sm font-semibold">
 								<div className="flex space-x-2">
 									<img src={trashPNG} alt="" className="w-5 h-5" />
-									<span>BTS</span>
+									<span>Sọt rác</span>
 								</div>
 								<div
 									className={`transform ${

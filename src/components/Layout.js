@@ -33,6 +33,7 @@ const ChangePassword = lazy(() =>
 	import('./Pages/ChangePassword/ChangePassword')
 )
 const ResetPassword = lazy(() => import('./Pages/ResetPassword/ResetPassword'))
+const About = lazy(() => import('./Pages/About/About'))
 const Orders = lazy(() => import('./AdminPages/Orders'))
 const DashBoard = lazy(() => import('./AdminPages/DashBoard'))
 const CategoryAdmin = lazy(() => import('./AdminPages/CategoryAdmin'))
@@ -44,6 +45,7 @@ const CategoryManager = lazy(() => import('./AdminPages/CategoryManager'))
 const SliderManager = lazy(() => import('./AdminPages/SliderManager'))
 const Privacy = lazy(() => import('./Pages/Privacy/Privacy'))
 const Error = lazy(() => import('./Pages/Error/Error'))
+const Assect = lazy(() => import('./AdminPages/Assect'))
 const Layout = () => {
 	const { admin } = useContext(GlobalState)
 	const [open, setOpen] = useState(false)
@@ -78,6 +80,7 @@ const Layout = () => {
 						<Route exact path="/login" component={Login} />
 						<Route exact path="/register" component={Register} />
 						<Route exact path="/dieu-khoan" component={Privacy} />
+						<Route exact path="/about-us" component={About} />
 						<Route exact path="/user/reset/:token" component={ResetPassword} />
 						<Route exact path="/quen-mat-khau" component={ForgortPassword} />
 						<ProtectedRoute
@@ -98,6 +101,7 @@ const Layout = () => {
 						<AdminRoute exact path="/orders" component={Orders} />
 						<AdminRoute exact path="/allusers" component={AllUsers} />
 						<AdminRoute exact path="/slideshow" component={SliderManager} />
+						<AdminRoute exact path="/accesst" component={Assect} />
 						<Route path="*" component={Error} />
 					</Switch>
 				</Suspense>

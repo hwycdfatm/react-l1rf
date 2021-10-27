@@ -10,6 +10,32 @@ const DashBoard = () => {
 	const [totalProducts, setTotalProducts] = useState(0)
 	const [totalPayment, setTotalPayment] = useState(0)
 	const [totalIncome, setTotalIncome] = useState(0)
+	const [getDate, setGetDate] = useState(new Date().toJSON().slice(0, 10))
+	const [toDate, setToDate] = useState(
+		new Date(new Date().getTime() + 24 * 60 * 60 * 1000).toJSON().slice(0, 10)
+	)
+	const [dataPayment, setDataPayment] = useState({
+		labels: ['1', '2', '3', '4', '5', '6', '7'],
+		datasets: [
+			{
+				label: 'Biểu đồ bán hàng',
+				data: [],
+
+				borderColor: [
+					'rgba(255, 99, 132, 1)',
+					'rgba(54, 162, 235, 1)',
+					'rgba(255, 206, 86, 1)',
+					'rgba(75, 192, 192, 1)',
+					'rgba(153, 102, 255, 1)',
+					'rgba(255, 159, 64, 1)',
+				],
+				borderWidth: 3,
+			},
+		],
+		option: {
+			responsive: true,
+		},
+	})
 	const [users, setUsers] = useState('')
 	useEffect(() => {
 		async function fetchTotalProducts() {
@@ -32,28 +58,28 @@ const DashBoard = () => {
 		fetchTotalPayment()
 		fetchTotalProducts()
 	}, [token])
-	const data = {
-		labels: ['1', '2', '3', '4', '5', '6', '7'],
-		datasets: [
-			{
-				label: 'Biểu đồ bán hàng',
-				data: [12, 19, 3, 5, 2, 3, 100],
 
-				borderColor: [
-					'rgba(255, 99, 132, 1)',
-					'rgba(54, 162, 235, 1)',
-					'rgba(255, 206, 86, 1)',
-					'rgba(75, 192, 192, 1)',
-					'rgba(153, 102, 255, 1)',
-					'rgba(255, 159, 64, 1)',
-				],
-				borderWidth: 3,
-			},
-		],
-		option: {
-			responsive: true,
-		},
-	}
+	useEffect(() => {
+		const fetchDataPayment = async () => {
+			try {
+				const result = await paymentApi.getDataPayment({
+					token,
+					_from: getDate,
+					_to: toDate,
+				})
+
+				setDataPayment((pre) => ({
+					...pre,
+					datasets: [{ ...pre.datasets[0], data: [...result.result] }],
+				}))
+			} catch (error) {
+				console.log(error)
+			}
+		}
+
+		fetchDataPayment()
+	}, [getDate, token, toDate])
+
 	return (
 		<div className="lg:ml-56 mt-10 lg:mt-0 min-h-screen flex flex-col">
 			<section className="flex p-3 lg:p-5 flex-wrap">
@@ -175,7 +201,29 @@ const DashBoard = () => {
 			<section className="flex p-3 lg:p-5 flex-wrap">
 				<div className="w-full px-3 lg:w-8/12">
 					<div className="flex flex-col px-5 py-6 shadow-lg border rounded-lg bg-white">
-						<Line data={data} />
+						<div className="w-full flex flex-col md:flex-row md:space-x-6 md:justify-end">
+							<div className="flex items-center justify-between md:space-x-3">
+								<p className="text-sm">Từ</p>
+								<input
+									type="date"
+									value={getDate}
+									className="border border-gray-700 rounded focus:outline-none p-1"
+									onChange={(e) => setGetDate(e.target.value)}
+								/>
+							</div>
+							<div className="flex items-center justify-between md:space-x-3">
+								<p className="text-sm">Đến</p>
+								<input
+									type="date"
+									value={toDate}
+									className="border border-gray-700 rounded focus:outline-none p-1"
+									onChange={(e) => setToDate(e.target.value)}
+								/>
+							</div>
+						</div>
+						<div className="">
+							<Line data={dataPayment} />
+						</div>
 					</div>
 				</div>
 				<div className="w-full px-3 mt-7 lg:mt-0 lg:w-4/12">
