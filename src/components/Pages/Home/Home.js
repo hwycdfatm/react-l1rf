@@ -22,6 +22,7 @@ const Home = () => {
 				alert(error.message)
 			}
 		}
+
 		fetchNewProducts()
 	}, [])
 
@@ -57,15 +58,21 @@ const Home = () => {
 			</section>
 			{/* Banner hello */}
 
-			<section className="flex flex-col h-32 md:h-56 items-center justify-center bg-green-300 dark:bg-green-600 ">
-				<div className="text-white font-maven font-black">
-					<p className="text-center mb-3 text-lg lg:text-5xl">Xin chào</p>
-					<span className="lg:text-xl">Chào mừng bạn đến với l1rf store</span>
+			<section className="h-32 md:h-56 bg-white dark:bg-darkBgColor flex items-center justify-center transition-all my-5">
+				<div className="text-gray-900 font-maven flex flex-col justify-center items-center space-y-6 font-black dark:text-white">
+					<p className="text-center text-lg lg:text-5xl">Xin chào</p>
+					<span className="lg:text-2xl">Chào mừng bạn đến với l1rf store</span>
+
+					<span className="text-center lg:text-lg">
+						Shop bán hàng đầu hàng Việt Nam với đa dạng ngành hàng, đầy đủ mẫu
+						mã cho bạn thoải sức lựa chọn
+					</span>
 				</div>
 			</section>
 
 			{/* SLide Show new products */}
 			<SlideProducts
+				title="Các sản phẩm mới"
 				newProducts={newProducts}
 				show={
 					windowSize >= 1280
@@ -77,6 +84,12 @@ const Home = () => {
 						: 1
 				}
 			/>
+			<section className="lg:h-36 bg-white dark:bg-darkBgColor flex items-center justify-center transition-all my-5 px-5 lg:px-0">
+				<code className="text-xl max-w-screen-lg leading-10 bg-gray-100 p-4 bg-opacity-60">
+					Giá trị là cái bạn đã xây dựng trước khi bán hàng và trong suốt quá
+					trình hợp tác. Bạn không tăng thêm giá trị mà chỉ khẳng định giá trị.
+				</code>
+			</section>
 		</div>
 	)
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-const SlideProducts = ({ newProducts, show }) => {
+const SlideProducts = ({ newProducts, show, title }) => {
 	const [currentIndex, setCurrentIndex] = useState(0)
 
 	const [touchPosition, setTouchPosition] = useState(null)
@@ -70,11 +70,11 @@ const SlideProducts = ({ newProducts, show }) => {
 	})
 
 	return (
-		<section className="px-2 h-screen lg:h-auto lg:px-10 my-10">
+		<section className="px-2 lg:h-auto lg:px-10 my-10">
 			{/* btn next & prev */}
 			<div className="flex justify-between items-center h-16">
 				<p className="text-xl font-maven text-gray-800 dark:text-white">
-					Các sản phẩm mới
+					{title}
 				</p>
 				<div className="hidden md:flex space-x-5">
 					<button

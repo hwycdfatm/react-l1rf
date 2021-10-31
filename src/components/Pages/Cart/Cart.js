@@ -209,7 +209,7 @@ const Cart = () => {
 										<img
 											src={PayPalIcon}
 											alt="icon paypal"
-											className="w-10 h-10 rounded-lg shadow-lg object-cover"
+											className="w-10 h-10 rounded-lg shadow-lg object-cover bg-white"
 										/>
 									</label>
 								</div>

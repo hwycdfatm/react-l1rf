@@ -17,7 +17,7 @@ const Detail = () => {
 	const [fail, setFail] = useState(false)
 	const { slug } = useParams()
 	const [product, setProduct] = useState([])
-	// const [selectSize, setSelectSize] = useState('')
+	const [selectSize, setSelectSize] = useState('')
 	const [awaitAdd, setAwaitAdd] = useState(false)
 
 	const [isShowing, toggle] = useModal()
@@ -53,15 +53,16 @@ const Detail = () => {
 	}, [isShowing])
 
 	const addToCartBtn = async () => {
-		// if (product.size.length > 0 && selectSize === '')
-		// 	return alert('Vui lòng chọn size')
+		if (product.size.length > 0 && selectSize === '')
+			return alert('Vui lòng chọn size')
 		if (product.inStock === 0) return
 
 		const check = await addToCart({
 			...product,
-			// size: selectSize,
+			size: selectSize,
 			quantity: count,
 		})
+
 		if (check) {
 			setAwaitAdd(true)
 			const timeOut = setTimeout(() => setAwaitAdd(false), 900)
@@ -161,7 +162,7 @@ const Detail = () => {
 								))
 							)}
 						</div>
-						{/* 
+
 						{product.size?.length > 0 && (
 							<div className="flex flex-col mt-6">
 								<span>Size</span>
@@ -176,8 +177,8 @@ const Detail = () => {
 												className={`h-10 ${
 													size === selectSize
 														? 'border-gray-700 bg-black text-white'
-														: 'border-gray-200 bg-white'
-												} border w-full flex rounded-md justify-center items-center transition-all bg-opacity-90`}
+														: 'border-gray-200 bg-white dark:text-black'
+												} border  w-full flex rounded-md justify-center items-center transition-all bg-opacity-90`}
 											>
 												<input
 													type="radio"
@@ -194,7 +195,7 @@ const Detail = () => {
 									))}
 								</div>
 							</div>
-						)} */}
+						)}
 						<div className="flex items-center space-x-4 mt-6">
 							<span>Số lượng</span>
 							<div className="flex bg-gray-100 dark:text-gray-800 rounded items-center overflow-hidden">

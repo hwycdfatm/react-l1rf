@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 
 const SlideShow = ({ sliderData, button, dots, children }) => {
 	const [activeSlide, setActiveSlide] = useState(0)
@@ -17,32 +17,99 @@ const SlideShow = ({ sliderData, button, dots, children }) => {
 			}
 		}
 	})
+
+	const [touchPosition, setTouchPosition] = useState(null)
+
+	const slideRef = useRef(null)
+
+	const handleTouchStart = (e) => {
+		const touchDown = e.touches[0].clientX
+
+		setTouchPosition(touchDown)
+	}
+
+	const handleTouchEnd = () => {
+		document.body.style.overflow = 'scroll'
+	}
+
+	const handleTouchMove = (e) => {
+		const touchDown = touchPosition
+
+		if (touchDown === null) {
+			return
+		}
+
+		const currentTouch = e.touches[0].clientX
+
+		const diff = touchDown - currentTouch
+
+		if (diff > 10) {
+			document.body.style.overflow = 'hidden'
+			if (activeSlide === 0) {
+				setActiveSlide(sliderData.length - 1)
+			} else {
+				setActiveSlide(activeSlide - 1)
+			}
+		}
+
+		if (diff < -10) {
+			document.body.style.overflow = 'hidden'
+			if (activeSlide < sliderData.length - 1) {
+				setActiveSlide(activeSlide + 1)
+			} else {
+				setActiveSlide(0)
+			}
+		}
+
+		setTouchPosition(null)
+	}
+
+	useEffect(() => {
+		const slide = slideRef.current
+		slide.addEventListener('touchstart', handleTouchStart, { passive: false })
+		slide.addEventListener('touchmove', handleTouchMove, { passive: false })
+		slide.addEventListener('touchend', handleTouchEnd, { passive: false })
+		return () => {
+			slide.removeEventListener('touchstart', handleTouchStart, {
+				passive: false,
+			})
+			slide.removeEventListener('touchmove', handleTouchMove, {
+				passive: false,
+			})
+			slide.removeEventListener('touchend', handleTouchEnd, { passive: false })
+		}
+	})
+
 	return (
 		<section className="h-full w-full flex relative overflow-hidden">
-			{sliderData.map((slide, index) => (
-				<div
-					key={index}
-					style={{ transition: '.9s ease-in-out' }}
-					className={`h-screen w-full absolute ${
-						index === activeSlide ? 'opacity-100' : 'opacity-0'
-					}`}
-				>
-					<img
-						src={slide.image.url}
-						alt=""
-						className="w-full h-full object-cover"
-					/>
-				</div>
-			))}
+			<div ref={slideRef}>
+				{sliderData.map((slide, index) => (
+					<div
+						key={index}
+						style={{ transition: '.9s ease-in-out' }}
+						className={`h-screen w-full absolute ${
+							index === activeSlide ? 'opacity-100' : 'opacity-0'
+						}`}
+					>
+						<img
+							src={slide.image.url}
+							alt=""
+							className="w-full h-full object-cover"
+						/>
+					</div>
+				))}
+			</div>
 			{dots && (
 				<div className="absolute bottom-10 w-full">
-					<div className="mx-auto w-max h-6 space-x-3 z-10 flex items-center px-3 bg-white rounded-full shadow-lg bg-opacity-70">
+					<div className="mx-auto w-max h-6 space-x-3 z-10 flex items-center px-3 bg-transaprent rounded-full bg-opacity-70">
 						{sliderData.map((slide, index) => (
 							<button
 								key={index}
 								onClick={() => setActiveSlide(index)}
 								className={` ${
-									index === activeSlide ? 'w-16 bg-gray-600' : 'w-7 bg-gray-300'
+									index === activeSlide
+										? 'w-10 lg:w-16 bg-gray-600'
+										: 'w-3 lg:w-6 bg-gray-300'
 								} h-3 rounded-full transition-all duration-500`}
 							/>
 						))}

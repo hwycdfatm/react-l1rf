@@ -54,12 +54,14 @@ const Pagination = (props) => {
 
 	return (
 		<div className="flex flex-col items-center my-8 justify-center">
-			<div className="flex text-gray-500 space-x-6">
+			<div className="flex text-gray-600 dark:text-gray-100 space-x-6">
 				<div className="flex space-x-3">
 					<button
 						onClick={() => firstPage()}
 						className={`w-6 h-8 rounded ${
-							currentPage === 1 ? 'text-gray-300' : 'text-gray-800'
+							currentPage === 1
+								? 'text-gray-300 dark:text-gray-800'
+								: 'text-gray-800 dark:text-gray-300'
 						}`}
 					>
 						<svg
@@ -80,7 +82,9 @@ const Pagination = (props) => {
 					<button
 						onClick={prePage}
 						className={`w-6 h-8 rounded ${
-							currentPage === 1 ? 'text-gray-300' : 'text-gray-800'
+							currentPage === 1
+								? 'text-gray-300 dark:text-gray-800'
+								: 'text-gray-800 dark:text-gray-300'
 						}`}
 					>
 						<svg
@@ -107,8 +111,8 @@ const Pagination = (props) => {
 								scrollToTop()
 								history.push(`/category/${props.slug}?_page=${page}`)
 							}}
-							className={`w-6 h-8 rounded text-center font-bold bg-opacity-70 hover:bg-green-100 ${
-								page === currentPage ? 'bg-green-300' : ''
+							className={`w-6 h-8 rounded text-center font-bold bg-opacity-70 hover:bg-gray-700 ${
+								page === currentPage ? 'bg-gray-800 text-gray-100' : ''
 							}`}
 						>
 							{page}
@@ -119,7 +123,9 @@ const Pagination = (props) => {
 					<button
 						onClick={nextPage}
 						className={`w-6 h-8 rounded ${
-							currentPage === page.length ? 'text-gray-300' : 'text-gray-800'
+							currentPage === page.length
+								? 'text-gray-300 dark:text-gray-800'
+								: 'text-gray-800 dark:text-gray-300'
 						}`}
 					>
 						<svg
@@ -140,7 +146,9 @@ const Pagination = (props) => {
 					<button
 						onClick={() => lastPage()}
 						className={`w-6 h-8 rounded ${
-							currentPage === page.length ? 'text-gray-300' : 'text-gray-800'
+							currentPage === page.length
+								? 'text-gray-300 dark:text-gray-800'
+								: 'text-gray-800 dark:text-gray-300'
 						}`}
 					>
 						<svg

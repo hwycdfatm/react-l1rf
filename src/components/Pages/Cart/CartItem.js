@@ -1,7 +1,7 @@
 import React from 'react'
 export default function CartItem(props) {
 	const search = props.search || null
-	const { images, price, title, _id } = props.item
+	const { images, price, title, size } = props.item
 	const priceParse = parseInt(price)
 
 	return (
@@ -15,20 +15,22 @@ export default function CartItem(props) {
 			</div>
 			<div className="flex flex-1 justify-between items-center">
 				<div className="text-base font-semibold">
-					<p>{title}</p>
+					<p>{title?.toUpperCase()}</p>
 
 					<p className="text-gray-400 text-sm">
 						{priceParse.toLocaleString('en')} vnđ
 						<span className="ml-2 font-light">x{props.item.quantity}</span>
 					</p>
-					{/* <p className="text-gray-400 text-sm">
-						<span>Size: {size?.toUpperCase()}</span>
-					</p> */}
+					{size && (
+						<p className="text-gray-400 text-sm">
+							<span>Size: {size?.toUpperCase()}</span>
+						</p>
+					)}
 				</div>
 				{!search && (
 					<div className="text-lg font-semibold">
 						<button
-							onClick={() => props.removeProduct(_id)}
+							onClick={() => props.removeProduct(props.item)}
 							className="focus:outline-none font-bold py-2 px-2 rounded-full inline-flex items-center "
 						>
 							<svg

@@ -112,21 +112,40 @@ export const DataProvider = ({ children }) => {
 	const addToCart = async (product) => {
 		try {
 			if (!login) return false
-			// Thêm vào giỏ hàng
+			// // Thêm vào giỏ hàng
+			// const productAvailable = cart.every((item) => item._id !== product._id)
+			// if (!productAvailable) {
+			// 	// Cập nhật số lượng sản phẩm
+			// 	cart.forEach((item) => {
+			// 		if (item._id === product._id) {
+			// 			item.quantity += product.quantity
+			// 		}
+			// 	})
+			// } else {
+			// 	// Thêm sản phẩm mới
+			// 	cart.push(product)
+			// 	setCart([...cart])
+			// }
 
-			const productAvailable = cart.every((item) => item._id !== product._id)
-			if (!productAvailable) {
-				// Cập nhật số lượng sản phẩm
-				cart.forEach((item) => {
-					if (item._id === product._id) {
-						item.quantity += product.quantity
-					}
-				})
-			} else {
-				// Thêm sản phẩm mới
+			if (cart.length === 0) {
 				cart.push(product)
-				setCart([...cart])
+			} else {
+				let flag
+				for (let i = 0; i < cart.length; i++) {
+					if (cart[i]._id === product._id && cart[i].size === product.size) {
+						cart[i].quantity += product.quantity
+						flag = false
+						break
+					} else {
+						flag = true
+					}
+				}
+				if (flag) {
+					cart.push(product)
+				}
 			}
+
+			setCart([...cart])
 			// Add to cart
 			const result = await userAPI.handleCart(cart, token)
 			if (result.status === 'Success') {
@@ -137,9 +156,9 @@ export const DataProvider = ({ children }) => {
 		}
 	}
 
-	const removeProduct = async (id) => {
-		setCart([...cart.filter((e) => e._id !== id)])
-		await userAPI.handleCart([...cart.filter((e) => e._id !== id)], token)
+	const removeProduct = async (product) => {
+		setCart([...cart.filter((e) => e !== product)])
+		await userAPI.handleCart([...cart.filter((e) => e !== product)], token)
 	}
 
 	return (
