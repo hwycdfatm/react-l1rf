@@ -65,14 +65,14 @@ const User = () => {
 			</Helmet>
 			<div className="flex flex-wrap">
 				<div className="w-full md:w-4/12 xl:w-3/12 md:pr-3">
-					<div className="flex flex-col p-4 font-maven bg-white border rounded-lg">
+					<div className="flex flex-col p-4 font-maven bg-white dark:bg-darkBgColor dark:text-white border rounded-lg transition-all">
 						<div>
 							<img
 								src="https://vietwebgroup.vn/admin/uploads/wibu-la-gi-nguon-goc-cua-wibu.png"
 								alt=""
 							/>
 						</div>
-						<p>Thông tin cá nhân</p>
+						<p className="mt-2">Thông tin cá nhân</p>
 						{updateProfile ? (
 							<div className="flex flex-col font-sm space-y-2 mt-2">
 								<span>Tên:</span>
@@ -81,7 +81,7 @@ const User = () => {
 									onChange={(e) => {
 										setUserTemp({ ...userTemp, name: e.target.value })
 									}}
-									className="border text-base rounded py-1 px-2 outline-none focus:outline-none focus:shadow-outline"
+									className="border text-base rounded py-1 px-2 outline-none focus:outline-none focus:shadow-outline bg-white dark:bg-transparent transition-all"
 									type="text"
 								/>
 								<span>Địa chỉ: </span>
@@ -90,7 +90,7 @@ const User = () => {
 									onChange={(e) => {
 										setUserTemp({ ...userTemp, address: e.target.value })
 									}}
-									className="border text-base rounded py-1 px-2 outline-none focus:outline-none focus:shadow-outline"
+									className="border text-base rounded py-1 px-2 outline-none focus:outline-none focus:shadow-outline bg-white dark:bg-transparent transition-all"
 									type="text"
 								/>
 								<span>Số điện thoại</span>
@@ -99,7 +99,7 @@ const User = () => {
 									onChange={(e) => {
 										setUserTemp({ ...userTemp, phone: e.target.value })
 									}}
-									className="border text-base rounded py-1 px-2 outline-none focus:outline-none focus:shadow-outline"
+									className="border text-base rounded py-1 px-2 outline-none focus:outline-none focus:shadow-outline bg-white dark:bg-transparent transition-all"
 									type="text"
 								/>
 							</div>

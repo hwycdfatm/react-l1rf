@@ -77,7 +77,7 @@ const Cart = () => {
 			<Helmet>
 				<title>Giỏ hàng</title>
 			</Helmet>
-			<div className=" h-full md:h-screen bg-transparent rounded-lg ">
+			<div className=" h-full md:min-h-screen bg-transparent rounded-lg">
 				<div className="grid grid-cols-12 gap-2 lg:gap-4 xl:gap-5">
 					<div className="col-span-12 sm:col-span-12 md:col-span-7 lg:col-span-8 2xl:col-span-8">
 						{cart.length >= 1 ? (
@@ -95,7 +95,7 @@ const Cart = () => {
 						)}
 						<Link
 							to={'/'}
-							className="flex text-gray-700 items-center space-x-2 dark:text-white"
+							className="flex text-gray-700 items-center space-x-2 dark:text-white py-3"
 						>
 							<svg
 								className="w-5 h-5"
@@ -218,7 +218,7 @@ const Cart = () => {
 
 						<div
 							onClick={handleCheckOut}
-							className="bg-green-400 cursor-pointer py-4 border-2 border-green-400 text-center text-white hover:text-green-400 font-bold  px-4 rounded-lg my-4 hover:bg-white dark:hover:bg-black"
+							className="bg-green-400 cursor-pointer py-4 border-2 border-green-400 text-center text-white hover:text-green-400 font-bold  px-4 rounded-lg my-4 hover:bg-white dark:hover:bg-darkBgColor"
 						>
 							Tiến hành thanh toán
 						</div>

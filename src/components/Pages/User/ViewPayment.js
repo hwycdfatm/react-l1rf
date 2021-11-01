@@ -8,7 +8,7 @@ const ViewPayment = ({ list }) => {
 				list.map((payment) => (
 					<div
 						key={payment.paymentID}
-						className="flex flex-col overflow-hidden font-maven bg-gray-100 bg-opacity-50 p-2"
+						className="flex flex-col overflow-hidden font-maven bg-gray-100 dark:bg-darkHeaderColor transition-all bg-opacity-50 p-2"
 					>
 						<div className="items-center h-6 flex justify-between">
 							<span className="text-sm md:text-base">#{payment.paymentID}</span>
@@ -53,7 +53,7 @@ const ViewPayment = ({ list }) => {
 					</div>
 				))
 			) : (
-				<div className="flex items-center justify-center overflow-hidden font-maven bg-gray-100 bg-opacity-50 h-20">
+				<div className="flex items-center justify-center overflow-hidden font-maven bg-gray-100 dark:bg-darkBgColor bg-opacity-50 h-20">
 					<span>Không có đơn hàng nào hết trơn</span>
 				</div>
 			)}

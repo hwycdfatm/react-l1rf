@@ -1,11 +1,24 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import FacebookIcon from '../../../images/facebook.png'
 import InstgramIcon from '../../../images/instagram.png'
 import TwitterIcon from '../../../images/twitter.png'
 import { GlobalState } from '../../../GlobalState'
+import assectAPI from '../../../api/assectAPI'
 const Footer = () => {
 	const { categories } = useContext(GlobalState)
+	const [assect, setAssect] = useState({})
+	useEffect(() => {
+		const fetchAssect = async () => {
+			try {
+				const result = await assectAPI.get()
+				setAssect(result.data[0])
+			} catch (error) {
+				console.log(error)
+			}
+		}
+		fetchAssect()
+	}, [])
 	return (
 		<section className="relative border-t dark:border-transparent pt-8 pb-6 bg-transparent dark:bg-darkHeaderColor transition-all dark:text-white">
 			<div className="container mx-auto px-4">
@@ -17,10 +30,10 @@ const Footer = () => {
 						<h5 className="text-lg mt-0 mb-5">
 							Mua những món đồ xinh đẹp với giá cả phải chăngggg
 						</h5>
-						<div className="flex space-x-6 mb-10">
+						<div className="flex space-x-6 mb-5">
 							<a
 								className="h-10 w-10 rounded-full overflow-hidden border"
-								href="https://facebook.com/mai.tritoann"
+								href={assect.fb}
 								target="_blank"
 								rel="noreferrer"
 							>
@@ -28,7 +41,7 @@ const Footer = () => {
 							</a>
 							<a
 								className="h-10 w-10 rounded-full overflow-hidden border"
-								href="https://instagram.com/hwycdfatm"
+								href={assect.instagram}
 								target="_blank"
 								rel="noreferrer"
 							>
@@ -36,11 +49,21 @@ const Footer = () => {
 							</a>
 							<a
 								className="h-10 w-10 rounded-full overflow-hidden border"
-								href="https://facebook.com/mai.tritoann"
+								href={assect.twitter}
 								target="_blank"
 								rel="noreferrer"
 							>
 								<img src={TwitterIcon} alt="Twitter của toàn" />
+							</a>
+						</div>
+						<div className="mb-5 lg:mb-0">
+							<a
+								target="_blank"
+								rel="noreferrer"
+								href="https://goo.gl/maps/49UqG5VJJJFNegDh7"
+								className="text-sm font-medium font-maven"
+							>
+								Địa chỉ: {assect.address}
 							</a>
 						</div>
 					</div>
@@ -78,7 +101,7 @@ const Footer = () => {
 									<li>
 										<a
 											className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
-											href="mailto:mai.tritoan7102@gmail.com"
+											href={`mailto:${assect.email}`}
 										>
 											Email góp ý
 										</a>
@@ -86,7 +109,7 @@ const Footer = () => {
 									<li>
 										<a
 											className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
-											href="tel:0339331767"
+											href={`tel:${assect.phone}`}
 										>
 											Hotline phản ánh
 										</a>
@@ -116,7 +139,7 @@ const Footer = () => {
 				<hr className="my-6 border-blueGray-300" />
 				<div className="flex flex-wrap items-center md:justify-between justify-center">
 					<div className="w-full md:w-4/12 px-4 mx-auto text-center">
-						<div className="text-sm text-blueGray-500 font-semibold py-1">
+						<div className="text-sm text-blueGray-500 font-semibold py-1 tracking-widest">
 							Copyright © 2021 by Mai Trí Toàn I Tờ .
 						</div>
 					</div>

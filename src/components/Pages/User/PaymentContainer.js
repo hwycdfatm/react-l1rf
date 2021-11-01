@@ -41,7 +41,7 @@ const Tabs = ({ paymentList, load }) => {
 						<button
 							key={index}
 							onClick={() => setOpenTab(index)}
-							className={`flex w-1/4 flex-col-reverse p-1 items-center justify-center rounded-lg bg-white md:border ${
+							className={`flex w-1/4 flex-col-reverse p-1 items-center justify-center rounded-lg bg-white dark:bg-darkBgColor transition-all md:border ${
 								index === openTab
 									? 'text-green-400 xs:text-white xs:bg-green-500'
 									: ''
@@ -68,7 +68,7 @@ const Tabs = ({ paymentList, load }) => {
 					))}
 				</div>
 				{/* Shows */}
-				<div className="bg-white mx-2">
+				<div className="bg-white dark:bg-darkBgColor dark:text-white transition-all mx-2">
 					{load ? (
 						<PaymentSkeleton />
 					) : openTab === 0 ? (

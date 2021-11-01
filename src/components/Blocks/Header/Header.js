@@ -82,24 +82,24 @@ const Header = () => {
 							</button>
 
 							{isActive && (
-								<div className="absolute top-14 right-0 w-40 rounded-md shadow-md bg-white dark:bg-gray-700 transform origin-top animation-down">
+								<div className="absolute top-14 right-0 w-40 rounded-md shadow-md bg-white dark:bg-darkHeaderColor transform origin-top animation-down">
 									<div className="flex flex-col p-1 font-medium ">
 										<Link
 											to="/user"
-											className="text-left font-medium text-sm hover:bg-gray-300 rounded-md p-2"
+											className="text-left font-medium text-sm hover:bg-gray-300 dark:hover:bg-gray-600 rounded-md p-2"
 										>
 											Thông tin cá nhân
 										</Link>
 										<Link
 											to="/doi-mat-khau"
-											className="text-left font-medium text-sm hover:bg-gray-300 rounded-md p-2"
+											className="text-left font-medium text-sm hover:bg-gray-300 dark:hover:bg-gray-600 rounded-md p-2"
 										>
 											Thay đổi mật khẩu
 										</Link>
 										<Link
 											to="/"
 											onClick={logout}
-											className="text-left font-medium text-sm hover:bg-gray-300 rounded-md p-2"
+											className="text-left font-medium text-sm hover:bg-gray-300 dark:hover:bg-gray-600 rounded-md p-2"
 										>
 											Đăng xuất
 										</Link>
