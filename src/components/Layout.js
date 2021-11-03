@@ -68,8 +68,8 @@ const Layout = () => {
 			)}
 			<div
 				className={`${
-					!admin ? 'pt-16' : 'min-h-screen'
-				} bg-white relative overflow-hidden font-noto w-full dark:bg-darkBgColor transition-all`}
+					!admin ? 'pt-16 dark:bg-darkBgColor' : 'min-h-screen '
+				} bg-white relative overflow-hidden font-noto w-full  transition-all`}
 			>
 				<Suspense fallback={<Loading />}>
 					<Switch>

@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
 import paymentAPI from '../../../api/paymentAPI'
+import assectAPI from '../../../api/assectAPI'
 import PaypalBtn from './PaypalBtn'
 import { GlobalState } from '../../../GlobalState'
 import { Helmet } from 'react-helmet-async'
 
-import axios from 'axios'
 const Checkout = ({ order, method, total, setCheckout, quantity }) => {
 	const { token, setCart, user } = useContext(GlobalState)
 
@@ -15,10 +15,8 @@ const Checkout = ({ order, method, total, setCheckout, quantity }) => {
 
 	useEffect(() => {
 		const getCurrencyConverter = async () => {
-			const result = await axios.get(
-				'https://free.currconv.com/api/v7/convert?q=VND_USD&compact=ultra&apiKey=ab40abe35a686c41d81c'
-			)
-			setTotalPaypal(Math.floor(result.data.VND_USD * total))
+			const result = await assectAPI.get()
+			setTotalPaypal(Math.floor(result.data[0].rateVNtoUSD * total))
 			setShow(true)
 		}
 		method === 'paypal' && getCurrencyConverter()
@@ -69,8 +67,8 @@ const Checkout = ({ order, method, total, setCheckout, quantity }) => {
 			<Helmet>
 				<title>Checkout</title>
 			</Helmet>
-			<div className="mx-6 my-2 flex justify-between">
-				<p className="text-xl text-left">Check Out</p>
+			<div className="mx-6 my-2 flex justify-between text-gray-800 dark:text-white font-maven">
+				<p className="text-xl text-left ">Check Out</p>
 				<button
 					onClick={() => setCheckout(false)}
 					className="flex items-center"
@@ -89,32 +87,42 @@ const Checkout = ({ order, method, total, setCheckout, quantity }) => {
 							d="M15 19l-7-7 7-7"
 						/>
 					</svg>
-					<span>Trở về</span>
+					<span className="font-maven">Trở về</span>
 				</button>
 			</div>
 			<div className="flex flex-col space-y-6 md:space-y-0 md:flex-row md:space-x-4 mx-6 my-3 lg:space-x-8">
-				<div className="rounded-lg border shadow-lg p-5 w-full bg-white lg:w-7/12">
-					<h1 className="text-lg font-semibold ">Thông tin khách hàng</h1>
-					<div className="pl-3 mt-2 space-y-1">
-						<p className="text-base text-gray-600">{name}</p>
-						<p className="text-base text-gray-600">{email}</p>
-						<p className="text-base text-gray-600">{phone}</p>
-						<p className="text-base text-gray-600">{address}</p>
+				<div className="rounded-lg border shadow-lg p-5 w-full bg-white dark:bg-darkBgColor transition-all lg:w-7/12">
+					<h1 className="text-lg font-semibold font-maven dark:text-gray-100">
+						Thông tin khách hàng
+					</h1>
+					<div className="pl-3 mt-2 space-y-1 transition-all">
+						<p className="text-base text-gray-600 dark:text-gray-100 font-maven">
+							{name}
+						</p>
+						<p className="text-base text-gray-600 dark:text-gray-100 font-maven">
+							{email}
+						</p>
+						<p className="text-base text-gray-600 dark:text-gray-100 font-maven">
+							{phone}
+						</p>
+						<p className="text-base text-gray-600 dark:text-gray-100 font-maven">
+							{address}
+						</p>
 					</div>
 				</div>
-				<div className="rounded-lg border shadow-lg p-5 w-full bg-white lg:w-5/12">
+				<div className="rounded-lg border shadow-lg p-5 w-full bg-white dark:bg-darkBgColor transition-all lg:w-5/12">
 					<div className="px-3 flex flex-col space-y-4">
-						<div className="text-base text-gray-600 w-full">
+						<div className="text-base text-gray-600 dark:text-gray-100 transition-all w-full">
 							<span>Phương thức thanh toán:</span>
 							<p className="text-lg ml-3">{String(method).toUpperCase()}</p>
 						</div>
-						<div className="text-base text-gray-600 w-full">
+						<div className="text-base text-gray-600 dark:text-gray-100 transition-all w-full">
 							<span>Tổng số tiền phải trả:</span>
 							<p className="text-3xl ml-3">
 								{parseInt(total).toLocaleString('en')} vnđ
 							</p>
 							{method === 'paypal' && (
-								<p className="text-gray-500 ml-3 text-sm">
+								<p className="text-gray-500 dark:text-gray-100 ml-3 transition-all text-sm">
 									({parseInt(totalPaypal).toLocaleString('en')} USD )
 								</p>
 							)}
@@ -123,13 +131,16 @@ const Checkout = ({ order, method, total, setCheckout, quantity }) => {
 				</div>
 			</div>
 			<div className="flex flex-col space-y-6 mx-6 my-4">
-				<div className="rounded-lg border shadow-lg p-5 w-full bg-white">
-					Các sản phẩm: ({quantity})
+				<div className="rounded-lg border shadow-lg p-5 w-full bg-white dark:bg-darkBgColor transition-all">
+					<span className="text-gray-700 dark:text-gray-100 font-maven">
+						Các sản phẩm: ({quantity})
+					</span>
+
 					{order &&
 						order.map((item) => (
 							<div
-								key={item._id}
-								className="bg-white py-2 px-2 border border-gray-200 rounded-lg my-4 flex overflow-hidden"
+								key={item._id + item.size}
+								className="bg-white dark:bg-darkBgColor transition-all py-2 px-2 border border-gray-200 rounded-lg my-4 flex overflow-hidden"
 							>
 								<div className="h-16 w-16 flex items-center justify-center mr-6 ">
 									<img
@@ -139,13 +150,20 @@ const Checkout = ({ order, method, total, setCheckout, quantity }) => {
 									/>
 								</div>
 								<div className="flex flex-1 justify-between items-center">
-									<div className="text-base font-semibold">
+									<div className="text-base font-semibold text-gray-800 dark:text-white">
 										<p>{item.title}</p>
 
 										<p className="text-gray-400 text-sm">
 											{parseInt(item.price).toLocaleString('en')}vnđ
 											<span className="ml-2 font-light">x{item.quantity}</span>
 										</p>
+										{item.size && (
+											<p className="text-gray-400 text-xs">
+												<span className="uppercase font-light">
+													size:{item.size}
+												</span>
+											</p>
+										)}
 									</div>
 								</div>
 							</div>

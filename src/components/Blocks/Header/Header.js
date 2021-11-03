@@ -127,7 +127,7 @@ const Header = () => {
 					{/* Dark Mode Toggle */}
 					<button
 						onClick={darkMode}
-						className="hidden justify-center items-center h-10 px-2 rounded-md lg:flex"
+						className="hidden justify-center items-center h-10 px-2 rounded-md md:flex"
 					>
 						{colorTheme === 'light' ? (
 							<svg

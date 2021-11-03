@@ -2,8 +2,10 @@ import React, { useContext, useEffect, useState } from 'react'
 import assectAPI from '../../api/assectAPI'
 import { GlobalState } from '../../GlobalState'
 import axios from 'axios'
+import LoadingBtn from '../../utils/LoadingBtn'
 const Asstect = () => {
 	const { token } = useContext(GlobalState)
+	const [loadRate, setLoadRate] = useState(false)
 	const [assect, setAssectt] = useState({
 		_id: '',
 		fb: '',
@@ -66,6 +68,7 @@ const Asstect = () => {
 
 	const handleUpdateRate = async () => {
 		try {
+			setLoadRate(true)
 			const result = await axios.get(
 				'https://free.currconv.com/api/v7/convert?q=VND_USD&compact=ultra&apiKey=ab40abe35a686c41d81c'
 			)
@@ -73,7 +76,9 @@ const Asstect = () => {
 				...prev,
 				rateVNtoUSD: result.data.VND_USD,
 			}))
+			setLoadRate(false)
 		} catch (error) {
+			setLoadRate(false)
 			console.log(error)
 		}
 	}
@@ -116,10 +121,12 @@ const Asstect = () => {
 							/>
 						</div>
 						<button
+							type="button"
+							disabled={loadRate}
 							onClick={() => handleUpdateRate()}
-							className="p-3 bg-blue-400 h-full rounded-lg text-white outline-none"
+							className={`bg-purple-400 h-12 rounded-lg text-white outline-none w-full xs:w-36`}
 						>
-							Cập nhật tỉ giá
+							{loadRate ? <LoadingBtn /> : 'Cập nhật tỉ giá'}
 						</button>
 					</div>
 					<div className="border flex flex-col overflow-hidden rounded-lg p-3">
@@ -133,7 +140,10 @@ const Asstect = () => {
 							className="outline-none font-base scrollbar"
 						></textarea>
 					</div>
-					<button className="p-3 bg-blue-400 h-full rounded-lg text-white outline-none">
+					<button
+						type="submit"
+						className="p-3 bg-blue-400 h-full rounded-lg text-white outline-none"
+					>
 						Cập nhật
 					</button>
 				</div>

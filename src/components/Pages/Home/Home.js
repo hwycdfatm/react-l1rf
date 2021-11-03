@@ -58,7 +58,7 @@ const Home = () => {
 			</section>
 			{/* Banner hello */}
 
-			<section className="bg-white dark:bg-darkBgColor flex items-center justify-center transition-all my-5">
+			<section className="bg-white dark:bg-darkBgColor flex items-center justify-center transition-all my-5 pt-5">
 				<div className="text-gray-900 font-maven flex flex-col justify-center items-center space-y-6 font-black dark:text-white">
 					<p className="text-center text-lg lg:text-5xl">Xin chào</p>
 					<span className="lg:text-2xl">Chào mừng bạn đến với l1rf store</span>

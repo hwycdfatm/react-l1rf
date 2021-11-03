@@ -74,7 +74,7 @@ const SidebarAdmin = (props) => {
 						to="/accesst"
 						onClick={handleSidebar}
 						className="flex items-center space-x-2 h-10 px-2 rounded-md transition duration-300 hover:bg-green-300 bg-opacity-60 text-sm font-semibold"
-						activeClassName="bg-green-300 bg-opacity-60 dark:bg-gray-900 dark:text-white"
+						activeClassName="bg-green-300 bg-opacity-60"
 					>
 						<img src={ProfilePNG} alt="" className="w-5 h-5" />
 						<span>Thông tin cơ bản</span>
@@ -83,7 +83,7 @@ const SidebarAdmin = (props) => {
 						to="/products"
 						onClick={handleSidebar}
 						className="flex items-center space-x-2 h-10 px-2 rounded-md transition duration-300 hover:bg-green-300 bg-opacity-60 text-sm font-semibold"
-						activeClassName="bg-green-300 bg-opacity-60 dark:bg-gray-900 dark:text-white"
+						activeClassName="bg-green-300 bg-opacity-60"
 					>
 						<img src={boxPNG} alt="" className="w-5 h-5" />
 						<span>Tất cả sản phẩm</span>
@@ -91,7 +91,7 @@ const SidebarAdmin = (props) => {
 					<NavLink
 						to="/orders"
 						onClick={handleSidebar}
-						activeClassName="bg-green-300 bg-opacity-60 dark:bg-gray-900 dark:text-white"
+						activeClassName="bg-green-300 bg-opacity-60"
 						className="flex items-center space-x-2 h-10 px-2 rounded-md transition duration-300 hover:bg-green-300 bg-opacity-60 text-sm font-semibold"
 					>
 						<img src={ticketPNG} alt="" className="w-5 h-5" />
@@ -100,7 +100,7 @@ const SidebarAdmin = (props) => {
 					<NavLink
 						to="/add"
 						onClick={handleSidebar}
-						activeClassName="bg-green-300 bg-opacity-60 dark:bg-gray-900 dark:text-white"
+						activeClassName="bg-green-300 bg-opacity-60"
 						className="flex items-center space-x-2 h-10 px-2 rounded-md transition duration-300 hover:bg-green-300 bg-opacity-60 text-sm font-semibold"
 					>
 						<img src={productPNG} alt="" className="w-5 h-5" />
@@ -109,7 +109,7 @@ const SidebarAdmin = (props) => {
 					<NavLink
 						to="/category-manager"
 						onClick={handleSidebar}
-						activeClassName="bg-green-300 bg-opacity-60 dark:bg-gray-900 dark:text-white"
+						activeClassName="bg-green-300 bg-opacity-60"
 						className="flex items-center space-x-2 h-10 px-2 rounded-md transition duration-300 hover:bg-green-300 bg-opacity-60 text-sm font-semibold"
 					>
 						<img src={categoryPNG} alt="" className="w-5 h-5" />
@@ -117,7 +117,7 @@ const SidebarAdmin = (props) => {
 					</NavLink>
 					<NavLink
 						to="/allusers"
-						activeClassName="bg-green-300 bg-opacity-60 dark:bg-gray-900 dark:text-white"
+						activeClassName="bg-green-300 bg-opacity-60"
 						onClick={handleSidebar}
 						className="flex items-center space-x-2 h-10 px-2 rounded-md transition duration-300 hover:bg-green-300 bg-opacity-60 text-sm font-semibold"
 					>
@@ -126,7 +126,7 @@ const SidebarAdmin = (props) => {
 					</NavLink>
 					<NavLink
 						to="/slideshow"
-						activeClassName="bg-green-300 bg-opacity-60 dark:bg-gray-900 dark:text-white"
+						activeClassName="bg-green-300 bg-opacity-60"
 						onClick={handleSidebar}
 						className="flex items-center space-x-2 h-10 px-2 rounded-md transition duration-300 hover:bg-green-300 bg-opacity-60 text-sm font-semibold"
 					>
