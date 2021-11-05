@@ -12,10 +12,13 @@ import Checkout from './Checkout'
 import Modal from '../../../utils/Modal/Modal'
 import useModal from '../../../utils/Modal/useModal'
 import Thanks from './Thanks'
+
+import assectAPI from '../../../api/assectAPI'
+
 const Cart = () => {
 	const { cart, removeProduct, user } = useContext(GlobalState)
 	const [tempTotal, setTempTotal] = useState(0)
-	const ship = 50000
+	const [ship, setShip] = useState(50000)
 	const total = tempTotal + ship
 	const [quantity, setQuantity] = useState(0)
 	const [methodPaid, setMethodPaid] = useState('cod')
@@ -39,6 +42,17 @@ const Cart = () => {
 		getTotal()
 	}, [cart])
 
+	useEffect(() => {
+		const fetchShip = async () => {
+			try {
+				const result = await assectAPI.get()
+				setShip(result.data[0].ship)
+			} catch (error) {
+				console.log(error)
+			}
+		}
+		fetchShip()
+	}, [])
 	const handleCheckOut = () => {
 		if (!user.address || !user.phone) return toggle()
 		if (methodPaid === '' || cart.length === 0) return
@@ -47,6 +61,7 @@ const Cart = () => {
 				'Phương thức thanh toán hiện đang bảo trì, bạn vui lòng chọn phương thức thanh toán khác nhé!!'
 			)
 		setCheckout(1)
+		window.scrollTo(0, 0)
 	}
 
 	useEffect(() => {

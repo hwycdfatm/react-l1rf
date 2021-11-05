@@ -1,5 +1,4 @@
 import React, { useContext, useState, lazy, Suspense } from 'react'
-
 import { Switch, Route } from 'react-router-dom'
 
 import { GlobalState } from '../GlobalState'

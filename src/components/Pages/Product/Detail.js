@@ -94,7 +94,7 @@ const Detail = () => {
 					content={imageMain ? imageMain : NotFoundImage}
 				></meta>
 			</Helmet>
-			<div className="flex flex-col max-w-screen-lg mx-auto px-2 xs:px-5">
+			<div className="flex flex-col max-w-screen-lg mx-auto px-2 xs:px-5 pb-10">
 				<div className="flex flex-wrap">
 					<div className="w-full sm:w-8/12 sm:mx-auto md:w-6/12 rounded-lg overflow-hidden">
 						{load ? (
@@ -265,10 +265,12 @@ const Detail = () => {
 						<Skeleton width="60%" />
 					</div>
 				) : (
-					<div
-						className="unreset pt-2 pb-10 w-full mt-10 font-maven"
-						dangerouslySetInnerHTML={{ __html: product.content }}
-					/>
+					product.content && (
+						<div
+							className="unreset pt-2 pb-10 w-full mt-10 font-maven"
+							dangerouslySetInnerHTML={{ __html: product.content }}
+						/>
+					)
 				)}
 				<Modal
 					isShowing={isShowing}

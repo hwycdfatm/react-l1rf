@@ -18,7 +18,7 @@ const AddProduct = () => {
 	const [product, setProduct] = useState({
 		title: '',
 		description: '',
-		content: 'Đây là phần content của sản phẩm',
+		content: '',
 		category: '',
 		price: '',
 		inStock: '',

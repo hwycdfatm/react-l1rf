@@ -114,7 +114,9 @@ const Checkout = ({ order, method, total, setCheckout, quantity }) => {
 					<div className="px-3 flex flex-col space-y-4">
 						<div className="text-base text-gray-600 dark:text-gray-100 transition-all w-full">
 							<span>Phương thức thanh toán:</span>
-							<p className="text-lg ml-3">{String(method).toUpperCase()}</p>
+							<p className="text-lg ml-3 uppercase font-medium">
+								{String(method).toUpperCase()}
+							</p>
 						</div>
 						<div className="text-base text-gray-600 dark:text-gray-100 transition-all w-full">
 							<span>Tổng số tiền phải trả:</span>
@@ -151,7 +153,7 @@ const Checkout = ({ order, method, total, setCheckout, quantity }) => {
 								</div>
 								<div className="flex flex-1 justify-between items-center">
 									<div className="text-base font-semibold text-gray-800 dark:text-white">
-										<p>{item.title}</p>
+										<p className="uppercase">{item.title}</p>
 
 										<p className="text-gray-400 text-sm">
 											{parseInt(item.price).toLocaleString('en')}vnđ

@@ -8,6 +8,8 @@ import { ToastContainer } from 'react-toastify'
 import ScrollToTop from './utils/ScrollToTop'
 import 'react-toastify/dist/ReactToastify.css'
 import { HelmetProvider } from 'react-helmet-async'
+import ReactGa from 'react-ga'
+
 function App() {
 	const [apiReady, setApiReady] = useState(false)
 	useEffect(() => {
@@ -21,6 +23,11 @@ function App() {
 		}
 		fetchApi()
 	}, [])
+
+	useEffect(() => {
+		ReactGa.initialize('G-PXKRRVLXMC')
+	}, [])
+
 	return (
 		<DataProvider>
 			<HelmetProvider>

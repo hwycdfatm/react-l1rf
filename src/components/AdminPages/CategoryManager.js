@@ -52,14 +52,7 @@ const CategoryManager = () => {
 							key={category._id}
 							className="flex justify-between w-full px-5 py-2 items-center border"
 						>
-							<p
-								style={{
-									color: `#${Math.floor(Math.random() * 16777215).toString(
-										16
-									)}`,
-								}}
-								className="text-4xl md:text-6xl bg-white font-bold"
-							>
+							<p className="text-4xl md:text-6xl bg-white font-bold text-purple-400">
 								{category.name}
 							</p>
 							<button
@@ -88,7 +81,7 @@ const CategoryManager = () => {
 							type="text"
 							value={valueForm}
 							onChange={(e) => setValueForm(e.target.value)}
-							className="px-3 py-2 border-gray-700 border text-2xl"
+							className="px-3 py-2 border-gray-700 border text-2xl text-purple-400"
 						/>
 						<button
 							onClick={() => submitForm()}
