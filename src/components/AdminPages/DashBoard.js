@@ -10,25 +10,18 @@ const DashBoard = () => {
 	const [totalProducts, setTotalProducts] = useState(0)
 	const [totalPayment, setTotalPayment] = useState(0)
 	const [totalIncome, setTotalIncome] = useState(0)
-	const [getDate, setGetDate] = useState(new Date().toJSON().slice(0, 10))
-	const [toDate, setToDate] = useState(
-		new Date(new Date().getTime() + 24 * 60 * 60 * 1000).toJSON().slice(0, 10)
+	const [getDate, setGetDate] = useState(
+		new Date(new Date().getTime() - 24 * 60 * 60 * 7000).toJSON().slice(0, 10)
 	)
+	const [toDate, setToDate] = useState(new Date().toJSON().slice(0, 10))
 	const [dataPayment, setDataPayment] = useState({
-		labels: ['1', '2', '3', '4', '5', '6', '7'],
+		labels: [],
 		datasets: [
 			{
-				label: 'Biểu đồ bán hàng',
+				label: 'Số hàng bán được trong ngày',
 				data: [],
 
-				borderColor: [
-					'rgba(255, 99, 132, 1)',
-					'rgba(54, 162, 235, 1)',
-					'rgba(255, 206, 86, 1)',
-					'rgba(75, 192, 192, 1)',
-					'rgba(153, 102, 255, 1)',
-					'rgba(255, 159, 64, 1)',
-				],
+				borderColor: ['rgba(255, 99, 132, 1)'],
 				borderWidth: 3,
 			},
 		],
@@ -68,9 +61,14 @@ const DashBoard = () => {
 					_to: toDate,
 				})
 
+				console.log(result)
 				setDataPayment((pre) => ({
 					...pre,
-					datasets: [{ ...pre.datasets[0], data: [...result.result] }],
+					datasets: [{ ...pre.datasets[0], data: [...result.quantityArray] }],
+				}))
+				setDataPayment((pre) => ({
+					...pre,
+					labels: [...result.dateArray],
 				}))
 			} catch (error) {
 				console.log(error)
@@ -201,7 +199,7 @@ const DashBoard = () => {
 			<section className="flex p-3 lg:p-5 flex-wrap">
 				<div className="w-full px-3 lg:w-8/12">
 					<div className="flex flex-col px-5 py-6 shadow-lg border rounded-lg bg-white">
-						<div className="w-full flex flex-col md:flex-row md:space-x-6 md:justify-end">
+						<div className="w-full flex flex-col md:flex-row md:space-x-6 md:justify-end mb-3">
 							<div className="flex items-center justify-between md:space-x-3">
 								<p className="text-sm">Từ</p>
 								<input
@@ -221,7 +219,7 @@ const DashBoard = () => {
 								/>
 							</div>
 						</div>
-						<div className="">
+						<div>
 							<Line data={dataPayment} />
 						</div>
 					</div>
