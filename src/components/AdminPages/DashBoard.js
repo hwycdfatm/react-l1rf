@@ -13,7 +13,9 @@ const DashBoard = () => {
 	const [getDate, setGetDate] = useState(
 		new Date(new Date().getTime() - 24 * 60 * 60 * 7000).toJSON().slice(0, 10)
 	)
-	const [toDate, setToDate] = useState(new Date().toJSON().slice(0, 10))
+	const [toDate, setToDate] = useState(
+		new Date(new Date().getTime() + 24 * 60 * 60 * 1000).toJSON().slice(0, 10)
+	)
 	const [dataPayment, setDataPayment] = useState({
 		labels: [],
 		datasets: [
