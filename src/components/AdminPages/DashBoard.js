@@ -70,7 +70,7 @@ const DashBoard = () => {
 					labels: [...result.dateArray],
 				}))
 			} catch (error) {
-				console.log(error)
+				alert(error.message)
 			}
 		}
 
