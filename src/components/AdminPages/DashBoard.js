@@ -61,7 +61,6 @@ const DashBoard = () => {
 					_to: toDate,
 				})
 
-				console.log(result)
 				setDataPayment((pre) => ({
 					...pre,
 					datasets: [{ ...pre.datasets[0], data: [...result.quantityArray] }],
