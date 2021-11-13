@@ -7,7 +7,16 @@ import productAPI from '../../../api/productAPI'
 import '../../../css/unreset.css'
 import { Helmet } from 'react-helmet-async'
 import Skeleton from 'react-loading-skeleton'
-
+import {
+	FacebookShareButton,
+	FacebookIcon,
+	EmailShareButton,
+	TelegramShareButton,
+	TwitterShareButton,
+	TwitterIcon,
+	TelegramIcon,
+	EmailIcon,
+} from 'react-share'
 import Modal from '../../../utils/Modal/Modal'
 import useModal from '../../../utils/Modal/useModal'
 const Detail = () => {
@@ -19,7 +28,7 @@ const Detail = () => {
 	const [product, setProduct] = useState([])
 	const [selectSize, setSelectSize] = useState('')
 	const [awaitAdd, setAwaitAdd] = useState(false)
-
+	const shareUrl = window.location.href
 	const [isShowing, toggle] = useModal()
 
 	const images = product.images || []
@@ -255,6 +264,23 @@ const Detail = () => {
 										</span>
 									)}
 								</button>
+							</div>
+						</div>
+						<div className="flex mt-4 flex-col">
+							<span>Chia sẽ</span>
+							<div className="flex mt-2 space-x-4">
+								<FacebookShareButton url={shareUrl}>
+									<FacebookIcon size={42} round />
+								</FacebookShareButton>
+								<TelegramShareButton url={shareUrl}>
+									<TelegramIcon size={42} round />
+								</TelegramShareButton>
+								<TwitterShareButton url={shareUrl}>
+									<TwitterIcon size={42} round />
+								</TwitterShareButton>
+								<EmailShareButton url={shareUrl}>
+									<EmailIcon size={42} round />
+								</EmailShareButton>
 							</div>
 						</div>
 					</div>

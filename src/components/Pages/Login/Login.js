@@ -159,6 +159,7 @@ const Login = () => {
 						</button>
 						<span className="text-center">hoặc</span>
 						<FacebookLogin
+							disableMobileRedirect={true}
 							appId="512680796465992"
 							autoLoad={false}
 							callback={handleLoginFacebook}

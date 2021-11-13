@@ -15,12 +15,17 @@ export default function Privacy() {
 		fetchAssect()
 	}, [])
 	return (
-		<div className="dark:text-white mt-1">
+		<div className="dark:text-white mt-1 w-full">
 			<Helmet>
 				<title>Điều khoản dịch vụ</title>
 			</Helmet>
 			<h1 className="text-center ">ĐIỀU KHOẢN DỊCH VỤ </h1>
-			<span>{assect.privacy}</span>
+			<p
+				style={{ whiteSpace: 'pre-line' }}
+				className="px-2 xs:px-5 md:px-7 lg:px-10 pb-10 mx-auto max-w-screen-lg"
+			>
+				{assect.privacy}{' '}
+			</p>
 		</div>
 	)
 }

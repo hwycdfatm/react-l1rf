@@ -172,7 +172,7 @@ const Checkout = ({ order, method, total, setCheckout, quantity }) => {
 						))}
 				</div>
 			</div>
-			<div className="mx-6 my-4 ">
+			<div className="mx-6 my-4 z-0 ">
 				{method === 'paypal' ? (
 					show ? (
 						<PaypalBtn total={totalPaypal} tranSuccess={tranSuccess} />
