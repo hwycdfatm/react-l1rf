@@ -3,8 +3,15 @@ import { useHistory } from 'react-router-dom'
 import { scrollToTop } from './ScrollToTopBtn'
 const Pagination = (props) => {
 	const page = []
+
 	const maxPage = props.totalPage
-	const currentPage = parseInt(props.currentPage)
+	const currentPage = /^[0-9]*$/.test(parseInt(props.currentPage))
+		? parseInt(props.currentPage) < 0
+			? 1
+			: parseInt(props.currentPage) > maxPage
+			? maxPage
+			: parseInt(props.currentPage)
+		: 1
 	const history = useHistory()
 
 	const nextPage = () => {
@@ -38,7 +45,7 @@ const Pagination = (props) => {
 	const [pageShow, setPageShow] = useState([])
 
 	useEffect(() => {
-		if (currentPage === 1) {
+		if (currentPage === 1 || currentPage === 2) {
 			setPageShow(page.slice(0, 5))
 		} else if (currentPage > 2) {
 			if (currentPage === maxPage - 1) {
@@ -49,6 +56,7 @@ const Pagination = (props) => {
 				setPageShow(page.slice(currentPage - 3, currentPage + 2))
 			}
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [currentPage])
 
@@ -104,26 +112,41 @@ const Pagination = (props) => {
 					</button>
 				</div>
 				<div className="flex space-x-2 mx-2">
-					{pageShow.map((page) => (
-						<button
-							key={page}
-							onClick={() => {
-								scrollToTop()
-								history.push(`/category/${props.slug}?_page=${page}`)
-							}}
-							className={`w-6 h-8 rounded text-center font-bold bg-opacity-70 hover:bg-gray-700 ${
-								page === currentPage ? 'bg-gray-800 text-gray-100' : ''
-							}`}
-						>
-							{page}
-						</button>
-					))}
+					{pageShow.length === 0
+						? page.map((page) => (
+								<button
+									key={page}
+									onClick={() => {
+										scrollToTop()
+										history.push(`/category/${props.slug}?_page=${page}`)
+									}}
+									className={`w-6 h-8 rounded text-center font-bold bg-opacity-70 hover:bg-gray-700 ${
+										page === currentPage ? 'bg-gray-800 text-gray-100' : ''
+									}`}
+								>
+									{page}
+								</button>
+						  ))
+						: pageShow.map((page) => (
+								<button
+									key={page}
+									onClick={() => {
+										scrollToTop()
+										history.push(`/category/${props.slug}?_page=${page}`)
+									}}
+									className={`w-6 h-8 rounded text-center font-bold bg-opacity-70 hover:bg-gray-700 ${
+										page === currentPage ? 'bg-gray-800 text-gray-100' : ''
+									}`}
+								>
+									{page}
+								</button>
+						  ))}
 				</div>
 				<div className="flex space-x-3">
 					<button
 						onClick={nextPage}
 						className={`w-6 h-8 rounded ${
-							currentPage === page.length
+							currentPage >= page.length
 								? 'text-gray-300 dark:text-gray-800'
 								: 'text-gray-800 dark:text-gray-300'
 						}`}
@@ -146,7 +169,7 @@ const Pagination = (props) => {
 					<button
 						onClick={() => lastPage()}
 						className={`w-6 h-8 rounded ${
-							currentPage === page.length
+							currentPage >= page.length
 								? 'text-gray-300 dark:text-gray-800'
 								: 'text-gray-800 dark:text-gray-300'
 						}`}

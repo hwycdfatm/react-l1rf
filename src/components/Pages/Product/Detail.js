@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 import { GlobalState } from '../../../GlobalState'
 import Error from '../Error/Error'
 import NotFoundImage from './image-not-found.jpg'
@@ -36,6 +36,9 @@ const Detail = () => {
 	const [imageMain, setImageMain] = useState('')
 
 	const price = parseInt(product.price)
+
+	// back history
+	const history = useHistory()
 
 	useEffect(() => {
 		async function fetchProduct() {
@@ -86,23 +89,52 @@ const Detail = () => {
 			<Helmet>
 				<title>{product?.title?.toUpperCase()}</title>
 				<meta
-					name="description"
+					property="description"
 					content={`${product?.title} một sản phẩm của L1rf Store`}
 				/>
 				<meta
-					name="og:description"
+					property="image"
+					content={imageMain ? imageMain : NotFoundImage}
+				></meta>
+				<meta
+					property="og:description"
 					content={`${product?.title} một sản phẩm của L1rf Store`}
 				/>
-				<meta name="og:title" content={product?.title} />
+				<meta property="og:title" content={product?.title} />
 				<meta
 					property="og:image"
 					content={imageMain ? imageMain : NotFoundImage}
 				></meta>
 				<meta
-					property="image"
+					property="og:image:secure_url"
 					content={imageMain ? imageMain : NotFoundImage}
-				></meta>
+				/>
+				<meta property="og:image:type" content="image/jpeg" />
+				<meta property="og:image:width" content="400" />
+				<meta property="og:image:height" content="300" />
 			</Helmet>
+			<div className="max-w-screen-lg mx-auto px-2 xs:px-5 mb-2">
+				<button
+					onClick={() => history.goBack()}
+					className="flex hover:text-gray-500 rounded focus:outline-none focus:shadow-outline"
+				>
+					<svg
+						className="w-6 h-6"
+						fill="none"
+						stroke="currentColor"
+						viewBox="0 0 24 24"
+						xmlns="http://www.w3.org/2000/svg"
+					>
+						<path
+							strokeLinecap="round"
+							strokeLinejoin="round"
+							strokeWidth={2}
+							d="M7 16l-4-4m0 0l4-4m-4 4h18"
+						/>
+					</svg>
+					<span className="ml-3 font-maven font-semibold">Trở về</span>
+				</button>
+			</div>
 			<div className="flex flex-col max-w-screen-lg mx-auto px-2 xs:px-5 pb-10">
 				<div className="flex flex-wrap">
 					<div className="w-full sm:w-8/12 sm:mx-auto md:w-6/12 rounded-lg overflow-hidden">
@@ -111,12 +143,12 @@ const Detail = () => {
 								<Skeleton height="100%" />
 							</div>
 						) : (
-							<div className="w-full h-96 xs:h-542px">
+							<div className="w-full h-96 xs:h-542px rounded-lg">
 								<img
 									src={imageMain ? imageMain : NotFoundImage}
 									srcSet={imageMain ? imageMain : NotFoundImage}
-									alt=""
-									className="w-full h-full object-cover"
+									alt={product.title}
+									className="w-full h-full object-cover rounded-lg"
 								/>
 							</div>
 						)}
@@ -174,7 +206,7 @@ const Detail = () => {
 
 						{product.size?.length > 0 && (
 							<div className="flex flex-col mt-6">
-								<span>Size</span>
+								<span>Size: </span>
 								<div className="flex flex-wrap w-full max-w-sm md:mx-0">
 									{product.size.map((size) => (
 										<div
@@ -206,7 +238,7 @@ const Detail = () => {
 							</div>
 						)}
 						<div className="flex items-center space-x-4 mt-6">
-							<span>Số lượng</span>
+							<span>Số lượng: </span>
 							<div className="flex bg-gray-100 dark:text-gray-800 rounded items-center overflow-hidden">
 								<button
 									onClick={() => setCount(count > 1 ? count - 1 : count)}
@@ -267,7 +299,7 @@ const Detail = () => {
 							</div>
 						</div>
 						<div className="flex mt-4 flex-col">
-							<span>Chia sẽ</span>
+							<span>Chia sẽ: </span>
 							<div className="flex mt-2 space-x-4">
 								<FacebookShareButton url={shareUrl}>
 									<FacebookIcon size={42} round />

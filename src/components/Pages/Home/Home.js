@@ -7,6 +7,7 @@ import sliderAPI from '../../../api/sliderAPI'
 
 const Home = () => {
 	const [newProducts, setNewProducts] = useState([])
+	const [hotProducts, setHotProducts] = useState([])
 
 	useEffect(() => {
 		const fetchNewProducts = async () => {
@@ -24,6 +25,22 @@ const Home = () => {
 		}
 
 		fetchNewProducts()
+
+		const fetchHotProducts = async () => {
+			try {
+				const params = {
+					_limit: 9,
+					sort: 'sold',
+				}
+				const result = await productAPI.getAll(params)
+				if (result.status === 'Success') {
+					setHotProducts(result.data)
+				}
+			} catch (error) {
+				alert(error.message)
+			}
+		}
+		fetchHotProducts()
 	}, [])
 
 	const [sliderData, setSliderData] = useState([])
@@ -50,7 +67,18 @@ const Home = () => {
 	return (
 		<div className="flex flex-col">
 			<Helmet>
-				<title>l1rf shop</title>
+				<title>L1RF STORE</title>
+				<meta name="description" content="Shop bán hàng đầu hàng Việt Nam" />
+				<meta
+					property="og:description"
+					content="Shop bán hàng đầu hàng Việt Nam"
+				/>
+				<meta
+					name="twitter:description"
+					content="Shop bán hàng đầu hàng Việt Nam"
+				/>
+				<meta property="og:image" content="%PUBLIC_URL%/image-logo.png" />
+				<meta property="og:image" content="%PUBLIC_URL%/image-logo.png" />
 			</Helmet>
 			<section className="h-screen -mt-16 pt-16">
 				{/* slide show */}
@@ -84,12 +112,20 @@ const Home = () => {
 						: 1
 				}
 			/>
-			<section className=" bg-white dark:bg-darkBgColor flex items-center justify-center transition-all my-5 px-5 lg:px-0">
-				<code className="text-xl max-w-screen-lg leading-10 bg-gray-100 p-4 bg-opacity-60">
-					Giá trị là cái bạn đã xây dựng trước khi bán hàng và trong suốt quá
-					trình hợp tác. Bạn không tăng thêm giá trị mà chỉ khẳng định giá trị.
-				</code>
-			</section>
+
+			<SlideProducts
+				title="Sản phẩm bán chạy"
+				newProducts={hotProducts}
+				show={
+					windowSize >= 1280
+						? 4
+						: windowSize >= 1024
+						? 3
+						: windowSize >= 555
+						? 2
+						: 1
+				}
+			/>
 		</div>
 	)
 }

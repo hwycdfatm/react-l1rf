@@ -5,6 +5,7 @@ import InstgramIcon from '../../../images/instagram.png'
 import TwitterIcon from '../../../images/twitter.png'
 import { GlobalState } from '../../../GlobalState'
 import assectAPI from '../../../api/assectAPI'
+import './style-gradient.css'
 const Footer = () => {
 	const { categories } = useContext(GlobalState)
 	const [assect, setAssect] = useState({})
@@ -20,7 +21,8 @@ const Footer = () => {
 		fetchAssect()
 	}, [])
 	return (
-		<section className="relative border-t dark:border-transparent pt-8 pb-6 bg-transparent dark:bg-darkHeaderColor transition-all dark:text-white">
+		<section className="relative border-t dark:border-transparent pb-6 bg-transparent dark:bg-darkHeaderColor transition-all dark:text-white">
+			<div className="bottom-shide h-1 mb-12"></div>
 			<div className="container mx-auto px-4">
 				<div className="flex flex-wrap text-left lg:text-left">
 					<div className="w-full lg:w-6/12 px-4">
