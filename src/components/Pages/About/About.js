@@ -51,7 +51,8 @@ const About = () => {
 						style={{ minHeight: 100 }}
 						className="mt-5 text-gray-600 dark:text-gray-200 transition-all"
 					>
-						Khi bạn cảm thấy buồn chán.... Hãy đi ỉa
+						Khi bạn cảm thấy buồn chán.... <br />
+						Hãy đi ỉa
 					</p>
 				</div>
 				<div className="flex justify-end mt-4">

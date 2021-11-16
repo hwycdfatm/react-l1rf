@@ -18,7 +18,8 @@ const Product = (props) => {
 					<img
 						srcSet={image[0].url || NotFoundImage}
 						src={image[0].url || NotFoundImage}
-						alt=""
+						alt={props.sp.title}
+						loading="lazy"
 						className="w-full h-full object-cover"
 					/>
 				</div>
