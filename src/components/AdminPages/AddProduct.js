@@ -36,6 +36,21 @@ const AddProduct = () => {
 		'2xl': 5,
 		free: 6,
 	}
+
+	const emptyProduct = () => {
+		setProduct({
+			title: '',
+			description: '',
+			content: '',
+			category: '',
+			slug: '',
+			price: '',
+			inStock: '',
+			images: [],
+			size: [],
+		})
+	}
+
 	const [uploadLoading, setUploadLoading] = useState(false)
 
 	const [checked, setChecked] = useState(false)
@@ -86,28 +101,14 @@ const AddProduct = () => {
 		e.preventDefault()
 		try {
 			if (!admin) return alert('Mày không có quyền')
-			if (!Object.values(product).every((item) => item !== ''))
-				return alert('Vui lòng nhập đầy đủ thông tin nào')
 			setUploadLoading(true)
 			const check = await productAPI.creat({ ...product }, token)
-			if (check.status === 'Success') {
-				toast(check.message, { type: 'success', position: 'top-right' })
-				setProduct({
-					title: '',
-					description: '',
-					content: 'Đây là phần content của sản phẩm',
-					category: '',
-					slug: '',
-					price: '',
-					inStock: '',
-					images: [],
-					size: [],
-				})
-				setUploadLoading(false)
-			}
+			toast(check.message, { type: 'success', position: 'top-right' })
+			emptyProduct()
+			setUploadLoading(false)
 		} catch (error) {
 			setUploadLoading(false)
-			console.log(error)
+			toast(error.message, { type: 'error', position: 'top-right' })
 		}
 	}
 

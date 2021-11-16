@@ -15,14 +15,13 @@ const SearchForm = (props) => {
 			<div className="h-16 w-14 flex items-center justify-center ml-2 mr-6 ">
 				<img
 					src={images[0]?.url}
-					alt=""
+					alt={title}
 					className="h-full object-contain rounded"
 				/>
 			</div>
 			<div className="flex flex-1 justify-between items-center">
 				<div className="text-base font-semibold">
-					<p>{title}</p>
-
+					<p className="uppercase">{title}</p>
 					<p className="text-gray-400 text-sm">
 						{parseInt(price).toLocaleString('en')} vnđ
 					</p>

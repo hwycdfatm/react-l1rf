@@ -87,11 +87,6 @@ const Login = () => {
 			}
 		} catch (err) {
 			setLogin(false)
-			setError(
-				<div className="w-full bg-red-100 rounded text-red-700 py-1 text-center animate-bounce text-opacity-80">
-					{err.message}
-				</div>
-			)
 		}
 	}
 

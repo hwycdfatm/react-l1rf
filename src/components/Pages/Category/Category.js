@@ -74,7 +74,7 @@ const Category = () => {
 	]
 
 	return (
-		<section className="w-full px-4 xl:px-10 lg:pt-4 flex flex-col space-y-4">
+		<section className="w-full max-w-screen-2xl mx-auto px-4 xl:px-10 lg:pt-4 flex flex-col space-y-4">
 			<Helmet>
 				<title>{String(slug).toUpperCase()}</title>
 			</Helmet>
