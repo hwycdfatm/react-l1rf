@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react'
 import productAPI from '../../../api/productAPI'
 import SlideProducts from './SlideProducts'
 import SlideShow from './SlideShow'
-import { Helmet } from 'react-helmet-async'
+import Seo from '../../../utils/Seo'
 import sliderAPI from '../../../api/sliderAPI'
-
 const Home = () => {
 	const [newProducts, setNewProducts] = useState([])
 	const [hotProducts, setHotProducts] = useState([])
@@ -66,20 +65,7 @@ const Home = () => {
 
 	return (
 		<div className="flex flex-col">
-			<Helmet>
-				<title>L1RF STORE</title>
-				<meta name="description" content="Shop bán hàng đầu hàng Việt Nam" />
-				<meta
-					property="og:description"
-					content="Shop bán hàng đầu hàng Việt Nam"
-				/>
-				<meta
-					name="twitter:description"
-					content="Shop bán hàng đầu hàng Việt Nam"
-				/>
-				<meta property="og:image" content="%PUBLIC_URL%/image-logo.png" />
-				<meta property="og:image" content="%PUBLIC_URL%/image-logo.png" />
-			</Helmet>
+			<Seo title="L1RF STORE" />
 			<section className="h-screen -mt-16 pt-16">
 				{/* slide show */}
 				<SlideShow sliderData={sliderData} button={true} dots={true} />

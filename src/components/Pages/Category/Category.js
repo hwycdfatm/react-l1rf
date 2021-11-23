@@ -7,7 +7,7 @@ import Pagination from '../../../utils/Pagination'
 import Product from '../Product/Product'
 import ProductsLoading from '../Product/ProductsLoading'
 
-import { Helmet } from 'react-helmet-async'
+import Seo from '../../../utils/Seo'
 
 import { useLocalStorage } from '../../../GlobalState'
 import { useDetectOutsideClick } from '../../../utils/useDetectOutsideClick'
@@ -75,9 +75,8 @@ const Category = () => {
 
 	return (
 		<section className="w-full max-w-screen-2xl mx-auto px-4 xl:px-10 lg:pt-4 flex flex-col space-y-4">
-			<Helmet>
-				<title>{String(slug).toUpperCase()}</title>
-			</Helmet>
+			<Seo title={String(slug).toUpperCase()} />
+
 			<div className="flex items-center lg:justify-end w-full my-2">
 				<div className="h-9 border flex items-center w-4/5 md:w-56 relative bg-white dark:bg-darkBgColor font-maven dark:text-white">
 					<div

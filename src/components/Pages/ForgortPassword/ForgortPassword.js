@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import userAPI from '../../../api/userAPI'
+import Seo from '../../../utils/Seo'
 
 const ForgortPassword = () => {
 	const [email, setEmail] = useState('')
@@ -42,6 +43,8 @@ const ForgortPassword = () => {
 
 	return (
 		<div className="max-w-lg mx-auto bg-transparent py-5 md:px-5">
+			<Seo title="Quên mật khẩu" />
+
 			<div className="px-8 mb-4 text-center pt-8">
 				<h3 className="pt-4 mb-4 text-2xl dark:text-white">
 					Bạn quên mật khẩu?

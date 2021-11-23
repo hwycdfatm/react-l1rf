@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { Helmet } from 'react-helmet-async'
 import assectAPI from '../../../api/assectAPI'
 import Skeleton from 'react-loading-skeleton'
+import Seo from '../../../utils/Seo'
+
 export default function Privacy() {
 	const [assect, setAssect] = useState({})
 	useEffect(() => {
@@ -17,9 +18,8 @@ export default function Privacy() {
 	}, [])
 	return (
 		<div className="dark:text-white mt-1 w-full">
-			<Helmet>
-				<title>Điều khoản dịch vụ</title>
-			</Helmet>
+			<Seo title="Điều khoản & dịch vụ" />
+
 			<h1 className="text-center ">ĐIỀU KHOẢN DỊCH VỤ </h1>
 			<p
 				style={{ whiteSpace: 'pre-line' }}

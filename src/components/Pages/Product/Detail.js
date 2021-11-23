@@ -5,7 +5,8 @@ import Error from '../Error/Error'
 import NotFoundImage from './image-not-found.jpg'
 import productAPI from '../../../api/productAPI'
 import '../../../css/unreset.css'
-import { Helmet } from 'react-helmet-async'
+import Seo from '../../../utils/Seo'
+
 import Skeleton from 'react-loading-skeleton'
 import {
 	FacebookShareButton,
@@ -86,33 +87,12 @@ const Detail = () => {
 	if (fail) return <Error />
 	return (
 		<section className="bg-transparent transition duration-700 dark:text-white py-2">
-			<Helmet>
-				<title>{product?.title?.toUpperCase()}</title>
-				<meta
-					property="description"
-					content={`${product?.title} một sản phẩm của L1rf Store`}
-				/>
-				<meta
-					property="image"
-					content={imageMain ? imageMain : NotFoundImage}
-				></meta>
-				<meta
-					property="og:description"
-					content={`${product?.title} một sản phẩm của L1rf Store`}
-				/>
-				<meta property="og:title" content={product?.title} />
-				<meta
-					property="og:image"
-					content={imageMain ? imageMain : NotFoundImage}
-				></meta>
-				<meta
-					property="og:image:secure_url"
-					content={imageMain ? imageMain : NotFoundImage}
-				/>
-				<meta property="og:image:type" content="image/jpeg" />
-				<meta property="og:image:width" content="400" />
-				<meta property="og:image:height" content="300" />
-			</Helmet>
+			<Seo
+				title={product?.title?.toUpperCase()}
+				description={`${product?.title} một sản phẩm của L1rf Store`}
+				image={imageMain}
+			/>
+
 			<div className="max-w-screen-lg mx-auto px-2 xs:px-5 mb-2">
 				<button
 					onClick={() => history.goBack()}

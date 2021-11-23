@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import PayPalIcon from '../../../images/paypalicon.png'
 import CodIcon from '../../../images/codicon.png'
 import MomoIcon from '../../../images/momoicon.png'
-import { Helmet } from 'react-helmet-async'
+import Seo from '../../../utils/Seo'
 
 import Checkout from './Checkout'
 
@@ -89,9 +89,8 @@ const Cart = () => {
 				text={'Bạn ơi vui lòng cập nhật đầy đủ thông tin giúp mình !! >.<'}
 				hide={toggle}
 			/>
-			<Helmet>
-				<title>Giỏ hàng</title>
-			</Helmet>
+			<Seo title="Giỏ hàng" />
+
 			<div className=" h-full md:min-h-screen bg-transparent rounded-lg">
 				<div className="grid grid-cols-12 gap-2 lg:gap-4 xl:gap-5">
 					<div className="col-span-12 sm:col-span-12 md:col-span-7 lg:col-span-8 2xl:col-span-8">

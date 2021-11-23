@@ -4,11 +4,11 @@ import { GlobalState } from '../../../GlobalState'
 import Skeleton from 'react-loading-skeleton'
 import PaymentContainer from './PaymentContainer'
 import userAPI from '../../../api/userAPI'
-import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
 
 import Modal from '../../../utils/Modal/Modal'
 import useModal from '../../../utils/Modal/useModal'
+import Seo from '../../../utils/Seo'
 const User = () => {
 	const { user, token, refreshToken, getUser } = useContext(GlobalState)
 	const [paymentList, setPaymentList] = useState([])
@@ -60,9 +60,7 @@ const User = () => {
 	return (
 		<div className="w-full max-w-screen-xl mx-auto bg-transparent transition duration-500 flex flex-col p-1 xl:p-0 xl:pb-2 space-y-5">
 			<Modal isShowing={isShowing} hide={toggle} text={text} type="ok" />
-			<Helmet>
-				<title>Trang cá nhân của {userTemp.name}</title>
-			</Helmet>
+			<Seo title={userTemp.name} />
 			<div className="flex flex-wrap">
 				<div className="w-full md:w-4/12 xl:w-3/12 md:pr-3">
 					<div className="flex flex-col p-4 font-maven bg-white dark:bg-darkBgColor dark:text-white border rounded-lg transition-all">

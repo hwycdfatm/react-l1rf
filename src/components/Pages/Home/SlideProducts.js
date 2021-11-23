@@ -136,7 +136,7 @@ const SlideProducts = ({ newProducts, show, title }) => {
 								to={`/product/${product.slug}`}
 								className="flex flex-col w-full h-full"
 							>
-								<div className="sm:h-72 md:h-80 lg:h-96 w-full">
+								<div className="h-72 md:h-80 lg:h-96 w-full">
 									<img
 										src={product.images[0]?.url}
 										alt={product.title}

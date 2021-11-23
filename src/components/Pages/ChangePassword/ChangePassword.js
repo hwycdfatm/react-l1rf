@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import userAPI from '../../../api/userAPI'
+import Seo from '../../../utils/Seo'
 
 import { GlobalState } from '../../../GlobalState'
 const ChangePassword = () => {
@@ -87,6 +88,8 @@ const ChangePassword = () => {
 
 	return (
 		<div className="w-full pb-32">
+			<Seo title="Đổi mật khẩu" />
+
 			<div className="max-w-md bg-transparent mx-auto rounded-lg mt-20 px-5">
 				<form
 					onSubmit={handleSubmit(handleSumbitChangePassword)}

@@ -3,7 +3,7 @@ import paymentAPI from '../../../api/paymentAPI'
 import assectAPI from '../../../api/assectAPI'
 import PaypalBtn from './PaypalBtn'
 import { GlobalState } from '../../../GlobalState'
-import { Helmet } from 'react-helmet-async'
+import Seo from '../../../utils/Seo'
 
 const Checkout = ({ order, method, total, setCheckout, quantity }) => {
 	const { token, setCart, user } = useContext(GlobalState)
@@ -64,9 +64,8 @@ const Checkout = ({ order, method, total, setCheckout, quantity }) => {
 	}
 	return (
 		<div className="flex flex-col w-full max-w-5xl mx-auto pt-4 pb-8">
-			<Helmet>
-				<title>Checkout</title>
-			</Helmet>
+			<Seo title="Check out" />
+
 			<div className="mx-6 my-2 flex justify-between text-gray-800 dark:text-white font-maven">
 				<p className="text-xl text-left ">Check Out</p>
 				<button
