@@ -31,7 +31,7 @@ const ViewPayment = ({ list }) => {
 										/>
 									</div>
 									<div className="flex flex-col">
-										<p className="font-semibold">{order.title} </p>
+										<p className="font-semibold uppercase">{order.title} </p>
 										<span className="text-xs md:text-sm">
 											{parseInt(order.price).toLocaleString('en')} vnđ
 											<span className="ml-2 text-xs">x{order.quantity}</span>

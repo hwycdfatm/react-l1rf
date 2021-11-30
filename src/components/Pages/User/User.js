@@ -66,8 +66,9 @@ const User = () => {
 					<div className="flex flex-col p-4 font-maven bg-white dark:bg-darkBgColor dark:text-white border rounded-lg transition-all">
 						<div>
 							<img
-								src="https://vietwebgroup.vn/admin/uploads/wibu-la-gi-nguon-goc-cua-wibu.png"
-								alt=""
+								src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSADXgn3Md90CuynWUMQ1sbqmoZGYMzSgEYAQ&usqp=CAU"
+								alt="avt"
+								className="w-full h-full"
 							/>
 						</div>
 						<p className="mt-2">Thông tin cá nhân</p>

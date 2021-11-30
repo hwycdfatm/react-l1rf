@@ -25,8 +25,7 @@ const About = () => {
 							style={{ minHeight: 100 }}
 							className="mt-5 text-gray-600 dark:text-gray-200 transition-all"
 						>
-							Băng vệ sinh dội nước còn thấm! <br />
-							Tình mình dù đầm thấm vẫn tàn phai......
+							Just Do It !!!!!!!
 						</p>
 					</div>
 					<div className="flex justify-end mt-4">
@@ -36,7 +35,7 @@ const About = () => {
 							rel="noreferrer"
 							className="text-lg font-medium text-indigo-500"
 						>
-							FB:Nguyễn Thịnh
+							FB: Nguyễn Thịnh
 						</a>
 					</div>
 				</div>
@@ -56,8 +55,7 @@ const About = () => {
 							style={{ minHeight: 100 }}
 							className="mt-5 text-gray-600 dark:text-gray-200 transition-all"
 						>
-							Khi bạn cảm thấy buồn chán.... <br />
-							Hãy đi ỉa
+							KHÔNG CÓ GÌ QUÝ HƠN ĐỘC LẬP, TỰ DO
 						</p>
 					</div>
 					<div className="flex justify-end mt-4">
@@ -67,7 +65,7 @@ const About = () => {
 							rel="noreferrer"
 							className="text-lg font-medium text-indigo-500"
 						>
-							FB:Mai Trí Toàn
+							FB: Mai Trí Toàn
 						</a>
 					</div>
 				</div>
