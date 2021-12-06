@@ -335,6 +335,7 @@ const AddProduct = () => {
 							placeholder="Nhập số lượng ở đây nè"
 							type="number"
 							name="inStock"
+							min="0"
 							value={product.inStock}
 							onChange={onChangeInput}
 						/>
