@@ -29,7 +29,7 @@ const Home = () => {
 			try {
 				const params = {
 					_limit: 9,
-					sort: 'sold',
+					sort: '-sold',
 				}
 				const result = await productAPI.getAll(params)
 				if (result.status === 'Success') {
