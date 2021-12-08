@@ -205,7 +205,7 @@ const CategoryAdmin = () => {
 									className="w-full object-cover h-48"
 								/>
 								<div className="flex flex-col space-y-1 py-1 px-2">
-									<span className="text-sm font-medium text-gray-500 truncate uppercase">
+									<span className="text-sm font-semibold text-gray-500 truncate uppercase">
 										{product.title}
 									</span>
 									<span className="text-xs font-medium text-gray-500">
@@ -213,6 +213,9 @@ const CategoryAdmin = () => {
 									</span>
 									<span className="text-xs font-medium text-gray-500">
 										Số lượng: {product.inStock}
+									</span>
+									<span className="text-xs font-medium text-gray-500">
+										Đã bán: {product.sold}
 									</span>
 									<div className="flex p-1 justify-center item-center space-x-3">
 										<button
