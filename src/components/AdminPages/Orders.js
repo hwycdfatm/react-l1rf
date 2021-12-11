@@ -23,7 +23,7 @@ const Orders = () => {
 				setShowForm(false)
 			}
 		} catch (error) {
-			console.log(error)
+			toast(error.message, { type: 'error', position: 'top-right' })
 		}
 	}
 
@@ -35,7 +35,7 @@ const Orders = () => {
 				setOrders([...orders.filter((e) => e._id !== _id)])
 			}
 		} catch (error) {
-			console.log(error)
+			toast(error.message, { type: 'error', position: 'top-right' })
 		}
 	}
 

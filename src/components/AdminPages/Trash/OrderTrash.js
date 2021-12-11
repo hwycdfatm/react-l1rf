@@ -13,9 +13,13 @@ const OrderTrash = () => {
 
 	useEffect(() => {
 		const fetchOrdersDeteled = async () => {
-			const result = await paymentAPI.getAllPaymentsDeleted({ token })
-			if (result.status === 'Success') {
-				setOrderDeleted(result.order)
+			try {
+				const result = await paymentAPI.getAllPaymentsDeleted({ token })
+				if (result.status === 'Success') {
+					setOrderDeleted(result.order)
+				}
+			} catch (error) {
+				toast(error.message, { type: 'error', position: 'top-right' })
 			}
 		}
 		fetchOrdersDeteled()
@@ -29,7 +33,7 @@ const OrderTrash = () => {
 				setOrderDeleted([...ordersDeleted.filter((e) => e._id !== _id)])
 			}
 		} catch (error) {
-			console.log(error)
+			toast(error.message, { type: 'error', position: 'top-right' })
 		}
 	}
 
@@ -42,7 +46,7 @@ const OrderTrash = () => {
 				setOrderDeleted([...ordersDeleted.filter((e) => e._id !== _id)])
 			}
 		} catch (error) {
-			console.log(error)
+			toast(error.message, { type: 'error', position: 'top-right' })
 		}
 	}
 	return (

@@ -14,7 +14,7 @@ const UserTrash = () => {
 				})
 				setUsersDeleted(result.users)
 			} catch (error) {
-				console.error(error)
+				toast(error.message, { type: 'error', position: 'top-right' })
 			}
 		}
 		getUsersDeleted()
@@ -28,7 +28,7 @@ const UserTrash = () => {
 				setUsersDeleted((pre) => [...pre.filter((user) => user._id !== _id)])
 			}
 		} catch (error) {
-			console.log(error)
+			toast(error.message, { type: 'error', position: 'top-right' })
 		}
 	}
 	const handleDeleteForce = async (_id) => {
@@ -39,7 +39,7 @@ const UserTrash = () => {
 				setUsersDeleted((pre) => [...pre.filter((user) => user._id !== _id)])
 			}
 		} catch (error) {
-			console.log(error)
+			toast(error.message, { type: 'error', position: 'top-right' })
 		}
 	}
 	return (

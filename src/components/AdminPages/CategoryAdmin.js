@@ -3,7 +3,7 @@ import productAPI from '../../api/productAPI'
 import Form from './Form'
 import { GlobalState } from '../../GlobalState'
 import { useDetectOutsideClick } from '../../utils/useDetectOutsideClick'
-
+import { toast } from 'react-toastify'
 const CategoryAdmin = () => {
 	const { token, categories } = useContext(GlobalState)
 
@@ -32,8 +32,8 @@ const CategoryAdmin = () => {
 				if (result.status === 'Success') {
 					setProductList(result.data)
 				}
-			} catch (err) {
-				console.log(err)
+			} catch (error) {
+				toast(error.message, { type: 'error', position: 'top-right' })
 			}
 		}
 
@@ -50,8 +50,8 @@ const CategoryAdmin = () => {
 			if (result.status === 'Success') {
 				setProductList(result.data)
 			}
-		} catch (err) {
-			console.log(err)
+		} catch (error) {
+			toast(error.message, { type: 'error', position: 'top-right' })
 		}
 	}
 	useEffect(() => {
@@ -79,8 +79,10 @@ const CategoryAdmin = () => {
 		try {
 			await productAPI.delete(id, token)
 			setProductList([...productList.filter((e) => e._id !== id)])
-		} catch (err) {
-			console.log(err)
+		} catch (error) {
+			toast(error.message, { type: 'error', position: 'top-right' })
+			localStorage.removeItem('ongchuhocuatoi')
+			window.location.href = '/'
 		}
 	}
 

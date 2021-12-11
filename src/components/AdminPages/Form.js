@@ -62,7 +62,7 @@ const Form = (props) => {
 
 			setImage((pre) => [...pre, ...res.images])
 		} catch (error) {
-			console.log(error)
+			toast(error.message, { type: 'error', position: 'top-right' })
 		}
 	}
 
@@ -100,7 +100,7 @@ const Form = (props) => {
 				props.fetchProduct()
 			}
 		} catch (error) {
-			console.log(error)
+			toast(error.message, { type: 'error', position: 'top-right' })
 		}
 	}
 
@@ -116,7 +116,7 @@ const Form = (props) => {
 				await uploadImageAPI.deleteArrayImage(images, token)
 			}
 		} catch (error) {
-			console.log(error)
+			toast(error.message, { type: 'error', position: 'top-right' })
 		}
 	}
 

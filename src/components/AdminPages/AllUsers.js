@@ -19,7 +19,7 @@ const AllUsers = () => {
 				const res = await userAPI.getAllUsers({ token, sort: 'createdAt' })
 				setUsers([...res.users])
 			} catch (error) {
-				console.log(error)
+				toast(error.message, { type: 'error', position: 'top-right' })
 			}
 		}
 		fetchAllUsers()
@@ -39,7 +39,7 @@ const AllUsers = () => {
 				setShowForm(false)
 			}
 		} catch (error) {
-			console.log(error)
+			toast(error.message, { type: 'error', position: 'top-right' })
 		}
 	}
 
@@ -49,14 +49,13 @@ const AllUsers = () => {
 				token,
 				_id,
 			})
-			console.log(result)
 			if (result.status === 'Success') {
 				toast(result.message, { type: 'success', position: 'top-center' })
 				setShowForm(false)
 				setUsers((pre) => [...pre.filter((user) => user._id !== _id)])
 			}
 		} catch (error) {
-			console.log(error)
+			toast(error.message, { type: 'error', position: 'top-right' })
 		}
 	}
 

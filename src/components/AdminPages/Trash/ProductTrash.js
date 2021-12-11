@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import productAPI from '../../../api/productAPI'
 import { GlobalState } from '../../../GlobalState'
+import { toast } from 'react-toastify'
 const ProductTrash = () => {
 	const { token } = useContext(GlobalState)
 	const [productList, setProductList] = useState([])
@@ -15,8 +16,8 @@ const ProductTrash = () => {
 				if (result.status === 'Success') {
 					setProductList(result.data)
 				}
-			} catch (err) {
-				console.log(err)
+			} catch (error) {
+				toast(error.message, { type: 'error', position: 'top-right' })
 			}
 		}
 		fetchProduct()
@@ -26,17 +27,16 @@ const ProductTrash = () => {
 		try {
 			await productAPI.restore(id, token)
 			setProductList([...productList.filter((e) => e._id !== id)])
-		} catch (err) {
-			console.log(err)
+		} catch (error) {
+			toast(error.message, { type: 'error', position: 'top-right' })
 		}
 	}
 	const handleDelete = async (id) => {
 		try {
-			const msg = await productAPI.deletedForce(id, token)
-			console.log(msg)
+			await productAPI.deletedForce(id, token)
 			setProductList([...productList.filter((e) => e._id !== id)])
-		} catch (err) {
-			console.log(err)
+		} catch (error) {
+			toast(error.message, { type: 'error', position: 'top-right' })
 		}
 	}
 

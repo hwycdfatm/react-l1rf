@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import { GlobalState } from '../../GlobalState'
 import CheckImages from '../../utils/CheckImages'
 import uploadImageAPI from '../../api/uploadImageAPI'
+import { toast } from 'react-toastify'
 const FormSlide = ({
 	showFormSlide,
 	setShowFormSlide,
@@ -25,7 +26,7 @@ const FormSlide = ({
 			const res = await uploadImageAPI.upload(formData, token)
 			setSlider({ ...slider, image: res.images[0] })
 		} catch (error) {
-			console.log(error)
+			toast(error.message, { type: 'error', position: 'top-right' })
 		}
 	}
 	const handleDestroy = async (public_name) => {
@@ -35,8 +36,8 @@ const FormSlide = ({
 			await uploadImageAPI.delete(public_name, token)
 
 			setSlider({ ...slider, image: '' })
-		} catch (err) {
-			alert(err)
+		} catch (error) {
+			toast(error.message, { type: 'error', position: 'top-right' })
 		}
 	}
 	return (

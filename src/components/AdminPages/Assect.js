@@ -3,6 +3,7 @@ import assectAPI from '../../api/assectAPI'
 import { GlobalState } from '../../GlobalState'
 import axios from 'axios'
 import LoadingBtn from '../../utils/LoadingBtn'
+import { toast } from 'react-toastify'
 const Asstect = () => {
 	const { token } = useContext(GlobalState)
 	const [loadRate, setLoadRate] = useState(false)
@@ -50,7 +51,7 @@ const Asstect = () => {
 					address: result.data[0].address,
 				})
 			} catch (error) {
-				console.log(error)
+				toast(error.message, { type: 'error', position: 'top-right' })
 			}
 		}
 		fetchAssect()
@@ -62,7 +63,9 @@ const Asstect = () => {
 			const { message } = await assectAPI.update(assect._id, assect, token)
 			alert(message)
 		} catch (error) {
-			console.log(error)
+			toast(error.message, { type: 'error', position: 'top-right' })
+			localStorage.removeItem('ongchuhocuatoi')
+			window.location.href = '/'
 		}
 	}
 
@@ -79,7 +82,7 @@ const Asstect = () => {
 			setLoadRate(false)
 		} catch (error) {
 			setLoadRate(false)
-			console.log(error)
+			toast(error.message, { type: 'error', position: 'top-right' })
 		}
 	}
 

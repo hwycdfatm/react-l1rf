@@ -5,6 +5,7 @@ import userAPI from '../../api/userAPI'
 import { GlobalState } from '../../GlobalState'
 import CountUp from 'react-countup'
 import { Line } from 'react-chartjs-2'
+import { toast } from 'react-toastify'
 const DashBoard = () => {
 	const { token } = useContext(GlobalState)
 	const [totalProducts, setTotalProducts] = useState(0)
@@ -72,7 +73,7 @@ const DashBoard = () => {
 					labels: [...result.dateArray],
 				}))
 			} catch (error) {
-				alert(error.message)
+				toast(error.message, { type: 'error', position: 'top-right' })
 			}
 		}
 

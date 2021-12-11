@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import sliderAPI from '../../api/sliderAPI'
 import { GlobalState } from '../../GlobalState'
 import FormSlide from './FormSlide'
+import { toast } from 'react-toastify'
 const SlideManager = () => {
 	const { token } = useContext(GlobalState)
 
@@ -25,7 +26,7 @@ const SlideManager = () => {
 				...result.sliders.filter((slide) => slide.activate === true),
 			])
 		} catch (error) {
-			console.log(error)
+			toast(error.message, { type: 'error', position: 'top-right' })
 		}
 	}
 	useEffect(() => {
@@ -46,7 +47,7 @@ const SlideManager = () => {
 			])
 			setSlideActive((pre) => [...pre, { ...slideObj }])
 		} catch (error) {
-			console.log(error)
+			toast(error.message, { type: 'error', position: 'top-right' })
 		}
 	}
 
@@ -59,7 +60,7 @@ const SlideManager = () => {
 			])
 			setSlideNoneActive((pre) => [...pre, { ...slideObj }])
 		} catch (error) {
-			console.log(error)
+			toast(error.message, { type: 'error', position: 'top-right' })
 		}
 	}
 
@@ -71,7 +72,7 @@ const SlideManager = () => {
 				...slideNoneActive.filter((slide) => slide._id !== _id),
 			])
 		} catch (error) {
-			console.log(error)
+			toast(error.message, { type: 'error', position: 'top-right' })
 		}
 	}
 
@@ -86,7 +87,7 @@ const SlideManager = () => {
 				setSlider({ image: '', title: '' })
 			}
 		} catch (error) {
-			console.log(error)
+			toast(error.message, { type: 'error', position: 'top-right' })
 		}
 	}
 	return (

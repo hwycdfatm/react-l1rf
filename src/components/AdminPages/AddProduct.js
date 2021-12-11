@@ -66,7 +66,9 @@ const AddProduct = () => {
 		e.preventDefault()
 		try {
 			if (product.images.length >= 4) return alert('Tối đa 4 ảnh thôi')
+
 			if (!admin) return alert('bạn không có quyền')
+
 			const files = e.target.files
 			if (files.length === 0) return alert('Vui lòng chọn ảnh')
 			let formData = new FormData()
@@ -92,7 +94,7 @@ const AddProduct = () => {
 				images: [...product.images, ...res.images],
 			})
 		} catch (error) {
-			console.log(error)
+			toast(error.message, { type: 'error', position: 'top-right' })
 		}
 	}
 
@@ -101,6 +103,7 @@ const AddProduct = () => {
 		e.preventDefault()
 		try {
 			if (!admin) return alert('Mày không có quyền')
+
 			setUploadLoading(true)
 			const check = await productAPI.creat({ ...product }, token)
 			toast(check.message, { type: 'success', position: 'top-right' })
@@ -126,8 +129,8 @@ const AddProduct = () => {
 					),
 				],
 			})
-		} catch (err) {
-			alert(err)
+		} catch (error) {
+			toast(error.message, { type: 'error', position: 'top-right' })
 		}
 	}
 

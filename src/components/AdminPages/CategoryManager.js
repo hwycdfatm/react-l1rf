@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { GlobalState } from '../../GlobalState'
 import categoryAPI from '../../api/categoryAPI'
+import { toast } from 'react-toastify'
 const CategoryManager = () => {
 	const [valueForm, setValueForm] = useState('')
 	const [categories, setCategories] = useState([])
@@ -23,12 +24,12 @@ const CategoryManager = () => {
 			if (!valueForm) return
 			const result = await categoryAPI.create({ name: valueForm }, token)
 			if (result.status === 'Success') {
-				alert(result.message)
+				toast(result.message, { type: 'success', position: 'top-right' })
 				fetchCategories()
 				setValueForm('')
 			}
 		} catch (error) {
-			console.log(error)
+			toast(error.message, { type: 'error', position: 'top-right' })
 		}
 	}
 
@@ -37,10 +38,10 @@ const CategoryManager = () => {
 			const result = await categoryAPI.delete(id, token)
 			if (result.status === 'Success') {
 				setCategories((pre) => pre.filter((category) => category._id !== id))
-				alert(result.message)
+				toast(result.message, { type: 'success', position: 'top-right' })
 			}
 		} catch (error) {
-			console.log(error)
+			toast(error.message, { type: 'error', position: 'top-right' })
 		}
 	}
 	return (

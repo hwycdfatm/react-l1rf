@@ -69,7 +69,7 @@ const Detail = () => {
 		if (product.size.length > 0 && selectSize === '')
 			return alert('Vui lòng chọn size')
 		if (product.inStock <= 0) return
-
+		if (count <= 0) return alert('Vui lòng chọn lại số lượng')
 		const check = await addToCart({
 			...product,
 			size: selectSize,
