@@ -109,7 +109,9 @@ const ChangePassword = () => {
 						{inputs.map((e, i) => (
 							<div key={i}>
 								<div className="mb-2">
-									<span className="text-gray-700">{e.placeholder}</span>
+									<span className="text-gray-700 dark:text-gray-200">
+										{e.placeholder}
+									</span>
 								</div>
 								<div className="flex items-center h-10 rounded-md border border-gray-200 overflow-hidden">
 									<label htmlFor={e.name} className="p-1 ml-1">
@@ -132,6 +134,7 @@ const ChangePassword = () => {
 										type={e.type}
 										id={e.name}
 										name={e.name}
+										placeholder={e.placeholder}
 										onFocus={() => removeMsg()}
 										className="h-full outline-none flex-1 ml-1 pl-1 font-normal dark:bg-transparent transition-all bg-white"
 										{...register(e.name)}
