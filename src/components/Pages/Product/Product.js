@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import NotFoundImage from './image-not-found.jpg'
+import ImageFallBack from '../../Image'
 
 const Product = (props) => {
 	const price = parseInt(props.sp.price)
@@ -11,13 +11,11 @@ const Product = (props) => {
 			to={`/product/${props.sp.slug}`}
 			className={`my-1 px-1 ${
 				grid ? 'w-full' : 'w-1/2'
-			} sm:w-1/3 md:my-2 md:px-2 md:w-1/4 lg:w-1/5 xl:w-1/6 transition-all`}
-		>
+			} sm:w-1/3 md:my-2 md:px-2 md:w-1/4 lg:w-1/5 xl:w-1/6 transition-all`}>
 			<div className="flex flex-col w-full bg-transparent dark:text-white h-full overflow-hidden transition-all">
 				<div className={`${grid ? '' : 'h-56'} xs:h-72`}>
-					<img
-						srcSet={image[0].url || NotFoundImage}
-						src={image[0].url || NotFoundImage}
+					<ImageFallBack
+						src={image[0].url}
 						alt={props.sp.title}
 						loading="lazy"
 						className="w-full h-full object-cover"

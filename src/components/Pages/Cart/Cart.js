@@ -109,15 +109,13 @@ const Cart = () => {
 						)}
 						<Link
 							to={'/'}
-							className="flex text-gray-700 items-center space-x-2 dark:text-white py-3"
-						>
+							className="flex text-gray-700 items-center space-x-2 dark:text-white py-3">
 							<svg
 								className="w-5 h-5"
 								fill="none"
 								stroke="currentColor"
 								viewBox="0 0 24 24"
-								xmlns="http://www.w3.org/2000/svg"
-							>
+								xmlns="http://www.w3.org/2000/svg">
 								<path
 									strokeLinecap="round"
 									strokeLinejoin="round"
@@ -176,8 +174,7 @@ const Cart = () => {
 									/>
 									<label
 										htmlFor="cod"
-										className="flex-1 flex items-center justify-between pr-6"
-									>
+										className="flex-1 flex items-center justify-between pr-6">
 										<span className="text-md">Thanh toán khi nhận hàng</span>
 										<img
 											src={CodIcon}
@@ -197,8 +194,7 @@ const Cart = () => {
 									/>
 									<label
 										htmlFor="momo"
-										className="flex-1 flex items-center justify-between pr-6"
-									>
+										className="flex-1 flex items-center justify-between pr-6">
 										<span className="text-md">Thanh toán Momo</span>
 										<img
 											src={MomoIcon}
@@ -217,8 +213,7 @@ const Cart = () => {
 									/>
 									<label
 										htmlFor="paypal"
-										className="flex-1 flex items-center justify-between pr-6"
-									>
+										className="flex-1 flex items-center justify-between pr-6">
 										<span className="text-md">Thanh toán Paypal</span>
 										<img
 											src={PayPalIcon}
@@ -232,8 +227,7 @@ const Cart = () => {
 
 						<div
 							onClick={handleCheckOut}
-							className="bg-green-400 cursor-pointer py-4 border-2 border-green-400 text-center text-white hover:text-green-400 font-bold  px-4 rounded-lg my-4 hover:bg-white dark:hover:bg-darkBgColor"
-						>
+							className="bg-green-400 cursor-pointer py-4 border-2 border-green-400 text-center text-white hover:text-green-400 font-bold  px-4 rounded-lg my-4 hover:bg-white dark:hover:bg-darkBgColor">
 							Tiến hành thanh toán
 						</div>
 					</div>

@@ -102,8 +102,7 @@ const Login = () => {
 			<div className="max-w-md bg-transparent mx-auto rounded-lg mt-20 px-5 py-7">
 				<form
 					onSubmit={handleSubmit(loginSubmit)}
-					className="flex flex-col space-y-6 text-gray-400"
-				>
+					className="flex flex-col space-y-6 text-gray-400">
 					<h1 className="text-2xl text-center font-normal text-gray-700 dark:text-white mb-6">
 						Chào mừng đến với l1rf Shop
 					</h1>
@@ -119,8 +118,7 @@ const Login = () => {
 											fill="none"
 											stroke="currentColor"
 											viewBox="0 0 24 24"
-											xmlns="http://www.w3.org/2000/svg"
-										>
+											xmlns="http://www.w3.org/2000/svg">
 											<path
 												strokeLinecap="round"
 												strokeLinejoin="round"
@@ -148,11 +146,10 @@ const Login = () => {
 					<div className="flex flex-col w-full justify-center space-y-2">
 						<button
 							type="submit"
-							className="w-full font-semibold h-10 bg-green-300 rounded-md text-white outline-none focus:outline-none focus:shadow-outline hover:bg-green-500 transition-all shadow-md"
-						>
+							className="w-full font-semibold h-10 bg-green-300 rounded-md text-white outline-none focus:outline-none focus:shadow-outline hover:bg-green-500 transition-all shadow-md">
 							{loader ? <LoadingBtn /> : 'Đăng nhập'}
 						</button>
-						<span className="text-center">hoặc</span>
+						{/* <span className="text-center">hoặc</span>
 						<FacebookLogin
 							disableMobileRedirect={true}
 							appId="512680796465992"
@@ -160,7 +157,7 @@ const Login = () => {
 							callback={handleLoginFacebook}
 							textButton="Đăng nhập với Facebook"
 							cssClass="font-semibold text-center text-white hover:text-red-50 bg-blue-500 p-2 rounded-lg block w-full"
-						/>
+						/> */}
 					</div>
 
 					<div className="flex flex-row text-blue-300 font-medium text-sm justify-between pt-5">

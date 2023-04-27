@@ -21,6 +21,7 @@ const User = () => {
 		address: user.address,
 		phone: user.phone,
 	})
+
 	const [isShowing, toggle] = useModal()
 
 	useEffect(() => {
@@ -129,22 +130,19 @@ const User = () => {
 						{updateProfile ? (
 							<button
 								onClick={handleUpdateProfile}
-								className="p-2 border mt-4 rounded-lg"
-							>
+								className="p-2 border mt-4 rounded-lg">
 								Cập nhật thông tin cá nhân
 							</button>
 						) : (
 							<button
 								onClick={() => setUpdateProfile(!updateProfile)}
-								className="p-2 border mt-4 rounded-lg"
-							>
+								className="p-2 border mt-4 rounded-lg">
 								Chỉnh sửa thông tin cá nhân
 							</button>
 						)}
 						<Link
 							to="/doi-mat-khau"
-							className="p-2 border mt-4 rounded-lg text-center"
-						>
+							className="p-2 border mt-4 rounded-lg text-center">
 							Đổi mật khẩu
 						</Link>
 					</div>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
+import ImageFallBack from '../../Image'
 
 const SlideShow = ({ sliderData, button, dots, children }) => {
 	const [activeSlide, setActiveSlide] = useState(0)
@@ -89,11 +90,10 @@ const SlideShow = ({ sliderData, button, dots, children }) => {
 						style={{ transition: '.9s ease-in-out' }}
 						className={`h-screen w-full absolute ${
 							index === activeSlide ? 'opacity-100' : 'opacity-0'
-						}`}
-					>
-						<img
+						}`}>
+						<ImageFallBack
 							src={slide.image.url}
-							alt=""
+							alt={slide.title}
 							className="w-full h-full object-cover"
 						/>
 					</div>
@@ -127,15 +127,13 @@ const SlideShow = ({ sliderData, button, dots, children }) => {
 								setActiveSlide(activeSlide - 1)
 							}
 						}}
-						className="hidden md:flex outline-none focus:outline-none focus:shadow-outline absolute top-1/2 left-5 p-4 rounded-full hover:shadow-lg hover:bg-white transition-all dark:hover:bg-black dark:text-white duration-500"
-					>
+						className="hidden md:flex outline-none focus:outline-none focus:shadow-outline absolute top-1/2 left-5 p-4 rounded-full hover:shadow-lg hover:bg-white transition-all dark:hover:bg-black dark:text-white duration-500">
 						<svg
 							className="w-7 h-7"
 							fill="none"
 							stroke="currentColor"
 							viewBox="0 0 24 24"
-							xmlns="http://www.w3.org/2000/svg"
-						>
+							xmlns="http://www.w3.org/2000/svg">
 							<path
 								strokeLinecap="round"
 								strokeLinejoin="round"
@@ -152,15 +150,13 @@ const SlideShow = ({ sliderData, button, dots, children }) => {
 								setActiveSlide(0)
 							}
 						}}
-						className="hidden md:flex outline-none focus:outline-none focus:shadow-outline absolute top-1/2 right-5 p-4 rounded-full hover:shadow-lg hover:bg-white transition-all dark:hover:bg-black dark:text-white duration-500"
-					>
+						className="hidden md:flex outline-none focus:outline-none focus:shadow-outline absolute top-1/2 right-5 p-4 rounded-full hover:shadow-lg hover:bg-white transition-all dark:hover:bg-black dark:text-white duration-500">
 						<svg
 							className="w-6 h-6"
 							fill="none"
 							stroke="currentColor"
 							viewBox="0 0 24 24"
-							xmlns="http://www.w3.org/2000/svg"
-						>
+							xmlns="http://www.w3.org/2000/svg">
 							<path
 								strokeLinecap="round"
 								strokeLinejoin="round"

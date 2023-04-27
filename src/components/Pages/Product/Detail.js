@@ -2,24 +2,24 @@ import React, { useState, useEffect, useContext } from 'react'
 import { useParams, useHistory } from 'react-router-dom'
 import { GlobalState } from '../../../GlobalState'
 import Error from '../Error/Error'
-import NotFoundImage from './image-not-found.jpg'
 import productAPI from '../../../api/productAPI'
 import '../../../css/unreset.css'
 import Seo from '../../../utils/Seo'
 
 import Skeleton from 'react-loading-skeleton'
-import {
-	FacebookShareButton,
-	FacebookIcon,
-	EmailShareButton,
-	TelegramShareButton,
-	TwitterShareButton,
-	TwitterIcon,
-	TelegramIcon,
-	EmailIcon,
-} from 'react-share'
+// import {
+// 	FacebookShareButton,
+// 	FacebookIcon,
+// 	EmailShareButton,
+// 	TelegramShareButton,
+// 	TwitterShareButton,
+// 	TwitterIcon,
+// 	TelegramIcon,
+// 	EmailIcon,
+// } from 'react-share'
 import Modal from '../../../utils/Modal/Modal'
 import useModal from '../../../utils/Modal/useModal'
+import ImageFallBack from '../../Image'
 const Detail = () => {
 	const { addToCart } = useContext(GlobalState)
 	const [count, setCount] = useState(1)
@@ -29,8 +29,10 @@ const Detail = () => {
 	const [product, setProduct] = useState([])
 	const [selectSize, setSelectSize] = useState('')
 	const [awaitAdd, setAwaitAdd] = useState(false)
-	const shareUrl = window.location.href
+	// const shareUrl = window.location.href
 	const [isShowing, toggle] = useModal()
+	const [isSizeShowing, toggleSize] = useModal()
+	const [isCountShowing, toggleCount] = useModal()
 
 	const images = product.images || []
 	// Image
@@ -66,10 +68,9 @@ const Detail = () => {
 	}, [isShowing])
 
 	const addToCartBtn = async () => {
-		if (product.size.length > 0 && selectSize === '')
-			return alert('Vui lòng chọn size')
+		if (product.size.length > 0 && selectSize === '') return toggleSize()
 		if (product.inStock <= 0) return
-		if (count <= 0) return alert('Vui lòng chọn lại số lượng')
+		if (count <= 0) return toggleCount()
 		const check = await addToCart({
 			...product,
 			size: selectSize,
@@ -96,15 +97,13 @@ const Detail = () => {
 			<div className="max-w-screen-lg mx-auto px-2 xs:px-5 mb-2">
 				<button
 					onClick={() => history.goBack()}
-					className="flex hover:text-gray-500 rounded focus:outline-none focus:shadow-outline"
-				>
+					className="flex hover:text-gray-500 rounded focus:outline-none focus:shadow-outline">
 					<svg
 						className="w-6 h-6"
 						fill="none"
 						stroke="currentColor"
 						viewBox="0 0 24 24"
-						xmlns="http://www.w3.org/2000/svg"
-					>
+						xmlns="http://www.w3.org/2000/svg">
 						<path
 							strokeLinecap="round"
 							strokeLinejoin="round"
@@ -124,9 +123,8 @@ const Detail = () => {
 							</div>
 						) : (
 							<div className="w-full h-96 xs:h-542px rounded-lg">
-								<img
-									src={imageMain ? imageMain : NotFoundImage}
-									srcSet={imageMain ? imageMain : NotFoundImage}
+								<ImageFallBack
+									src={imageMain}
 									alt={product.title}
 									className="w-full h-full object-cover rounded-lg"
 								/>
@@ -136,8 +134,7 @@ const Detail = () => {
 					<div className="flex flex-col w-full md:w-6/12 md:pl-4 font-maven">
 						<h1
 							title={product.title}
-							className="text-lg font-bold font-maven uppercase md:text-xl mt-4 md:mt-0 md:mb-3"
-						>
+							className="text-lg font-bold font-maven uppercase md:text-xl mt-4 md:mt-0 md:mb-3">
 							<span className="text-sm font-light">/ {product.category} /</span>
 							<br />
 							{load ? <Skeleton height={30} /> : product.title}
@@ -171,12 +168,10 @@ const Detail = () => {
 									<div
 										onClick={() => setImageMain(item.url)}
 										className="h-14 w-14 cursor-pointer border border-gray-200 rounded overflow-hidden"
-										key={index}
-									>
-										<img
+										key={index}>
+										<ImageFallBack
 											src={item.url}
-											srcSet={item.url}
-											alt="thịnh ăn cứt"
+											alt={product.title}
 											className="object-cover w-full h-full"
 										/>
 									</div>
@@ -191,16 +186,14 @@ const Detail = () => {
 									{product.size.map((size) => (
 										<div
 											key={size}
-											className="w-1/2 flex-shrink flex-grow-0 p-1"
-										>
+											className="w-1/2 flex-shrink flex-grow-0 p-1">
 											<label
 												htmlFor={size}
 												className={`h-10 ${
 													size === selectSize
 														? 'border-gray-700 bg-black text-white'
 														: 'border-gray-200 bg-white dark:text-black'
-												} border  w-full flex rounded-md justify-center items-center transition-all bg-opacity-90`}
-											>
+												} border  w-full flex rounded-md justify-center items-center transition-all bg-opacity-90`}>
 												<input
 													type="radio"
 													id={size}
@@ -222,8 +215,7 @@ const Detail = () => {
 							<div className="flex bg-gray-100 dark:text-gray-800 rounded items-center overflow-hidden">
 								<button
 									onClick={() => setCount(count > 1 ? count - 1 : count)}
-									className="p-1 px-2 hover:bg-gray-200"
-								>
+									className="p-1 px-2 hover:bg-gray-200">
 									<span>-</span>
 								</button>
 								<input
@@ -238,8 +230,7 @@ const Detail = () => {
 								/>
 								<button
 									onClick={() => setCount(count + 1)}
-									className="p-1 px-2 hover:bg-gray-200"
-								>
+									className="p-1 px-2 hover:bg-gray-200">
 									<span>+</span>
 								</button>
 							</div>
@@ -255,15 +246,13 @@ const Detail = () => {
 										awaitAdd
 											? 'w-10 h-10 text-green-400 bg-gray-100 rounded-full'
 											: 'h-10 w-44 text-gray-900 bg-gray-100 rounded'
-									} flex items-center justify-center  font-semibold hover:border-gray-300 transition-all overflow-hidden border border-gray-200`}
-								>
+									} flex items-center justify-center  font-semibold hover:border-gray-300 transition-all overflow-hidden border border-gray-200`}>
 									{awaitAdd ? (
 										<svg
 											className="w-6 h-6"
 											fill="currentColor"
 											viewBox="0 0 20 20"
-											xmlns="http://www.w3.org/2000/svg"
-										>
+											xmlns="http://www.w3.org/2000/svg">
 											<path
 												fillRule="evenodd"
 												d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
@@ -278,7 +267,7 @@ const Detail = () => {
 								</button>
 							</div>
 						</div>
-						<div className="flex mt-4 flex-col">
+						{/* <div className="flex mt-4 flex-col">
 							<span>Chia sẽ: </span>
 							<div className="flex mt-2 space-x-4">
 								<FacebookShareButton url={shareUrl}>
@@ -294,7 +283,7 @@ const Detail = () => {
 									<EmailIcon size={42} round />
 								</EmailShareButton>
 							</div>
-						</div>
+						</div> */}
 					</div>
 				</div>
 				{load ? (
@@ -314,6 +303,18 @@ const Detail = () => {
 					isShowing={isShowing}
 					hide={toggle}
 					text="Vui lòng đăng nhập"
+					type="alert"
+				/>
+				<Modal
+					isShowing={isSizeShowing}
+					hide={toggleSize}
+					text="Vui lòng chọn size"
+					type="alert"
+				/>
+				<Modal
+					isShowing={isCountShowing}
+					hide={toggleCount}
+					text="Vui lòng chọn số lượng"
 					type="alert"
 				/>
 			</div>

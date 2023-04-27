@@ -4,6 +4,7 @@ import assectAPI from '../../../api/assectAPI'
 import PaypalBtn from './PaypalBtn'
 import { GlobalState } from '../../../GlobalState'
 import Seo from '../../../utils/Seo'
+import ImageFallBack from '../../Image'
 
 const Checkout = ({ order, method, total, setCheckout, quantity }) => {
 	const { token, setCart, user } = useContext(GlobalState)
@@ -70,15 +71,13 @@ const Checkout = ({ order, method, total, setCheckout, quantity }) => {
 				<p className="text-xl text-left ">Check Out</p>
 				<button
 					onClick={() => setCheckout(false)}
-					className="flex items-center"
-				>
+					className="flex items-center">
 					<svg
 						className="w-5 h-5"
 						fill="none"
 						stroke="currentColor"
 						viewBox="0 0 24 24"
-						xmlns="http://www.w3.org/2000/svg"
-					>
+						xmlns="http://www.w3.org/2000/svg">
 						<path
 							strokeLinecap="round"
 							strokeLinejoin="round"
@@ -141,10 +140,9 @@ const Checkout = ({ order, method, total, setCheckout, quantity }) => {
 						order.map((item) => (
 							<div
 								key={item._id + item.size}
-								className="bg-white dark:bg-darkBgColor transition-all py-2 px-2 border border-gray-200 rounded-lg my-4 flex overflow-hidden"
-							>
+								className="bg-white dark:bg-darkBgColor transition-all py-2 px-2 border border-gray-200 rounded-lg my-4 flex overflow-hidden">
 								<div className="h-16 w-16 flex items-center justify-center mr-6 ">
-									<img
+									<ImageFallBack
 										src={item.images[0].url}
 										alt={token}
 										className="h-full object-contain rounded"
@@ -189,8 +187,7 @@ const Checkout = ({ order, method, total, setCheckout, quantity }) => {
 								: method === 'momo' && handlePaymentMomo()
 						}}
 						style={{ maxWidth: '750px' }}
-						className="bg-green-300 p-3 mx-auto block rounded-lg w-full shadow-lg border-2 border-transparent hover:border-green-300 hover:bg-white text-white hover:text-green-400 transition-all font-semibold  outline-none focus:outline-none focus:shadow-outline"
-					>
+						className="bg-green-300 p-3 mx-auto block rounded-lg w-full shadow-lg border-2 border-transparent hover:border-green-300 hover:bg-white text-white hover:text-green-400 transition-all font-semibold  outline-none focus:outline-none focus:shadow-outline">
 						THANH TOÁN
 					</button>
 				)}

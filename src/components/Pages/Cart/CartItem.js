@@ -1,4 +1,5 @@
 import React from 'react'
+import ImageFallBack from '../../Image'
 export default function CartItem(props) {
 	const search = props.search || null
 	const { images, price, title, size } = props.item
@@ -7,9 +8,9 @@ export default function CartItem(props) {
 	return (
 		<div className="bg-white text-gray-700 dark:text-white dark:bg-darkBgColor transition-all py-4 px-4 border border-gray-200 shadow-md rounded-lg my-4 flex overflow-hidden">
 			<div className="h-16 w-14 flex items-center justify-center mr-6 ">
-				<img
+				<ImageFallBack
 					src={images && images[0].url}
-					alt=""
+					alt={title}
 					className="h-full object-contain"
 				/>
 			</div>
@@ -31,15 +32,13 @@ export default function CartItem(props) {
 					<div className="text-lg font-semibold">
 						<button
 							onClick={() => props.removeProduct(props.item)}
-							className="focus:outline-none font-bold py-2 px-2 rounded-full inline-flex items-center "
-						>
+							className="focus:outline-none font-bold py-2 px-2 rounded-full inline-flex items-center ">
 							<svg
 								className="w-6 h-6"
 								fill="none"
 								stroke="currentColor"
 								viewBox="0 0 24 24"
-								xmlns="http://www.w3.org/2000/svg"
-							>
+								xmlns="http://www.w3.org/2000/svg">
 								<path
 									strokeLinecap="round"
 									strokeLinejoin="round"
